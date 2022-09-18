@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1022618559624",
+    "project_id": "frimo-93773",
+    "storage_bucket": "frimo-93773.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022618559624:android:8472ce43ecf221c8202b3d",
+        "android_client_info": {
+          "package_name": "gachon.teama.frimo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022618559624-28f97foi8mqt4tfce50i70hhgr4916fm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs-720b1QR9Pc-Yhw_qNYOqMsCQnVqJx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022618559624-28f97foi8mqt4tfce50i70hhgr4916fm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

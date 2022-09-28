@@ -8,6 +8,8 @@ import java.util.*
 
 // Todo: 채팅을 보내면 채팅이 올라가게
 // Todo: DataItem 없앨 수 있는 지 알아보기
+// Todo: 00:00를 표현할 수 있는 방법에 대해 알아보기
+// Todo: 처음 실행 시 채팅 맨 아래로
 
 class ChattingActivity : ComponentActivity() {
 
@@ -18,7 +20,6 @@ class ChattingActivity : ComponentActivity() {
     private val myRef: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     // Chatting
-    private lateinit var CHAT_NAME : String
     private lateinit var userName: String
     private var chatList = mutableListOf<DataItem>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
@@ -30,23 +31,23 @@ class ChattingActivity : ComponentActivity() {
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Todo: 채팅방 이름, 유저 이름 어떻게 처리할 지 고민하기
-        CHAT_NAME = "발표용"
-        userName = "test"
+        // Todo: user name 가져오기
+        userName = "namseunghyeon"
 
         with(binding){
 
-            // RecyclerView Setting
+            // Set recyclerview
             binding.recyclerviewChatting.setHasFixedSize(true)
             binding.recyclerviewChatting.adapter = mAdapter
 
-            // Send Button Click Listener
+            // When send button clicked
             ButtonSend.setOnClickListener {
 
+                // Send message
                 var msg: String = EditTextChat.text.toString()
                 if (msg != null) {
                     var chat: ChatDTO = ChatDTO(userName, msg, Date())
-                    myRef.child("chat").child(CHAT_NAME).push().setValue(chat).addOnCompleteListener {
+                    myRef.child("chat").child(userName).push().setValue(chat).addOnCompleteListener {
                         EditTextChat.setText("")
                     }
                 }
@@ -54,18 +55,21 @@ class ChattingActivity : ComponentActivity() {
 
         }
 
-        myRef.child("chat").child(CHAT_NAME).addChildEventListener(object: ChildEventListener{
+        // DatabaseReference child event listener
+        myRef.child("chat").child(userName).addChildEventListener(object: ChildEventListener{
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
                 val chat : ChatDTO = dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
 
+                // Change data format (ChatDTO -> DataItem)
                 var chatData : DataItem
                 if(chat.nickname.equals(userName))
                     chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Right.content, chat.time)
                 else
                     chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Left.content, chat.time)
 
+                // add chat data in adapter
                 mAdapter.addChat(chatData)
 
             }

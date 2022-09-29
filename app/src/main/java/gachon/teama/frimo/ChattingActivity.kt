@@ -41,7 +41,7 @@ class ChattingActivity : ComponentActivity() {
             binding.recyclerviewChatting.adapter = mAdapter
 
             // When send button clicked
-            ButtonSend.setOnClickListener {
+            buttonSend.setOnClickListener {
 
                 // Send message
                 var msg: String = EditTextChat.text.toString()

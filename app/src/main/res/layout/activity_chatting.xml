@@ -13,11 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -25,13 +27,14 @@
             android:id="@+id/EditText_chat"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_marginRight="10dp"
+            android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/Button_send"
-            android:text="SEND"
-            android:layout_width="80dp"
-            android:layout_height="match_parent" />
+        <ImageButton
+            android:id="@+id/button_send"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/ic_send_button" />
 
     </LinearLayout>
 

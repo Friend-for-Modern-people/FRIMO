@@ -53,6 +53,11 @@ class ChattingActivity : ComponentActivity() {
                 }
             }
 
+            // When back button clicked
+            buttonBack.setOnClickListener {
+                finish()
+            }
+
         }
 
         // DatabaseReference child event listener

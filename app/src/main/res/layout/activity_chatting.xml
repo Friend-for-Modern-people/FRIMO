@@ -23,12 +23,39 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <EditText
-            android:id="@+id/EditText_chat"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/round_rectangle"
+            android:backgroundTint="@color/gray1"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/button_plus"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_plus" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="15dp"
+                android:background="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edittext_chat"
+                android:textSize="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:background="@null"/>
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/button_send"

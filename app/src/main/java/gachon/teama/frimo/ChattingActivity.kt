@@ -44,11 +44,11 @@ class ChattingActivity : ComponentActivity() {
             buttonSend.setOnClickListener {
 
                 // Send message
-                var msg: String = EditTextChat.text.toString()
+                var msg: String = edittextChat.text.toString()
                 if (msg != null) {
                     var chat: ChatDTO = ChatDTO(userName, msg, Date())
                     myRef.child("chat").child(userName).push().setValue(chat).addOnCompleteListener {
-                        EditTextChat.setText("")
+                        edittextChat.setText("")
                     }
                 }
             }

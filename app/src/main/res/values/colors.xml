@@ -7,9 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-<!--  FRIMO  -->
+    <!--  FRIMO  -->
     <color name="fColor1">#292929</color>
     <color name="fColor2">#787878</color>
     <color name="fColor3">#979797</color>
     <color name="fColor4">#C0C0C0</color>
+    <color name="gray1">#6F6F6F</color>
 </resources>

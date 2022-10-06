@@ -34,7 +34,7 @@ class ChattingActivity : ComponentActivity() {
         // Todo: user name 가져오기
         userName = "namseunghyeon"
 
-        with(binding){
+        with(binding) {
 
             // Set recyclerview
             recyclerviewChatting.setHasFixedSize(true)
@@ -48,8 +48,8 @@ class ChattingActivity : ComponentActivity() {
                 if (msg != null) {
                     val chat: ChatDTO = ChatDTO(userName, msg, Date())
                     myRef.child("chat").child(userName).push().setValue(chat).addOnCompleteListener {
-                        edittextChat.setText("")
-                    }
+                            edittextChat.setText("")
+                        }
                 }
             }
 
@@ -61,21 +61,24 @@ class ChattingActivity : ComponentActivity() {
         }
 
         // DatabaseReference child event listener
-        myRef.child("chat").child(userName).addChildEventListener(object: ChildEventListener{
+        myRef.child("chat").child(userName).addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
-                val chat : ChatDTO = dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
+                val chat: ChatDTO = dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
 
                 // Change data format (ChatDTO -> DataItem)
-                val chatData : DataItem
-                if(chat.nickname.equals(userName))
+                val chatData: DataItem
+                if (chat.nickname.equals(userName))
                     chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Right.content, chat.time)
                 else
                     chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Left.content, chat.time)
 
                 // add chat data in adapter
                 mAdapter.addChat(chatData)
+
+                // Update the chat window when you send a chat
+                binding.recyclerviewChatting.scrollToPosition(chatList.size - 1);
 
             }
 

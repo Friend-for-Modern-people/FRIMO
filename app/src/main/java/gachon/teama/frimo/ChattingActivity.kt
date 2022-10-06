@@ -37,16 +37,16 @@ class ChattingActivity : ComponentActivity() {
         with(binding){
 
             // Set recyclerview
-            binding.recyclerviewChatting.setHasFixedSize(true)
-            binding.recyclerviewChatting.adapter = mAdapter
+            recyclerviewChatting.setHasFixedSize(true)
+            recyclerviewChatting.adapter = mAdapter
 
             // When send button clicked
             buttonSend.setOnClickListener {
 
                 // Send message
-                var msg: String = edittextChat.text.toString()
+                val msg: String = edittextChat.text.toString()
                 if (msg != null) {
-                    var chat: ChatDTO = ChatDTO(userName, msg, Date())
+                    val chat: ChatDTO = ChatDTO(userName, msg, Date())
                     myRef.child("chat").child(userName).push().setValue(chat).addOnCompleteListener {
                         edittextChat.setText("")
                     }
@@ -68,7 +68,7 @@ class ChattingActivity : ComponentActivity() {
                 val chat : ChatDTO = dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
 
                 // Change data format (ChatDTO -> DataItem)
-                var chatData : DataItem
+                val chatData : DataItem
                 if(chat.nickname.equals(userName))
                     chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Right.content, chat.time)
                 else
@@ -95,7 +95,7 @@ class ChattingActivity : ComponentActivity() {
 
             }
 
-        });
+        })
 
     }
 }

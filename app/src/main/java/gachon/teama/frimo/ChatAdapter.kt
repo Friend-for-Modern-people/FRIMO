@@ -85,7 +85,7 @@ class ChatAdapter(var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<
 
     fun addChat(chat: DataItem) {
         myDataList.add(chat)
-        notifyItemInserted(myDataList.size - 1) // 갱신
+        notifyItemInserted(myDataList.size - 1) // 채팅이 추가되었을 때 말풍선 추가 생성
     }
 
 }

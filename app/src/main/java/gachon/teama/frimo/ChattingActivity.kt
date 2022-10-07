@@ -6,10 +6,7 @@ import com.google.firebase.database.*
 import gachon.teama.frimo.databinding.ActivityChattingBinding
 import java.util.*
 
-// Todo: 채팅을 보내면 채팅이 올라가게
-// Todo: DataItem 없앨 수 있는 지 알아보기
 // Todo: 00:00를 표현할 수 있는 방법에 대해 알아보기
-// Todo: 처음 실행 시 채팅 맨 아래로
 
 class ChattingActivity : ComponentActivity() {
 

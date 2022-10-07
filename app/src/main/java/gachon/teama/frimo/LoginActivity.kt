@@ -19,12 +19,12 @@ class LoginActivity : AppCompatActivity() {
 
         binding.buttonKakaoLogin.setOnClickListener{
             // Todo: Kakao login 구현
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SetNicknameActivity::class.java))
         }
 
         binding.buttonGoogleLogin.setOnClickListener{
             // Todo: Google login 구현
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SetNicknameActivity::class.java))
         }
 
     }

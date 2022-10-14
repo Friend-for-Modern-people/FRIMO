@@ -12,17 +12,20 @@ private const val TAG_DIARY = "diary"
 
 class MainActivity : AppCompatActivity() {
 
+//    바인딩
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
+//        기존 인플레이터에서 바인딩으로 변환
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setFragment(TAG_CHAT, chatting())
 
+//        하단 네비게이션 바 클릭시 전환
         binding.naviView.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.chatFragment -> setFragment(TAG_CHAT, chatting())
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+//    프래그번트 전환 function
     private fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val fragmentTransaction = manager.beginTransaction()

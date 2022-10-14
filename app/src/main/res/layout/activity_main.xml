@@ -7,11 +7,13 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
+<!--  프래그먼트가 들어갈 자리  -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/mainFrameLayout" />
 
+<!--  하단 네비게이션 바  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/naviView"
         android:layout_width="match_parent"

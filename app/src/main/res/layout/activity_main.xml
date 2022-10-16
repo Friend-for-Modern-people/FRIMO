@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-<!--  프래그먼트가 들어갈 자리  -->
     <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mainFrameLayout" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-<!--  하단 네비게이션 바  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/naviView"
+        android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         app:itemBackground="@color/fColor3"
         app:itemIconTint="@drawable/menu_click_color"
         app:itemTextColor="@drawable/menu_click_color"
-        app:menu="@menu/navi_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:menu="@menu/navi_menu" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ic_chat"-->
-<!--        android:src="@drawable/ic_chatting"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="200dp" />-->
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

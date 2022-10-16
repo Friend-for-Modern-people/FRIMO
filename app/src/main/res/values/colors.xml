@@ -18,4 +18,6 @@
     <color name="yellow1">#FFDC00</color>
     <color name="skin">#FAC883</color>
     <color name="gray3">#2C3643</color>
+    <color name="gray4">#343434</color>
+    <color name="gray5">#8D8D8D</color>
 </resources>

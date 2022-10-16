@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setFragment(TAG_CHAT, chatting())
 
 //        하단 네비게이션 바 클릭시 전환
-        binding.naviView.setOnItemSelectedListener { item ->
+        binding.navigationBar.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.chatFragment -> setFragment(TAG_CHAT, chatting())
                 R.id.diaryFragment -> setFragment(TAG_DIARY, diary())
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = manager.beginTransaction()
 
         if(manager.findFragmentByTag(tag)==null){
-            fragmentTransaction.add(R.id.mainFrameLayout, fragment, tag)
+            fragmentTransaction.add(R.id.frame, fragment, tag)
         }
 
         val chat = manager.findFragmentByTag(TAG_CHAT)

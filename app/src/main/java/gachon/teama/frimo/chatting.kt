@@ -41,7 +41,7 @@ class chatting : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentChattingBinding.inflate(inflater,container,false)
 
-        binding.startChat.setOnClickListener {
+        binding.buttonStart.setOnClickListener {
             startActivity(Intent(activity,ChattingActivity::class.java))
         }
         return  binding.root

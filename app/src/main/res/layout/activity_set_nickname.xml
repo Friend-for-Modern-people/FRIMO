@@ -38,7 +38,7 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/skin"
         android:text="다음"
-        android:textColor="@color/black"
+        android:textColor="@color/gray4"
         android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

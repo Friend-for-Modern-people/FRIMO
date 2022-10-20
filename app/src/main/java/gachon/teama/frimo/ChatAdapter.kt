@@ -49,13 +49,13 @@ class ChatAdapter(var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<
         val inflater: LayoutInflater = LayoutInflater.from(context)
 
         return if (viewType == ChatWindowLocation.Center.content) {
-            view = inflater.inflate(R.layout.chatting_center, viewGroup, false)
+            view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
             CenterViewHolder(view)
         } else if (viewType == ChatWindowLocation.Left.content) {
-            view = inflater.inflate(R.layout.chatting_left, viewGroup, false)
+            view = inflater.inflate(R.layout.view_chatting_left, viewGroup, false)
             LeftViewHolder(view)
         } else {
-            view = inflater.inflate(R.layout.chatting_right, viewGroup, false)
+            view = inflater.inflate(R.layout.view_chatting_right, viewGroup, false)
             RightViewHolder(view)
         }
     }

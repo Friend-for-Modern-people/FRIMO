@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:theme="@style/CustomTheme"
         tools:targetApi="31">
 
         <activity
@@ -26,7 +26,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Loading" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SetNicknameActivity" />
         <activity android:name=".MainActivity" />

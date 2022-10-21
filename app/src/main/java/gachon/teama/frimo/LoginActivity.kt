@@ -22,10 +22,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, SetNicknameActivity::class.java))
         }
 
-        binding.buttonGoogleLogin.setOnClickListener{
-            // Todo: Google login 구현
-            startActivity(Intent(this, SetNicknameActivity::class.java))
-        }
-
     }
 }

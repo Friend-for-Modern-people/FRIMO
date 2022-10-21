@@ -34,37 +34,20 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/button_kakao_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_marginTop="80dp"
-        android:orientation="vertical"
+        android:layout_marginHorizontal="30dp"
+        android:background="@drawable/shape_kakao_login"
+        android:text="카카오톡으로 시작하기"
+        android:textColor="@color/gray4"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frimo">
-
-        <Button
-            android:id="@+id/button_kakao_login"
-            android:layout_width="316dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="5dp"
-            android:backgroundTint="@color/yellow1"
-            android:text="카카오톡으로 시작하기"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/button_google_login"
-            android:layout_width="316dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="@color/white"
-            android:text="구글로 시작하기"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/frimo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

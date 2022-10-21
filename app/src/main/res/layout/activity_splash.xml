@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/img_logo" />
 
         <TextView
             android:layout_width="wrap_content"

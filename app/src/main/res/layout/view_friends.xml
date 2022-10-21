@@ -41,7 +41,7 @@
             android:layout_width="92dp"
             android:layout_height="84dp"
             android:layout_marginEnd="5dp"
-            android:src="@drawable/character2"
+            android:src="@drawable/img_character2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

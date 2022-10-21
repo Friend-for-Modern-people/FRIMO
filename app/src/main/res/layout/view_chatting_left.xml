@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/speech_bubble_left"
+            android:background="@drawable/shape_speech_bubble_left"
             android:maxLength="150"
             android:maxLines="15"
             android:padding="10dp"

@@ -11,7 +11,7 @@
         android:background="@drawable/rectangle_corner_3"
         android:backgroundTint="@color/purple1"
         android:scaleType="centerCrop"
-        android:src="@drawable/character3"
+        android:src="@drawable/img_character3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

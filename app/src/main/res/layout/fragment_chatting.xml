@@ -36,7 +36,7 @@
                 android:layout_height="90dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/white"
-                android:src="@drawable/character1"
+                android:src="@drawable/img_character1"
                 app:shapeAppearanceOverlay="@style/CircleImageStyle" />
 
             <TextView

@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import gachon.teama.frimo.databinding.ActivityMainBinding
-
-import gachon.teama.frimo.databinding.FragmentChattingBinding
+import gachon.teama.frimo.databinding.FragmentSetCharacterBinding
 
 //// TODO: Rename parameter arguments, choose names that match
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,7 +23,7 @@ class chatting : Fragment() {
 //    private var param1: String? = null
 //    private var param2: String? = null
 
-    private lateinit var binding: FragmentChattingBinding
+    private lateinit var binding: FragmentSetCharacterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +37,7 @@ class chatting : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = FragmentChattingBinding.inflate(inflater,container,false)
+        binding = FragmentSetCharacterBinding.inflate(inflater,container,false)
 
         binding.buttonStart.setOnClickListener {
             startActivity(Intent(activity,ChattingActivity::class.java))

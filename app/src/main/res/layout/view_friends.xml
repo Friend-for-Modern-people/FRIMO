@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:background="@drawable/bordered_rectangle_with_corner_3">
+        android:background="@drawable/shape_view_friends">
 
         <LinearLayout
             android:layout_width="wrap_content"

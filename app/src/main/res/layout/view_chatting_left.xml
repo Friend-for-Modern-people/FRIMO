@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="5dp"
         android:scaleType="centerCrop"
-        android:src="@color/black"
+        android:src="@color/white"
         app:shapeAppearanceOverlay="@style/CircleImageStyle" />
 
     <LinearLayout

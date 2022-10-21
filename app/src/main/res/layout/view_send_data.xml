@@ -17,7 +17,7 @@
         <Button
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/circle_button"
+            android:background="@drawable/shape_circle_button"
             android:backgroundTint="@color/pink1" />
 
         <TextView
@@ -40,7 +40,7 @@
         <Button
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/circle_button"
+            android:background="@drawable/shape_circle_button"
             android:backgroundTint="@color/green1" />
 
         <TextView
@@ -63,7 +63,7 @@
         <Button
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/circle_button"
+            android:background="@drawable/shape_circle_button"
             android:backgroundTint="@color/skyblue1" />
 
         <TextView
@@ -86,7 +86,7 @@
         <Button
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/circle_button"
+            android:background="@drawable/shape_circle_button"
             android:backgroundTint="@color/purple2" />
 
         <TextView

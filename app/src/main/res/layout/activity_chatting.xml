@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_chatting_background"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -26,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@color/fColor1"
+            android:textColor="@color/white"
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +33,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -57,11 +66,11 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@drawable/round_rectangle"
-            android:backgroundTint="@color/gray1"
+            android:background="@drawable/shape_send_text"
             android:orientation="horizontal">
 
             <ImageButton
@@ -77,7 +86,7 @@
                 android:layout_height="26dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="15dp"
-                android:background="#FFFFFF" />
+                android:background="@color/skin" />
 
             <EditText
                 android:id="@+id/edittext_chat"
@@ -93,9 +102,11 @@
 
         <ImageButton
             android:id="@+id/button_send"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/ic_send_button" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_circle_button"
+            android:backgroundTint="@color/skin"
+            android:src="@drawable/ic_send" />
 
     </LinearLayout>
 

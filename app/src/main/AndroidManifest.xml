@@ -27,6 +27,7 @@
         </activity>
 
         <activity android:name=".LoginActivity" />
+        <activity android:name=".AuthorityActivity" />
         <activity android:name=".SetNicknameActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ChattingActivity" />

@@ -1,6 +1,7 @@
 package gachon.teama.frimo
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import com.google.firebase.database.*
 import gachon.teama.frimo.databinding.ActivityChattingBinding
@@ -28,14 +29,29 @@ class ChattingActivity : ComponentActivity() {
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Todo: user name 가져오기
+        // Todo: user 정보 가져오기 -> firebase에서 해당 유저의 채팅 내역을 가져오기 위해
         userName = "namseunghyeon"
 
         with(binding) {
 
+            // When back button clicked
+            buttonBack.setOnClickListener {
+                finish()
+            }
+
             // Set recyclerview
             recyclerviewChatting.setHasFixedSize(true)
             recyclerviewChatting.adapter = mAdapter
+
+            // When + button clicked
+            // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
+            //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
+            buttonPlus.setOnClickListener {
+                if (viewSendData.isShown)
+                    viewSendData.visibility = View.GONE
+                else
+                    viewSendData.visibility = View.VISIBLE
+            }
 
             // When send button clicked
             buttonSend.setOnClickListener {
@@ -44,15 +60,11 @@ class ChattingActivity : ComponentActivity() {
                 val msg: String = edittextChat.text.toString()
                 if (msg != null) {
                     val chat: ChatDTO = ChatDTO(userName, msg, Date())
-                    myRef.child("chat").child(userName).push().setValue(chat).addOnCompleteListener {
+                    myRef.child("chat").child(userName).push().setValue(chat)
+                        .addOnCompleteListener {
                             edittextChat.setText("")
                         }
                 }
-            }
-
-            // When back button clicked
-            buttonBack.setOnClickListener {
-                finish()
             }
 
         }
@@ -62,14 +74,25 @@ class ChattingActivity : ComponentActivity() {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
-                val chat: ChatDTO = dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
+                val chat: ChatDTO =
+                    dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
 
                 // Change data format (ChatDTO -> DataItem)
                 val chatData: DataItem
                 if (chat.nickname.equals(userName))
-                    chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Right.content, chat.time)
+                    chatData = DataItem(
+                        chat.message,
+                        chat.nickname,
+                        ChatWindowLocation.Right.content,
+                        chat.time
+                    )
                 else
-                    chatData = DataItem(chat.message, chat.nickname, ChatWindowLocation.Left.content, chat.time)
+                    chatData = DataItem(
+                        chat.message,
+                        chat.nickname,
+                        ChatWindowLocation.Left.content,
+                        chat.time
+                    )
 
                 // add chat data in adapter
                 mAdapter.addChat(chatData)

@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.buttonKakaoLogin.setOnClickListener{
             // Todo: Kakao login 구현
+            //  내부 저장소에 관련 정보 저장
             startActivity(Intent(this, AuthorityActivity::class.java))
         }
 

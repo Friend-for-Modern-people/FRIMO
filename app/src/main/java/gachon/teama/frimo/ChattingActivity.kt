@@ -74,13 +74,11 @@ class ChattingActivity : ComponentActivity() {
 
                 // Send message
                 val msg: String = edittextChat.text.toString()
-                if (msg != null) {
-                    val chat: ChatDTO = ChatDTO("Me", msg, Date())
-                    myRef.child(userName).child("chat").push().setValue(chat)
-                        .addOnCompleteListener {
-                            edittextChat.setText("")
-                        }
-                }
+                val chat = ChatDTO("Me", msg, Date())
+                myRef.child(userName).child("chat").push().setValue(chat)
+                    .addOnCompleteListener {
+                        edittextChat.setText("")
+                    }
             }
 
         }
@@ -94,16 +92,15 @@ class ChattingActivity : ComponentActivity() {
                     dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
 
                 // Change data format (ChatDTO -> DataItem)
-                val chatData: DataItem
-                if (chat.who.equals("Me"))
-                    chatData = DataItem(
+                val chatData: DataItem = if (chat.who == "Me")
+                    DataItem(
                         chat.message,
                         "Me",
                         ChatWindowLocation.Right.content,
                         chat.time
                     )
                 else
-                    chatData = DataItem(
+                    DataItem(
                         chat.message,
                         "FRIMO",
                         ChatWindowLocation.Left.content,
@@ -114,7 +111,7 @@ class ChattingActivity : ComponentActivity() {
                 mAdapter.addChat(chatData)
 
                 // Update the chat window when you send a chat
-                binding.recyclerviewChatting.scrollToPosition(chatList.size - 1);
+                binding.recyclerviewChatting.scrollToPosition(chatList.size - 1)
 
             }
 

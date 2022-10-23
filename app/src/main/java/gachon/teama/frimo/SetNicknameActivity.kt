@@ -26,11 +26,7 @@ class SetNicknameActivity : AppCompatActivity() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
                 override fun afterTextChanged(editable: Editable) {
-                    if (editable.isNotEmpty()) {
-                        buttonNext.isEnabled = true
-                    } else {
-                        buttonNext.isEnabled =false
-                    }
+                    buttonNext.isEnabled = editable.isNotEmpty()
                 }
             })
         }

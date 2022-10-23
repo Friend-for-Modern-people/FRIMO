@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 
-class ChatAdapter(var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatAdapter(private var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class CenterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
@@ -48,15 +48,19 @@ class ChatAdapter(var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<
         val context: Context = viewGroup.context
         val inflater: LayoutInflater = LayoutInflater.from(context)
 
-        return if (viewType == ChatWindowLocation.Center.content) {
-            view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
-            CenterViewHolder(view)
-        } else if (viewType == ChatWindowLocation.Left.content) {
-            view = inflater.inflate(R.layout.view_chatting_left, viewGroup, false)
-            LeftViewHolder(view)
-        } else {
-            view = inflater.inflate(R.layout.view_chatting_right, viewGroup, false)
-            RightViewHolder(view)
+        return when (viewType) {
+            ChatWindowLocation.Center.content -> {
+                view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
+                CenterViewHolder(view)
+            }
+            ChatWindowLocation.Left.content -> {
+                view = inflater.inflate(R.layout.view_chatting_left, viewGroup, false)
+                LeftViewHolder(view)
+            }
+            else -> {
+                view = inflater.inflate(R.layout.view_chatting_right, viewGroup, false)
+                RightViewHolder(view)
+            }
         }
     }
 
@@ -64,15 +68,19 @@ class ChatAdapter(var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<
 
         val formatter = SimpleDateFormat("h:mm a")
 
-        if (viewHolder is CenterViewHolder) {
-            viewHolder.textView.setText(myDataList.get(position).content)
-        } else if (viewHolder is LeftViewHolder) {
-            viewHolder.textView_nickname.setText(myDataList.get(position).name)
-            viewHolder.textView_message.setText(myDataList.get(position).content)
-            viewHolder.textView_time.setText(formatter.format(myDataList.get(position).time))
-        } else if (viewHolder is RightViewHolder) {
-            viewHolder.textView_message.setText(myDataList.get(position).content)
-            viewHolder.textView_time.setText(formatter.format(myDataList.get(position).time))
+        when (viewHolder) {
+            is CenterViewHolder -> {
+                viewHolder.textView.text = myDataList[position].content
+            }
+            is LeftViewHolder -> {
+                viewHolder.textView_nickname.text = myDataList[position].name
+                viewHolder.textView_message.text = myDataList[position].content
+                viewHolder.textView_time.text = formatter.format(myDataList[position].time)
+            }
+            is RightViewHolder -> {
+                viewHolder.textView_message.text = myDataList[position].content
+                viewHolder.textView_time.text = formatter.format(myDataList[position].time)
+            }
         }
 
     }

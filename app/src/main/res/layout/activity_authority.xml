@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:text="안녕하세요 :)"
             android:textColor="@color/white"
-            android:textSize="22dp" />
+            android:textSize="22dp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +29,8 @@
             android:layout_marginTop="15dp"
             android:text="프리모에서는\n다음 권한을 사용하오니 허용해주세요"
             android:textColor="@color/white"
-            android:textSize="17dp" />
+            android:textSize="17dp"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
@@ -55,14 +57,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintVertical_bias="0.5"
+                tools:ignore="HardcodedText" />
 
             <CheckBox
+                android:id="@+id/checkbox_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/skin"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,6 +81,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/textview_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="파일 접근 권한이 필요합니다"
@@ -85,24 +90,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintVertical_bias="0.5"
+                tools:ignore="HardcodedText" />
 
             <CheckBox
+                android:id="@+id/checkbox_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
                 android:checked="false"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_marginVertical="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp">
 
             <TextView
+                android:id="@+id/textview_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="카메라 권한이 필요합니다"
@@ -111,15 +119,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintVertical_bias="0.5"
+                tools:ignore="HardcodedText" />
 
             <CheckBox
+                android:id="@+id/checkbox_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
                 android:checked="false"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -128,6 +138,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/textview_mic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="마이크 권한이 필요합니다"
@@ -136,15 +147,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintVertical_bias="0.5"
+                tools:ignore="HardcodedText" />
 
             <CheckBox
+                android:id="@+id/checkbox_mic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
                 android:checked="false"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -152,13 +165,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_start"
+        android:id="@+id/button_next"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/skin"
+        android:background="@drawable/shape_button_next"
+        android:enabled="false"
         android:text="다음"
         android:textColor="@color/gray4"
         android:textSize="17dp"

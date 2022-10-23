@@ -38,7 +38,7 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_set_nickname_next_button"
+        android:background="@drawable/shape_button_next"
         android:enabled="false"
         android:text="다음"
         android:textColor="@color/gray4"

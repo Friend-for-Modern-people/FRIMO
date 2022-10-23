@@ -53,18 +53,22 @@ class ChattingActivity : ComponentActivity() {
                     viewSendData.visibility = View.VISIBLE
             }
 
+            // When album button clicked
             buttonAlbum.setOnClickListener {
 
             }
 
+            // When camera button clicked
             buttonCamera.setOnClickListener {
 
             }
 
+            // When voice button clicked
             buttonVoice.setOnClickListener {
 
             }
 
+            // When file button clicked
             buttonFile.setOnClickListener {
 
             }

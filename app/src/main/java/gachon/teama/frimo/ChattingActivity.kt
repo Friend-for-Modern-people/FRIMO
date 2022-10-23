@@ -53,14 +53,30 @@ class ChattingActivity : ComponentActivity() {
                     viewSendData.visibility = View.VISIBLE
             }
 
+            buttonAlbum.setOnClickListener {
+
+            }
+
+            buttonCamera.setOnClickListener {
+
+            }
+
+            buttonVoice.setOnClickListener {
+
+            }
+
+            buttonFile.setOnClickListener {
+
+            }
+
             // When send button clicked
             buttonSend.setOnClickListener {
 
                 // Send message
                 val msg: String = edittextChat.text.toString()
                 if (msg != null) {
-                    val chat: ChatDTO = ChatDTO(userName, msg, Date())
-                    myRef.child("chat").child(userName).push().setValue(chat)
+                    val chat: ChatDTO = ChatDTO("Me", msg, Date())
+                    myRef.child(userName).child("chat").push().setValue(chat)
                         .addOnCompleteListener {
                             edittextChat.setText("")
                         }
@@ -70,7 +86,7 @@ class ChattingActivity : ComponentActivity() {
         }
 
         // DatabaseReference child event listener
-        myRef.child("chat").child(userName).addChildEventListener(object : ChildEventListener {
+        myRef.child(userName).child("chat").addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
@@ -79,17 +95,17 @@ class ChattingActivity : ComponentActivity() {
 
                 // Change data format (ChatDTO -> DataItem)
                 val chatData: DataItem
-                if (chat.nickname.equals(userName))
+                if (chat.who.equals("Me"))
                     chatData = DataItem(
                         chat.message,
-                        chat.nickname,
+                        "Me",
                         ChatWindowLocation.Right.content,
                         chat.time
                     )
                 else
                     chatData = DataItem(
                         chat.message,
-                        chat.nickname,
+                        "FRIMO",
                         ChatWindowLocation.Left.content,
                         chat.time
                     )

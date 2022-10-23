@@ -17,7 +17,7 @@ class AuthorityActivity : ComponentActivity() {
         setContentView(binding.root)
 
         binding.buttonStart.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SetNicknameActivity::class.java))
         }
 
     }

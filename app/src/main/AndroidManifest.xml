@@ -3,7 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="gachon.teama.frimo">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:required="false" />
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:required="false" />
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        android:required="false" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:required="false" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -30,8 +44,9 @@
         <activity android:name=".AuthorityActivity" />
         <activity android:name=".SetNicknameActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ChattingActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ChattingActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

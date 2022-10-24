@@ -29,6 +29,9 @@ class AuthorityActivity : ComponentActivity() {
                     checkboxFile.isChecked = true
                     textviewFile.text ="파일 접근 권한이 수락되었습니다"
 
+                    checkboxInternet.isChecked = true
+                    textviewInternet.text ="인터넷 접근 권한이 수락되었습니다"
+
                     checkboxCamera.isChecked = true
                     textviewCamera.text ="카메라 접근 권한이 수락되었습니다"
 
@@ -39,6 +42,9 @@ class AuthorityActivity : ComponentActivity() {
 
                     checkboxFile.isChecked = false
                     textviewFile.text ="파일 접근 권한이 필요합니다"
+
+                    checkboxInternet.isChecked = false
+                    textviewInternet.text ="인터넷 접근 권한이 필요합니다"
 
                     checkboxCamera.isChecked = false
                     textviewCamera.text ="카메라 접근 권한이 필요합니다"
@@ -59,6 +65,17 @@ class AuthorityActivity : ComponentActivity() {
                     textviewFile.text ="파일 접근 권한이 수락되었습니다"
                 else
                     textviewFile.text ="파일 접근 권한이 필요합니다"
+            }
+
+            checkboxInternet.setOnClickListener {
+
+                updateCheckbox()
+
+                // Indicate whether or not the permission is accepted by clicking the checkbox
+                if(checkboxInternet.isChecked)
+                    textviewInternet.text ="인터넷 접근 권한이 수락되었습니다"
+                else
+                    textviewInternet.text ="인터넷 접근 권한이 필요합니다"
             }
 
             checkboxCamera.setOnClickListener {
@@ -89,6 +106,9 @@ class AuthorityActivity : ComponentActivity() {
         binding.buttonNext.setOnClickListener {
 
             // Todo: 권한 받아오기
+
+
+
             startActivity(Intent(this, SetNicknameActivity::class.java))
         }
 
@@ -100,7 +120,7 @@ class AuthorityActivity : ComponentActivity() {
 
             // If any of the lower checkboxes are not clicked, unclick the upper checkbox.
             // When all child checkboxes are clicked, the parent checkbox is clicked
-            checkboxAll.isChecked = checkboxFile.isChecked && checkboxCamera.isChecked && checkboxMic.isChecked
+            checkboxAll.isChecked = checkboxFile.isChecked && checkboxInternet.isChecked && checkboxCamera.isChecked && checkboxMic.isChecked
 
             // Activate next button when full permission is received
             buttonNext.isEnabled = checkboxAll.isChecked

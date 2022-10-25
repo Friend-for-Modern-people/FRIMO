@@ -47,10 +47,15 @@ class ChattingActivity : ComponentActivity() {
             // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
             //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
             buttonPlus.setOnClickListener {
-                if (viewSendData.isShown)
+
+                if (viewSendData.isShown) {
                     viewSendData.visibility = View.GONE
-                else
+                    buttonPlus.animate().rotation(0f).setDuration(500).start()
+                }
+                else {
                     viewSendData.visibility = View.VISIBLE
+                    buttonPlus.animate().rotation(45f).setDuration(500).start()
+                }
             }
 
             // When album button clicked

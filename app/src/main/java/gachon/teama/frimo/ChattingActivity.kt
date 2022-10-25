@@ -39,20 +39,32 @@ class ChattingActivity : ComponentActivity() {
                 finish()
             }
 
+            // When search button clicked
+            buttonSearch.setOnClickListener {
+
+                // Todo: 검색할 단어를 입력받을 공간 UI 구현
+
+                for (i in 1..chatList.size){
+
+                }
+
+            }
+
             // Set recyclerview
             recyclerviewChatting.setHasFixedSize(true)
             recyclerviewChatting.adapter = mAdapter
 
-            // When + button clicked
-            // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
-            //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
+            // When '+' button clicked
             buttonPlus.setOnClickListener {
 
-                if (viewSendData.isShown) {
+                // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
+                //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
+
+                if (viewSendData.isShown) { // if it was already shown
                     viewSendData.visibility = View.GONE
                     buttonPlus.animate().rotation(0f).setDuration(500).start()
                 }
-                else {
+                else { // If it hasn't already been shown
                     viewSendData.visibility = View.VISIBLE
                     buttonPlus.animate().rotation(45f).setDuration(500).start()
                 }

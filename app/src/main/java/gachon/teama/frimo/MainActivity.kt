@@ -31,11 +31,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
 //        binding.icChat.setOnClickListener {
 //            startActivity(Intent(this, ChattingActivity::class.java))
 //        }
-
     }
 
 //    프래그번트 전환 function

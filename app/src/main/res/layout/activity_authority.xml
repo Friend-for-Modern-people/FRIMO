@@ -200,7 +200,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_button_next"
+        android:background="@drawable/shape_button"
         android:enabled="false"
         android:text="다음"
         android:textColor="@color/gray4"

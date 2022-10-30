@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="160dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="150dp"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:layout_marginEnd="10dp">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rectangle_corner_3"
+            android:background="@drawable/shape_recommend_friend"
             android:backgroundTint="@color/purple1"
             android:scaleType="centerCrop"
             android:src="@drawable/img_character3"
@@ -22,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="28dp"
-            android:background="@drawable/rectangle_corner_3"
+            android:background="@drawable/shape_recommend_friend"
             android:backgroundTint="@color/gray3"
             android:gravity="center"
             android:text="# 화분속이 따뜻한"

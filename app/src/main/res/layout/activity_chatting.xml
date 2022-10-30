@@ -105,7 +105,7 @@
             android:id="@+id/button_send"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/shape_circle_button"
+            android:background="@drawable/shape_circle"
             android:backgroundTint="@color/skin"
             android:src="@drawable/ic_send" />
 
@@ -132,7 +132,7 @@
                 android:id="@+id/button_album"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/shape_circle_button"
+                android:background="@drawable/shape_circle"
                 android:backgroundTint="@color/pink1" />
 
             <TextView
@@ -156,7 +156,7 @@
                 android:id="@+id/button_camera"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/shape_circle_button"
+                android:background="@drawable/shape_circle"
                 android:backgroundTint="@color/green1" />
 
             <TextView
@@ -180,7 +180,7 @@
                 android:id="@+id/button_voice"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/shape_circle_button"
+                android:background="@drawable/shape_circle"
                 android:backgroundTint="@color/skyblue1" />
 
             <TextView
@@ -204,7 +204,7 @@
                 android:id="@+id/button_file"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/shape_circle_button"
+                android:background="@drawable/shape_circle"
                 android:backgroundTint="@color/purple2" />
 
             <TextView

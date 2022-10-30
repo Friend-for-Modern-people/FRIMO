@@ -9,12 +9,13 @@
         android:id="@+id/frimo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -34,21 +35,18 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_kakao_login"
+    <ImageButton
+        android:id="@+id/button_login"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginHorizontal="30dp"
-        android:background="@drawable/shape_border_button_pressed"
-        android:backgroundTint="@color/yellow1"
-        android:text="카카오톡으로 시작하기"
-        android:textColor="@color/gray4"
-        android:textSize="15dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/img_kakao_login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frimo" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,8 +25,9 @@
             android:layout_height="28dp"
             android:background="@drawable/shape_recommend_friend"
             android:backgroundTint="@color/gray3"
-            android:gravity="center"
-            android:text="# 화분속이 따뜻한"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:text="추천 친구"
             android:textColor="@color/white"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent" />

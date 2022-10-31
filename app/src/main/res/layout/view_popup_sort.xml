@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="270dp"
-    android:background="@drawable/shape_view_send_data">
+    android:background="@drawable/shape_view_popup_sort">
 
     <TextView
         android:id="@+id/textView"

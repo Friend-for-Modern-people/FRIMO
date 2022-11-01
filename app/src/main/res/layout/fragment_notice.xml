@@ -124,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@id/textview_text_notice2" />
 
     <LinearLayout
-        android:id="@+id/textview_text_answer2"
+        android:id="@+id/textview_notice2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"

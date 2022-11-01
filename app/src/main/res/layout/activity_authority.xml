@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/textview_text"
+        android:id="@+id/textview_text_hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="70dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,164 +34,173 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textview_text_authority_all"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="40dp"
+        android:text="프리모 이용 약관 전체 동의"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@id/textview_text_hello"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_hello"
+        tools:ignore="HardcodedText" />
+
+    <CheckBox
+        android:id="@+id/checkbox_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:buttonTint="@color/skin"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_authority_all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textview_text_authority_all" />
+
+    <View
+        android:id="@+id/boundary"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_text">
+        app:layout_constraintTop_toBottomOf="@id/textview_text_authority_all" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textview_text_authority1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="파일 접근 권한이 필요합니다"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/boundary"
+        tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="프리모 이용 약관 전체 동의"
-                android:textColor="@color/white"
-                android:textSize="17dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/textview_text_give_authority1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="권한을 수락해주세요"
+        android:textColor="@color/red1"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_authority1"
+        tools:ignore="HardcodedText" />
 
-            <CheckBox
-                android:id="@+id/checkbox_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/skin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <CheckBox
+        android:id="@+id/checkbox_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/white"
+        android:checked="false"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_authority1"
+        app:layout_constraintEnd_toEndOf="@id/checkbox_all"
+        app:layout_constraintTop_toTopOf="@id/textview_text_authority1" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textview_text_authority2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="인터넷 권한이 필요합니다"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority1"
+        tools:ignore="HardcodedText" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="20dp"
-            android:background="#FFFFFF" />
+    <TextView
+        android:id="@+id/textview_text_give_authority2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="권한을 수락해주세요"
+        android:textColor="@color/red1"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_authority2"
+        tools:ignore="HardcodedText" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <CheckBox
+        android:id="@+id/checkbox_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/white"
+        android:checked="false"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_authority2"
+        app:layout_constraintEnd_toEndOf="@id/checkbox_all"
+        app:layout_constraintTop_toTopOf="@id/textview_text_authority2" />
 
-            <TextView
-                android:id="@+id/textview_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="파일 접근 권한이 필요합니다"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/textview_text_authority3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="카메라 권한이 필요합니다"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority2"
+        tools:ignore="HardcodedText" />
 
-            <CheckBox
-                android:id="@+id/checkbox_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/white"
-                android:checked="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textview_text_give_authority3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="권한을 수락해주세요"
+        android:textColor="@color/red1"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_authority3"
+        tools:ignore="HardcodedText" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <CheckBox
+        android:id="@+id/checkbox_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/white"
+        android:checked="false"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_authority3"
+        app:layout_constraintEnd_toEndOf="@id/checkbox_all"
+        app:layout_constraintTop_toTopOf="@id/textview_text_authority3" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp">
+    <TextView
+        android:id="@+id/textview_text_authority4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="마이크 권한이 필요합니다"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority3"
+        tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/textview_internet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="인터넷 권한이 필요합니다"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/textview_text_give_authority4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="권한을 수락해주세요"
+        android:textColor="@color/red1"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_authority4"
+        tools:ignore="HardcodedText" />
 
-            <CheckBox
-                android:id="@+id/checkbox_internet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/white"
-                android:checked="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textview_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="카메라 권한이 필요합니다"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                tools:ignore="HardcodedText" />
-
-            <CheckBox
-                android:id="@+id/checkbox_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/white"
-                android:checked="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:id="@+id/textview_mic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="마이크 권한이 필요합니다"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                tools:ignore="HardcodedText" />
-
-            <CheckBox
-                android:id="@+id/checkbox_mic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/white"
-                android:checked="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </LinearLayout>
+    <CheckBox
+        android:id="@+id/checkbox_mic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/white"
+        android:checked="false"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_authority4"
+        app:layout_constraintEnd_toEndOf="@id/checkbox_all"
+        app:layout_constraintTop_toTopOf="@id/textview_text_authority4" />
 
     <Button
         android:id="@+id/button_next"

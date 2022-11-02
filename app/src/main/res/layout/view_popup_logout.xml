@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:layout_marginHorizontal="30dp"
@@ -13,7 +14,8 @@
         android:gravity="center"
         android:text="로그아웃 하시겠어요?\n너무 아쉬워요  :("
         android:textColor="@color/white"
-        android:textSize="17dp" />
+        android:textSize="17dp"
+        tools:ignore="HardcodedText" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +31,8 @@
             android:gravity="center"
             android:text="취소"
             android:textColor="@color/gray3"
-            android:textSize="17dp" />
+            android:textSize="17dp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:layout_width="0dp"
@@ -39,7 +42,8 @@
             android:gravity="center"
             android:text="로그아웃"
             android:textColor="@color/gray3"
-            android:textSize="17dp" />
+            android:textSize="17dp"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

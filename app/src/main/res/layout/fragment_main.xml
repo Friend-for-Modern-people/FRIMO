@@ -120,7 +120,8 @@
                     android:textSize="17dp"
                     app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
                     app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/textview_when_talked"
@@ -132,7 +133,8 @@
                     android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                    app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name" />
+                    app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name"
+                    tools:ignore="HardcodedText" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -250,7 +252,8 @@
                     android:layout_height="wrap_content"
                     android:text="따뜻한"
                     android:textColor="@color/skin"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="wrap_content"

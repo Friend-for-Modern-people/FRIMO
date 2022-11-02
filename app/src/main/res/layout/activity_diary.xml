@@ -32,7 +32,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintVertical_bias="0.5"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/button_share"
@@ -54,7 +55,8 @@
             android:textColor="@color/white"
             android:textSize="17dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_back" />
+            app:layout_constraintTop_toBottomOf="@id/button_back"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,7 +70,8 @@
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/textview_today_sentiment"
             app:layout_constraintStart_toEndOf="@id/textview_today_sentiment"
-            app:layout_constraintTop_toTopOf="@id/textview_today_sentiment" />
+            app:layout_constraintTop_toTopOf="@id/textview_today_sentiment"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/imageView_diary"
@@ -99,7 +102,8 @@
             android:textSize="22dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_diary" />
+            app:layout_constraintTop_toBottomOf="@id/imageView_diary"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_diary_contents"
@@ -112,7 +116,8 @@
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_diary_title" />
+            app:layout_constraintTop_toBottomOf="@id/textview_diary_title"
+            tools:ignore="HardcodedText" />
 
         <View
             android:id="@+id/boundary1"
@@ -148,7 +153,8 @@
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword" />
+            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_keyword2"
@@ -160,7 +166,8 @@
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/textview_keyword1"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword" />
+            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_keyword3"
@@ -172,7 +179,8 @@
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/textview_keyword2"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword" />
+            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_keyword4"
@@ -184,7 +192,8 @@
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/textview_keyword3"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword" />
+            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            tools:ignore="HardcodedText" />
 
         <View
             android:id="@+id/boundary2"
@@ -207,7 +216,8 @@
             android:textColor="@color/gray5"
             android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/boundary2" />
+            app:layout_constraintTop_toBottomOf="@id/boundary2"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/imageview_who_commented"
@@ -231,7 +241,8 @@
             android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@id/textview_when_commented"
             app:layout_constraintStart_toEndOf="@id/imageview_who_commented"
-            app:layout_constraintTop_toTopOf="@id/imageview_who_commented" />
+            app:layout_constraintTop_toTopOf="@id/imageview_who_commented"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_when_commented"
@@ -243,7 +254,8 @@
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_who_commented"
             app:layout_constraintStart_toEndOf="@id/imageview_who_commented"
-            app:layout_constraintTop_toBottomOf="@id/textview_who_commented" />
+            app:layout_constraintTop_toBottomOf="@id/textview_who_commented"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_comment"
@@ -260,7 +272,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageview_who_commented" />
+            app:layout_constraintTop_toBottomOf="@id/imageview_who_commented"
+            tools:ignore="HardcodedText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,7 +78,8 @@
             android:textSize="17dp"
             app:layout_constraintEnd_toStartOf="@id/textview_text_cancel"
             app:layout_constraintStart_toEndOf="@id/button_search"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_text_cancel"
@@ -90,7 +91,8 @@
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="@id/edittext_search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/edittext_search" />
+            app:layout_constraintTop_toTopOf="@id/edittext_search"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -188,7 +190,8 @@
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="@id/button_album"
             app:layout_constraintStart_toStartOf="@id/button_album"
-            app:layout_constraintTop_toBottomOf="@id/button_album" />
+            app:layout_constraintTop_toBottomOf="@id/button_album"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/button_camera"
@@ -209,7 +212,8 @@
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="@id/button_camera"
             app:layout_constraintStart_toStartOf="@id/button_camera"
-            app:layout_constraintTop_toBottomOf="@id/button_camera" />
+            app:layout_constraintTop_toBottomOf="@id/button_camera"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/button_voice"
@@ -230,7 +234,8 @@
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="@id/button_voice"
             app:layout_constraintStart_toStartOf="@id/button_voice"
-            app:layout_constraintTop_toBottomOf="@id/button_voice" />
+            app:layout_constraintTop_toBottomOf="@id/button_voice"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/button_file"
@@ -251,7 +256,8 @@
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="@id/button_file"
             app:layout_constraintStart_toStartOf="@id/button_file"
-            app:layout_constraintTop_toBottomOf="@id/button_file" />
+            app:layout_constraintTop_toBottomOf="@id/button_file"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

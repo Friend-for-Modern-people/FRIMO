@@ -16,7 +16,8 @@
         android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button_sort_year"
@@ -33,7 +34,8 @@
         app:layout_constraintEnd_toStartOf="@id/button_sort_month"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_text_sort"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button_sort_month"
@@ -50,7 +52,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_sort_year"
         app:layout_constraintTop_toBottomOf="@id/textview_text_sort"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button_sort_sentiment"
@@ -65,7 +68,8 @@
         app:layout_constraintBottom_toTopOf="@id/button_apply"
         app:layout_constraintEnd_toStartOf="@id/button_sort_recent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_sort_year" />
+        app:layout_constraintTop_toBottomOf="@id/button_sort_year"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button_sort_recent"
@@ -80,7 +84,8 @@
         app:layout_constraintBottom_toTopOf="@id/button_apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_sort_sentiment"
-        app:layout_constraintTop_toBottomOf="@id/button_sort_month" />
+        app:layout_constraintTop_toBottomOf="@id/button_sort_month"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button_apply"

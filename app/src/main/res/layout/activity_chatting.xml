@@ -159,7 +159,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view_send_data"
         android:layout_width="match_parent"
         android:layout_height="210dp"
@@ -169,102 +169,90 @@
         android:paddingTop="30dp"
         android:visibility="gone">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/button_album"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/pink1"
+            app:layout_constraintEnd_toStartOf="@id/button_camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:text="앨범"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_album"
+            app:layout_constraintStart_toStartOf="@id/button_album"
+            app:layout_constraintTop_toBottomOf="@id/button_album" />
 
-            <Button
-                android:id="@+id/button_album"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="@color/pink1" />
+        <Button
+            android:id="@+id/button_camera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/green1"
+            app:layout_constraintEnd_toStartOf="@id/button_voice"
+            app:layout_constraintStart_toEndOf="@id/button_album"
+            app:layout_constraintTop_toTopOf="@id/button_album" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="앨범"
-                android:textColor="@color/white"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:text="카메라"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_camera"
+            app:layout_constraintStart_toStartOf="@id/button_camera"
+            app:layout_constraintTop_toBottomOf="@id/button_camera" />
 
-            <Button
-                android:id="@+id/button_camera"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="@color/green1" />
+        <Button
+            android:id="@+id/button_voice"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/skyblue1"
+            app:layout_constraintEnd_toStartOf="@id/button_file"
+            app:layout_constraintStart_toEndOf="@id/button_camera"
+            app:layout_constraintTop_toTopOf="@id/button_album" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="카메라"
-                android:textColor="@color/white"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:text="음성메시지"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_voice"
+            app:layout_constraintStart_toStartOf="@id/button_voice"
+            app:layout_constraintTop_toBottomOf="@id/button_voice" />
 
-            <Button
-                android:id="@+id/button_voice"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="@color/skyblue1" />
+        <Button
+            android:id="@+id/button_file"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/purple2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_voice"
+            app:layout_constraintTop_toTopOf="@id/button_album" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="음성메시지"
-                android:textColor="@color/white"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:text="파일"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_file"
+            app:layout_constraintStart_toStartOf="@id/button_file"
+            app:layout_constraintTop_toBottomOf="@id/button_file" />
 
-            <Button
-                android:id="@+id/button_file"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="@color/purple2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="파일"
-                android:textColor="@color/white"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

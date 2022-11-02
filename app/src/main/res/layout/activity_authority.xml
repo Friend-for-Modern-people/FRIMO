@@ -5,34 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <TextView
         android:id="@+id/textview_text_hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="70dp"
-        android:orientation="vertical"
+        android:text="안녕하세요 :)"
+        android:textColor="@color/white"
+        android:textSize="22dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="안녕하세요 :)"
-            android:textColor="@color/white"
-            android:textSize="22dp"
-            tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/textview_text_give_authority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="프리모에서는\n다음 권한을 사용하오니 허용해주세요"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        tools:ignore="HardcodedText"
+        app:layout_constraintStart_toStartOf="@id/textview_text_hello"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_hello"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="프리모에서는\n다음 권한을 사용하오니 허용해주세요"
-            android:textColor="@color/white"
-            android:textSize="17dp"
-            tools:ignore="HardcodedText" />
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/textview_text_authority_all"
@@ -43,7 +40,7 @@
         android:textColor="@color/white"
         android:textSize="17dp"
         app:layout_constraintStart_toStartOf="@id/textview_text_hello"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_hello"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority"
         tools:ignore="HardcodedText" />
 
     <CheckBox
@@ -207,7 +204,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/shape_button"
         android:enabled="false"

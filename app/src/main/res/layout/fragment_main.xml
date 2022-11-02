@@ -16,10 +16,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/logo"
+                android:id="@+id/imageview_logo"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
@@ -30,22 +30,21 @@
                 android:id="@+id/button_search"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="@id/imageview_logo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageview_logo"
                 app:srcCompat="@drawable/ic_search" />
 
             <LinearLayout
                 android:id="@+id/textview_recommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logo">
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/imageview_logo">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,236 +67,219 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_character"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
-                android:paddingStart="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
                 app:layout_constraintTop_toBottomOf="@id/textview_recommend"
                 tools:listitem="@layout/view_friends_recommend" />
 
-            <LinearLayout
-                android:id="@+id/layout_recently_talk"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textview_recently_talk"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical"
-                android:layout_marginHorizontal="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerview_character">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="최근 대화 나눈 친구"
-                    android:textColor="@color/white"
-                    android:textSize="17dp"
-                    tools:ignore="HardcodedText" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/shape_fragment_main_recently_talk">
-
-                    <ImageView
-                        android:id="@+id/imageview_recently_talk_character"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/img_character1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textview_recently_talk_character_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:text="이름"
-                        android:textColor="@color/white"
-                        android:textSize="17dp"
-                        app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
-                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textview_when_talked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:text="날짜"
-                        android:textColor="@color/gray5"
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                        app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name" />
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="12dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/ic_detail"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_recently_talk">
+                android:text="최근 대화 나눈 친구"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_character"
+                tools:ignore="HardcodedText" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_recently_talk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_fragment_main_recently_talk"
+                app:layout_constraintEnd_toEndOf="@id/button_search"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/textview_recently_talk">
+
+                <ImageView
+                    android:id="@+id/imageview_recently_talk_character"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/img_character1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textview_recently_talk_character_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="이름"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
+                    app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textview_when_talked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="날짜"
+                    android:textColor="@color/gray5"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
+                    app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_detail"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textview_set_character_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="캐릭터 테마 설정"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/layout_recently_talk"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textview_theme1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="차분"
+                android:textColor="@color/gray5"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/textview_set_character_theme"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textview_theme2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="사투리"
+                android:textColor="@color/gray5"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
+                app:layout_constraintStart_toEndOf="@id/textview_theme1"
+                app:layout_constraintTop_toTopOf="@id/textview_theme1"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textview_theme3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/shape_set_character_theme"
+                android:padding="3dp"
+                android:text="따뜻함"
+                android:textColor="@color/skin"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
+                app:layout_constraintStart_toEndOf="@id/textview_theme2"
+                app:layout_constraintTop_toTopOf="@id/textview_theme1"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textview_theme4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="팩폭"
+                android:textColor="@color/gray5"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
+                app:layout_constraintStart_toEndOf="@id/textview_theme3"
+                app:layout_constraintTop_toTopOf="@id/textview_theme1"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:id="@+id/boundary"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray6"
+                app:layout_constraintEnd_toEndOf="@id/button_search"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/textview_theme1" />
+
+            <LinearLayout
+                android:id="@+id/textview_friend_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/boundary">
+
+                <TextView
+                    android:id="@+id/textview_friend_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="캐릭터 테마 설정"
+                    android:text="명의 "
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="15dp"
                     tools:ignore="HardcodedText" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:text="따뜻한"
+                    android:textColor="@color/skin"
+                    android:textSize="15dp" />
 
-                    <TextView
-                        android:id="@+id/textview_theme1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="차분"
-                        android:textColor="@color/gray5"
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/textview_theme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:text="사투리"
-                        android:textColor="@color/gray5"
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/textview_theme1"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/textview_theme3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:background="@drawable/shape_set_character_theme"
-                        android:padding="3dp"
-                        android:text="따뜻함"
-                        android:textColor="@color/skin"
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/textview_theme2"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/textview_theme4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:text="팩폭"
-                        android:textColor="@color/gray5"
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/textview_theme3"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#FFFFFF" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4"
-                            android:textColor="@color/white"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="명의 "
-                            android:textColor="@color/white"
-                            android:textSize="15dp"
-                            tools:ignore="HardcodedText" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="따뜻한"
-                            android:textColor="@color/skin"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" 친구들이 있어요"
-                            android:textColor="@color/white"
-                            android:textSize="15dp"
-                            tools:ignore="HardcodedText" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="17dp"
-                        android:src="@drawable/ic_detail"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.5" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/view_friends" />
+                    android:text=" 친구들이 있어요"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_detail"
+                app:layout_constraintBottom_toBottomOf="@id/textview_friend_recommend"
+                app:layout_constraintEnd_toEndOf="@id/button_search"
+                app:layout_constraintTop_toTopOf="@id/textview_friend_recommend"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/button_search"
+                app:layout_constraintStart_toStartOf="@id/imageview_logo"
+                app:layout_constraintTop_toBottomOf="@id/textview_friend_recommend"
+                tools:listitem="@layout/view_friends" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

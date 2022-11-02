@@ -9,12 +9,11 @@
         android:id="@+id/textview_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"
         android:text="반가워요 :)\n사용자님의 닉네임을 \n적어주세요 "
         android:textColor="@color/white"
         android:textSize="22dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/edittext_nickname"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 

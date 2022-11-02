@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
@@ -27,9 +27,10 @@
                 android:textSize="17dp" />
 
             <TextView
+                android:id="@+id/textview_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="단어"
+                android:text="00"
                 android:textColor="@color/white"
                 android:textSize="17dp" />
 
@@ -58,7 +59,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/shape_view_popup_option_left"
@@ -68,7 +69,7 @@
             android:textSize="17dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/shape_view_popup_option_right"

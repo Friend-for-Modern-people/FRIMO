@@ -12,14 +12,14 @@
         <ImageView
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/edittext_nickname"
+            app:layout_constraintTop_toTopOf="@id/textview_text_change_nickname"
+            app:layout_constraintBottom_toBottomOf="@id/textview_text_change_nickname"/>
 
         <TextView
+            android:id="@+id/textview_text_change_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -36,12 +36,11 @@
             android:id="@+id/textview_enter_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="40dp"
             android:text="변경할 닉네임을 입력해주세요"
             android:textColor="@color/white"
             android:textSize="17dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/edittext_nickname"
             app:layout_constraintTop_toBottomOf="@id/button_back"
             tools:ignore="HardcodedText" />
 

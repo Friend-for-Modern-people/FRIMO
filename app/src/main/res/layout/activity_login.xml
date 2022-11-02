@@ -5,42 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/frimo"
+    <ImageView
+        android:id="@+id/imageview_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button_login"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toTopOf="@id/textview_text_frimo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/img_logo" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/img_logo" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="조금, 새침하고 예민한 ‘나’의\n가장 친한 친구"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textview_text_frimo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="조금, 새침하고 예민한 ‘나’의\n가장 친한 친구"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/button_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageview_logo" />
 
     <ImageButton
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/img_kakao_login"
         app:layout_constraintBottom_toBottomOf="parent"

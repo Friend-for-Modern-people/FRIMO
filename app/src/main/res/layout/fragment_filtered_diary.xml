@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sentiment1"
+            android:id="@+id/layout_filter1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -19,12 +19,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textview_sentiment1"
+                android:id="@+id/textview_filter1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
-                android:text="# 감정1"
+                android:text="필터1"
                 android:textColor="@color/white"
                 android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -32,28 +32,28 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/textview_sentiment1_diary_count"
+                android:id="@+id/textview_filter1_diary_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:text="개수"
                 android:textColor="@color/white"
                 android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="@id/button_sentiment1_detail"
-                app:layout_constraintEnd_toStartOf="@id/button_sentiment1_detail"
-                app:layout_constraintTop_toTopOf="@id/button_sentiment1_detail"
+                app:layout_constraintBottom_toBottomOf="@id/button_filter1_detail"
+                app:layout_constraintEnd_toStartOf="@id/button_filter1_detail"
+                app:layout_constraintTop_toTopOf="@id/button_filter1_detail"
                 tools:ignore="HardcodedText" />
 
             <ImageButton
-                android:id="@+id/button_sentiment1_detail"
+                android:id="@+id/button_filter1_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_detail"
                 app:flow_verticalBias="0.5"
-                app:layout_constraintBottom_toBottomOf="@id/textview_sentiment1"
+                app:layout_constraintBottom_toBottomOf="@id/textview_filter1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textview_sentiment1"
+                app:layout_constraintTop_toTopOf="@id/textview_filter1"
                 app:layout_constraintVertical_bias="0.5" />
 
             <LinearLayout
@@ -63,7 +63,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_sentiment1">
+                app:layout_constraintTop_toBottomOf="@id/textview_filter1">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -74,7 +74,7 @@
                     android:gravity="center">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/date1_diary"
+                        android:id="@+id/filter1_diary1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +83,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/imageView_date1"
+                            android:id="@+id/imageView_filter1_diary1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
@@ -106,7 +106,7 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
-                                android:id="@+id/textview_date1"
+                                android:id="@+id/textview_filter1_diary1_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -120,7 +120,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <TextView
-                                android:id="@+id/textview_date1_sentiment"
+                                android:id="@+id/textview_filter1_diary1_sentiment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
@@ -149,7 +149,7 @@
                     android:gravity="center">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/date2_diary"
+                        android:id="@+id/filter1_diary2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -158,7 +158,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/imageView_date2"
+                            android:id="@+id/imageView_filter1_diary2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
@@ -181,7 +181,7 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
-                                android:id="@+id/textview_date2"
+                                android:id="@+id/textview_filter1_diary2_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -195,7 +195,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <TextView
-                                android:id="@+id/textview_date2_sentiment"
+                                android:id="@+id/textview_filter1_diary2_sentiment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
@@ -221,21 +221,21 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sentiment2"
+            android:id="@+id/layout_filter2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sentiment1">
+            app:layout_constraintTop_toBottomOf="@id/layout_filter1">
 
             <TextView
-                android:id="@+id/textview_sentiment2"
+                android:id="@+id/textview_filter2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="20dp"
-                android:text="# 감정2"
+                android:text="필터2"
                 android:textColor="@color/white"
                 android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -243,28 +243,28 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/textview_sentiment2_diary_count"
+                android:id="@+id/textview_filter2_diary_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:text="개수"
                 android:textColor="@color/white"
                 android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="@id/button_sentiment2_detail"
-                app:layout_constraintEnd_toStartOf="@id/button_sentiment2_detail"
-                app:layout_constraintTop_toTopOf="@id/button_sentiment2_detail"
+                app:layout_constraintBottom_toBottomOf="@id/button_filter2_detail"
+                app:layout_constraintEnd_toStartOf="@id/button_filter2_detail"
+                app:layout_constraintTop_toTopOf="@id/button_filter2_detail"
                 tools:ignore="HardcodedText" />
 
             <ImageButton
-                android:id="@+id/button_sentiment2_detail"
+                android:id="@+id/button_filter2_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_detail"
                 app:flow_verticalBias="0.5"
-                app:layout_constraintBottom_toBottomOf="@id/textview_sentiment2"
+                app:layout_constraintBottom_toBottomOf="@id/textview_filter2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textview_sentiment2"
+                app:layout_constraintTop_toTopOf="@id/textview_filter2"
                 app:layout_constraintVertical_bias="0.5" />
 
             <LinearLayout
@@ -274,7 +274,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_sentiment2">
+                app:layout_constraintTop_toBottomOf="@id/textview_filter2">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -285,7 +285,7 @@
                     android:gravity="center">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/date3_diary"
+                        android:id="@+id/filter2_diary1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -294,7 +294,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/imageView_date3"
+                            android:id="@+id/imageView_filter2_diary1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
@@ -317,7 +317,7 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
-                                android:id="@+id/textview_date3"
+                                android:id="@+id/textview_filter2_diary1_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -331,7 +331,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <TextView
-                                android:id="@+id/textview_date3_sentiment"
+                                android:id="@+id/textview_filter2_diary1_sentiment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
@@ -360,7 +360,7 @@
                     android:gravity="center">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/date4_diary"
+                        android:id="@+id/filter2_diary2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -369,7 +369,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/imageView_date4"
+                            android:id="@+id/imageView_filter2_diary2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
@@ -392,7 +392,7 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
-                                android:id="@+id/textview_date4"
+                                android:id="@+id/textview_filter2_diary2_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -406,7 +406,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <TextView
-                                android:id="@+id/textview_date4_sentiment"
+                                android:id="@+id/textview_filter2_diary2_sentiment2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"

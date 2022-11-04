@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:gravity="center"
-        android:text="로그아웃 하시겠어요?\n너무 아쉬워요  :("
+        android:text="어디가시려구요...?  :(\n돌아와요..."
         android:textColor="@color/white"
         android:textSize="17dp"
         tools:ignore="HardcodedText" />

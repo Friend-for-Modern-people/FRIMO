@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="000"
                 android:textColor="@color/white"
-                android:textSize="22dp"
+                android:textSize="26dp"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -44,17 +44,22 @@
                 android:layout_height="wrap_content"
                 android:text="님"
                 android:textColor="@color/white"
-                android:textSize="22dp"
+                android:textSize="26dp"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
-        <ImageView
+        <TextView
             android:id="@+id/button_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:background="@drawable/ic_detail"
+            android:paddingVertical="3dp"
+            android:paddingHorizontal="5dp"
+            android:background="@drawable/shape_change_nickname"
+            android:text="닉네임 수정"
+            android:textColor="@color/white"
+            android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="@id/textview_text_nickname"
             app:layout_constraintStart_toEndOf="@id/textview_text_nickname"
             app:layout_constraintTop_toTopOf="@id/textview_text_nickname" />

@@ -96,11 +96,6 @@ class ChattingActivity : ComponentActivity() {
 
             }
 
-            // When file button clicked
-            buttonFile.setOnClickListener {
-
-            }
-
             // When send button clicked
             buttonSend.setOnClickListener {
 

@@ -91,10 +91,8 @@
                             android:backgroundTint="@color/pink1"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_character3"
-                            app:layout_aspectRatio="100%"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_widthPercent="100%" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -166,10 +164,8 @@
                             android:backgroundTint="@color/skyblue1"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_character3"
-                            app:layout_aspectRatio="100%"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_widthPercent="100%" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -302,10 +298,8 @@
                             android:backgroundTint="@color/pink1"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_character3"
-                            app:layout_aspectRatio="100%"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_widthPercent="100%" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -377,10 +371,8 @@
                             android:backgroundTint="@color/skyblue1"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_character3"
-                            app:layout_aspectRatio="100%"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_widthPercent="100%" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"

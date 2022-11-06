@@ -84,12 +84,9 @@
             android:backgroundTint="@color/pink1"
             android:scaleType="centerCrop"
             android:src="@drawable/img_character3"
-            app:layout_aspectRatio="100%"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_sentiment"
-            app:layout_widthPercent="100%" />
+            app:layout_constraintTop_toBottomOf="@id/textview_today_sentiment" />
 
         <TextView
             android:id="@+id/textview_diary_title"

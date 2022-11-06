@@ -129,7 +129,8 @@
                 android:layout_height="16dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
-                android:background="@drawable/ic_plus" />
+                android:background="@drawable/ic_plus"
+                android:backgroundTint="@color/black" />
 
             <View
                 android:layout_width="2dp"

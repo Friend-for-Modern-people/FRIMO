@@ -30,4 +30,10 @@
     <color name="skyblue1">#9DE8FF</color>
     <color name="purple2">#DBAEFF</color>
     <color name="red1">#FF4F4F</color>
+    <color name="pleasure">#FF7C7C</color>
+    <color name="sadness">#4770FF</color>
+    <color name="anxiety">#FF7A00</color>
+    <color name="wound">#7E7E7E</color>
+    <color name="embarrassment">#AE47FF</color>
+    <color name="anger">#FF0000</color>
 </resources>

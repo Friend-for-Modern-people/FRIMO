@@ -105,7 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/shape_fragment_main_recently_talk"
+                android:background="@drawable/shape_border_575757"
                 app:layout_constraintEnd_toEndOf="@id/button_search"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
                 app:layout_constraintTop_toBottomOf="@id/textview_recently_talk">
@@ -199,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:background="@drawable/shape_set_character_theme"
+                android:background="@drawable/shape_border_fac883"
                 android:padding="3dp"
                 android:text="따뜻함"
                 android:textColor="@color/skin"

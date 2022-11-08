@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:background="@drawable/shape_diary"
+        android:background="@drawable/shape_corners_radius_3"
         android:backgroundTint="@color/pink1"
         android:scaleType="centerCrop"
         android:src="@drawable/img_character3"
@@ -24,7 +24,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@drawable/shape_diary"
+        android:background="@drawable/shape_corners_radius_3"
         android:backgroundTint="@color/gray3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

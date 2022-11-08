@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="270dp"
-    android:background="@drawable/shape_view_popup_sort">
+    android:backgroundTint="@color/gray3"
+    android:background="@drawable/shape_corners_top_radius_30">
 
     <TextView
         android:id="@+id/textview_text_sort"

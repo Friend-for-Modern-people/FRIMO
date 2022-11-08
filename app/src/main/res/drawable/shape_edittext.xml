@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/shape_edittext_focused" android:state_focused="true" />
-    <item android:drawable="@drawable/shape_edittext_not_focused" android:state_focused="false" />
+    <item android:state_focused="true" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <stroke android:width="2dp" android:color="@color/skin" />
+            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+
+    <item android:state_focused="false" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <stroke android:width="2dp" android:color="@color/gray6" />
+            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
 </selector>

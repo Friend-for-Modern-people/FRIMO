@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="270dp"
     android:backgroundTint="@color/gray3"
-    android:background="@drawable/shape_corners_top_radius_30">
+    android:background="@drawable/shape_corners_top_30">
 
     <TextView
         android:id="@+id/textview_text_sort"

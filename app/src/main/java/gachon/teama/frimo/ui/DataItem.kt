@@ -1,4 +1,4 @@
-package gachon.teama.frimo
+package gachon.teama.frimo.ui
 
 import java.util.Date
 

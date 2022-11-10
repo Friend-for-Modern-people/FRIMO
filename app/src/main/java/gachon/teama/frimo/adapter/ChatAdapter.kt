@@ -1,4 +1,4 @@
-package gachon.teama.frimo
+package gachon.teama.frimo.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import gachon.teama.frimo.R
+import gachon.teama.frimo.ui.ChatWindowLocation
+import gachon.teama.frimo.ui.DataItem
 import java.text.SimpleDateFormat
 
 class ChatAdapter(private var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

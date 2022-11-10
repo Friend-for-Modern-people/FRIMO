@@ -31,7 +31,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,12 +40,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".AuthorityActivity" />
-        <activity android:name=".SetNicknameActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.AuthorityActivity" />
+        <activity android:name=".ui.SetNicknameActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity
-            android:name=".ChattingActivity"
+            android:name=".ui.ChattingActivity"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

@@ -1,4 +1,4 @@
-package gachon.teama.frimo
+package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -40,7 +40,7 @@ class chatting : Fragment() {
         binding = FragmentSetCharacterBinding.inflate(inflater,container,false)
 
         binding.buttonStart.setOnClickListener {
-            startActivity(Intent(activity,ChattingActivity::class.java))
+            startActivity(Intent(activity, ChattingActivity::class.java))
         }
         return  binding.root
     }

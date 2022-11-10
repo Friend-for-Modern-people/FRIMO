@@ -1,4 +1,4 @@
-package gachon.teama.frimo
+package gachon.teama.frimo.ui
 
 import android.app.Activity
 import android.content.ContentValues
@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.firebase.database.*
+import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.databinding.ActivityChattingBinding
 import java.util.*
 

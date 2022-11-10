@@ -1,9 +1,10 @@
-package gachon.teama.frimo
+package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import gachon.teama.frimo.R
 
 class SplashActivity : AppCompatActivity() {
 
@@ -19,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
-        },DURATION)
+        }, DURATION)
 
     }
 

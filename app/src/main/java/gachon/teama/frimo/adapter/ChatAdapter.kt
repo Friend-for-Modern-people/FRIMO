@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.ui.ChatWindowLocation
-import gachon.teama.frimo.ui.DataItem
+import gachon.teama.frimo.data.remote.Chat
 import java.text.SimpleDateFormat
 
-class ChatAdapter(private var myDataList: MutableList<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatAdapter(private var ChatList: MutableList<Chat>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class CenterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
@@ -52,13 +51,13 @@ class ChatAdapter(private var myDataList: MutableList<DataItem>) : RecyclerView.
         val inflater: LayoutInflater = LayoutInflater.from(context)
 
         return when (viewType) {
-            ChatWindowLocation.Center.content -> {
-                view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
-                CenterViewHolder(view)
-            }
-            ChatWindowLocation.Left.content -> {
+            1 -> {
                 view = inflater.inflate(R.layout.view_chatting_left, viewGroup, false)
                 LeftViewHolder(view)
+            }
+            2-> {
+                view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
+                CenterViewHolder(view)
             }
             else -> {
                 view = inflater.inflate(R.layout.view_chatting_right, viewGroup, false)
@@ -73,30 +72,34 @@ class ChatAdapter(private var myDataList: MutableList<DataItem>) : RecyclerView.
 
         when (viewHolder) {
             is CenterViewHolder -> {
-                viewHolder.textView.text = myDataList[position].content
+                viewHolder.textView.text = ChatList[position].message
             }
             is LeftViewHolder -> {
-                viewHolder.textView_nickname.text = myDataList[position].name
-                viewHolder.textView_message.text = myDataList[position].content
-                viewHolder.textView_time.text = formatter.format(myDataList[position].time)
+                viewHolder.textView_nickname.text = ChatList[position].who
+                viewHolder.textView_message.text = ChatList[position].message
+                viewHolder.textView_time.text = formatter.format(ChatList[position].time)
             }
             is RightViewHolder -> {
-                viewHolder.textView_message.text = myDataList[position].content
-                viewHolder.textView_time.text = formatter.format(myDataList[position].time)
+                viewHolder.textView_message.text = ChatList[position].message
+                viewHolder.textView_time.text = formatter.format(ChatList[position].time)
             }
         }
 
     }
 
-    override fun getItemCount() = myDataList.size
+    override fun getItemCount() = ChatList.size
 
     override fun getItemViewType(position: Int): Int {
-        return myDataList[position].viewType
+        return when(ChatList[position].who){
+            "FRIMO" -> 1 // Left
+            "Me" -> 3 // Right
+            else -> 2 // Center
+        }
     }
 
-    fun addChat(chat: DataItem) {
-        myDataList.add(chat)
-        notifyItemInserted(myDataList.size - 1) // 채팅이 추가되었을 때 말풍선 추가 생성
+    fun addChat(chat: Chat) {
+        ChatList.add(chat)
+        notifyItemInserted(ChatList.size - 1) // 채팅이 추가되었을 때 말풍선 추가 생성
     }
 
 }

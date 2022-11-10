@@ -1,8 +1,8 @@
-package gachon.teama.frimo.ui
+package gachon.teama.frimo.data.remote
 
 import java.util.*
 
-data class ChatDTO(
+data class Chat(
     val who : String = "null",
     val message : String = "null",
     val time : Date = Date()

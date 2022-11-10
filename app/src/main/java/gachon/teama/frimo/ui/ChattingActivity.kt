@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.firebase.database.*
 import gachon.teama.frimo.adapter.ChatAdapter
+import gachon.teama.frimo.data.remote.Chat
 import gachon.teama.frimo.databinding.ActivityChattingBinding
 import java.util.*
 
@@ -27,7 +28,7 @@ class ChattingActivity : ComponentActivity() {
 
     // Chatting
     private lateinit var userName: String
-    private var chatList = mutableListOf<DataItem>() // Chatting 내역
+    private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
 
     //Cam&Gallery
@@ -102,7 +103,7 @@ class ChattingActivity : ComponentActivity() {
 
                 // Send message
                 val msg: String = edittextChat.text.toString()
-                val chat = ChatDTO("Me", msg, Date())
+                val chat = Chat("Me", msg, Date())
                 myRef.child(userName).child("chat").push().setValue(chat)
                     .addOnCompleteListener {
                         edittextChat.setText("")
@@ -116,27 +117,11 @@ class ChattingActivity : ComponentActivity() {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
-                val chat: ChatDTO =
-                    dataSnapshot.getValue(ChatDTO::class.java) ?: throw Error("load error")
-
-                // Change data format (ChatDTO -> DataItem)
-                val chatData: DataItem = if (chat.who == "Me")
-                    DataItem(
-                        chat.message,
-                        "Me",
-                        ChatWindowLocation.Right.content,
-                        chat.time
-                    )
-                else
-                    DataItem(
-                        chat.message,
-                        "FRIMO",
-                        ChatWindowLocation.Left.content,
-                        chat.time
-                    )
+                val chat: Chat =
+                    dataSnapshot.getValue(Chat::class.java) ?: throw Error("load error")
 
                 // add chat data in adapter
-                mAdapter.addChat(chatData)
+                mAdapter.addChat(chat)
 
                 // Update the chat window when you send a chat
                 binding.recyclerviewChatting.scrollToPosition(chatList.size - 1)

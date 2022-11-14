@@ -17,5 +17,5 @@ data class Character (
     var img_recommendation : Int, // 오늘의 추천 캐릭터에서 보여줄 이미지
     var img_theme : Int // 캐릭터 테마에서 보여줄 이미지
 ) {
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
+    @PrimaryKey(autoGenerate = true) var id: Int = 1
 }

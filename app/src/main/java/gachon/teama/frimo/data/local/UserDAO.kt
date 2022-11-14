@@ -17,4 +17,7 @@ interface UserDAO {
     @Query("UPDATE User Set recently_talk = :character_num") // Update recently talk
     fun updateRecentlyTalk(character_num: Int) : Void
 
+    @Query("Select nickname from User")
+    fun getNickname() : String
+
 }

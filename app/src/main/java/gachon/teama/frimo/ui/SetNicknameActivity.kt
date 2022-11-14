@@ -46,6 +46,8 @@ class SetNicknameActivity : AppCompatActivity() {
             // 내부 저장소에 유저 정보 저장하기
             database.userDao().insert(User(nickname = name, recently_talk = 0))
 
+            // Todo: 서버에 유저 정보 전송
+
             startActivity(Intent(this, MainActivity::class.java))
         }
 

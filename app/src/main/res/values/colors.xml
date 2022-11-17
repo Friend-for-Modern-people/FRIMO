@@ -36,4 +36,6 @@
     <color name="wound">#7E7E7E</color>
     <color name="embarrassment">#AE47FF</color>
     <color name="anger">#FF0000</color>
+    <color name="navigation_click">#292929</color>
+    <color name="navigation_unclick">#A1A1A1</color>
 </resources>

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/chatFragment"
-        android:title="Chat"
-        android:icon="@drawable/ic_chat"/>
+        android:id="@+id/chat"
+        android:title="채팅"
+        android:icon="@drawable/ic_temp"
+        tools:ignore="HardcodedText" />
     <item
-        android:id="@+id/diaryFragment"
-        android:title="Diary"
-        android:icon="@drawable/ic_diary"/>
+        android:id="@+id/diary"
+        android:title="일기장"
+        android:icon="@drawable/ic_temp"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/setting"
+        android:title="환경설정"
+        android:icon="@drawable/ic_temp"
+        tools:ignore="HardcodedText" />
 </menu>

@@ -1,36 +1,35 @@
 package gachon.teama.frimo.ui
 
-import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
-import gachon.teama.frimo.R
-import gachon.teama.frimo.data.entities.User
+import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
+import gachon.teama.frimo.databinding.ActivitySplashBinding
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
     private lateinit var database: AppDatabase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+    override fun initAfterBinding() {
 
         database = AppDatabase.getInstance(this@SplashActivity)!!
+
+        // Todo: DB에 값이 없는 경우 캐릭터 data 추가
+        if(database.characterDao().getAll().isEmpty()){
+
+        }
 
         // Delay screen
         Handler(Looper.getMainLooper()).postDelayed({
 
             // If the user has set a nickname, go to the main page, otherwise go to the login page
-            if(database.userDao().getNickname().isNotEmpty())
-                startActivity(Intent(this, MainActivity::class.java))
-            else
-                startActivity(Intent(this, LoginActivity::class.java))
-
-            finish()
+            if(database.userDao().getNickname().isNotEmpty()) {
+                startNextActivity(MainActivity::class.java)
+            } else {
+                startNextActivity(LoginActivity::class.java)
+            }
 
         }, 3000)
+
     }
 }

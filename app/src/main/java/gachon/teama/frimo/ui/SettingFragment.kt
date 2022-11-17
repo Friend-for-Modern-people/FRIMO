@@ -25,6 +25,12 @@ class SettingFragment : Fragment(){
         // Set user nickname
         binding.textviewNickname.text = database.userDao().getNickname()
 
+        binding.buttonDetail.setOnClickListener {
+
+            // Fixme: 다른 method 알아볼 것
+            fragmentManager?.beginTransaction()?.replace(R.id.frame, ChangeNicknameFragment())?.commit()
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }

@@ -54,6 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@drawable/shape_change_nickname"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
             android:text="닉네임 수정"
             android:textColor="@color/white"
             android:textSize="10dp"

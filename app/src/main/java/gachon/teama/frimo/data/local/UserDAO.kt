@@ -20,4 +20,7 @@ interface UserDAO {
     @Query("Select nickname from User")
     fun getNickname() : String
 
+    @Query("UPDATE User Set nickname = :nickname") // Update recently talk
+    fun updateNickname(nickname: String) : Void
+
 }

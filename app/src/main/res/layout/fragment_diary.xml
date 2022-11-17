@@ -46,7 +46,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textview_nickname"
+                    android:id="@+id/textview_nickname_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="000"
@@ -95,7 +95,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@id/textview_nickname"
+                    android:id="@+id/textview_nickname_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="000"

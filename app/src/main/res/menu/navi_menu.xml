@@ -2,7 +2,7 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/chat"
+        android:id="@+id/chatting"
         android:title="채팅"
         android:icon="@drawable/ic_temp"
         tools:ignore="HardcodedText" />

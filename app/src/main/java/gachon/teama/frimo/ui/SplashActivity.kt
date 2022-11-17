@@ -2,6 +2,7 @@ package gachon.teama.frimo.ui
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivitySplashBinding
@@ -22,8 +23,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         // Delay screen
         Handler(Looper.getMainLooper()).postDelayed({
 
+//            Log.d("ACT/SPLASH", database.userDao().getNickname())
+
             // If the user has set a nickname, go to the main page, otherwise go to the login page
-            if(database.userDao().getNickname().isNotEmpty()) {
+            if(database.userDao().getNickname() != null) {
                 startNextActivity(MainActivity::class.java)
             } else {
                 startNextActivity(LoginActivity::class.java)

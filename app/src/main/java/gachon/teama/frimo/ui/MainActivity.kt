@@ -1,74 +1,81 @@
 package gachon.teama.frimo.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
 import gachon.teama.frimo.R
+import gachon.teama.frimo.databinding.ActivityLoginBinding
 import gachon.teama.frimo.databinding.ActivityMainBinding
-
-private const val TAG_CHAT = "chatting"
-private const val TAG_DIARY = "diary"
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val fragmentManager = supportFragmentManager
+
+    private lateinit var binding : ActivityMainBinding
+
+    private var chattingFragment: ChattingFragment? = null
+    private var diaryFragment: DiaryFragment? = null
+    private var settingFragment: SettingFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+//        binding.lifecycleOwner = this
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setFragment(TAG_CHAT, chatting())
-
-//        하단 네비게이션 바 클릭시 전환
-        binding.navigationBar.setOnItemSelectedListener { item ->
-            when(item.itemId){
-                R.id.chatFragment -> setFragment(TAG_CHAT, chatting())
-                R.id.diaryFragment -> setFragment(TAG_DIARY, diary())
-            }
-            true
-        }
-
-//        binding.icChat.setOnClickListener {
-//            startActivity(Intent(this, ChattingActivity::class.java))
-//        }
+        initBottomNavigation()
     }
 
-//    프래그번트 전환 function
-    private fun setFragment(tag: String, fragment: Fragment) {
-        val manager: FragmentManager = supportFragmentManager
-        val fragmentTransaction = manager.beginTransaction()
+    private fun initBottomNavigation(){
 
-        if(manager.findFragmentByTag(tag)==null){
-            fragmentTransaction.add(R.id.frame, fragment, tag)
-        }
+        // 최초로 보이는 프래그먼트
+        chattingFragment = ChattingFragment()
+        fragmentManager.beginTransaction().replace(R.id.frame,chattingFragment!!).commit()
 
-        val chat = manager.findFragmentByTag(TAG_CHAT)
-        val diary = manager.findFragmentByTag(TAG_DIARY)
+        binding.navigationbar.setOnItemSelectedListener {
 
-        //Transaction.hide
-        if(chat != null){
-            fragmentTransaction.hide(chat)
-        }
-        if (diary != null){
-            fragmentTransaction.hide(diary)
-        }
+            // 최초 선택 시 fragment add, 선택된 프래그먼트 show, 나머지 프래그먼트 hide
+            when(it.itemId){
+                R.id.chatting ->{
+                    if(chattingFragment == null){
+                        chattingFragment = ChattingFragment()
+                        fragmentManager.beginTransaction().add(R.id.frame,chattingFragment!!).commit()
+                    }
+                    if(chattingFragment != null) fragmentManager.beginTransaction().show(chattingFragment!!).commit()
+                    if(diaryFragment != null) fragmentManager.beginTransaction().hide(diaryFragment!!).commit()
+                    if(settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment!!).commit()
 
-        //Transaction.show
-        if(tag== TAG_CHAT){
-            if(chat!=null){
-                fragmentTransaction.show(chat)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.diary ->{
+                    if(diaryFragment == null){
+                        diaryFragment = DiaryFragment()
+                        fragmentManager.beginTransaction().add(R.id.frame,diaryFragment!!).commit()
+                    }
+                    if(chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment!!).commit()
+                    if(diaryFragment != null) fragmentManager.beginTransaction().show(diaryFragment!!).commit()
+                    if(settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment!!).commit()
+
+                    return@setOnItemSelectedListener true
+                }
+                R.id.setting ->{
+                    if(settingFragment == null){
+                        settingFragment = SettingFragment()
+                        fragmentManager.beginTransaction().add(R.id.frame,settingFragment!!).commit()
+                    }
+                    if(chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment!!).commit()
+                    if(diaryFragment != null) fragmentManager.beginTransaction().hide(diaryFragment!!).commit()
+                    if(settingFragment != null) fragmentManager.beginTransaction().show(settingFragment!!).commit()
+
+                    return@setOnItemSelectedListener true
+                }
+                else ->{
+                    return@setOnItemSelectedListener true
+                }
             }
         }
-        else if(tag== TAG_DIARY){
-            if(diary!=null){
-                fragmentTransaction.show(diary)
-            }
-        }
-
-        fragmentTransaction.commitAllowingStateLoss()
     }
 }

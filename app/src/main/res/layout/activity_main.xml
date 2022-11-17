@@ -8,13 +8,13 @@
         android:id="@+id/frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintBottom_toTopOf="@id/navigationbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation_bar"
+        android:id="@+id/navigationbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:itemBackground="@color/white"

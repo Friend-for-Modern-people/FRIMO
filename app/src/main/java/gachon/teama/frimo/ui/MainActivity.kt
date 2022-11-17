@@ -11,11 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private val fragmentManager = supportFragmentManager
 
-    private lateinit var binding : ActivityMainBinding
-
-    private var chattingFragment: ChattingFragment? = null
-    private var diaryFragment: DiaryFragment? = null
-    private var settingFragment: SettingFragment? = null
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,50 +22,25 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
     }
 
-    private fun initBottomNavigation(){
+    private fun initBottomNavigation() {
 
-        // 최초로 보이는 프래그먼트
-        chattingFragment = ChattingFragment()
-        fragmentManager.beginTransaction().replace(R.id.frame,chattingFragment!!).commit()
+        // 최초 실행시 보이는 fragment
+        fragmentManager.beginTransaction().replace(R.id.frame, ChattingFragment()).commit()
 
         binding.navigationbar.setOnItemSelectedListener {
 
             // 최초 선택 시 fragment add, 선택된 프래그먼트 show, 나머지 프래그먼트 hide
-            when(it.itemId){
-                R.id.chatting ->{
-                    if(chattingFragment == null){
-                        chattingFragment = ChattingFragment()
-                        fragmentManager.beginTransaction().add(R.id.frame,chattingFragment!!).commit()
-                    }
-                    if(chattingFragment != null) fragmentManager.beginTransaction().show(chattingFragment!!).commit()
-                    if(diaryFragment != null) fragmentManager.beginTransaction().hide(diaryFragment!!).commit()
-                    if(settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment!!).commit()
-
+            when (it.itemId) {
+                R.id.chatting -> { // Chatting
+                    fragmentManager.beginTransaction().replace(R.id.frame, ChattingFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
-                R.id.diary ->{
-                    if(diaryFragment == null){
-                        diaryFragment = DiaryFragment()
-                        fragmentManager.beginTransaction().add(R.id.frame,diaryFragment!!).commit()
-                    }
-                    if(chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment!!).commit()
-                    if(diaryFragment != null) fragmentManager.beginTransaction().show(diaryFragment!!).commit()
-                    if(settingFragment != null) fragmentManager.beginTransaction().hide(settingFragment!!).commit()
-
+                R.id.diary -> { // Diary
+                    fragmentManager.beginTransaction().replace(R.id.frame, DiaryFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
-                R.id.setting ->{
-                    if(settingFragment == null){
-                        settingFragment = SettingFragment()
-                        fragmentManager.beginTransaction().add(R.id.frame,settingFragment!!).commit()
-                    }
-                    if(chattingFragment != null) fragmentManager.beginTransaction().hide(chattingFragment!!).commit()
-                    if(diaryFragment != null) fragmentManager.beginTransaction().hide(diaryFragment!!).commit()
-                    if(settingFragment != null) fragmentManager.beginTransaction().show(settingFragment!!).commit()
-
-                    return@setOnItemSelectedListener true
-                }
-                else ->{
+                else -> { // Setting
+                    fragmentManager.beginTransaction().replace(R.id.frame, SettingFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
             }

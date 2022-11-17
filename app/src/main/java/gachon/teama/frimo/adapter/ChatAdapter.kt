@@ -51,17 +51,17 @@ class ChatAdapter(private var ChatList: MutableList<Chat>) : RecyclerView.Adapte
         val inflater: LayoutInflater = LayoutInflater.from(context)
 
         return when (viewType) {
-            1 -> {
+            left -> {
                 view = inflater.inflate(R.layout.view_chatting_left, viewGroup, false)
                 LeftViewHolder(view)
             }
-            2-> {
-                view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
-                CenterViewHolder(view)
-            }
-            else -> {
+            right -> {
                 view = inflater.inflate(R.layout.view_chatting_right, viewGroup, false)
                 RightViewHolder(view)
+            }
+            else -> {
+                view = inflater.inflate(R.layout.view_chatting_center, viewGroup, false)
+                CenterViewHolder(view)
             }
         }
     }
@@ -91,15 +91,21 @@ class ChatAdapter(private var ChatList: MutableList<Chat>) : RecyclerView.Adapte
 
     override fun getItemViewType(position: Int): Int {
         return when(ChatList[position].who){
-            "FRIMO" -> 1 // Left
-            "Me" -> 3 // Right
-            else -> 2 // Center
+            "FRIMO" -> left
+            "Me" -> right
+            else -> center
         }
     }
 
     fun addChat(chat: Chat) {
         ChatList.add(chat)
         notifyItemInserted(ChatList.size - 1) // 채팅이 추가되었을 때 말풍선 추가 생성
+    }
+
+    companion object Position{
+        const val left = 1
+        const val center = 2
+        const val right = 3
     }
 
 }

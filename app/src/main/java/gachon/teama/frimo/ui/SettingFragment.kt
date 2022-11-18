@@ -11,6 +11,7 @@ import gachon.teama.frimo.databinding.FragmentSettingBinding
 
 /***
  * @see ChangeNicknameActivity
+ * @see NoticeActivity
  * @see GuideActivity
  */
 
@@ -34,7 +35,7 @@ class SettingFragment : Fragment(){
 
         // When notice layout clicked
         binding.layoutNotice.setOnClickListener {
-
+            startActivity(Intent(requireContext(), NoticeActivity::class.java))
         }
 
         // When guide layout clicked

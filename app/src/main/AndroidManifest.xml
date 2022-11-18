@@ -54,6 +54,7 @@
 
         <!-- Setting  -->
         <activity android:name=".ui.ChangeNicknameActivity" />
+        <activity android:name=".ui.NoticeActivity" />
         <activity android:name=".ui.GuideActivity" />
 
     </application>

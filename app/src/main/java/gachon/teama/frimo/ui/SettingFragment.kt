@@ -9,6 +9,11 @@ import androidx.fragment.app.Fragment
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentSettingBinding
 
+/***
+ * @see ChangeNicknameActivity
+ * @see GuideActivity
+ */
+
 class SettingFragment : Fragment(){
 
     // Binding
@@ -22,8 +27,24 @@ class SettingFragment : Fragment(){
         binding = FragmentSettingBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
 
-        binding.buttonDetail.setOnClickListener {
+        // When change nickname button clicked
+        binding.buttonChangeNickname.setOnClickListener {
             startActivity(Intent(requireContext(), ChangeNicknameActivity::class.java))
+        }
+
+        // When notice layout clicked
+        binding.layoutNotice.setOnClickListener {
+
+        }
+
+        // When guide layout clicked
+        binding.layoutGuide.setOnClickListener {
+            startActivity(Intent(requireContext(), GuideActivity::class.java))
+        }
+
+        // When logout button clicked
+        binding.buttonLogout.setOnClickListener {
+
         }
 
         // Inflate the layout for this fragment

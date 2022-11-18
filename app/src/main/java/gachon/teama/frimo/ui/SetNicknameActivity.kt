@@ -41,13 +41,9 @@ class SetNicknameActivity : AppCompatActivity() {
 
             val name: String = binding.edittextNickname.text.toString()
 
-            // Todo: 서버에 중복되는 아이디 있는지 확인
-
             // 내부 저장소에 유저 정보 저장하기
             // FixMe: 현재 RoomDB에 접근할 때 MainThread로 접근함. 다른 방법 있는지 알아볼 것
             database.userDao().insert(User(nickname = name, recently_talk = 0))
-
-            // Todo: 서버에 유저 정보 전송
 
             startActivity(Intent(this, MainActivity::class.java))
         }

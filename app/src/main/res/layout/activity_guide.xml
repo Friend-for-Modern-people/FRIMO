@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/textview_text_question1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
@@ -43,6 +43,7 @@
         tools:ignore="HardcodedText" />
 
     <ImageView
+        android:id="@+id/button_detail_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -53,29 +54,29 @@
 
     <View
         android:id="@+id/boundary1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:background="@color/gray6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/button_detail_1"
+        app:layout_constraintStart_toStartOf="@id/textview_text_question1"
         app:layout_constraintTop_toBottomOf="@id/textview_text_question1" />
 
     <LinearLayout
-        android:id="@+id/textview_text_answer1"
-        android:layout_width="match_parent"
+        android:id="@+id/layout_guide_1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/button_detail_1"
+        app:layout_constraintStart_toStartOf="@id/textview_text_question1"
         app:layout_constraintTop_toBottomOf="@id/boundary1">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="프리모는 어떤 앱입니다"
+            android:layout_marginVertical="20dp"
+            android:text="프리모는 현대사회에서 받는 스트레스나 마음 속에 담아 두었던 말을 다양한 친구들과 나누는 앱이에요"
             android:textColor="@color/white"
             android:textSize="15dp"
             tools:ignore="HardcodedText" />
@@ -83,14 +84,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="20dp"
             android:background="@color/gray6" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/textview_text_question2"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
@@ -98,10 +98,11 @@
         android:textColor="@color/white"
         android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_answer1"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide_1"
         tools:ignore="HardcodedText" />
 
     <ImageView
+        android:id="@+id/button_detail_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -112,29 +113,29 @@
 
     <View
         android:id="@+id/boundary2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:background="@color/gray6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/button_detail_2"
+        app:layout_constraintStart_toStartOf="@id/textview_text_question2"
         app:layout_constraintTop_toBottomOf="@id/textview_text_question2" />
 
     <LinearLayout
-        android:id="@+id/textview_text_answer2"
-        android:layout_width="match_parent"
+        android:id="@+id/layout_guide_2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/button_detail_2"
+        app:layout_constraintStart_toStartOf="@id/textview_text_question2"
         app:layout_constraintTop_toBottomOf="@id/boundary2">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="일기장은 새벽 3시에 생성됩니다."
+            android:layout_marginVertical="20dp"
+            android:text="일기장은 프리모 친구들과 대화 이후에 새벽 3시에 생성되니 걱정 마세요 :)"
             android:textColor="@color/white"
             android:textSize="15dp"
             tools:ignore="HardcodedText" />
@@ -142,14 +143,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="20dp"
             android:background="@color/gray6" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/textview_text_question3"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
@@ -157,10 +157,11 @@
         android:textColor="@color/white"
         android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_answer2"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide_2"
         tools:ignore="HardcodedText" />
 
     <ImageView
+        android:id="@+id/button_detail_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -171,14 +172,38 @@
 
     <View
         android:id="@+id/boundary3"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="20dp"
         android:background="@color/gray6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/button_detail_3"
+        app:layout_constraintStart_toStartOf="@id/textview_text_question3"
         app:layout_constraintTop_toBottomOf="@id/textview_text_question3" />
 
+    <LinearLayout
+        android:id="@+id/layout_guide_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/button_detail_3"
+        app:layout_constraintStart_toStartOf="@id/textview_text_question3"
+        app:layout_constraintTop_toBottomOf="@id/boundary3">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:text="조만간 업데이트 하겠습니다:)"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray6" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

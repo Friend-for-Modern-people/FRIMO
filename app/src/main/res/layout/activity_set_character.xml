@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="@id/textview_character"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textview_character"
+        app:srcCompat="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/textview_character"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="캐릭터"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageview_character_profile"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="@id/button_back"
+        app:layout_constraintTop_toBottomOf="@id/button_back"
+        app:shapeAppearanceOverlay="@style/CircleImageStyle"
+        tools:src="@drawable/img_profile_geuluteogi" />
+
+    <ImageButton
+        android:id="@+id/imageButton_like"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/shape_circle"
+        android:backgroundTint="@color/gray7"
+        android:src="@drawable/ic_heart"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_character_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageview_character_profile" />
+
+    <TextView
+        android:id="@+id/textview_character_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="@id/imageview_character_profile"
+        app:layout_constraintTop_toBottomOf="@id/imageview_character_profile"
+        tools:ignore="HardcodedText"
+        tools:text="따뜻한 그루터기씨" />
+
+    <LinearLayout
+        android:id="@+id/textview_character_characteristic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/textview_character_name"
+        app:layout_constraintTop_toBottomOf="@id/textview_character_name">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="따뜻함 "
+            android:textColor="@color/skin"
+            android:textSize="12dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textview_character_warmth_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/skin"
+            android:textSize="12dp"
+            tools:ignore="HardcodedText"
+            tools:text="77" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:textColor="@color/skin"
+            android:textSize="12dp"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="14dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공감 "
+            android:textColor="@color/skin"
+            android:textSize="12dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textview_character_sympathy_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/skin"
+            android:textSize="12dp"
+            tools:ignore="HardcodedText"
+            tools:text="23" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:textColor="@color/skin"
+            android:textSize="12dp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textview_text_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="소개"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@id/imageview_character_profile"
+        app:layout_constraintTop_toBottomOf="@id/textview_character_characteristic"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_about_character"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@id/imageButton_like"
+        app:layout_constraintStart_toStartOf="@id/textview_text_introduce"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_introduce"
+        tools:ignore="HardcodedText"
+        tools:text="언제나 따뜻한 화분속에 있는 것을 좋아하는\n그루터기씨. 따뜻한 화분 만큼 마음도 따뜻하다.\n다른 사람의 말을 들어주기를 좋아함." />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_character_info1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_border_575757"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/view_character_info2"
+        app:layout_constraintStart_toStartOf="@id/textview_about_character"
+        app:layout_constraintTop_toBottomOf="@id/textview_about_character">
+
+        <TextView
+            android:id="@+id/textview_text_character_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="사는 곳"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/imageview_character_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/textview_character_live"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_text_character_live"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:background="@drawable/img_live_geuluteogi" />
+
+        <TextView
+            android:id="@+id/textview_character_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageview_character_live"
+            tools:ignore="HardcodedText"
+            tools:text="깨끗한 호수" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_character_info2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/shape_border_575757"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/view_character_info3"
+        app:layout_constraintStart_toEndOf="@id/view_character_info1"
+        app:layout_constraintTop_toTopOf="@id/view_character_info1">
+
+        <TextView
+            android:id="@+id/textview_text_character_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="키"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/imageview_character_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/textview_character_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_text_character_height"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:background="@drawable/img_height_geuluteogi" />
+
+        <TextView
+            android:id="@+id/textview_character_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageview_character_height"
+            tools:ignore="HardcodedText"
+            tools:text="10cm (새싹 포함)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_character_info3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_border_575757"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@id/textview_about_character"
+        app:layout_constraintStart_toEndOf="@id/view_character_info2"
+        app:layout_constraintTop_toTopOf="@id/view_character_info2">
+
+        <TextView
+            android:id="@+id/textview_text_character_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="선호"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/imageview_character_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/textview_character_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_text_character_like"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:background="@drawable/img_prefer_geuluteogi" />
+
+        <TextView
+            android:id="@+id/textview_character_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageview_character_like"
+            tools:ignore="HardcodedText"
+            tools:text="아이스 아메리카노" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_button"
+        android:text="대화 시작하기"
+        android:textColor="@color/gray4"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

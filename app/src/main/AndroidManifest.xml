@@ -44,6 +44,7 @@
         <activity android:name=".ui.AuthorityActivity" />
         <activity android:name=".ui.SetNicknameActivity" />
         <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.ChangeNicknameActivity" />
         <activity
             android:name=".ui.ChattingActivity"
             android:windowSoftInputMode="adjustResize" />

@@ -45,7 +45,7 @@ class SettingFragment : Fragment(){
 
         // When logout button clicked
         binding.buttonLogout.setOnClickListener {
-
+            // Todo: logout view 띄우기
         }
 
         // Inflate the layout for this fragment

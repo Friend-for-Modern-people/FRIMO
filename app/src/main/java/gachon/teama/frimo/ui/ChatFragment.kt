@@ -42,10 +42,14 @@ class ChatFragment : Fragment() {
 
             val recently_talk: Friend = database.friendDao().getFriend(database.userDao().getRecentlyChatCharacterId())
 
-            // Setting information in layout
-            binding.imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
-            binding.textviewRecentlyTalkFriendName.text = recently_talk.name
-            binding.textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
+            with(binding){
+
+                // Setting information in layout
+                imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
+                textviewRecentlyTalkFriendName.text = recently_talk.name
+                textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
+
+            }
 
         } else {
             binding.layoutRecentlyTalk.visibility = View.GONE

@@ -98,7 +98,6 @@
                 app:layout_constraintTop_toBottomOf="@id/recyclerview_recommend_friend">
 
                 <TextView
-                    android:id="@+id/textview_recently_talk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="최근 대화 나눈 친구"
@@ -113,24 +112,24 @@
                     android:background="@drawable/shape_border_575757">
 
                     <ImageView
-                        android:id="@+id/imageview_recently_talk_character"
+                        android:id="@+id/imageview_recently_talk_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:background="@drawable/img_character1" />
+                        tools:background="@drawable/img_theme_geuluteogi" />
 
                     <TextView
-                        android:id="@+id/textview_recently_talk_character_name"
+                        android:id="@+id/textview_recently_talk_friend_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:textColor="@color/white"
                         android:textSize="17dp"
                         app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
-                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
+                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_friend"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="HardcodedText"
                         tools:text="따뜻한 그루터기씨" />
@@ -143,8 +142,8 @@
                         android:textColor="@color/gray5"
                         android:textSize="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                        app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name"
+                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_friend"
+                        app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_friend_name"
                         tools:ignore="HardcodedText"
                         tools:text="22.11.19." />
 
@@ -162,11 +161,11 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textview_set_character_theme"
+                android:id="@+id/textview_text_set_friend_theme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="캐릭터 테마 설정"
+                android:text="친구 테마"
                 android:textColor="@color/white"
                 android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
@@ -182,7 +181,7 @@
                 android:textColor="@color/gray5"
                 android:textSize="12dp"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
-                app:layout_constraintTop_toBottomOf="@id/textview_set_character_theme"
+                app:layout_constraintTop_toBottomOf="@id/textview_text_set_friend_theme"
                 tools:ignore="HardcodedText" />
 
             <TextView

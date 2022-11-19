@@ -5,15 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import gachon.teama.frimo.data.entities.Character
+import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.entities.User
 
-@Database(entities = [Character::class, User::class], version = 1)
+@Database(entities = [Friend::class, User::class], version = 1)
 @TypeConverters(Converter::class)   // Date <-> Long 변환을 위함, RoomDB Date 지원 X
 
 /* 추상 클래스 */
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun characterDao(): CharacterDAO
+    abstract fun friendDao(): FriendDAO
     abstract fun userDao(): UserDAO
 
     companion object { // 동반 객체 (singleton)

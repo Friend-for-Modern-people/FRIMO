@@ -83,7 +83,7 @@
             android:background="@drawable/shape_corners_3"
             android:backgroundTint="@color/pink1"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_character3"
+            android:src="@drawable/img_diary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_today_sentiment" />
@@ -224,9 +224,9 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/white"
-            android:src="@drawable/img_character1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_comment_count" />
+            app:layout_constraintTop_toBottomOf="@id/textview_comment_count"
+            tools:src="@drawable/img_profile_geuluteogi" />
 
         <TextView
             android:id="@+id/textview_who_commented"

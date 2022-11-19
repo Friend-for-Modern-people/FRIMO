@@ -15,7 +15,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         database = AppDatabase.getInstance(this@SplashActivity)!!
 
         // Todo: DB에 값이 없는 경우 캐릭터 data 추가
-        if(database.characterDao().getAll().isEmpty()){
+        if(database.friendDao().getAll().isEmpty()){
 
         }
 

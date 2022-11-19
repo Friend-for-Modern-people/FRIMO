@@ -16,7 +16,7 @@
         android:background="@drawable/shape_corners_3"
         android:backgroundTint="@color/pink1"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_character3"
+        android:src="@drawable/img_diary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

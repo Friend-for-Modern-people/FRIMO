@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Character (
+data class Friend (
     var name: String, // Character name
     var img_profile: Int, // Character image
     var like: Boolean, // 캐릭터 하트 여부

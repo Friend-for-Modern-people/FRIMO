@@ -1,5 +1,6 @@
 package gachon.teama.frimo.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,9 @@ class ChatFragment : Fragment() {
         binding = FragmentChatBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
 
+        binding.layoutRecentlyTalkFriend.setOnClickListener {
+            startActivity(Intent(requireContext(), SetCharacterActivity::class.java))
+        }
 
         // Inflate the layout for this fragment
         return binding.root

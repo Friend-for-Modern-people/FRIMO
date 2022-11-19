@@ -38,4 +38,6 @@
     <color name="anger">#FF0000</color>
     <color name="navigation_click">#292929</color>
     <color name="navigation_unclick">#A1A1A1</color>
+    <color name="like">#FF7C7C</color>
+    <color name="unlike">#787878</color>
 </resources>

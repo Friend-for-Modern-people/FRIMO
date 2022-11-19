@@ -43,17 +43,28 @@
         app:shapeAppearanceOverlay="@style/CircleImageStyle"
         tools:src="@drawable/img_profile_geuluteogi" />
 
-    <ImageButton
-        android:id="@+id/imageButton_like"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_like_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/shape_circle"
         android:backgroundTint="@color/gray7"
-        android:src="@drawable/ic_heart"
         app:layout_constraintBottom_toBottomOf="@id/imageview_friend_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageview_friend_profile" />
+        app:layout_constraintTop_toTopOf="@id/imageview_friend_profile">
+
+        <ImageView
+            android:id="@+id/imageButton_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_heart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textview_friend_name"
@@ -153,7 +164,7 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/white"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="@id/imageButton_like"
+        app:layout_constraintEnd_toEndOf="@id/layout_like_button"
         app:layout_constraintStart_toStartOf="@id/textview_text_introduce"
         app:layout_constraintTop_toBottomOf="@id/textview_text_introduce"
         tools:ignore="HardcodedText"
@@ -286,10 +297,10 @@
             tools:ignore="HardcodedText" />
 
         <ImageView
-            android:id="@+id/imageview_friend_like"
+            android:id="@+id/imageview_friend_prefer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/textview_friend_like"
+            app:layout_constraintBottom_toTopOf="@id/textview_friend_prefer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_text_friend_like"
@@ -297,7 +308,7 @@
             tools:background="@drawable/img_prefer_geuluteogi" />
 
         <TextView
-            android:id="@+id/textview_friend_like"
+            android:id="@+id/textview_friend_prefer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -305,14 +316,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageview_friend_like"
+            app:layout_constraintTop_toBottomOf="@id/imageview_friend_prefer"
             tools:ignore="HardcodedText"
             tools:text="아이스 아메리카노" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/button_start"
+        android:id="@+id/button_chat_start"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="30dp"

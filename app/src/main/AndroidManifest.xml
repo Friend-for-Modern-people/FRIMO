@@ -46,6 +46,7 @@
         <activity android:name=".ui.MainActivity" />
 
         <!-- Chatting -->
+        <activity android:name=".ui.SetCharacterActivity" />
         <activity
             android:name=".ui.ChattingActivity"
             android:windowSoftInputMode="adjustResize" />

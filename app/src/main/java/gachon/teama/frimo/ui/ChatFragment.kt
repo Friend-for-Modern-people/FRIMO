@@ -30,7 +30,8 @@ class ChatFragment : Fragment() {
 
         super.onResume()
 
-        var experience: Boolean = !(database.userDao().getRecentlyChatCharacterId() == 0 && database.userDao().getRecentlyChatDate().equals(""))
+        // 참고) 대화를 한 적이 없는 경우 최근 캐릭터 id는 99
+        var experience: Boolean = !(database.userDao().getRecentlyChatCharacterId() == 99)
 
         if (experience) { // If there is a character the user has talked to recently
 

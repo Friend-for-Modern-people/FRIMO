@@ -14,6 +14,6 @@ interface FriendDAO {
     @Delete
     fun delete(friend: Friend)
 
-    @Query("SELECT * FROM Friend") // 테이블의 모든 캐릭터를 가져와라
-    fun getAll(): List<Friend>
+    @Query("SELECT * FROM Friend") // 테이블의 모든 친구 정보를 가져와라
+    fun getFriendList(): List<Friend>
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentChatBinding
 
@@ -34,6 +35,13 @@ class ChatFragment : Fragment() {
         var experience: Boolean = !(database.userDao().getRecentlyChatCharacterId() == 99)
 
         if (experience) { // If there is a character the user has talked to recently
+
+            val recently_talk: Friend = database.friendDao().getFriend(database.userDao().getRecentlyChatCharacterId())
+
+            // Setting information in layout
+            binding.imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
+            binding.textviewRecentlyTalkFriendName.text = recently_talk.name
+            binding.textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
 
         } else {
             binding.layoutRecentlyTalk.visibility = View.GONE

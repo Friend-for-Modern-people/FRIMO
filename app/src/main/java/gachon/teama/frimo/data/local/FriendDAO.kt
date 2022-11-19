@@ -19,4 +19,9 @@ interface FriendDAO {
 
     @Query("SELECT * FROM Friend WHERE id = :id") // Get specific friend information
     fun getFriend(id: Int): Friend
+
+    // Update recently chat character id
+    @Query("UPDATE Friend Set `like` = :like where id =:id")
+    fun updateFriendLike(id: Int, like: Boolean): Void
+
 }

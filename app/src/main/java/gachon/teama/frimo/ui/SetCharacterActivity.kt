@@ -19,24 +19,28 @@ class SetCharacterActivity :
 
         initScreen()
 
-        // When back button clicked
-        binding.buttonBack.setOnClickListener {
-            finish()
+        with(binding){
+
+            // When back button clicked
+            buttonBack.setOnClickListener {
+                finish()
+            }
+
+            // When like button clicked
+            layoutLikeButton.setOnClickListener {
+
+                recently_talk_friend.like = !recently_talk_friend.like // Update like
+                setLike() // Update screen
+                database.friendDao().updateFriendLike(recently_talk_friend.id, recently_talk_friend.like) // Update DB
+
+            }
+
+            // When chat start button clicked
+            buttonChatStart.setOnClickListener {
+                startNextActivity(ChattingActivity::class.java)
+            }
+
         }
-
-        binding.layoutLikeButton.setOnClickListener {
-
-            // Todo: like 반대로 update
-            //  DB에 update
-            //  화면 update
-
-        }
-
-        // When chat start button clicked
-        binding.buttonChatStart.setOnClickListener {
-            startNextActivity(ChattingActivity::class.java)
-        }
-
 
     }
 

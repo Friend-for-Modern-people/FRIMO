@@ -14,13 +14,12 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:background="@drawable/shape_corners_3"
-        android:backgroundTint="@color/purple1"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_character3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/img_recommendation_geuluteogi" />
 
     <TextView
         android:id="@+id/textview_recommend_friend"
@@ -28,7 +27,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_corners_3"
         android:backgroundTint="@color/gray3"
-        android:gravity="center_vertical"
         android:padding="5dp"
         android:text="추천 친구"
         android:textColor="@color/white"

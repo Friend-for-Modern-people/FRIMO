@@ -34,16 +34,16 @@
                 app:layout_constraintEnd_toStartOf="@id/button_search"
                 app:layout_constraintTop_toTopOf="@id/button_search" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/button_search"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
                 android:adjustViewBounds="true"
+                android:background="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="@id/imageview_logo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imageview_logo"
-                app:srcCompat="@drawable/ic_search" />
+                app:layout_constraintTop_toTopOf="@id/imageview_logo" />
 
             <LinearLayout
                 android:id="@+id/textview_recommend"
@@ -87,74 +87,79 @@
                 app:layout_constraintTop_toBottomOf="@id/textview_recommend"
                 tools:listitem="@layout/view_friends_recommend" />
 
-            <TextView
-                android:id="@+id/textview_recently_talk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="최근 대화 나눈 친구"
-                android:textColor="@color/white"
-                android:textSize="17dp"
-                app:layout_constraintStart_toStartOf="@id/imageview_logo"
-                app:layout_constraintTop_toBottomOf="@id/recyclerview_recommend_friend"
-                tools:ignore="HardcodedText" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/layout_recently_talk"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/shape_border_575757"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="@id/button_search"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
-                app:layout_constraintTop_toBottomOf="@id/textview_recently_talk">
-
-                <ImageView
-                    android:id="@+id/imageview_recently_talk_character"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/img_character1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_recommend_friend">
 
                 <TextView
-                    android:id="@+id/textview_recently_talk_character_name"
+                    android:id="@+id/textview_recently_talk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:text="이름"
+                    android:text="최근 대화 나눈 친구"
                     android:textColor="@color/white"
                     android:textSize="17dp"
-                    app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
-                    app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText" />
 
-                <TextView
-                    android:id="@+id/textview_when_talked"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:text="날짜"
-                    android:textColor="@color/gray5"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
-                    app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name"
-                    tools:ignore="HardcodedText" />
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/shape_border_575757">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="12dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_detail"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/imageview_recently_talk_character"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:background="@drawable/img_character1" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/textview_recently_talk_character_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/white"
+                        android:textSize="17dp"
+                        app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
+                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText"
+                        tools:text="따뜻한 그루터기씨" />
+
+                    <TextView
+                        android:id="@+id/textview_when_talked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/gray5"
+                        android:textSize="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_character"
+                        app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_character_name"
+                        tools:ignore="HardcodedText"
+                        tools:text="22.11.19." />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="12dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_detail"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textview_set_character_theme"
@@ -274,24 +279,15 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:src="@drawable/ic_detail"
-                app:layout_constraintBottom_toBottomOf="@id/textview_friend_recommend"
-                app:layout_constraintEnd_toEndOf="@id/button_search"
-                app:layout_constraintTop_toTopOf="@id/textview_friend_recommend"
-                app:layout_constraintVertical_bias="0.5" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_friend"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/button_search"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_friend_recommend"
                 tools:listitem="@layout/view_friends" />
 

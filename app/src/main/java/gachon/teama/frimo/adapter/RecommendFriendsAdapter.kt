@@ -1,5 +1,6 @@
 package gachon.teama.frimo.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Friend
+import gachon.teama.frimo.ui.SetCharacterActivity
 
-class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adapter<RecommendFriendsAdapter.ViewHolder>() {
+class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) :
+    RecyclerView.Adapter<RecommendFriendsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -20,9 +23,6 @@ class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) : Recycler
             textView = view.findViewById(R.id.textview_recommend_friend)
             imageView = view.findViewById(R.id.imageView_recommend_friend)
             imageView.clipToOutline = true // 이미지를 배경에 맞게 자르기
-
-            // Define click listener for the ViewHolder's View.
-
         }
     }
 
@@ -35,8 +35,14 @@ class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) : Recycler
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = dataSet[position].name
         viewHolder.imageView.setImageResource(dataSet[position].img_recommendation)
+
+        // View click listener
+        viewHolder.imageView.setOnClickListener {
+            val intent = Intent(it.context, SetCharacterActivity::class.java)
+            intent.putExtra("id", position + 1) // 배열은 0부터 시작
+            it.context.startActivity(intent)
+        }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 }

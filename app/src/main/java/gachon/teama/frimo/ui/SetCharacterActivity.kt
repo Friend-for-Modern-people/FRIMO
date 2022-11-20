@@ -15,7 +15,7 @@ class SetCharacterActivity :
     override fun initAfterBinding() {
 
         database = AppDatabase.getInstance(this@SetCharacterActivity)!!
-        recently_talk_friend = database.friendDao().getFriend(database.userDao().getRecentlyChatFriendId())
+        recently_talk_friend = database.friendDao().getFriend(intent.getIntExtra("id",1))
 
         initScreen()
 

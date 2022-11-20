@@ -31,10 +31,12 @@ class ChatFragment : Fragment() {
 
         // When recently talk friend layout clicked
         binding.layoutRecentlyTalkFriend.setOnClickListener {
-            startActivity(Intent(requireContext(), SetCharacterActivity::class.java))
+            val intent = Intent(it.context, SetCharacterActivity::class.java)
+            intent.putExtra("id", database.userDao().getRecentlyChatFriendId())
+            startActivity(intent)
         }
 
-        with(binding){
+        with(binding) {
 
             // Set recommend friend recyclerview
             recyclerviewRecommendFriend.setHasFixedSize(true)
@@ -54,9 +56,9 @@ class ChatFragment : Fragment() {
 
         if (experience) {
 
-            val recently_talk = friend[database.userDao().getRecentlyChatFriendId()]
+            val recently_talk = friend[database.userDao().getRecentlyChatFriendId() - 1] // 배열은 0부터 시작
 
-            with(binding){
+            with(binding) {
 
                 // Setting information in layout
                 imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
@@ -70,7 +72,7 @@ class ChatFragment : Fragment() {
         }
     }
 
-    private fun initVariable(){
+    private fun initVariable() {
         binding = FragmentChatBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
         friend = database.friendDao().getFriendList() as ArrayList

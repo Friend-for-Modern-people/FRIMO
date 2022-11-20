@@ -32,11 +32,11 @@ interface UserDAO {
     fun updateRecentlyChatDate(date: Date) : Void
 
     // Get recently chat character id
-    @Query("Select recently_chat_character_id from User")
-    fun getRecentlyChatCharacterId() : Int
+    @Query("Select recently_chat_friend_id from User")
+    fun getRecentlyChatFriendId() : Int
 
     // Update recently chat character id
-    @Query("UPDATE User Set recently_chat_character_id = :character_id")
-    fun updateRecentlyChatCharacterId(character_id: Int) : Void
+    @Query("UPDATE User Set recently_chat_friend_id = :friend_id")
+    fun updateRecentlyChatFriendId(friend_id: Int) : Void
 
 }

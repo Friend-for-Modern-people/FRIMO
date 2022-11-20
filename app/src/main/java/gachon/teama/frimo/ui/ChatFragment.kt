@@ -19,15 +19,17 @@ class ChatFragment : Fragment() {
     // Database
     private lateinit var database: AppDatabase
 
+    // Friend
+    private lateinit var friend: ArrayList<Friend>
+
+    // RecyclerView
+    private lateinit var mAdapter: RecommendFriendsAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = FragmentChatBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
+        initVariable()
 
-        // Recyclerview
-        var friend = database.friendDao().getFriendList() as ArrayList
-        var mAdapter = RecommendFriendsAdapter(friend)
-
+        // When recently talk friend layout clicked
         binding.layoutRecentlyTalkFriend.setOnClickListener {
             startActivity(Intent(requireContext(), SetCharacterActivity::class.java))
         }
@@ -47,12 +49,12 @@ class ChatFragment : Fragment() {
 
         super.onResume()
 
-        // 참고) 대화를 한 적이 없는 경우 최근 캐릭터 id는 99
-        var experience: Boolean = !(database.userDao().getRecentlyChatCharacterId() == 99)
+        // 대화 경험 여부 (대화를 한 적이 없는 경우 최근 친구 id는 99)
+        var experience: Boolean = !(database.userDao().getRecentlyChatFriendId() == 99)
 
-        if (experience) { // If there is a character the user has talked to recently
+        if (experience) {
 
-            val recently_talk: Friend = database.friendDao().getFriend(database.userDao().getRecentlyChatCharacterId())
+            val recently_talk = friend[database.userDao().getRecentlyChatFriendId()]
 
             with(binding){
 
@@ -66,6 +68,13 @@ class ChatFragment : Fragment() {
         } else {
             binding.layoutRecentlyTalk.visibility = View.GONE
         }
+    }
+
+    private fun initVariable(){
+        binding = FragmentChatBinding.inflate(layoutInflater)
+        database = AppDatabase.getInstance(requireContext())!!
+        friend = database.friendDao().getFriendList() as ArrayList
+        mAdapter = RecommendFriendsAdapter(friend)
     }
 
 }

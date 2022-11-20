@@ -37,6 +37,9 @@ class SetCharacterActivity :
 
             // When chat start button clicked
             buttonChatStart.setOnClickListener {
+
+                // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
+
                 startNextActivity(ChattingActivity::class.java)
             }
 

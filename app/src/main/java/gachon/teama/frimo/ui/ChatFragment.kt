@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import gachon.teama.frimo.adapter.RecommendFriendsAdapter
 import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentChatBinding
@@ -23,8 +24,19 @@ class ChatFragment : Fragment() {
         binding = FragmentChatBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
 
+        // Recyclerview
+        var friend = database.friendDao().getFriendList() as ArrayList
+        var mAdapter = RecommendFriendsAdapter(friend)
+
         binding.layoutRecentlyTalkFriend.setOnClickListener {
             startActivity(Intent(requireContext(), SetCharacterActivity::class.java))
+        }
+
+        with(binding){
+
+            // Set recommend friend recyclerview
+            recyclerviewRecommendFriend.setHasFixedSize(true)
+            recyclerviewRecommendFriend.adapter = mAdapter
         }
 
         // Inflate the layout for this fragment

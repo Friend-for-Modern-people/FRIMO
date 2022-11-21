@@ -21,15 +21,14 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
             }
 
             // When the user wants to see the guide for question 1
-            buttonDetail1.setOnClickListener {
+            layoutNotice1.setOnClickListener {
 
-                if (layoutNotice1.isShown) { // If the layout is showing
-                    layoutNotice1.visibility = View.GONE
+                if (layoutNotice1Detail.isShown) { // If the layout is showing
+                    layoutNotice1Detail.visibility = View.GONE
                     buttonDetail1.animate().rotation(0f).setDuration(100).start()
-                }
-                else { // If the layout isn't showing
+                } else { // If the layout isn't showing
                     buttonDetail1.animate().rotation(90f).setDuration(100).start()
-                    layoutNotice1.visibility = View.VISIBLE
+                    layoutNotice1Detail.visibility = View.VISIBLE
 
                     // Todo: 서버에서 앱 기능 개선 관련 공지 받아오기
                 }
@@ -37,14 +36,13 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
             }
 
             // When the user wants to see the guide for question 2
-            buttonDetail2.setOnClickListener {
+            layoutNotice2.setOnClickListener {
 
-                if (layoutNotice2.isShown) { // If the layout is showing
-                    layoutNotice2.visibility = View.GONE
+                if (layoutNotice2Detail.isShown) { // If the layout is showing
+                    layoutNotice2Detail.visibility = View.GONE
                     buttonDetail2.animate().rotation(0f).setDuration(100).start()
-                }
-                else { // If the layout isn't showing
-                    layoutNotice2.visibility = View.VISIBLE
+                } else { // If the layout isn't showing
+                    layoutNotice2Detail.visibility = View.VISIBLE
                     buttonDetail2.animate().rotation(90f).setDuration(100).start()
 
                     // Todo: 서버에서 일기장 생성 관련 이슈 관련 공지 받아오기

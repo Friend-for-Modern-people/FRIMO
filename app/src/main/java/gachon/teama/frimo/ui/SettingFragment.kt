@@ -45,7 +45,25 @@ class SettingFragment : Fragment(){
 
         // When logout button clicked
         binding.buttonLogout.setOnClickListener {
-            // Todo: logout view 띄우기
+//            AlertDialog.Builder(it.context)
+//                .setView(R.layout.view_popup_logout)
+//                .show()
+//                .also{
+//                    alertDialog ->
+//                    if (alertDialog == null){
+//                        return@also
+//                    }
+//
+//                    val cancel = alertDialog.findViewById<TextView>(R.id.textview_text_cancel)?.text
+//                    val logout = alertDialog.findViewById<TextView>(R.id.textview_text_logout)?.text
+//
+//                    cancel?.set
+//
+//                }
+
+            LogoutPopupFragment().show(requireActivity().getSupportFragmentManager(), "tag")
+
+
         }
 
         // Inflate the layout for this fragment

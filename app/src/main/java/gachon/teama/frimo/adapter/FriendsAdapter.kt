@@ -35,8 +35,7 @@ class FriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adap
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView_name.text = dataSet[position].name
-        // Todo: tag 설정
-
+        viewHolder.textview_tag.text = dataSet[position].tag
         viewHolder.imageView_friend.setImageResource(dataSet[position].img_theme)
 
         // View click listener

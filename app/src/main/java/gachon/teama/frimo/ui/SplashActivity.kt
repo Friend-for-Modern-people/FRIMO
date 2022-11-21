@@ -59,7 +59,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "아이스 아메리카노",
                     img_prefer = R.drawable.img_prefer_geuluteogi,
                     img_recommendation = R.drawable.img_recommendation_geuluteogi,
-                    img_theme = R.drawable.img_theme_geuluteogi
+                    img_theme = R.drawable.img_theme_geuluteogi,
+                    tag = "#따뜻함 #포근"
                 )
             )
 
@@ -82,7 +83,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "따뜻한 온돌",
                     img_prefer = R.drawable.img_prefer_halmae,
                     img_recommendation = R.drawable.img_recommendation_halmae,
-                    img_theme = R.drawable.img_theme_halmae
+                    img_theme = R.drawable.img_theme_halmae,
+                    tag = "#따뜻함 #친숙함"
                 )
             )
 
@@ -105,7 +107,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "엿",
                     img_prefer = R.drawable.img_prefer_seonbi,
                     img_recommendation = R.drawable.img_recommendation_seonbi,
-                    img_theme = R.drawable.img_theme_seonbi
+                    img_theme = R.drawable.img_theme_seonbi,
+                    tag = "#친숙함 #존경"
                 )
             )
 
@@ -128,7 +131,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "전기 충전기",
                     img_prefer = R.drawable.img_prefer_human,
                     img_recommendation = R.drawable.img_recommendation_human,
-                    img_theme = R.drawable.img_theme_human
+                    img_theme = R.drawable.img_theme_human,
+                    tag = "#차분 #따뜻함"
                 )
             )
 
@@ -151,7 +155,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "나비 넥타이",
                     img_prefer = R.drawable.img_prefer_gentleman,
                     img_recommendation = R.drawable.img_recommendation_gentleman,
-                    img_theme = R.drawable.img_theme_gentleman
+                    img_theme = R.drawable.img_theme_gentleman,
+                    tag = "#차분 #따뜻함 #존경"
                 )
             )
 
@@ -172,7 +177,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "일렉트로닉 기타",
                     img_prefer = R.drawable.img_prefer_enfp,
                     img_recommendation = R.drawable.img_recommendation_enfp,
-                    img_theme = R.drawable.img_theme_enfp
+                    img_theme = R.drawable.img_theme_enfp,
+                    tag = "#친숙함"
                 )
             )
 
@@ -193,7 +199,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     prefer = "테니스",
                     img_prefer = R.drawable.img_prefer_chinggu,
                     img_recommendation = R.drawable.img_recommendation_chinggu,
-                    img_theme = R.drawable.img_theme_chinggu
+                    img_theme = R.drawable.img_theme_chinggu,
+                    tag = "#따뜻함 #친숙함"
                 )
             )
 

@@ -18,7 +18,8 @@ data class Friend (
     var prefer : String, // What character prefers
     var img_prefer : Int, // (Image) What character prefers
     var img_recommendation : Int, // 오늘의 추천 캐릭터에서 보여줄 이미지
-    var img_theme : Int // 캐릭터 테마에서 보여줄 이미지
+    var img_theme : Int, // 캐릭터 테마에서 보여줄 이미지
+    var tag: String
 ) {
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 }

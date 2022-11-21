@@ -21,39 +21,39 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
             }
 
             // When the user wants to see the guide for question 1
-            buttonDetail1.setOnClickListener {
+            layoutGuide1.setOnClickListener {
 
-                if (layoutGuide1.isShown) { // If the layout is showing
-                    layoutGuide1.visibility = View.GONE
+                if (layoutGuide1Detail.isShown) { // If the layout is showing
+                    layoutGuide1Detail.visibility = View.GONE
                     buttonDetail1.animate().rotation(0f).setDuration(100).start()
                 } else { // If the layout isn't showing
-                    layoutGuide1.visibility = View.VISIBLE
+                    layoutGuide1Detail.visibility = View.VISIBLE
                     buttonDetail1.animate().rotation(90f).setDuration(100).start()
                 }
 
             }
 
             // When the user wants to see the guide for question 2
-            buttonDetail2.setOnClickListener {
+            layoutGuide2.setOnClickListener {
 
-                if (layoutGuide2.isShown) { // If the layout is showing
-                    layoutGuide2.visibility = View.GONE
+                if (layoutGuide2Detail.isShown) { // If the layout is showing
+                    layoutGuide2Detail.visibility = View.GONE
                     buttonDetail2.animate().rotation(0f).setDuration(100).start()
                 } else { // If the layout isn't showing
-                    layoutGuide2.visibility = View.VISIBLE
+                    layoutGuide2Detail.visibility = View.VISIBLE
                     buttonDetail2.animate().rotation(90f).setDuration(100).start()
                 }
 
             }
 
             // When the user wants to see the guide for question 3
-            buttonDetail3.setOnClickListener {
+            layoutGuide3.setOnClickListener {
 
-                if (layoutGuide3.isShown) { // If the layout is showing
-                    layoutGuide3.visibility = View.GONE
+                if (layoutGuide3Detail.isShown) { // If the layout is showing
+                    layoutGuide3Detail.visibility = View.GONE
                     buttonDetail3.animate().rotation(0f).setDuration(100).start()
                 } else { // If the layout isn't showing
-                    layoutGuide3.visibility = View.VISIBLE
+                    layoutGuide3Detail.visibility = View.VISIBLE
                     buttonDetail3.animate().rotation(90f).setDuration(100).start()
                 }
 

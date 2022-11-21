@@ -6,8 +6,7 @@ import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivitySetCharacterBinding
 
-class SetCharacterActivity :
-    BaseActivity<ActivitySetCharacterBinding>(ActivitySetCharacterBinding::inflate) {
+class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivitySetCharacterBinding::inflate) {
 
     private lateinit var database: AppDatabase
     private lateinit var recently_talk_friend: Friend

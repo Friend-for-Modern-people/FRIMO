@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="@id/textview_text_help"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_guide"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textview_text_help"
+        app:layout_constraintTop_toTopOf="@id/textview_text_guide"
         app:srcCompat="@drawable/ic_back" />
 
     <TextView
-        android:id="@+id/textview_text_help"
+        android:id="@+id/textview_text_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -29,48 +29,60 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/textview_text_question1"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_guide1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="30dp"
-        android:text="프리모는 어떤 앱인가요?"
-        android:textColor="@color/white"
-        android:textSize="17dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_back"
-        tools:ignore="HardcodedText" />
-
-    <ImageView
-        android:id="@+id/button_detail_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/ic_detail"
-        app:layout_constraintBottom_toBottomOf="@id/textview_text_question1"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textview_text_question1" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_guide">
 
-    <View
-        android:id="@+id/boundary1"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/gray6"
-        app:layout_constraintEnd_toEndOf="@id/button_detail_1"
-        app:layout_constraintStart_toStartOf="@id/textview_text_question1"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_question1" />
+        <TextView
+            android:id="@+id/textview_text_question1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:text="프리모는 어떤 앱인가요?"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/button_detail_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/layout_guide_1"
+        android:id="@+id/layout_guide1_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/button_detail_1"
-        app:layout_constraintStart_toStartOf="@id/textview_text_question1"
-        app:layout_constraintTop_toBottomOf="@id/boundary1">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide1">
 
         <TextView
             android:layout_width="match_parent"
@@ -88,48 +100,58 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textview_text_question2"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_guide2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:text="일기장이 생성이 안되어 있어요"
-        android:textColor="@color/white"
-        android:textSize="17dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_guide_1"
-        tools:ignore="HardcodedText" />
-
-    <ImageView
-        android:id="@+id/button_detail_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/ic_detail"
-        app:layout_constraintBottom_toBottomOf="@id/textview_text_question2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textview_text_question2" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide1_detail">
 
-    <View
-        android:id="@+id/boundary2"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/gray6"
-        app:layout_constraintEnd_toEndOf="@id/button_detail_2"
-        app:layout_constraintStart_toStartOf="@id/textview_text_question2"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_question2" />
+        <TextView
+            android:id="@+id/textview_text_question2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:text="일기장이 생성이 안되어 있어요"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/button_detail_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/layout_guide_2"
+        android:id="@+id/layout_guide2_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/button_detail_2"
-        app:layout_constraintStart_toStartOf="@id/textview_text_question2"
-        app:layout_constraintTop_toBottomOf="@id/boundary2">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide2">
 
         <TextView
             android:layout_width="match_parent"
@@ -147,51 +169,59 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textview_text_question3"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_guide3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:text="질문 목록"
-        android:textColor="@color/white"
-        android:textSize="17dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_guide_2"
-        tools:ignore="HardcodedText" />
-
-    <ImageView
-        android:id="@+id/button_detail_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/ic_detail"
-        app:layout_constraintBottom_toBottomOf="@id/textview_text_question3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textview_text_question3" />
-
-    <View
-        android:id="@+id/boundary3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/gray6"
-        app:layout_constraintEnd_toEndOf="@id/button_detail_3"
-        app:layout_constraintStart_toStartOf="@id/textview_text_question3"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_question3" />
-
-    <LinearLayout
-        android:id="@+id/layout_guide_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/button_detail_3"
-        app:layout_constraintStart_toStartOf="@id/textview_text_question3"
-        app:layout_constraintTop_toBottomOf="@id/boundary3">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide2_detail">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:text="질문 목록"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/button_detail_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_guide3_detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_guide3">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:text="조만간 업데이트 하겠습니다 :)"

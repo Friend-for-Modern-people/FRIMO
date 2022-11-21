@@ -29,9 +29,14 @@ class ChatFragment : Fragment() {
 
         initVariable()
 
+        // When my best friend button clicked
+        binding.buttonMyBestFriend.setOnClickListener {
+            startActivity(Intent(requireContext(), MyBestFriendActivity::class.java))
+        }
+
         // When recently talk friend layout clicked
         binding.layoutRecentlyTalkFriend.setOnClickListener {
-            val intent = Intent(it.context, SetCharacterActivity::class.java)
+            val intent = Intent(requireContext(), SetCharacterActivity::class.java)
             intent.putExtra("id", database.userDao().getRecentlyChatFriendId())
             startActivity(intent)
         }

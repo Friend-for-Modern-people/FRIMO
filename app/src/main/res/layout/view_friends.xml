@@ -18,7 +18,7 @@
             android:layout_marginStart="20dp"
             android:textColor="@color/white"
             android:textSize="17dp"
-            app:layout_constraintBottom_toTopOf="@id/textview_tag"
+            app:layout_constraintBottom_toTopOf="@id/textview_friend_tag"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
@@ -26,7 +26,7 @@
             tools:text="친절한 그루터기씨" />
 
         <TextView
-            android:id="@+id/textview_tag"
+            android:id="@+id/textview_friend_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -40,6 +40,7 @@
             tools:text="#따뜻함 #포근" />
 
         <ImageView
+            android:id="@+id/imageview_friend"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="5dp"

@@ -1,6 +1,5 @@
 package gachon.teama.frimo.ui
 
-import android.os.Bundle
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.databinding.ActivityMainBinding

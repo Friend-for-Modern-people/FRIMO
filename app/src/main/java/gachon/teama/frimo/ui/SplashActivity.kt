@@ -28,7 +28,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
             if (database.userDao().getNickname() != null) {
                 startNextActivity(MainActivity::class.java)
             } else {
-                startNextActivity(LoginActivity::class.java)
+                startNextActivity(OnboardingActivity::class.java)
             }
 
         }, 3000)

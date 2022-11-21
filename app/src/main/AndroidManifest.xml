@@ -40,6 +40,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.OnboardingActivity" />
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.AuthorityActivity" />
         <activity android:name=".ui.SetNicknameActivity" />

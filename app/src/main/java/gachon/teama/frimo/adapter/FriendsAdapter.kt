@@ -42,7 +42,7 @@ class FriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adap
         // View click listener
         viewHolder.imageView_friend.setOnClickListener {
             val intent = Intent(it.context, SetCharacterActivity::class.java)
-            intent.putExtra("id", position + 1) // 배열은 0부터 시작
+            intent.putExtra("id", dataSet[position].id)
             it.context.startActivity(intent)
         }
     }

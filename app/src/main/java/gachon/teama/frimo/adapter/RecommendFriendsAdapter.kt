@@ -23,6 +23,13 @@ class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) :
             textView = view.findViewById(R.id.textview_recommend_friend)
             imageView = view.findViewById(R.id.imageView_recommend_friend)
             imageView.clipToOutline = true // 이미지를 배경에 맞게 자르기
+
+            // View click listener
+            view.setOnClickListener {
+                val intent = Intent(it.context, SetCharacterActivity::class.java)
+                intent.putExtra("id", adapterPosition + 1) // 0부터 시작하기 때문
+                it.context.startActivity(intent)
+            }
         }
     }
 
@@ -35,13 +42,6 @@ class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = dataSet[position].name
         viewHolder.imageView.setImageResource(dataSet[position].img_recommendation)
-
-        // View click listener
-        viewHolder.imageView.setOnClickListener {
-            val intent = Intent(it.context, SetCharacterActivity::class.java)
-            intent.putExtra("id", position + 1) // 배열은 0부터 시작
-            it.context.startActivity(intent)
-        }
     }
 
     override fun getItemCount() = dataSet.size

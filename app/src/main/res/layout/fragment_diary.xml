@@ -112,6 +112,7 @@
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
+
         </LinearLayout>
 
         <View
@@ -125,6 +126,7 @@
             app:layout_constraintTop_toBottomOf="@id/textview_diary" />
 
         <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -34,10 +34,8 @@
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/button_find"
@@ -71,11 +69,13 @@
             android:id="@+id/edittext_search"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginVertical="10dp"
             android:background="@android:color/transparent"
             android:hint="대화내용 검색"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
             android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/textview_text_cancel"
             app:layout_constraintStart_toEndOf="@id/button_search"
             app:layout_constraintTop_toTopOf="parent"

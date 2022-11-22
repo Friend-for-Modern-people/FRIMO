@@ -2,18 +2,18 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/chatting"
-        android:title="채팅"
-        android:icon="@drawable/ic_temp"
+        android:id="@+id/home"
+        android:title="홈"
+        android:icon="@drawable/ic_menu_home_unselect"
         tools:ignore="HardcodedText" />
     <item
         android:id="@+id/diary"
         android:title="일기장"
-        android:icon="@drawable/ic_temp"
+        android:icon="@drawable/ic_menu_diary_unselect"
         tools:ignore="HardcodedText" />
     <item
         android:id="@+id/setting"
-        android:title="환경설정"
-        android:icon="@drawable/ic_temp"
+        android:title="설정"
+        android:icon="@drawable/ic_menu_setting_unselect"
         tools:ignore="HardcodedText" />
 </menu>

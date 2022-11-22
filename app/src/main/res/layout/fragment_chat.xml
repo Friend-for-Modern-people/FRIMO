@@ -168,9 +168,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/shape_border_fac883"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
                 android:text="차분"
-                android:textColor="@color/gray5"
+                android:textColor="@color/skin"
                 android:textSize="12dp"
+                app:layout_constraintEnd_toStartOf="@id/textview_theme2"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
                 app:layout_constraintTop_toBottomOf="@id/textview_text_set_friend_theme"
                 tools:ignore="HardcodedText" />
@@ -179,11 +183,14 @@
                 android:id="@+id/textview_theme2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="사투리"
+                android:layout_marginStart="10dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
+                android:text="친숙함"
                 android:textColor="@color/gray5"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
+                app:layout_constraintEnd_toStartOf="@id/textview_theme3"
                 app:layout_constraintStart_toEndOf="@id/textview_theme1"
                 app:layout_constraintTop_toTopOf="@id/textview_theme1"
                 tools:ignore="HardcodedText" />
@@ -192,13 +199,14 @@
                 android:id="@+id/textview_theme3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/shape_border_fac883"
-                android:padding="3dp"
+                android:layout_marginStart="10dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
                 android:text="따뜻함"
-                android:textColor="@color/skin"
+                android:textColor="@color/gray5"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
+                app:layout_constraintEnd_toStartOf="@id/textview_theme4"
                 app:layout_constraintStart_toEndOf="@id/textview_theme2"
                 app:layout_constraintTop_toTopOf="@id/textview_theme1"
                 tools:ignore="HardcodedText" />
@@ -207,8 +215,10 @@
                 android:id="@+id/textview_theme4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="팩폭"
+                android:layout_marginStart="10dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
+                android:text="존경"
                 android:textColor="@color/gray5"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
@@ -239,9 +249,9 @@
                     android:id="@+id/textview_friend_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="2"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
-                    tools:text="5" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -252,12 +262,13 @@
                     tools:ignore="HardcodedText" />
 
                 <TextView
+                    android:id="@+id/textview_friend_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="차분한"
                     android:textColor="@color/skin"
                     android:textSize="15dp"
-                    tools:ignore="HardcodedText"
-                    tools:text="따뜻한" />
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="wrap_content"

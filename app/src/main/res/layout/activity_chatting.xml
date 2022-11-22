@@ -55,7 +55,7 @@
         android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@id/button_search"
@@ -71,7 +71,8 @@
             android:id="@+id/edittext_search"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:hint="검색"
+            android:background="@android:color/transparent"
+            android:hint="대화내용 검색"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
             android:textSize="17dp"
@@ -161,7 +162,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/view_send_data"
+        android:id="@+id/layout_send_data"
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:background="@drawable/shape_corners_top_30"
@@ -169,14 +170,15 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="30dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <Button
+        <ImageButton
             android:id="@+id/button_album"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/pink1"
+            android:src="@drawable/ic_album"
             app:layout_constraintEnd_toStartOf="@id/button_camera"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -193,12 +195,13 @@
             app:layout_constraintTop_toBottomOf="@id/button_album"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_camera"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/green1"
+            android:src="@drawable/ic_camera"
             app:layout_constraintEnd_toStartOf="@id/button_voice"
             app:layout_constraintStart_toEndOf="@id/button_album"
             app:layout_constraintTop_toTopOf="@id/button_album" />

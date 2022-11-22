@@ -2,9 +2,11 @@ package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentSettingBinding
@@ -28,6 +30,23 @@ class SettingFragment : Fragment(){
         binding = FragmentSettingBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
 
+        clickViewEvents()
+
+        // Inflate the layout for this fragment
+        return binding.root
+    }
+
+    override fun onResume() {
+
+        super.onResume()
+
+        // Set user nickname
+        binding.textviewNickname.text = database.userDao().getNickname()
+    }
+
+    // 뷰 클릭 이벤트 정의
+    private fun clickViewEvents() {
+
         // When change nickname button clicked
         binding.buttonChangeNickname.setOnClickListener {
             startActivity(Intent(requireContext(), ChangeNicknameActivity::class.java))
@@ -45,36 +64,15 @@ class SettingFragment : Fragment(){
 
         // When logout button clicked
         binding.buttonLogout.setOnClickListener {
-//            AlertDialog.Builder(it.context)
-//                .setView(R.layout.view_popup_logout)
-//                .show()
-//                .also{
-//                    alertDialog ->
-//                    if (alertDialog == null){
-//                        return@also
-//                    }
-//
-//                    val cancel = alertDialog.findViewById<TextView>(R.id.textview_text_cancel)?.text
-//                    val logout = alertDialog.findViewById<TextView>(R.id.textview_text_logout)?.text
-//
-//                    cancel?.set
-//
-//                }
+            Log.d("logout", "help...me..")
+            val dialog = LogoutPopupFragment()
+            // 알림창이 띄워져있는 동안 배경 클릭 막기
+            dialog.isCancelable = false
+            dialog.show(activity?.supportFragmentManager!!, "ConfirmDialog")
 
-            LogoutPopupFragment().show(requireActivity().getSupportFragmentManager(), "tag")
-
-
+//            dialog.show(this.supportFragmentManager, "ConfirmDialog")
         }
-
-        // Inflate the layout for this fragment
-        return binding.root
     }
 
-    override fun onResume() {
 
-        super.onResume()
-
-        // Set user nickname
-        binding.textviewNickname.text = database.userDao().getNickname()
-    }
 }

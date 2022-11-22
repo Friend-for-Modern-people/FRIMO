@@ -9,7 +9,6 @@ import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.entities.User
 
 @Database(entities = [Friend::class, User::class], version = 1)
-@TypeConverters(Converter::class)   // Date <-> Long 변환을 위함, RoomDB Date 지원 X
 
 /* 추상 클래스 */
 abstract class AppDatabase: RoomDatabase() {

@@ -1,5 +1,6 @@
 package gachon.teama.frimo.ui
 
+import android.content.Intent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Friend
@@ -39,7 +40,10 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
 
                 // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
 
-                startNextActivity(ChattingActivity::class.java)
+                // Start chatting activity
+                var intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
+                intent.putExtra("id", recently_talk_friend.id)
+                startActivity(intent)
             }
 
         }

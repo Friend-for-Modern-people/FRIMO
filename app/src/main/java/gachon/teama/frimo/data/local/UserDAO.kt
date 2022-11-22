@@ -29,7 +29,7 @@ interface UserDAO {
 
     // Update recently chat date
     @Query("UPDATE User Set recently_chat_date = :date")
-    fun updateRecentlyChatDate(date: Date) : Void
+    fun updateRecentlyChatDate(date: String) : Void
 
     // Get recently chat character id
     @Query("Select recently_chat_friend_id from User")

@@ -25,11 +25,11 @@ class FilteredDiaryFragment : Fragment() {
     private fun setClickListener() {
 
         binding.layoutFilter1Detail.setOnClickListener {
-
+            startActivity(Intent(requireContext(), FilteredDetailDiaryActivity::class.java))
         }
 
         binding.layoutFilter2Detail.setOnClickListener {
-
+            startActivity(Intent(requireContext(), FilteredDetailDiaryActivity::class.java))
         }
 
         // When filter1 diary1 clicked
@@ -56,5 +56,10 @@ class FilteredDiaryFragment : Fragment() {
             startActivity(Intent(requireContext(), DiaryActivity::class.java))
         }
 
+    }
+
+    private fun setDiary() {
+        // Todo: 서버에서 data 가져와 RoomDB에 저장
+        //  필터에 맞게 diary 셋팅
     }
 }

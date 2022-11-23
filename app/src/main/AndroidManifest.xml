@@ -54,6 +54,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Diary -->
+        <activity android:name=".ui.DiaryActivity" />
 
         <!-- Setting  -->
         <activity android:name=".ui.ChangeNicknameActivity" />

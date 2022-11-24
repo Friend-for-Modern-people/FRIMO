@@ -11,6 +11,15 @@ import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlin.collections.ArrayList
 
+/***
+ * @see MainActivity
+ * @see DiaryFragment
+ * @see FilteredDetailDiaryActivity
+ * @see DiaryActivity
+ * MainActivity - DiaryFragment frame에 부착되어
+ * 필터링 된 일기를 더 보기 위해 FilteredDetailDiaryActivity를 호출하고
+ * 일기를 자세히 보기 위해 DiaryActivity 호출함
+ */
 class FilteredDiaryFragment : Fragment() {
 
     // Binding
@@ -21,10 +30,8 @@ class FilteredDiaryFragment : Fragment() {
 
     // Diary
     private lateinit var diaryList: ArrayList<Diary>
-    private lateinit var diary1: Diary // filter1 diary1
-    private lateinit var diary2: Diary // filter1 diary2
-    private lateinit var diary3: Diary // filter2 diary1
-    private lateinit var diary4: Diary // filter2 diary2
+    private lateinit var filter1Diary: ArrayList<Diary>
+    private lateinit var filter2Diary: ArrayList<Diary>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -40,11 +47,21 @@ class FilteredDiaryFragment : Fragment() {
     private fun setClickListener() {
 
         binding.layoutFilter1Detail.setOnClickListener {
-            startActivity(Intent(requireContext(), FilteredDetailDiaryActivity::class.java))
+
+            // Intent로 필터링된 diary 넣어 전달
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "필터1")
+            intent.putExtra("filteredDiary", filter1Diary)
+            startActivity(intent)
         }
 
         binding.layoutFilter2Detail.setOnClickListener {
-            startActivity(Intent(requireContext(), FilteredDetailDiaryActivity::class.java))
+
+            // Intent로 필터링된 diary 넣어 전달
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "필터2")
+            intent.putExtra("filteredDiary", filter2Diary)
+            startActivity(intent)
         }
 
         // When filter1 diary1 clicked
@@ -52,7 +69,7 @@ class FilteredDiaryFragment : Fragment() {
 
             // Intent로 diary id 넣어 전달
             val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary1.id)
+            intent.putExtra("id", filter1Diary[0].id)
             startActivity(intent)
 
         }
@@ -62,7 +79,7 @@ class FilteredDiaryFragment : Fragment() {
 
             // Intent로 diary id 넣어 전달
             val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary2.id)
+            intent.putExtra("id", filter1Diary[1].id)
             startActivity(intent)
 
         }
@@ -72,7 +89,7 @@ class FilteredDiaryFragment : Fragment() {
 
             // Intent로 diary id 넣어 전달
             val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary3.id)
+            intent.putExtra("id", filter2Diary[0].id)
             startActivity(intent)
 
         }
@@ -82,7 +99,7 @@ class FilteredDiaryFragment : Fragment() {
 
             // Intent로 diary id 넣어 전달
             val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary4.id)
+            intent.putExtra("id", filter2Diary[1].id)
             startActivity(intent)
 
         }
@@ -91,33 +108,30 @@ class FilteredDiaryFragment : Fragment() {
 
     private fun setDiary() {
 
-        // 전체 diary 셋팅
+        // diary 필터링
         getDiaryFromServer()
+        filteringDiary()
 
-        // Todo: 필터에 맞게 diary 셋팅
-        diary1 = diaryList[0]
-        diary2 = diaryList[1]
-        diary3 = diaryList[2]
-        diary4 = diaryList[3]
-
-        // 화면 setting
+        // 필터링된 다이어리를 화면에 setting
         with(binding) {
 
+            // Todo: diary 이미지 셋팅
+
             // Filter1 Diary1 셋팅
-            textviewFilter1Diary1Date.text = diary1.created
-            textviewFilter1Diary1Sentiment.text = diary1.sentiment
+            textviewFilter1Diary1Date.text = filter1Diary[0].created
+            textviewFilter1Diary1Sentiment.text = filter1Diary[0].sentiment
 
             // Filter1 Diary2 셋팅
-            textviewFilter1Diary2Date.text = diary2.created
-            textviewFilter1Diary2Sentiment.text = diary2.sentiment
+            textviewFilter1Diary2Date.text = filter1Diary[1].created
+            textviewFilter1Diary2Sentiment.text = filter1Diary[1].sentiment
 
             // Filter2 Diary1 셋팅
-            textviewFilter2Diary1Date.text = diary3.created
-            textviewFilter2Diary1Sentiment.text = diary3.sentiment
+            textviewFilter2Diary1Date.text = filter2Diary[0].created
+            textviewFilter2Diary1Sentiment.text = filter2Diary[0].sentiment
 
             // Filter2 Diary2 셋팅
-            textviewFilter2Diary2Date.text = diary4.created
-            textviewFilter2Diary2Sentiment.text = diary4.sentiment
+            textviewFilter2Diary2Date.text = filter2Diary[1].created
+            textviewFilter2Diary2Sentiment.text = filter2Diary[1].sentiment
 
         }
 
@@ -168,6 +182,13 @@ class FilteredDiaryFragment : Fragment() {
         // RoomDB에 저장된 모든 diary 가져오기
         diaryList = database.diaryDao().getDiaryList() as ArrayList
 
+    }
+
+    private fun filteringDiary() {
+
+        // Todo: 필터에 맞게 diary 셋팅
+        filter1Diary = diaryList
+        filter2Diary = diaryList
     }
 
 

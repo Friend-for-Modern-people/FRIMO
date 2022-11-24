@@ -11,13 +11,13 @@ import gachon.teama.frimo.adapter.FriendsAdapter
 import gachon.teama.frimo.adapter.RecommendFriendsAdapter
 import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.databinding.FragmentChatBinding
+import gachon.teama.frimo.databinding.FragmentHomeBinding
 import java.util.function.Predicate
 
-class ChatFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     // Binding
-    private lateinit var binding: FragmentChatBinding
+    private lateinit var binding: FragmentHomeBinding
 
     // Database
     private lateinit var database: AppDatabase
@@ -44,7 +44,7 @@ class ChatFragment : Fragment() {
     }
 
     private fun initVariable() {
-        binding = FragmentChatBinding.inflate(layoutInflater)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
         friend = database.friendDao().getFriendList() as ArrayList
         recommendFriendAdapter = RecommendFriendsAdapter(friend)

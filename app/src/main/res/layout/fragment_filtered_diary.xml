@@ -370,7 +370,7 @@
                         tools:ignore="HardcodedText" />
 
                     <TextView
-                        android:id="@+id/textview_filter2_diary2_sentiment2"
+                        android:id="@+id/textview_filter2_diary2_sentiment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"

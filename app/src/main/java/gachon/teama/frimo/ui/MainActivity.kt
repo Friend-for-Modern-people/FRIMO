@@ -9,7 +9,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun initAfterBinding() {
 
         // 최초 실행시 보이는 fragment
-        supportFragmentManager.beginTransaction().replace(R.id.frame, ChatFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame, HomeFragment()).commit()
 
         initNavigationBar()
 
@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     R.id.home -> { // Home
 
                         // Fragment 변경
-                        supportFragmentManager.beginTransaction().replace(R.id.frame, ChatFragment()).commit()
+                        supportFragmentManager.beginTransaction().replace(R.id.frame, HomeFragment()).commit()
 
                         // 아이콘 변경
 //                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_select)

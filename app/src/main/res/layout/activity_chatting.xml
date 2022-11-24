@@ -218,12 +218,13 @@
             app:layout_constraintTop_toBottomOf="@id/button_camera"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_voice"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/skyblue1"
+            android:src="@drawable/ic_mike"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/button_camera"
             app:layout_constraintTop_toTopOf="@id/button_album" />

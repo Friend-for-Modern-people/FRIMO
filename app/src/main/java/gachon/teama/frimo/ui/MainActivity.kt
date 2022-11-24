@@ -25,9 +25,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         supportFragmentManager.beginTransaction().replace(R.id.frame, HomeFragment()).commit()
 
                         // 아이콘 변경
-//                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_select)
-//                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_unselect)
-//                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_unselect)
+                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_select)
+                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_unselect)
+                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_unselect)
                     }
                     R.id.diary -> { // Diary
 
@@ -35,9 +35,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         supportFragmentManager.beginTransaction().replace(R.id.frame, DiaryFragment()).commit()
 
                         // 아이콘 변경
-//                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_unselect)
-//                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_select)
-//                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_unselect)
+                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_unselect)
+                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_select)
+                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_unselect)
                     }
                     else -> { // Setting
 
@@ -45,9 +45,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         supportFragmentManager.beginTransaction().replace(R.id.frame, SettingFragment()).commit()
 
                         // 아이콘 변경
-//                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_unselect)
-//                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_unselect)
-//                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_select) // 선택한 이미지 변경
+                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_unselect)
+                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_unselect)
+                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_select) // 선택한 이미지 변경
                     }
                 }
                 true

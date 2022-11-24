@@ -26,11 +26,11 @@ class DiaryFragment : Fragment(){
         binding.textviewNickname1.text = database.userDao().getNickname()
         binding.textviewNickname2.text = database.userDao().getNickname()
 
-        // Todo: 일기장 개수 설정
+        // 일기장 개수 설정
+        binding.textviewDiaryCount.text = database.diaryDao().getDiaryCount().toString()
 
         // 최초 실행시 보이는 fragment
         childFragmentManager.beginTransaction().replace(R.id.frame, FilteredDiaryFragment()).commit()
-
 
         // Inflate the layout for this fragment
         return binding.root

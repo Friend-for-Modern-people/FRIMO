@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textview_today_sentiment"
+            android:id="@+id/textview_text_today_sentiment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -59,18 +59,19 @@
             tools:ignore="HardcodedText" />
 
         <TextView
+            android:id="@+id/textview_sentiment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@drawable/shape_corners_3"
             android:backgroundTint="@color/pink1"
             android:padding="5dp"
-            android:text="# 감정"
+            android:text="#감정"
             android:textColor="@color/white"
             android:textSize="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/textview_today_sentiment"
-            app:layout_constraintStart_toEndOf="@id/textview_today_sentiment"
-            app:layout_constraintTop_toTopOf="@id/textview_today_sentiment"
+            app:layout_constraintBottom_toBottomOf="@id/textview_text_today_sentiment"
+            app:layout_constraintStart_toEndOf="@id/textview_text_today_sentiment"
+            app:layout_constraintTop_toTopOf="@id/textview_text_today_sentiment"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -86,7 +87,7 @@
             android:src="@drawable/img_diary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_sentiment" />
+            app:layout_constraintTop_toBottomOf="@id/textview_text_today_sentiment" />
 
         <TextView
             android:id="@+id/textview_diary_title"

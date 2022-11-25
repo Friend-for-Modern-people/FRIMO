@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-// Todo: 이미지, 키워드, 댓글 추가 방법 알아볼 것
+// Todo: 키워드, 댓글 추가 방법 알아볼 것
 @Entity
 @Parcelize
 data class Diary(

@@ -11,6 +11,11 @@ import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.ui.DiaryActivity
 
+/**
+ * @see gachon.teama.frimo.ui.FilteredDetailDiaryActivity
+ *
+ * FilteredDetailDiaryActivity에서 diary 보여주는데 사용
+ */
 class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
     RecyclerView.Adapter<FilteredDiaryAdapter.ViewHolder>() {
 
@@ -40,7 +45,8 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
         viewHolder.textView_date.text = dataSet[position].created
         viewHolder.textView_sentiment.text = dataSet[position].sentiment
 
-        // Todo: 이미지 셋팅
+        // 이미지 배경 셋팅
+        // Fixme: 함수로 간단하게 할 수 없을까?
         when(dataSet[position].sentiment){
             "# 기쁨" -> {
                 viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.pleasure))

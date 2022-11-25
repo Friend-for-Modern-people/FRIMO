@@ -5,10 +5,10 @@ import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.ActivityFilteredDetailDiaryBinding
 
-/***
+/**
  * @see MainActivity
  * @see DiaryFragment
- * @see FilteredDiaryFragment
+ * @see gachon.teama.frimo.adapter.FilteredDiaryAdapter
  *
  * 뒤로가기 버튼을 클릭하여 MainActivity로 돌아감
  * RecyclerView에 FilteredDiaryAapter를 사용

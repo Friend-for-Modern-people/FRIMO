@@ -14,17 +14,17 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="17dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/textview_date"
+            app:layout_constraintBottom_toBottomOf="@id/textview_date"/>
 
         <TextView
             android:id="@+id/textview_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="날짜"
             android:textColor="@color/white"
             android:textSize="17dp"
@@ -39,22 +39,21 @@
             android:id="@+id/button_share"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="30dp"
             android:src="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/textview_date"
+            app:layout_constraintBottom_toBottomOf="@id/textview_date"/>
 
         <TextView
             android:id="@+id/textview_text_today_sentiment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:text="오늘의 감정"
             android:textColor="@color/white"
             android:textSize="17dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/button_back"
             app:layout_constraintTop_toBottomOf="@id/button_back"
             tools:ignore="HardcodedText" />
 
@@ -76,68 +75,63 @@
 
         <ImageView
             android:id="@+id/imageView_diary"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="15dp"
             android:adjustViewBounds="true"
             android:background="@drawable/shape_corners_3"
             android:backgroundTint="@color/pink1"
             android:scaleType="centerCrop"
             android:src="@drawable/img_diary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/button_share"
+            app:layout_constraintStart_toStartOf="@id/textview_text_today_sentiment"
             app:layout_constraintTop_toBottomOf="@id/textview_text_today_sentiment" />
 
         <TextView
             android:id="@+id/textview_diary_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"
             android:text="제목"
             android:textColor="@color/white"
             android:textSize="22dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/imageView_diary"
+            app:layout_constraintStart_toStartOf="@id/imageView_diary"
             app:layout_constraintTop_toBottomOf="@id/imageView_diary"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textview_diary_contents"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="15dp"
             android:text="내용"
             android:textColor="@color/white"
             android:textSize="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/textview_diary_title"
+            app:layout_constraintStart_toStartOf="@id/textview_diary_title"
             app:layout_constraintTop_toBottomOf="@id/textview_diary_title"
             tools:ignore="HardcodedText" />
 
         <View
             android:id="@+id/boundary1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="20dp"
             android:background="@color/gray6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/textview_diary_contents"
+            app:layout_constraintStart_toStartOf="@id/textview_diary_contents"
             app:layout_constraintTop_toBottomOf="@id/textview_diary_contents" />
 
         <TextView
             android:id="@+id/textview_today_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="오늘의 키워드"
             android:textColor="@color/white"
             android:textSize="17dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/boundary1"
             app:layout_constraintTop_toBottomOf="@id/boundary1"
             tools:ignore="HardcodedText" />
 
@@ -145,12 +139,11 @@
             android:id="@+id/textview_keyword1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="#키워드1"
             android:textColor="@color/skin"
             android:textSize="15dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/textview_today_keyword"
             app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
             tools:ignore="HardcodedText" />
 
@@ -159,12 +152,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:text="#키워드2"
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/textview_keyword1"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            app:layout_constraintTop_toTopOf="@id/textview_keyword1"
+            app:layout_constraintBottom_toBottomOf="@id/textview_keyword1"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -172,12 +165,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:text="#키워드3"
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/textview_keyword2"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            app:layout_constraintTop_toTopOf="@id/textview_keyword2"
+            app:layout_constraintBottom_toBottomOf="@id/textview_keyword2"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -185,35 +178,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:text="#키워드4"
             android:textColor="@color/skin"
             android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/textview_keyword3"
-            app:layout_constraintTop_toBottomOf="@id/textview_today_keyword"
+            app:layout_constraintTop_toTopOf="@id/textview_keyword3"
+            app:layout_constraintBottom_toBottomOf="@id/textview_keyword3"
             tools:ignore="HardcodedText" />
 
         <View
             android:id="@+id/boundary2"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="20dp"
             android:background="@color/gray6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/boundary1"
+            app:layout_constraintStart_toStartOf="@id/boundary1"
             app:layout_constraintTop_toBottomOf="@id/textview_keyword1" />
 
         <TextView
             android:id="@+id/textview_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="댓글 갯수"
+            android:text="댓글 1개"
             android:textColor="@color/gray5"
             android:textSize="12dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/boundary2"
             app:layout_constraintTop_toBottomOf="@id/boundary2"
             tools:ignore="HardcodedText" />
 
@@ -221,11 +212,10 @@
             android:id="@+id/imageview_who_commented"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/textview_comment_count"
             app:layout_constraintTop_toBottomOf="@id/textview_comment_count"
             tools:src="@drawable/img_profile_geuluteogi" />
 
@@ -246,12 +236,11 @@
             android:id="@+id/textview_when_commented"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:text="댓글 작성 날짜"
             android:textColor="@color/white"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_who_commented"
-            app:layout_constraintStart_toEndOf="@id/imageview_who_commented"
+            app:layout_constraintStart_toStartOf="@id/textview_who_commented"
             app:layout_constraintTop_toBottomOf="@id/textview_who_commented"
             tools:ignore="HardcodedText" />
 
@@ -259,7 +248,6 @@
             android:id="@+id/textview_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/shape_corners_3"
@@ -269,11 +257,10 @@
             android:textColor="@color/white"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/boundary2"
+            app:layout_constraintStart_toStartOf="@id/imageview_who_commented"
             app:layout_constraintTop_toBottomOf="@id/imageview_who_commented"
             tools:ignore="HardcodedText" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

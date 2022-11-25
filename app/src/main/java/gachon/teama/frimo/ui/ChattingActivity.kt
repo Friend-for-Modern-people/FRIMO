@@ -1,14 +1,11 @@
 package gachon.teama.frimo.ui
 
-import android.app.Activity
-import android.content.ContentValues
-import android.content.Intent
-import android.icu.text.SimpleDateFormat
-import android.net.Uri
-import android.os.Bundle
-import android.provider.MediaStore
+import android.content.Context
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.recyclerview.widget.*
 import com.google.firebase.database.*
 import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.base.BaseActivity
@@ -32,9 +29,9 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
     private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
 
-    //Cam&Gallery
-    private var DEFAULT_GALLERY_REQUEST_CODE = 1
-    private var TAKE_PICTURE = 1
+//    //Cam&Gallery
+//    private var DEFAULT_GALLERY_REQUEST_CODE = 1
+//    private var TAKE_PICTURE = 1
 
     override fun initAfterBinding() {
 
@@ -43,12 +40,13 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         // Todo: 카카오 로그인 구현시 카카오 토큰으로 변경해 채팅내역 가져오기
         userName = "namseunghyeon"
 
-        setEventListener()
+        setDatabaseListener()
         setRecyclerview()
+        setClickListener()
 
     }
 
-    private fun setEventListener() {
+    private fun setDatabaseListener() {
 
         // DatabaseReference child event listener
         myRef.child(userName).child("chat").addChildEventListener(object : ChildEventListener {
@@ -60,6 +58,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
                 // add chat data in adapter
                 mAdapter.addChat(chat)
+
+                Log.d("chat", chatList.toString())
 
                 // Update the chat window when you send a chat
                 binding.recyclerviewChatting.scrollToPosition(chatList.size - 1)
@@ -83,9 +83,6 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
         })
-
-        // Set click listener
-        setClickListener()
 
     }
 
@@ -114,12 +111,28 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             // When search button clicked (search layout에서 돋보기 버튼)
+            // Fixme: 채팅 내용 중 딱 한 개의 채팅만 존재하는 경우만 의도하는 대로 동작. 해결 필요
             buttonSearch.setOnClickListener {
 
-                var word = edittextSearch.text.toString()
+                // Keyboard 숨기기
+                hideKeyboard(it)
 
-                for (i in 1..chatList.size) {
-                    // Todo: 단어 찾기
+                var word = edittextSearch.text.toString()
+                var position: MutableList<Int> = mutableListOf()
+
+                // 찾는 단어의 위치들
+                for (i in 0..chatList.size - 1) {
+                    if (chatList[i].message.contains(word)) {
+                        position.add(i)
+
+                        val smoothScroller: RecyclerView.SmoothScroller by lazy {
+                            object : LinearSmoothScroller(this@ChattingActivity) {
+                                override fun getVerticalSnapPreference() = SNAP_TO_START
+                            }
+                        }
+                        smoothScroller.targetPosition = i
+                        recyclerviewChatting.layoutManager?.startSmoothScroll(smoothScroller)
+                    }
                 }
 
             }

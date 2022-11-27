@@ -1,6 +1,11 @@
 package gachon.teama.frimo.ui
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -29,6 +34,10 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
     private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
 
+    // STT
+    private lateinit var speechRecognizer: SpeechRecognizer
+    private lateinit var recognitionListener: RecognitionListener
+
 //    //Cam&Gallery
 //    private var DEFAULT_GALLERY_REQUEST_CODE = 1
 //    private var TAKE_PICTURE = 1
@@ -39,6 +48,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
         // Todo: 카카오 로그인 구현시 카카오 토큰으로 변경해 채팅내역 가져오기
         userName = "namseunghyeon"
+
+        // STT init
+        var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
 
         setDatabaseListener()
         setRecyclerview()
@@ -184,7 +198,9 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
             // When voice button clicked
             buttonVoice.setOnClickListener {
-
+                speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
+                speechRecognizer.setRecognitionListener(recognitionListener)
+                speechRecognizer.startListening(intent)
             }
 
         }
@@ -252,4 +268,72 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        val filename = sdf.format(System.currentTimeMillis())
 //        return "$filename.jpg"
 //    }
+
+//    STT
+    private fun setListener(){
+        recognitionListener = object: RecognitionListener{
+            override fun onReadyForSpeech(params: Bundle?) {
+                Toast.makeText(applicationContext,"Recording start", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onBeginningOfSpeech() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onRmsChanged(rmsdB: Float) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onBufferReceived(buffer: ByteArray?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onEndOfSpeech() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onError(error: Int) {
+                var message: String
+                when(error){
+                    SpeechRecognizer.ERROR_AUDIO ->
+                        message = "Audio Error"
+                    SpeechRecognizer.ERROR_CLIENT ->
+                        message = "Client Error"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ->
+                        message = "No permissions"
+                    SpeechRecognizer.ERROR_NETWORK ->
+                        message = "Network Error"
+                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT ->
+                        message = "Network TIMEOUT"
+                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY ->
+                        message = "Recognizer is busy"
+                    SpeechRecognizer.ERROR_SERVER ->
+                        message = "SERVER is weird"
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT ->
+                        message = "Speech Time Exceeded"
+                    else ->
+                        message = "Unknown Error"
+                }
+                Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResults(results: Bundle?) {
+                var matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (matches != null) {
+                    for(i in 0 until matches.size){
+                        binding.edittextChat.setText(matches[i])
+                    }
+                }
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onEvent(eventType: Int, params: Bundle?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+}
 }

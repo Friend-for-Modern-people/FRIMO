@@ -172,104 +172,77 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <!-- 기획 변경으로 다음 버젼에서 출시 -->
+        <ImageButton
+            android:id="@+id/button_album"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/pink1"
+            android:src="@drawable/ic_album"
+            app:layout_constraintEnd_toStartOf="@id/button_camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/button_album"-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:background="@drawable/shape_circle"-->
-<!--            android:backgroundTint="@color/pink1"-->
-<!--            android:src="@drawable/ic_album"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/button_camera"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="앨범"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_album"
+            app:layout_constraintStart_toStartOf="@id/button_album"
+            app:layout_constraintTop_toBottomOf="@id/button_album"
+            tools:ignore="HardcodedText" />
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:text="앨범"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="12dp"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/button_album"-->
-<!--            app:layout_constraintStart_toStartOf="@id/button_album"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/button_album"-->
-<!--            tools:ignore="HardcodedText" />-->
+        <ImageButton
+            android:id="@+id/button_camera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/green1"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintBottom_toBottomOf="@id/button_album"
+            app:layout_constraintEnd_toStartOf="@id/button_voice"
+            app:layout_constraintStart_toEndOf="@id/button_album"
+            app:layout_constraintTop_toTopOf="@id/button_album" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/button_camera"-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="@drawable/shape_circle"-->
-<!--            android:backgroundTint="@color/green1"-->
-<!--            android:src="@drawable/ic_camera"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/button_album"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/button_voice"-->
-<!--            app:layout_constraintStart_toEndOf="@id/button_album"-->
-<!--            app:layout_constraintTop_toTopOf="@id/button_album" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="카메라"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_camera"
+            app:layout_constraintStart_toStartOf="@id/button_camera"
+            app:layout_constraintTop_toBottomOf="@id/button_camera"
+            tools:ignore="HardcodedText" />
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:text="카메라"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="12dp"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/button_camera"-->
-<!--            app:layout_constraintStart_toStartOf="@id/button_camera"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/button_camera"-->
-<!--            tools:ignore="HardcodedText" />-->
+        <ImageButton
+            android:id="@+id/button_voice"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/skyblue1"
+            android:src="@drawable/ic_mike"
+            app:layout_constraintBottom_toBottomOf="@id/button_camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_camera"
+            app:layout_constraintTop_toTopOf="@id/button_camera" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/button_voice"-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="@drawable/shape_circle"-->
-<!--            android:backgroundTint="@color/skyblue1"-->
-<!--            android:src="@drawable/ic_mike"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/button_camera"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/button_camera"-->
-<!--            app:layout_constraintTop_toTopOf="@id/button_camera" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:text="음성메시지"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="12dp"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/button_voice"-->
-<!--            app:layout_constraintStart_toStartOf="@id/button_voice"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/button_voice"-->
-<!--            tools:ignore="HardcodedText" />-->
-
-
-                <ImageButton
-                    android:id="@+id/button_voice"
-                    android:layout_width="48dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/shape_circle"
-                    android:backgroundTint="@color/skyblue1"
-                    android:src="@drawable/ic_mike"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="음성메시지"
-                    android:textColor="@color/white"
-                    android:textSize="12dp"
-                    app:layout_constraintEnd_toEndOf="@id/button_voice"
-                    app:layout_constraintStart_toStartOf="@id/button_voice"
-                    app:layout_constraintTop_toBottomOf="@id/button_voice"
-                    tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="음성메시지"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/button_voice"
+            app:layout_constraintStart_toStartOf="@id/button_voice"
+            app:layout_constraintTop_toBottomOf="@id/button_voice"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

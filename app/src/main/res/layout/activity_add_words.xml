@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/textview_text_add_word"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textview_text_add_word" />
+
+    <TextView
+        android:id="@+id/textview_text_add_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="단어 추가"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_text_words_i_wrote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="내가 쓴 단어들"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@id/button_back"
+        app:layout_constraintTop_toBottomOf="@id/button_back"
+        tools:ignore="HardcodedText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_words_i_wrote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_words_i_wrote"
+        tools:listitem="@layout/view_word_i_wrote" />
+
+    <View
+        android:id="@+id/boundary"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray9"
+        app:layout_constraintEnd_toEndOf="@id/recyclerview_words_i_wrote"
+        app:layout_constraintStart_toStartOf="@id/recyclerview_words_i_wrote"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_words_i_wrote" />
+
+    <TextView
+        android:id="@+id/textview_what_words_like_to_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="어떤 단어를 추가할까요?"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@id/boundary"
+        app:layout_constraintTop_toBottomOf="@id/boundary"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/edittext_what_words_like_to_add"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_edittext"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="@id/boundary"
+        app:layout_constraintStart_toStartOf="@id/boundary"
+        app:layout_constraintTop_toBottomOf="@id/textview_what_words_like_to_add" />
+
+    <TextView
+        android:id="@+id/textview_text_what_emotion_did_you_feel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="어떤 감정을 느꼈나요?"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@id/edittext_what_words_like_to_add"
+        app:layout_constraintTop_toBottomOf="@id/edittext_what_words_like_to_add"
+        tools:ignore="HardcodedText" />
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/edittext_what_words_like_to_add"
+        app:layout_constraintStart_toStartOf="@id/edittext_what_words_like_to_add"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_what_emotion_did_you_feel">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+
+                <RadioButton
+                    android:id="@+id/button_pleasure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기쁨"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <RadioButton
+                    android:id="@+id/button_sadness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="슬픔"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <RadioButton
+                    android:id="@+id/button_anxiety"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="불안"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp">
+
+                <RadioButton
+                    android:id="@+id/button_wound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="상처"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <RadioButton
+                    android:id="@+id/button_embarrassment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="당황"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <RadioButton
+                    android:id="@+id/button_anger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="분노"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_button"
+        android:text="추가하기"
+        android:textColor="@color/gray4"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

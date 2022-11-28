@@ -1,5 +1,11 @@
 package gachon.teama.frimo.ui
 
+import android.graphics.drawable.BitmapDrawable
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
@@ -54,7 +60,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                 }
             }
 
-            // Todo: image가 있는 경우 image 셋팅
             // 기존 이미지에서 배경색 변경
             when (diary.sentiment) {
                 "# 기쁨" -> {
@@ -84,6 +89,42 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         // When back button clicked
         binding.buttonBack.setOnClickListener {
             finish()
+        }
+
+        // When share button clicked
+        binding.buttonShare.setOnClickListener {
+            // Todo: 일기 공유하기
+            showToast("추후 업데이트 예정입니다 :)")
+        }
+
+        // When detail button clicked
+        binding.buttonDetail.setOnClickListener {
+
+            // FixMe: startActivity로 부르는 방법이 없을까?
+            // 클릭시 팝업 윈도우 생성
+            val popupWindow = PopupWindow(it)
+            val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+            // 팝업으로 띄울 커스텀뷰를 설정하고
+            val view: View = inflater.inflate(R.layout.view_words_i_wrote, null)
+            popupWindow.contentView = view
+
+            // popup window 크기 설정
+            popupWindow.setWindowLayoutMode(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            // popup window 터치 되도록
+            popupWindow.isTouchable = true
+
+            // 포커스
+            popupWindow.isFocusable = true
+
+            // popup window 이외에도 터치되게 (터치시 팝업 닫기 위한 코드)
+            popupWindow.isOutsideTouchable = true
+            popupWindow.setBackgroundDrawable(BitmapDrawable())
+
+            // popup window 보여주기
+            popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+
         }
 
     }

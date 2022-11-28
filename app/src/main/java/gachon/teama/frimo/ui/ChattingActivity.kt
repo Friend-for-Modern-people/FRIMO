@@ -188,12 +188,14 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             // 기획 변경으로 다음 버젼에서 출시
             // When album button clicked
             buttonAlbum.setOnClickListener {
+                // Todo: Album
                 showToast("추후 업데이트 예정입니다 :)")
                 // startDefalultGalleryApp()
             }
 
             // When camera button clicked
             buttonCamera.setOnClickListener {
+                // Todo: Camera
                 showToast("추후 업데이트 예정입니다 :)")
 //                openCamera()
             }

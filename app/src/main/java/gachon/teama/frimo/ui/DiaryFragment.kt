@@ -50,6 +50,7 @@ class DiaryFragment : Fragment(){
 
         binding.buttonFilter.setOnClickListener {
 
+            // FixMe: startActivity로 부르는 방법이 없을까?
             // 클릭시 팝업 윈도우 생성
             val popupWindow = PopupWindow(it)
             val inflater = context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater

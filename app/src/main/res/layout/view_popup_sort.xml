@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="270dp"
-    android:backgroundTint="@color/gray3"
-    android:background="@drawable/shape_corners_top_30">
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corners_top_30"
+    android:backgroundTint="@color/gray3">
 
     <TextView
         android:id="@+id/textview_text_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginVertical="20dp"
         android:text="정렬"
         android:textColor="@color/white"
         android:textSize="17dp"
+        app:layout_constraintBottom_toTopOf="@id/button_sort_year"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -44,15 +45,14 @@
         android:layout_height="45dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/shape_border_button"
         android:text="월별 순"
         android:textColor="@color/gray6"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/button_sort_recent"
+        app:layout_constraintBottom_toBottomOf="@id/button_sort_year"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_sort_year"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_sort"
+        app:layout_constraintTop_toTopOf="@id/button_sort_year"
         app:layout_constraintVertical_chainStyle="packed"
         tools:ignore="HardcodedText" />
 
@@ -82,10 +82,10 @@
         android:text="최근 생성 순"
         android:textColor="@color/gray6"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/button_apply"
+        app:layout_constraintBottom_toBottomOf="@id/button_sort_sentiment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_sort_sentiment"
-        app:layout_constraintTop_toBottomOf="@id/button_sort_month"
+        app:layout_constraintTop_toTopOf="@id/button_sort_sentiment"
         tools:ignore="HardcodedText" />
 
     <Button
@@ -93,7 +93,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginVertical="20dp"
         android:background="@drawable/shape_button"
         android:text="확인"
         android:textColor="@color/gray4"
@@ -101,6 +101,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_sort_sentiment"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

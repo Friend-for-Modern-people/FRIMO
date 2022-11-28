@@ -1,10 +1,12 @@
 package gachon.teama.frimo.ui
 
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.PopupWindow
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
@@ -124,6 +126,14 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
             // popup window 보여주기
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+
+            // (popup window) when add button clicked
+            popupWindow.contentView.findViewById<ImageButton>(R.id.button_add).setOnClickListener {
+                startActivity(Intent(this, AddWordActivity::class.java))
+                popupWindow.dismiss()
+            }
+
+            // Todo: popup window recyclerview 셋팅
 
         }
 

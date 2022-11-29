@@ -26,9 +26,9 @@
         android:text="프리모에서는\n다음 권한을 사용하오니 허용해주세요"
         android:textColor="@color/white"
         android:textSize="17dp"
-        tools:ignore="HardcodedText"
         app:layout_constraintStart_toStartOf="@id/textview_text_hello"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_hello"/>
+        app:layout_constraintTop_toBottomOf="@id/textview_text_hello"
+        tools:ignore="HardcodedText" />
 
 
     <TextView
@@ -116,7 +116,6 @@
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
         android:textSize="12dp"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority2"
         tools:ignore="HardcodedText" />
@@ -150,7 +149,6 @@
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
         android:textSize="12dp"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority3"
         tools:ignore="HardcodedText" />
@@ -184,7 +182,6 @@
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
         android:textSize="12dp"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority4"
         tools:ignore="HardcodedText" />

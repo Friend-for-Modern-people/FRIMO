@@ -47,6 +47,7 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
 
         // 이미지 배경 셋팅
         // Fixme: 함수로 간단하게 할 수 없을까?
+        // Todo: Companion object 사용으로 줄여보기
         when(dataSet[position].sentiment){
             "# 기쁨" -> {
                 viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.pleasure))

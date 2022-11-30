@@ -8,15 +8,52 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
+import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
+import gachon.teama.frimo.data.remote.Words
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
 
     override fun initAfterBinding() {
-        // Todo: RoomDB에서 data 가져와 recyclerview 셋팅
+        setRecyclerview()
         setClickListener()
+    }
+
+    private fun setRecyclerview() {
+
+        // Todo: RoomDB에서 data 가져오기 (선행: 서버에서 data 가져오기)
+        val words: MutableList<Words> = mutableListOf()
+        words.add(Words(1, "사랑", 6))
+        words.add(Words(1, "슬퍼", 2))
+        words.add(Words(1, "놀라워", 5))
+        words.add(Words(1, "불안", 3))
+        words.add(Words(1, "분노", 1))
+        words.add(Words(1, "사랑", 6))
+        words.add(Words(1, "슬퍼", 2))
+        words.add(Words(1, "놀라워", 5))
+        words.add(Words(1, "불안", 3))
+        words.add(Words(1, "분노", 1))
+        words.add(Words(1, "사랑", 6))
+        words.add(Words(1, "슬퍼", 2))
+        words.add(Words(1, "놀라워", 5))
+        words.add(Words(1, "불안", 3))
+        words.add(Words(1, "분노", 1))
+
+        FlexboxLayoutManager(this).apply{
+            flexWrap = FlexWrap.WRAP
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+        }.let {
+            binding.recyclerviewWordsIWrote.layoutManager = it
+            binding.recyclerviewWordsIWrote.adapter = WordsAdapter(words as ArrayList)
+        }
+
     }
 
     private fun setClickListener() {
@@ -61,7 +98,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             // popup window 보여주기
             showAtLocation(v, Gravity.CENTER, 0, 0)
 
-            // Todo: 추가할 단어 배치
+            // 추가할 단어 배치
             val text = binding.edittextWordsLikeToAdd.text
             contentView.findViewById<TextView>(R.id.textview_text).text = "\"${text}\"를(을}\n추가 하시겠어요?"
 

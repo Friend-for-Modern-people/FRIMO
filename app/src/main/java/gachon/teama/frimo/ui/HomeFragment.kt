@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
 
     // RecyclerView
     private lateinit var recommendFriendAdapter: RecommendFriendsAdapter
-    private lateinit var friendsAdapter: FriendsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

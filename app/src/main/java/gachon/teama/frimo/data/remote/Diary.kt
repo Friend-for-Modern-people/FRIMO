@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 // Todo: 키워드, 댓글 추가 방법 알아볼 것
+// Todo: diary id Int type에서 Long type으로 변경
+// Todo: diary sentiment int type으로 변경
 @Entity
 @Parcelize
 data class Diary(

@@ -15,36 +15,31 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.Words
+import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
 
+    // Database
+    private lateinit var database: AppDatabase
+
     override fun initAfterBinding() {
+
+        database = AppDatabase.getInstance(DiaryActivity())!!
+
         setRecyclerview()
         setClickListener()
     }
 
     private fun setRecyclerview() {
 
-        // Todo: RoomDB에서 data 가져오기 (선행: 서버에서 data 가져오기)
-        val words: MutableList<Words> = mutableListOf()
-        words.add(Words(1, "사랑", 6))
-        words.add(Words(1, "슬퍼", 2))
-        words.add(Words(1, "놀라워", 5))
-        words.add(Words(1, "불안", 3))
-        words.add(Words(1, "분노", 1))
-        words.add(Words(1, "사랑", 6))
-        words.add(Words(1, "슬퍼", 2))
-        words.add(Words(1, "놀라워", 5))
-        words.add(Words(1, "불안", 3))
-        words.add(Words(1, "분노", 1))
-        words.add(Words(1, "사랑", 6))
-        words.add(Words(1, "슬퍼", 2))
-        words.add(Words(1, "놀라워", 5))
-        words.add(Words(1, "불안", 3))
-        words.add(Words(1, "분노", 1))
+        // 현재 보여지고 있는 diary가 어떤 것인지 받아오고
+        var id = intent.getIntExtra("id", 0)
 
+        // RoomDB에서 해당 diary에 작성된 단어 가져오기
+        val words = database.wordsDao().getWords(id)
+
+        // Set reyclerview
         FlexboxLayoutManager(this).apply{
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
@@ -110,6 +105,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             // When logout button clicked
             contentView.findViewById<TextView>(R.id.textview_text_add).setOnClickListener {
                 popupWindow.dismiss()
+                // Todo: RoomDB에 해당 내용 update
                 // Todo: 서버에 단어와 선택된 감정을 함께 전송
                 Toast.makeText(this@AddWordActivity, "추가되었습니다", Toast.LENGTH_SHORT).show()
                 finish()

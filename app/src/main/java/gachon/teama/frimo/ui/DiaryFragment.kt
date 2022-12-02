@@ -21,15 +21,33 @@ class DiaryFragment : Fragment(){
     // Database
     private lateinit var database: AppDatabase
 
+    /**
+     * @description - 생명주기 onCreateView
+     * @param - inflater(LayoutInflater)
+     * @param - container(ViewGroup)
+     * @param - savedInstanceState(Bundle)
+     * @return - v(View)
+     * @author - namsh1125
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = FragmentDiaryBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
-
+        initVariable()
         setScreen()
         setClickListener()
 
         return binding.root // Inflate the layout for this fragment
+    }
+
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable() {
+
+        binding = FragmentDiaryBinding.inflate(layoutInflater)
+        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**
@@ -70,7 +88,7 @@ class DiaryFragment : Fragment(){
      * @description - Filter button 클릭시 보여줄 PopupWindow 셋팅
      * @param - v(View) : 보여질 화면
      * @return - None
-     * @author - Nam Seung Hyeon
+     * @author - namsh1125
      */
     private fun showPopupwindow(v: View) {
 
@@ -96,7 +114,7 @@ class DiaryFragment : Fragment(){
     }
 
     /**
-     * @description - Server에 저장된 diary의 갯수 가져오기
+     * @description - Server에 유저가 작성한 diary의 갯수 받아오기
      * @param - None
      * @return - None
      * @author - namsh1125

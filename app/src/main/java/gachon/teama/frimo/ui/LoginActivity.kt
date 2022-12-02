@@ -1,27 +1,35 @@
 package gachon.teama.frimo.ui
 
 import android.content.Intent
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
 
-    // Binding
-    private lateinit var binding: ActivityLoginBinding
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    override fun initAfterBinding() {
+        setClickListener()
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
 
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        // Set login button click listener
         binding.buttonLogin.setOnClickListener{
             // Todo: Kakao login 구현
             //  내부 저장소에 관련 정보 저장
             startActivity(Intent(this, AuthorityActivity::class.java))
         }
-
     }
+
 }

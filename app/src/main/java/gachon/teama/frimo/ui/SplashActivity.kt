@@ -14,13 +14,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     // Database
     private lateinit var database: AppDatabase
 
-    // Friend list
-    private var friendList = ArrayList<Friend>()
-
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
 
-        initFriend()
+        setFriend()
 
+        // Todo: 카카오 로그인 구현 시 토큰 리프레쉬? 하는 코드 작성
         // Delay screen
         Handler(Looper.getMainLooper()).postDelayed({
 
@@ -35,10 +39,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     }
 
-    private fun initFriend(){
+    /**
+     * @description - 처음 앱을 설치하여 data가 없는 경우, 친구 정보 추가
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setFriend(){
 
         database = AppDatabase.getInstance(this@SplashActivity)!!
-        friendList = database.friendDao().getFriendList() as ArrayList
+        var friendList = database.friendDao().getFriendList() as ArrayList
 
         // Add data if there is no character information in roomDB
         if (friendList.isEmpty()) {
@@ -64,8 +74,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                 )
             )
 
-            Log.d("roomdb", "insert geuluteogi success")
-
             database.friendDao().insert(
                 Friend(
                     name = "복덕방 할매",
@@ -88,8 +96,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                 )
             )
 
-            Log.d("roomdb", "insert halmae success")
-
             database.friendDao().insert(
                 Friend(
                     name = "갓선비",
@@ -111,8 +117,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     tag = "#친숙함 #존경"
                 )
             )
-
-            Log.d("roomdb", "insert seonbi success")
 
             database.friendDao().insert(
                 Friend(
@@ -203,8 +207,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     tag = "#따뜻함 #친숙함"
                 )
             )
-
-            friendList = database.friendDao().getFriendList() as ArrayList
 
         }
 

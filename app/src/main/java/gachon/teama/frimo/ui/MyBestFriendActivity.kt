@@ -1,6 +1,5 @@
 package gachon.teama.frimo.ui
 
-import android.util.Log
 import gachon.teama.frimo.adapter.FriendsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Friend
@@ -13,51 +12,84 @@ class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityM
     // Database
     private lateinit var database: AppDatabase
 
-    // RecyclerView
-    private lateinit var mAdapter: FriendsAdapter
-
-    private lateinit var likeFriend: MutableList<Friend>
-
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
 
         initVariable()
+        setScreen()
+        setClickListener()
+        setRecyclerview()
+    }
 
-        // When back button clicked
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable(){
+        database = AppDatabase.getInstance(this@MyBestFriendActivity)!!
+    }
+
+    /**
+     * @description - 화면 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setScreen() {
+        binding.textviewBestFriendCount.text = getLikeFriend().size.toString()
+    }
+
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
+
+        // Set back button click listener
         binding.buttonBack.setOnClickListener {
             finish()
         }
-
-        with(binding) {
-
-            // Set number of my best friend
-            textviewBestFriendCount.text = likeFriend.size.toString()
-
-            // Set my best friend recyclerview
-            recyclerviewMyBestFriend.setHasFixedSize(true)
-            recyclerviewMyBestFriend.adapter = mAdapter
-        }
-
-
     }
 
-    private fun getLikeFriend() {
+    /**
+     * @description - Set recyclerview
+     * @see gachon.teama.frimo.adapter.FriendsAdapter
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setRecyclerview() {
+        binding.recyclerviewMyBestFriend.setHasFixedSize(true)
+        binding.recyclerviewMyBestFriend.adapter = FriendsAdapter(getLikeFriend())
+    }
 
-        likeFriend = database.friendDao().getFriendList().toMutableList()
+    /**
+     * @description - 좋아요 누른 친구 가져오기
+     * @param - None
+     * @return - friend(ArrayList<Friend>) : 좋아요 누른 친구
+     * @author - namsh1125
+     */
+    private fun getLikeFriend() : ArrayList<Friend> {
 
-        var unlikeFriend = Predicate<Friend> { friend: Friend ->
+        val likeFriend = database.friendDao().getFriendList().toMutableList()
+
+        val unlikeFriend = Predicate<Friend> { friend: Friend ->
             friend.like.equals(false)
         }
 
         likeFriend.removeIf(unlikeFriend)
 
-    }
+        return likeFriend as ArrayList
 
-    private fun initVariable(){
-
-        database = AppDatabase.getInstance(this@MyBestFriendActivity)!!
-
-        getLikeFriend()
-        mAdapter = FriendsAdapter(likeFriend as ArrayList)
     }
 
 }

@@ -33,8 +33,19 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     override fun initAfterBinding() {
 
+        initVariable()
         setScreen()
         setClickListener()
+    }
+
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable() {
+        id = intent.getIntExtra("id", 0)
     }
 
     /**
@@ -46,7 +57,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun setScreen() {
 
         // Get diary
-        id = intent.getIntExtra("id", 0)
         val diary = getDiary(id)
 
         with(binding) {
@@ -140,7 +150,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @description - Detail button 클릭시 보여줄 PopupWindow 셋팅
      * @param - v(View) : 보여질 화면
      * @return - None
-     * @author - Nam Seung Hyeon
+     * @author - namsh1125
      */
     private fun showPopupwindow(v: View) {
 

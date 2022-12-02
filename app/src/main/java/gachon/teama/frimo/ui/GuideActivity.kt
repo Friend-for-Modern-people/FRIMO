@@ -11,16 +11,32 @@ import gachon.teama.frimo.databinding.ActivityGuideBinding
 
 class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::inflate) {
 
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
+        setClickListener()
+    }
+
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
 
         with(binding){
 
-            // When back button clicked
+            // Set back button click listener
             buttonBack.setOnClickListener {
                 finish()
             }
 
-            // When the user wants to see the guide for question 1
+            // Set guide1 layout click listener
             layoutGuide1.setOnClickListener {
 
                 if (layoutGuide1Detail.isShown) { // If the layout is showing
@@ -30,10 +46,9 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
                     layoutGuide1Detail.visibility = View.VISIBLE
                     buttonDetail1.animate().rotation(90f).setDuration(100).start()
                 }
-
             }
 
-            // When the user wants to see the guide for question 2
+            // Set guide2 layout click listener
             layoutGuide2.setOnClickListener {
 
                 if (layoutGuide2Detail.isShown) { // If the layout is showing
@@ -43,10 +58,9 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
                     layoutGuide2Detail.visibility = View.VISIBLE
                     buttonDetail2.animate().rotation(90f).setDuration(100).start()
                 }
-
             }
 
-            // When the user wants to see the guide for question 3
+            // Set guide3 layout click listener
             layoutGuide3.setOnClickListener {
 
                 if (layoutGuide3Detail.isShown) { // If the layout is showing
@@ -56,10 +70,8 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
                     layoutGuide3Detail.visibility = View.VISIBLE
                     buttonDetail3.animate().rotation(90f).setDuration(100).start()
                 }
-
             }
 
         }
-
     }
 }

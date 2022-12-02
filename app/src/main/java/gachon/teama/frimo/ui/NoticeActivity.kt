@@ -11,16 +11,32 @@ import gachon.teama.frimo.databinding.ActivityNoticeBinding
 
 class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding::inflate) {
 
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
+        setClickListener()
+    }
+
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
 
         with(binding){
 
-            // When back button clicked
+            // Set back button click listener
             buttonBack.setOnClickListener {
                 finish()
             }
 
-            // When the user wants to see the guide for question 1
+            // Set layout(notice 1) click listener
             layoutNotice1.setOnClickListener {
 
                 if (layoutNotice1Detail.isShown) { // If the layout is showing
@@ -35,7 +51,7 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
 
             }
 
-            // When the user wants to see the guide for question 2
+            // Set layout(notice 2) click listener
             layoutNotice2.setOnClickListener {
 
                 if (layoutNotice2Detail.isShown) { // If the layout is showing
@@ -51,6 +67,5 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
             }
 
         }
-
     }
 }

@@ -30,54 +30,95 @@ class SettingFragment : Fragment(){
     // Database
     private lateinit var database: AppDatabase
 
+    /**
+     * @description - 생명주기 onCreateView
+     * @param - inflater(LayoutInflater)
+     * @param - container(ViewGroup)
+     * @param - savedInstanceState(Bundle)
+     * @return - v(View)
+     * @author - namsh1125
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        initVariable()
+        setClickListener()
+
+        return binding.root // Inflate the layout for this fragment
+    }
+
+    /**
+     * @description - 생명주기 onResume
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    override fun onResume() {
+
+        super.onResume()
+
+        // Set user nickname
+        binding.textviewNickname.text = database.userDao().getNickname()
+    }
+
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable() {
 
         binding = FragmentSettingBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
+    }
 
-        // When change nickname button clicked
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
+
+        // Set change nickname button click listener
         binding.buttonChangeNickname.setOnClickListener {
             startActivity(Intent(requireContext(), ChangeNicknameActivity::class.java))
         }
 
-        // When notice layout clicked
+        // Set notice layout click listener
         binding.layoutNotice.setOnClickListener {
             startActivity(Intent(requireContext(), NoticeActivity::class.java))
         }
 
-        // When guide layout clicked
+        // Set guide layout click listener
         binding.layoutGuide.setOnClickListener {
             startActivity(Intent(requireContext(), GuideActivity::class.java))
         }
 
-        // When logout button clicked
+        // Set logout button click listener
         binding.buttonLogout.setOnClickListener {
-            showLogoutPopup(it)
+            showPopupwindow(it)
         }
 
-        // Inflate the layout for this fragment
-        return binding.root
     }
 
-    private fun showLogoutPopup(v:View){
+    /**
+     * @description - Logout button 클릭시 보여줄 PopupWindow 셋팅
+     * @param - v(View) : 보여질 화면
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun showPopupwindow(v:View){
 
-        // 클릭시 팝업 윈도우 생성
         val popupWindow = PopupWindow(v)
         val inflater = context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         with(popupWindow){
 
-            // 팝업으로 띄울 커스텀뷰 설정
-            contentView = inflater.inflate(R.layout.view_popup_logout, null)
-
-            // popup window 크기 설정
-            setWindowLayoutMode(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-            // popup window 터치 되도록
-            isTouchable = true
-
-            // 포커스
-            isFocusable = true
+            contentView = inflater.inflate(R.layout.view_popup_logout, null) // 팝업으로 띄울 화면
+            setWindowLayoutMode(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) // popup window 크기 설정
+            isTouchable = true // popup window 터치 되도록
+            isFocusable = true // 포커스
 
             // popup window 이외에도 터치되게 (터치시 팝업 닫기 위한 코드)
             isOutsideTouchable = true
@@ -86,13 +127,14 @@ class SettingFragment : Fragment(){
             // popup window 보여주기
             showAtLocation(v, Gravity.CENTER, 0, 0)
 
-            // When cancel button clicked
+            // Set cancel button click listener
             contentView.findViewById<TextView>(R.id.textview_text_cancel).setOnClickListener {
                 popupWindow.dismiss()
             }
 
-            // When logout button clicked
+            // Set logout button click listener
             contentView.findViewById<TextView>(R.id.textview_text_logout).setOnClickListener {
+
                 popupWindow.dismiss()
                 // Todo: 로그아웃 구현
                 Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
@@ -103,11 +145,4 @@ class SettingFragment : Fragment(){
 
     }
 
-    override fun onResume() {
-
-        super.onResume()
-
-        // Set user nickname
-        binding.textviewNickname.text = database.userDao().getNickname()
-    }
 }

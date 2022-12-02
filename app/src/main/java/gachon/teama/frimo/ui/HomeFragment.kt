@@ -25,9 +25,14 @@ class HomeFragment : Fragment() {
     // Friend
     private lateinit var friend: ArrayList<Friend>
 
-    // RecyclerView
-    private lateinit var recommendFriendAdapter: RecommendFriendsAdapter
-
+    /**
+     * @description - 생명주기 onCreateView
+     * @param - inflater(LayoutInflater)
+     * @param - container(ViewGroup)
+     * @param - savedInstanceState(Bundle)
+     * @return - v(View)
+     * @author - namsh1125
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         initVariable()
@@ -37,26 +42,43 @@ class HomeFragment : Fragment() {
         return binding.root // Inflate the layout for this fragment
     }
 
+    /**
+     * @description - 생명주기 onResume
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun onResume() {
         super.onResume()
         setRecentlyTalkFriend()
     }
 
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun initVariable() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
         friend = database.friendDao().getFriendList() as ArrayList
-        recommendFriendAdapter = RecommendFriendsAdapter(friend)
     }
 
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun setClickListener(){
 
-        // When my best friend button clicked
+        // Set button(my best friend) click listener
         binding.buttonMyBestFriend.setOnClickListener {
             startActivity(Intent(requireContext(), MyBestFriendActivity::class.java))
         }
 
-        // When recently talk friend layout clicked
+        // Set layout(recently talk friend) click listener
         binding.layoutRecentlyTalkFriend.setOnClickListener {
             val intent = Intent(requireContext(), SetCharacterActivity::class.java)
             intent.putExtra("id", database.userDao().getRecentlyChatFriendId())
@@ -65,7 +87,7 @@ class HomeFragment : Fragment() {
 
         with(binding){
 
-            // When theme1(차분) clicked
+            // Set text(차분) click listener
             binding.textviewTheme1.setOnClickListener {
 
                 textviewFriendCount.text = getTheme1Friend().size.toString()
@@ -81,10 +103,9 @@ class HomeFragment : Fragment() {
                 textviewTheme3.setTextColor(resources.getColor(R.color.gray5))
                 textviewTheme4.background = null
                 textviewTheme4.setTextColor(resources.getColor(R.color.gray5))
-
             }
 
-            // When theme2(친숙함) clicked
+            // Set text(친숙함) click listener
             binding.textviewTheme2.setOnClickListener {
 
                 textviewFriendCount.text = getTheme2Friend().size.toString()
@@ -100,10 +121,9 @@ class HomeFragment : Fragment() {
                 textviewTheme3.setTextColor(resources.getColor(R.color.gray5))
                 textviewTheme4.background = null
                 textviewTheme4.setTextColor(resources.getColor(R.color.gray5))
-
             }
 
-            // When theme3(따뜻함) clicked
+            // Set text(따뜻함) click listener
             binding.textviewTheme3.setOnClickListener {
 
                 textviewFriendCount.text = getTheme3Friend().size.toString()
@@ -119,10 +139,9 @@ class HomeFragment : Fragment() {
                 textviewTheme3.setTextColor(resources.getColor(R.color.skin))
                 textviewTheme4.background = null
                 textviewTheme4.setTextColor(resources.getColor(R.color.gray5))
-
             }
 
-            // When theme4(존경) clicked
+            // Set text(존경) click listener
             binding.textviewTheme4.setOnClickListener {
 
                 textviewFriendCount.text = getTheme4Friend().size.toString()
@@ -142,22 +161,30 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * @description - Set recyclerview
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun setRecyclerview(){
 
-        with(binding) {
+        // Set recommend friend recyclerview
+        binding.recyclerviewRecommendFriend.setHasFixedSize(true)
+        binding.recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(friend)
 
-            // Set recommend friend recyclerview
-            recyclerviewRecommendFriend.setHasFixedSize(true)
-            recyclerviewRecommendFriend.adapter = recommendFriendAdapter
-
-            // Set friend recyclerview
-            recyclerviewFriend.setHasFixedSize(true)
-            recyclerviewFriend.adapter = FriendsAdapter(getTheme1Friend())
-
-        }
+        // Set friend recyclerview
+        binding.recyclerviewFriend.setHasFixedSize(true)
+        binding.recyclerviewFriend.adapter = FriendsAdapter(getTheme1Friend())
 
     }
 
+    /**
+     * @description - 화면에 최근에 대화한 친구 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun setRecentlyTalkFriend(){
 
         // 대화 경험 여부 (대화를 한 적이 없는 경우 최근 친구 id는 99)
@@ -167,20 +194,22 @@ class HomeFragment : Fragment() {
 
             val recently_talk = friend[database.userDao().getRecentlyChatFriendId() - 1] // 배열은 0부터 시작
 
-            with(binding) {
-
-                // Setting information in layout
-                imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
-                textviewRecentlyTalkFriendName.text = recently_talk.name
-                textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
-
-            }
+            // layout에 최근 대화 친구 셋팅
+            binding.imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
+            binding.textviewRecentlyTalkFriendName.text = recently_talk.name
+            binding.textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
 
         } else {
             binding.layoutRecentlyTalk.visibility = View.GONE
         }
     }
 
+    /**
+     * @description - '차분' 태그를 포함하는 친구만 추출
+     * @param - None
+     * @return - friend(ArrayList<Friend>) : '차분'의 태그를 포함하는 친구
+     * @author - namsh1125
+     */
     private fun getTheme1Friend() : ArrayList<Friend> {
 
         // Get friend
@@ -197,6 +226,12 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * @description - '친숙함' 태그를 포함하는 친구만 추출
+     * @param - None
+     * @return - friend(ArrayList<Friend>) : '친숙함'의 태그를 포함하는 친구
+     * @author - namsh1125
+     */
     private fun getTheme2Friend() : ArrayList<Friend> {
 
         // Get friend
@@ -213,6 +248,12 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * @description - '따뜻함' 태그를 포함하는 친구만 추출
+     * @param - None
+     * @return - friend(ArrayList<Friend>) : '따뜻함'의 태그를 포함하는 친구
+     * @author - namsh1125
+     */
     private fun getTheme3Friend() : ArrayList<Friend> {
 
         // Get friend
@@ -229,6 +270,12 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * @description - '존경' 태그를 포함하는 친구만 추출
+     * @param - None
+     * @return - friend(ArrayList<Friend>) : '존경'의 태그를 포함하는 친구
+     * @author - namsh1125
+     */
     private fun getTheme4Friend() : ArrayList<Friend> {
 
         // Get friend

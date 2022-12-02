@@ -66,17 +66,19 @@ class FilteredDetailDiaryActivity :
 
     /**
      * @description - Set recyclerview
+     * @see gachon.teama.frimo.adapter.FilteredDiaryAdapter
      * @param - None
      * @return - None
      * @author - namsh1125
      */
     private fun setRecyclerview() {
+
         binding.recyclerviewFilteredDiary.setHasFixedSize(true)
         binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(filteredDiary)
     }
 
     /**
-     * @description - 이전 화면에서 전달 받은 data 가져오기
+     * @description - 이전 화면에서 전달 받은 filtering된 diary 가져오기
      * @param - None
      * @return - None
      * @author - namsh1125

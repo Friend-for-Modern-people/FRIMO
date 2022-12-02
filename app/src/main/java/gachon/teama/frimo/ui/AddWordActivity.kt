@@ -41,10 +41,8 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      */
     private fun setRecyclerview() {
 
-        // 현재 보여지고 있는 diary가 어떤 것인지 이전 activity에서 받아오고
+        // 현재 보여지고 있는 diary가 어떤 것인지 이전 activity에서 받아오기
         val id = intent.getIntExtra("id", 0)
-
-        val words = getWords(id)
 
         // Set reyclerview
         FlexboxLayoutManager(this).apply {
@@ -53,7 +51,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             justifyContent = JustifyContent.FLEX_START
         }.let {
             binding.recyclerviewWordsIWrote.layoutManager = it
-            binding.recyclerviewWordsIWrote.adapter = WordsAdapter(words)
+            binding.recyclerviewWordsIWrote.adapter = WordsAdapter(getWords(id))
         }
 
     }
@@ -111,7 +109,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @description - Add button 클릭시 보여줄 PopupWindow 셋팅
      * @param - v(View) : 보여질 화면
      * @return - None
-     * @author - Nam Seung Hyeon
+     * @author - namsh1125
      */
     private fun showPopupwindow(v: View) {
 

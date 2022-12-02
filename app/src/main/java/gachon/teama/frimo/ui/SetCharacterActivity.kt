@@ -10,70 +10,118 @@ import gachon.teama.frimo.databinding.ActivitySetCharacterBinding
 class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivitySetCharacterBinding::inflate) {
 
     private lateinit var database: AppDatabase
-    private lateinit var recently_talk_friend: Friend
+    private lateinit var friend: Friend
 
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
 
+        initVariable()
+        setScreen()
+        setClickListener()
+    }
+
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable() {
+
         database = AppDatabase.getInstance(this@SetCharacterActivity)!!
-        recently_talk_friend = database.friendDao().getFriend(intent.getIntExtra("id",1))
 
-        initScreen()
+        // Get friend information
+        var id = intent.getIntExtra("id", 1)
+        friend = getFriend(id)
+    }
 
-        with(binding){
+    /**
+     * @description - 친구 정보 가져오기
+     * @param - id(Int) : 친구 id
+     * @return - friend(Friend) : 친구 정보
+     * @author - namsh1125
+     */
+    private fun getFriend(id: Int) : Friend {
+        return database.friendDao().getFriend(id)
+    }
 
-            // When back button clicked
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
+
+        with(binding) {
+
+            // Set back button click listener
             buttonBack.setOnClickListener {
                 finish()
             }
 
-            // When like button clicked
+            // Set like button click listener
             layoutLikeButton.setOnClickListener {
 
-                recently_talk_friend.like = !recently_talk_friend.like // Update like
+                friend.like = !friend.like // Update like
                 setLike() // Update screen
-                database.friendDao().updateFriendLike(recently_talk_friend.id, recently_talk_friend.like) // Update DB
-
+                database.friendDao().updateFriendLike(friend.id, friend.like) // Update DB
             }
 
-            // When chat start button clicked
+            // Set start button click listener
             buttonChatStart.setOnClickListener {
 
                 // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
 
                 // Start chatting activity
                 var intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
-                intent.putExtra("id", recently_talk_friend.id)
+                intent.putExtra("id", friend.id)
                 startActivity(intent)
             }
 
         }
-
     }
 
-    private fun initScreen() {
+    /**
+     * @description - 화면에 친구 정보 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setScreen() {
+
+        setLike()
 
         with(binding) {
 
-            setLike()
-
-            imageviewFriendProfile.setImageDrawable(getDrawable(recently_talk_friend.img_profile))
-            textviewFriendName.text = recently_talk_friend.name
-            textviewFriendWarmthRate.text = recently_talk_friend.warmth.toString()
-            textviewFriendSympathyRate.text = recently_talk_friend.sympathy.toString()
-            textviewFriendIntroduction.text = recently_talk_friend.introduce
-            imageviewFriendLive.setImageDrawable(getDrawable(recently_talk_friend.img_live))
-            textviewFriendLive.text = recently_talk_friend.live
-            imageviewFriendHeight.setImageDrawable(getDrawable(recently_talk_friend.img_height))
-            textviewFriendHeight.text = recently_talk_friend.height
-            imageviewFriendPrefer.setImageDrawable(getDrawable(recently_talk_friend.img_prefer))
-            textviewFriendPrefer.text = recently_talk_friend.prefer
-
+            imageviewFriendProfile.setImageDrawable(getDrawable(friend.img_profile))
+            textviewFriendName.text = friend.name
+            textviewFriendWarmthRate.text = friend.warmth.toString()
+            textviewFriendSympathyRate.text = friend.sympathy.toString()
+            textviewFriendIntroduction.text = friend.introduce
+            imageviewFriendLive.setImageDrawable(getDrawable(friend.img_live))
+            textviewFriendLive.text = friend.live
+            imageviewFriendHeight.setImageDrawable(getDrawable(friend.img_height))
+            textviewFriendHeight.text = friend.height
+            imageviewFriendPrefer.setImageDrawable(getDrawable(friend.img_prefer))
+            textviewFriendPrefer.text = friend.prefer
         }
     }
 
-    private fun setLike(){
+    /**
+     * @description - 친구를 좋아하는지 여부에 따라 화면(하트) 색상 변경
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setLike() {
 
-        if (recently_talk_friend.like) {
+        if (friend.like) {
             binding.imageButtonLike.background.setTint(resources.getColor(R.color.like))
         } else {
             binding.imageButtonLike.background.setTint(resources.getColor(R.color.unlike))

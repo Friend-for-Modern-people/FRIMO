@@ -10,26 +10,61 @@ import gachon.teama.frimo.databinding.ActivitySetNicknameBinding
 
 class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySetNicknameBinding::inflate) {
 
+    // Database
     private lateinit var database: AppDatabase
 
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
 
+        initVariable()
+        setEdittext()
+        setClickListener()
+    }
+
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable() {
         database = AppDatabase.getInstance(this@SetNicknameActivity)!!
+    }
+
+    /**
+     * @description - 본인의 nickname을 입력한 경우에만 버튼이 활성화가 되도록 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setEdittext() {
 
         // Activate button when available nickname is entered
-        with(binding) {
-            edittextNickname.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        binding.edittextNickname.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
-                override fun afterTextChanged(editable: Editable) {
-                    buttonNext.isEnabled = editable.isNotEmpty()
-                }
-            })
-        }
+            override fun afterTextChanged(editable: Editable) {
+                binding.buttonNext.isEnabled = editable.isNotEmpty()
+            }
+        })
+    }
 
-        // When next button clicked
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setClickListener() {
+
+        // Set next button click listener
         binding.buttonNext.setOnClickListener {
 
             val name: String = binding.edittextNickname.text.toString()
@@ -41,7 +76,6 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
 
             startActivity(Intent(this, MainActivity::class.java))
         }
-
     }
 
 }

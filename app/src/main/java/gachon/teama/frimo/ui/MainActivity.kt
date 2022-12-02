@@ -6,15 +6,34 @@ import gachon.teama.frimo.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     override fun initAfterBinding() {
 
-        // 최초 실행시 보이는 fragment
-        supportFragmentManager.beginTransaction().replace(R.id.frame, HomeFragment()).commit()
-
+        setScreen()
         initNavigationBar()
-
     }
 
+    /**
+     * @description - 최초 실행시 보이는 fragment 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setScreen() {
+        supportFragmentManager.beginTransaction().replace(R.id.frame, HomeFragment()).commit()
+    }
+
+    /**
+     * @description - Navigation bar 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun initNavigationBar() {
         binding.navigationbar.run {
             setOnItemSelectedListener{ item ->

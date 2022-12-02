@@ -9,6 +9,14 @@ import gachon.teama.frimo.R
 
 class OnboardingFragment2: Fragment() {
 
+    /**
+     * @description - 생명주기 onCreateView
+     * @param - inflater(LayoutInflater)
+     * @param - container(ViewGroup)
+     * @param - savedInstanceState(Bundle)
+     * @return - v(View)
+     * @author - namsh1125
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_onboarding_2, container, false)
     }

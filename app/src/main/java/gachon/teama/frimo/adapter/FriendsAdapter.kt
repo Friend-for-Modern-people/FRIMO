@@ -39,7 +39,6 @@ class FriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adap
         viewHolder.imageView_friend.setImageResource(dataSet[position].img_theme)
 
         // View click listener
-        // Fixme: viewHolder class 안에 선언하는 방법이 무엇이 있을까?
         viewHolder.itemView.setOnClickListener {
             val intent = Intent(it.context, SetCharacterActivity::class.java)
             intent.putExtra("id", dataSet[position].id)

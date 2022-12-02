@@ -30,7 +30,6 @@ class FilteredDiaryFragment : Fragment() {
     private lateinit var database: AppDatabase
 
     // Diary
-    private lateinit var diaryList: ArrayList<Diary>
     private lateinit var filter1Diary: ArrayList<Diary>
     private lateinit var filter2Diary: ArrayList<Diary>
 
@@ -39,13 +38,22 @@ class FilteredDiaryFragment : Fragment() {
         binding = FragmentFilteredDiaryBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
 
-        setDiary()
+        getDiary()
+        setScreen()
         setClickListener()
 
         return binding.root
     }
 
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun setClickListener() {
+
+        // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
 
         binding.layoutFilter1Detail.setOnClickListener {
 
@@ -72,7 +80,6 @@ class FilteredDiaryFragment : Fragment() {
             val intent = Intent(requireContext(), DiaryActivity::class.java)
             intent.putExtra("id", filter1Diary[0].id)
             startActivity(intent)
-
         }
 
         // When filter1 diary2 clicked
@@ -82,7 +89,6 @@ class FilteredDiaryFragment : Fragment() {
             val intent = Intent(requireContext(), DiaryActivity::class.java)
             intent.putExtra("id", filter1Diary[1].id)
             startActivity(intent)
-
         }
 
         // When filter2 diary1 clicked
@@ -92,7 +98,6 @@ class FilteredDiaryFragment : Fragment() {
             val intent = Intent(requireContext(), DiaryActivity::class.java)
             intent.putExtra("id", filter2Diary[0].id)
             startActivity(intent)
-
         }
 
         // When filter2 diary2 clicked
@@ -102,58 +107,67 @@ class FilteredDiaryFragment : Fragment() {
             val intent = Intent(requireContext(), DiaryActivity::class.java)
             intent.putExtra("id", filter2Diary[1].id)
             startActivity(intent)
-
         }
 
     }
 
-    private fun setDiary() {
+    /**
+     * @description - Set screen
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setScreen() {
 
-        // diary 필터링
-        filteringDiary()
-
-        // 필터링된 다이어리를 화면에 setting
         with(binding) {
 
-            // Filter1 Diary1 셋팅
+            // Todo: 해당 화면에 보여줄 diary가 없다면 visibility를 gone으로 설정
+
+           // Filter1 Diary1 셋팅
             textviewFilter1Diary1Date.text = filter1Diary[0].created
-            textviewFilter1Diary1Sentiment.text = filter1Diary[0].sentiment
+            textviewFilter1Diary1Sentiment.text = getTextSentiment(filter1Diary[0].sentiment)
             imageViewFilter1Diary1.background.setTint(getColor(filter1Diary[0].sentiment))
 
             // Filter1 Diary2 셋팅
             textviewFilter1Diary2Date.text = filter1Diary[1].created
-            textviewFilter1Diary2Sentiment.text = filter1Diary[1].sentiment
+            textviewFilter1Diary2Sentiment.text = getTextSentiment(filter1Diary[1].sentiment)
             imageViewFilter1Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
 
             // Filter2 Diary1 셋팅
             textviewFilter2Diary1Date.text = filter2Diary[0].created
-            textviewFilter2Diary1Sentiment.text = filter2Diary[0].sentiment
+            textviewFilter2Diary1Sentiment.text = getTextSentiment(filter2Diary[0].sentiment)
             imageViewFilter2Diary1.background.setTint(getColor(filter2Diary[0].sentiment))
 
             // Filter2 Diary2 셋팅
             textviewFilter2Diary2Date.text = filter2Diary[1].created
-            textviewFilter2Diary2Sentiment.text = filter2Diary[1].sentiment
+            textviewFilter2Diary2Sentiment.text = getTextSentiment(filter2Diary[1].sentiment)
             imageViewFilter2Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
 
         }
 
     }
 
-    private fun getColor(sentiment: String): Int{
+    /**
+     * @description - diary의 감정에 맞는 배경화면 색상을 return
+     * @param - sentiment(Int) : 해당 diary의 대표 감정
+     * @return - color(Int) : 해당 diary의 배경화면 색상
+     * @author - namsh1125
+     */
+    private fun getColor(sentiment: Int): Int {
         when (sentiment) {
-            "# 기쁨" -> {
+            pleasure -> {
                 return resources.getColor(R.color.pleasure)
             }
-            "# 슬픔" -> {
+            sadness -> {
                 return resources.getColor(R.color.sadness)
             }
-            "# 불안" -> {
+            anxiety -> {
                 return resources.getColor(R.color.anxiety)
             }
-            "# 상처" -> {
+            wound -> {
                 return resources.getColor(R.color.wound)
             }
-            "# 당황" -> {
+            embarrassment -> {
                 return resources.getColor(R.color.embarrassment)
             }
             else -> {
@@ -162,14 +176,80 @@ class FilteredDiaryFragment : Fragment() {
         }
     }
 
-    private fun filteringDiary() {
+    /**
+     * @description - Server에서 filtering된 diary 가져오기
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun getDiary() {
 
-        // RoomDB에 저장된 모든 diary 가져오기
-        diaryList = database.diaryDao().getDiaryList() as ArrayList
+        filter1Diary = getFilter1Diaries()
+        filter2Diary = getFilter2Diaries()
+    }
 
-        // Todo: 필터에 맞게 diary 셋팅
-        filter1Diary = diaryList
-        filter2Diary = diaryList
+    /**
+     * @description - 화면 상단에 보여줄 filtering된 diary를 Server에서 가져오기
+     * @param - None
+     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들
+     * @author - namsh1125
+     */
+    private fun getFilter1Diaries() : ArrayList<Diary>{
+
+        // Todo: 서버에서 filtering된 diary 가져오기
+        val diaries: MutableList<Diary> = mutableListOf()
+
+        diaries.add(Diary(id = 1, title = "1번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
+        diaries.add(Diary(id = 2, title = "2번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
+        diaries.add(Diary(id = 3, title = "3번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
+        diaries.add(Diary(id = 4, title = "4번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
+
+        return diaries as ArrayList<Diary>
+    }
+
+    /**
+     * @description - 화면 하단에 보여줄 filtering된 diary를 Server에서 가져오기
+     * @param - None
+     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들
+     * @author - namsh1125
+     */
+    private fun getFilter2Diaries() : ArrayList<Diary>{
+
+        // Todo: 서버에서 filtering된 diary 가져오기
+        val diaries: MutableList<Diary> = mutableListOf()
+
+        diaries.add(Diary(id = 5, title = "5번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
+        diaries.add(Diary(id = 6, title = "6번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
+        diaries.add(Diary(id = 7, title = "7번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
+        diaries.add(Diary(id = 8, title = "8번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
+
+        return diaries as ArrayList<Diary>
+    }
+
+    /**
+     * @description - Type 변경 ( toString 같은 느낌 )
+     * @param - sentiment(Int) : 해당 diary의 대표 감정
+     * @return - sentiment(String) : String으로 변환된 해당 diary의 대표 감정
+     * @author - namsh1125
+     */
+    private fun getTextSentiment(sentiment: Int): String {
+        return when(sentiment){
+            anger -> "# 분노"
+            sadness -> "# 슬픔"
+            anxiety -> "# 불안"
+            wound -> "# 상처"
+            embarrassment -> "# 당황"
+            else -> "# 기쁨"
+        }
+    }
+
+    companion object Sentiment {
+        const val anger = 0
+        const val sadness = 1
+        const val anxiety = 2
+        const val wound = 3
+        const val embarrassment = 4
+        const val pleasure = 5
     }
 
 }

@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 
 // Todo: 키워드, 댓글 추가 방법 알아볼 것
 // Todo: diary id Int type에서 Long type으로 변경
-// Todo: diary sentiment int type으로 변경
 @Entity
 @Parcelize
 data class Diary(
@@ -15,5 +14,5 @@ data class Diary(
     val title: String, // diary 재목
     val content: String, // diary 내용
     val created: String, // diary 작성 날짜
-    val sentiment: String, // diary 대표 감정
+    val sentiment: Int, // diary 대표 감정
 ): Parcelable

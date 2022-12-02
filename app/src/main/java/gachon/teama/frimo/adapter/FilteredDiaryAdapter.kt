@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.ui.DiaryActivity
+import gachon.teama.frimo.ui.FilteredDiaryFragment
 
 /**
  * @see gachon.teama.frimo.ui.FilteredDetailDiaryActivity
@@ -43,34 +44,55 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.textView_date.text = dataSet[position].created
-        viewHolder.textView_sentiment.text = dataSet[position].sentiment
+        viewHolder.textView_sentiment.text = getTextSentiment(dataSet[position].sentiment)
 
         // 이미지 배경 셋팅
         // Fixme: 함수로 간단하게 할 수 없을까?
-        // Todo: Companion object 사용으로 줄여보기
-        when(dataSet[position].sentiment){
-            "# 기쁨" -> {
-                viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.pleasure))
+        when (dataSet[position].sentiment) {
+            pleasure -> viewHolder.imageView.background.setTint(
+                viewHolder.itemView.context.resources.getColor(
+                    R.color.pleasure
+                )
+            )
+
+            sadness -> {
+                viewHolder.imageView.background.setTint(
+                    viewHolder.itemView.context.resources.getColor(
+                        R.color.sadness
+                    )
+                )
             }
-            "# 슬픔" -> {
-                viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.sadness))
+            anxiety -> {
+                viewHolder.imageView.background.setTint(
+                    viewHolder.itemView.context.resources.getColor(
+                        R.color.anxiety
+                    )
+                )
             }
-            "# 불안" -> {
-                viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.anxiety))
+            wound -> {
+                viewHolder.imageView.background.setTint(
+                    viewHolder.itemView.context.resources.getColor(
+                        R.color.wound
+                    )
+                )
             }
-            "# 상처" -> {
-                viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.wound))
+            embarrassment -> {
+                viewHolder.imageView.background.setTint(
+                    viewHolder.itemView.context.resources.getColor(
+                        R.color.embarrassment
+                    )
+                )
             }
-            "# 당황" -> {
-                viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.embarrassment))
-            }
-            else -> {
-                viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(R.color.anger))
+            anger -> {
+                viewHolder.imageView.background.setTint(
+                    viewHolder.itemView.context.resources.getColor(
+                        R.color.anger
+                    )
+                )
             }
         }
 
         // When recyclerview item(diary) clicked
-        // Fixme: viewHolder class 안에 선언하는 방법이 무엇이 있을까?
         viewHolder.itemView.setOnClickListener {
             val intent = Intent(it.context, DiaryActivity::class.java)
             intent.putExtra("id", dataSet[position].id)
@@ -80,5 +102,25 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+    private fun getTextSentiment(sentiment: Int): String {
+        return when(sentiment){
+            anger -> "# 분노"
+            sadness -> "# 슬픔"
+            anxiety -> "# 불안"
+            wound -> "# 상처"
+            embarrassment -> "# 당황"
+            else -> "# 기쁨"
+        }
+    }
+
+    companion object Sentiment {
+        const val anger = 1
+        const val sadness = 2
+        const val anxiety = 3
+        const val wound = 4
+        const val embarrassment = 5
+        const val pleasure = 6
+    }
 
 }

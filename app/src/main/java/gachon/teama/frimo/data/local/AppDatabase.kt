@@ -6,17 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.entities.User
-import gachon.teama.frimo.data.remote.Diary
-import gachon.teama.frimo.data.remote.Words
 
-@Database(entities = [Friend::class, User::class, Diary::class, Words::class], version = 1)
+@Database(entities = [Friend::class, User::class], version = 1)
 
 /* 추상 클래스 */
 abstract class AppDatabase: RoomDatabase() {
     abstract fun friendDao(): FriendDAO
     abstract fun userDao(): UserDAO
-    abstract fun diaryDao(): DiaryDAO
-    abstract fun wordsDao(): WordsDAO
 
     companion object { // 동반 객체 (singleton)
         private var instance: AppDatabase? = null // 한 번만 생성해서 모든 객체가 공유해서 사용

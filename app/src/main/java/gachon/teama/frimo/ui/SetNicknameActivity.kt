@@ -71,7 +71,6 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
 
             // 내부 저장소에 유저 정보 저장하기
             // 대화를 한 적이 없는 경우 최근 캐릭터 id는 99로 설정
-            // FixMe: 현재 RoomDB에 접근할 때 MainThread로 접근함. 다른 방법 있는지 알아볼 것
             database.userDao().insert(User(nickname = name, recently_chat_friend_id = 99, recently_chat_date = ""))
 
             startActivity(Intent(this, MainActivity::class.java))

@@ -26,8 +26,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
         // Set login button click listener
         binding.buttonLogin.setOnClickListener{
-            // Todo: Kakao login 구현
-            //  내부 저장소에 관련 정보 저장
+            // Todo: (Not now) Kakao login 구현 및 관련 내용 저장
             startActivity(Intent(this, AuthorityActivity::class.java))
         }
     }

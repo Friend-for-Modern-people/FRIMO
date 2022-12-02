@@ -163,6 +163,8 @@ class HomeFragment : Fragment() {
 
     /**
      * @description - Set recyclerview
+     * @see gachon.teama.frimo.adapter.RecommendFriendsAdapter
+     * @see gachon.teama.frimo.adapter.FriendsAdapter
      * @param - None
      * @return - None
      * @author - namsh1125

@@ -36,48 +36,60 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var recognitionListener: RecognitionListener
 
-//    //Cam&Gallery
+//    // Cam&Gallery
 //    private var DEFAULT_GALLERY_REQUEST_CODE = 1
 //    private var TAKE_PICTURE = 1
 
+    /**
+     * @description - Binding 이후
+     * @param - None
+     * @return - None
+     * @author - namsh1125, Hongsi-Taste
+     */
     override fun initAfterBinding() {
 
-        database = AppDatabase.getInstance(this@ChattingActivity)!!
-
-        // Todo: 카카오 로그인 구현시 카카오 토큰으로 변경해 채팅내역 가져오기
-        userName = "namseunghyeon"
-
-        // STT init
-        var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
-
-        setListener()
-
+        initVariable()
         setDatabaseListener()
         setRecyclerview()
         setClickListener()
-
+        setListener()
     }
 
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125, Hongsi-Taste
+     */
+    private fun initVariable() {
+
+        database = AppDatabase.getInstance(this@ChattingActivity)!!
+
+        // Todo: (Not now) 카카오 로그인 구현시 카카오 토큰으로 변경해 채팅내역 가져오기
+        userName = "namseunghyeon"
+
+        // STT
+        var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+    }
+
+    /**
+     * @description - DatabaseReference event listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun setDatabaseListener() {
 
-        // DatabaseReference child event listener
         myRef.child(userName).child("chat").addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
 
-                val chat: Chat =
-                    dataSnapshot.getValue(Chat::class.java) ?: throw Error("load error")
+                val chat: Chat = dataSnapshot.getValue(Chat::class.java) ?: throw Error("load error")
 
-                // add chat data in adapter
-                mAdapter.addChat(chat)
-
-                Log.d("chat", chatList.toString())
-
-                // Update the chat window when you send a chat
-                binding.recyclerviewChatting.scrollToPosition(chatList.size - 1)
-
+                mAdapter.addChat(chat) // add chat data in adapter
+                binding.recyclerviewChatting.scrollToPosition(chatList.size - 1) // Update chat window
             }
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -100,11 +112,29 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     }
 
+    /**
+     * @description - Set recyclerview
+     * @see gachon.teama.frimo.adapter.ChatAdapter
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setRecyclerview() {
+        binding.recyclerviewChatting.setHasFixedSize(true)
+        binding.recyclerviewChatting.adapter = mAdapter
+    }
+
+    /**
+     * @description - Set click listener
+     * @param - None
+     * @return - None
+     * @author - namsh1125, Hongsi-Taste
+     */
     private fun setClickListener() {
 
         with(binding) {
 
-            // When back button clicked
+            // Set back button click listener
             buttonBack.setOnClickListener {
 
                 // 최근 대화 날짜 저장
@@ -118,13 +148,13 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 finish()
             }
 
-            // When find button clicked (basic layout에서 돋보기 버튼)
+            // Set find button click listener (basic layout에서 돋보기 버튼)
             buttonFind.setOnClickListener {
                 layoutBasic.visibility = View.GONE
                 layoutSearch.visibility = View.VISIBLE
             }
 
-            // When search button clicked (search layout에서 돋보기 버튼)
+            // Set search button click listener (search layout에서 돋보기 버튼)
             // Fixme: 채팅 내용 중 딱 한 개의 채팅만 존재하는 경우만 의도하는 대로 동작. 해결 필요
             buttonSearch.setOnClickListener {
 
@@ -151,12 +181,13 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
             }
 
+            // Set cancel text click listener
             textviewTextCancel.setOnClickListener {
                 layoutBasic.visibility = View.VISIBLE
                 layoutSearch.visibility = View.GONE
             }
 
-            // When '+' button clicked
+            // Set '+' button click listener
             buttonPlus.setOnClickListener {
 
                 // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
@@ -171,7 +202,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 }
             }
 
-            // When send button clicked
+            // Set send button click listener
             buttonSend.setOnClickListener {
 
                 // Send message
@@ -184,22 +215,25 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             // 기획 변경으로 다음 버젼에서 출시
-            // When album button clicked
+            // Set album button click listener
             buttonAlbum.setOnClickListener {
-                // Todo: Album
-                showToast("추후 업데이트 예정입니다 :)")
+
                 // startDefalultGalleryApp()
-            }
-
-            // When camera button clicked
-            buttonCamera.setOnClickListener {
-                // Todo: Camera
+                // Todo: (Not now) Album 이동
                 showToast("추후 업데이트 예정입니다 :)")
-//                openCamera()
             }
 
-            // When voice button clicked
+            // Set camera button click listener
+            buttonCamera.setOnClickListener {
+
+//                openCamera()
+                // Todo: (Not now) Camera 작동
+                showToast("추후 업데이트 예정입니다 :)")
+            }
+
+            // Set voice button click listener
             buttonVoice.setOnClickListener {
+
                 speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
                 speechRecognizer.setRecognitionListener(recognitionListener)
                 speechRecognizer.startListening(intent)
@@ -209,69 +243,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     }
 
-    private fun setRecyclerview() {
-        binding.recyclerviewChatting.setHasFixedSize(true)
-        binding.recyclerviewChatting.adapter = mAdapter
-    }
-
-//    private fun startDefalultGalleryApp() {
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = Intent.ACTION_GET_CONTENT
-//        startActivityForResult(intent, DEFAULT_GALLERY_REQUEST_CODE)
-//    }
-//
-//    private fun openCamera() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//
-//        createImageUri(newFileName(), "image/jpg")?.let { uri ->
-//            val uri = uri.toString()
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-//            startActivityForResult(intent, TAKE_PICTURE)
-//        }
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (resultCode != Activity.RESULT_OK) {
-//            return
-//        }
-//
-//        when (requestCode) {
-//
-//            DEFAULT_GALLERY_REQUEST_CODE -> {
-//                data ?: return
-//                val uri = data.data as Uri
-//            }
-//            TAKE_PICTURE -> {
-//                data ?: return
-//                val curi = data.data as Uri
-//
-//                curi.let { uri ->
-////                    사진 프리뷰 들어갈 자리
-//                }
-//            }
-//            else -> {
-//                Toast.makeText(this, "사진 로딩 실패", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-//
-//    private fun createImageUri(filename: String, mimeType: String): Uri? {
-//        var values = ContentValues()
-//        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-//        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
-//        return this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-//    }
-//
-//    private fun newFileName(): String {
-//        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
-//        val filename = sdf.format(System.currentTimeMillis())
-//        return "$filename.jpg"
-//    }
-
-//    STT
+    // STT
     private fun setListener(){
         recognitionListener = object: RecognitionListener{
             override fun onReadyForSpeech(params: Bundle?) {
@@ -341,4 +313,62 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
         }
     }
+
+//    private fun startDefalultGalleryApp() {
+//        val intent = Intent()
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        startActivityForResult(intent, DEFAULT_GALLERY_REQUEST_CODE)
+//    }
+//
+//    private fun openCamera() {
+//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//
+//        createImageUri(newFileName(), "image/jpg")?.let { uri ->
+//            val uri = uri.toString()
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+//            startActivityForResult(intent, TAKE_PICTURE)
+//        }
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (resultCode != Activity.RESULT_OK) {
+//            return
+//        }
+//
+//        when (requestCode) {
+//
+//            DEFAULT_GALLERY_REQUEST_CODE -> {
+//                data ?: return
+//                val uri = data.data as Uri
+//            }
+//            TAKE_PICTURE -> {
+//                data ?: return
+//                val curi = data.data as Uri
+//
+//                curi.let { uri ->
+////                    사진 프리뷰 들어갈 자리
+//                }
+//            }
+//            else -> {
+//                Toast.makeText(this, "사진 로딩 실패", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+//
+//    private fun createImageUri(filename: String, mimeType: String): Uri? {
+//        var values = ContentValues()
+//        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+//        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+//        return this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+//    }
+//
+//    private fun newFileName(): String {
+//        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
+//        val filename = sdf.format(System.currentTimeMillis())
+//        return "$filename.jpg"
+//    }
+
 }

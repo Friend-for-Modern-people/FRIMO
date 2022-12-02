@@ -95,7 +95,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
             }
 
             // Todo: 키워드 셋팅
-            // Todo: 댓글 셋팅
+            // Todo: (Not now) 댓글 셋팅
 
         }
     }
@@ -135,7 +135,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         // Set share button click listener
         binding.buttonShare.setOnClickListener {
-            // Todo: 일기 공유하기 기능 추가
+            // Todo: (Not now) 일기 공유하기 기능 추가
             showToast("추후 업데이트 예정입니다 :)")
         }
 

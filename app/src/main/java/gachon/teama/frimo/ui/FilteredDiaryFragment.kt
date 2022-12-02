@@ -33,16 +33,34 @@ class FilteredDiaryFragment : Fragment() {
     private lateinit var filter1Diary: ArrayList<Diary>
     private lateinit var filter2Diary: ArrayList<Diary>
 
+    /**
+     * @description - 생명주기 onCreateView
+     * @param - inflater(LayoutInflater)
+     * @param - container(ViewGroup)
+     * @param - savedInstanceState(Bundle)
+     * @return - v(View)
+     * @author - namsh1125
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = FragmentFilteredDiaryBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
-
+        initVariable()
         getDiary()
         setScreen()
         setClickListener()
 
         return binding.root
+    }
+
+    /**
+     * @description - 변수 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun initVariable() {
+
+        binding = FragmentFilteredDiaryBinding.inflate(layoutInflater)
+        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**
@@ -53,12 +71,11 @@ class FilteredDiaryFragment : Fragment() {
      */
     private fun setClickListener() {
 
-        // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-
         binding.layoutFilter1Detail.setOnClickListener {
 
             // Intent로 필터링된 diary 넣어 전달
             val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
             intent.putExtra("filter", "필터1")
             intent.putExtra("filteredDiary", filter1Diary)
             startActivity(intent)
@@ -68,6 +85,7 @@ class FilteredDiaryFragment : Fragment() {
 
             // Intent로 필터링된 diary 넣어 전달
             val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
             intent.putExtra("filter", "필터2")
             intent.putExtra("filteredDiary", filter2Diary)
             startActivity(intent)

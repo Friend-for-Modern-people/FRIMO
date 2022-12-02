@@ -136,7 +136,7 @@ class SettingFragment : Fragment(){
             contentView.findViewById<TextView>(R.id.textview_text_logout).setOnClickListener {
 
                 popupWindow.dismiss()
-                // Todo: 로그아웃 구현
+                // Todo: (Not now) 로그아웃 구현
                 Toast.makeText(requireContext(), "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(requireContext(), SplashActivity::class.java))
             }

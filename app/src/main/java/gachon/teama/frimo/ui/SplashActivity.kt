@@ -24,7 +24,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
         setFriend()
 
-        // Todo: 카카오 로그인 구현 시 토큰 리프레쉬? 하는 코드 작성
+        // Todo: (Not now) 카카오 로그인 구현 시 토큰 리프레쉬? 하는 코드 작성
         // Delay screen
         Handler(Looper.getMainLooper()).postDelayed({
 

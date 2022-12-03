@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -22,9 +23,6 @@ import gachon.teama.frimo.databinding.ActivityDiaryBinding
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
-    // Diary
-    private var id: Int = 0 // Diary id
-
     /**
      * @description - Binding 이후
      * @param - None
@@ -33,19 +31,18 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     override fun initAfterBinding() {
 
-        initVariable()
         setScreen()
         setClickListener()
     }
 
     /**
-     * @description - 변수 셋팅
+     * @description - 현재 화면에 보여지고 있는 diary의 id 가져오기
      * @param - None
-     * @return - None
+     * @return - id(Int) : diary id
      * @author - namsh1125
      */
-    private fun initVariable() {
-        id = intent.getIntExtra("id", 0)
+    private fun getDiaryId(): Int {
+        return intent.getIntExtra("id", 0)
     }
 
     /**
@@ -57,6 +54,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun setScreen() {
 
         // Get diary
+        val id = getDiaryId()
         val diary = getDiary(id)
 
         with(binding) {
@@ -154,6 +152,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     private fun showPopupwindow(v: View) {
 
+        val id = getDiaryId()
+        val words = getWords(id)
         val popupWindow = PopupWindow(v)
         val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -190,14 +190,55 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
         }.let {
-            var recyclerView =
-                popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
+            val recyclerView = popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
             recyclerView.layoutManager = it
-            recyclerView.adapter = WordsAdapter(getWords(id))
+            recyclerView.adapter = WordsAdapter(words)
         }
 
-        // Todo: popup window 감정 갯수 보여주기
+        // 기쁨 감정 갯수 설정
+        val textviewPleasure= popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
+        textviewPleasure.text = "기쁨 ${getWordsCount(pleasure)} "
 
+        // 슬픔 감정 갯수 설정
+        val textviewSadness= popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
+        textviewSadness.text = "슬픔 ${getWordsCount(sadness)} "
+
+        // 불안 감정 갯수 설정
+        val textviewAnxiety= popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
+        textviewAnxiety.text = "불안 ${getWordsCount(anxiety)} "
+
+        // 상처 감정 갯수 설정
+        val textviewWound= popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
+        textviewWound.text = "상처 ${getWordsCount(wound)} "
+
+        // 당황 감정 갯수 설정
+        val textviewEmbarrassment= popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
+        textviewEmbarrassment.text = "당황 ${getWordsCount(embarrassment)} "
+
+        // 분노 감정 갯수 설정
+        val textviewAnger= popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
+        textviewAnger.text = "분노 ${getWordsCount(anger)} "
+
+    }
+
+    /**
+     * @description - 찾고자 하는 감정으로 사용자가 작성한 단어의 갯수를 알려주는 함수
+     * @param - sentiment(Int) : 감정
+     * @return - count(Int) : 찾고자 하는 감정으로 사용자가 작성한 단어의 갯수
+     * @author - namsh1125
+     */
+    private fun getWordsCount(sentiment: Int): Int {
+
+        val words = getWords(getDiaryId())
+        var count = 0
+
+        for(i in 0 until words.size){
+            if(words[i].sentiment == sentiment){
+                count++
+            }
+        }
+
+        return count
     }
 
     /**
@@ -211,21 +252,24 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         // Todo: 임시로 작성한 아래 코드 지우고 서버에서 data 받아오기
         val words: MutableList<Words> = mutableListOf()
 
-        words.add(Words("사랑", 6))
-        words.add(Words("슬퍼", 2))
-        words.add(Words("놀라워", 5))
-        words.add(Words("불안", 3))
-        words.add(Words("분노", 1))
-        words.add(Words("사랑", 6))
-        words.add(Words("슬퍼", 2))
-        words.add(Words("놀라워", 5))
-        words.add(Words("불안", 3))
-        words.add(Words("분노", 1))
-        words.add(Words("사랑", 6))
-        words.add(Words("슬퍼", 2))
-        words.add(Words("놀라워", 5))
-        words.add(Words("불안", 3))
-        words.add(Words("분노", 1))
+        words.add(Words("사랑", 5))
+        words.add(Words("슬퍼", 1))
+        words.add(Words("놀라워", 4))
+        words.add(Words("불안", 2))
+        words.add(Words("분노", 0))
+        words.add(Words("상처", 3))
+        words.add(Words("불안", 2))
+        words.add(Words("분노", 0))
+        words.add(Words("상처", 3))
+        words.add(Words("사랑", 5))
+        words.add(Words("슬퍼", 1))
+        words.add(Words("놀라워", 4))
+        words.add(Words("사랑", 5))
+        words.add(Words("슬퍼", 1))
+        words.add(Words("놀라워", 4))
+        words.add(Words("불안", 2))
+        words.add(Words("분노", 0))
+        words.add(Words("상처", 3))
 
         return words as ArrayList<Words>
     }
@@ -237,7 +281,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @author - namsh1125
      */
     private fun getTextSentiment(sentiment: Int): String {
-        return when(sentiment){
+        return when (sentiment) {
             anger -> "# 분노"
             sadness -> "# 슬픔"
             anxiety -> "# 불안"

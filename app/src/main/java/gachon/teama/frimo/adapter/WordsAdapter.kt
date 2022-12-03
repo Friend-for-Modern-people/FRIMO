@@ -61,11 +61,11 @@ class WordsAdapter(private val dataSet: ArrayList<Words>) : RecyclerView.Adapter
     override fun getItemCount() = dataSet.size
 
     companion object Sentiment{
-        const val anger = 1
-        const val sadness = 2
-        const val anxiety = 3
-        const val wound = 4
-        const val embarrassment = 5
-        const val pleasure = 6
+        const val anger = 0
+        const val sadness = 1
+        const val anxiety = 2
+        const val wound = 3
+        const val embarrassment = 4
+        const val pleasure = 5
     }
 }

@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="45dp"
     android:background="@drawable/shape_corners_3"
     android:backgroundTint="@color/gray3">
 
@@ -57,236 +58,91 @@
             android:layout_margin="20dp"
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
-            app:layout_constraintBottom_toTopOf="@id/layout_pleasure"
+            app:layout_constraintBottom_toTopOf="@id/textview_pleasure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/boundary"
             tools:listitem="@layout/view_word_i_wrote" />
 
-        <LinearLayout
-            android:id="@+id/layout_pleasure"
+        <TextView
+            android:id="@+id/textview_pleasure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:visibility="visible"
+            android:text="기쁨 0 "
+            android:textColor="@color/pleasure"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/layout_sadness"
+            app:layout_constraintEnd_toStartOf="@id/textview_sadness"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/recyclerview_words_i_wrote">
+            app:layout_constraintStart_toStartOf="@id/recyclerview_words_i_wrote"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/textview_text_pleasure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="기쁨 "
-                android:textColor="@color/pleasure"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/textview_pleasure_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/pleasure"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_sadness"
+        <TextView
+            android:id="@+id/textview_sadness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/layout_pleasure"
-            app:layout_constraintEnd_toStartOf="@id/layout_anxiety"
-            app:layout_constraintStart_toEndOf="@id/layout_pleasure"
-            app:layout_constraintTop_toTopOf="@id/layout_pleasure">
+            android:text="슬픔 0 "
+            android:textColor="@color/sadness"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_pleasure"
+            app:layout_constraintEnd_toStartOf="@id/textview_anxiety"
+            app:layout_constraintStart_toEndOf="@id/textview_pleasure"
+            app:layout_constraintTop_toTopOf="@id/textview_pleasure"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="슬픔 "
-                android:textColor="@color/sadness"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/textview_sadness_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/sadness"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_anxiety"
+        <TextView
+            android:id="@+id/textview_anxiety"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/layout_sadness"
-            app:layout_constraintEnd_toStartOf="@id/layout_wound"
-            app:layout_constraintStart_toEndOf="@id/layout_sadness"
-            app:layout_constraintTop_toTopOf="@id/layout_sadness">
+            android:text="불안 0 "
+            android:textColor="@color/anxiety"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_sadness"
+            app:layout_constraintEnd_toStartOf="@id/textview_wound"
+            app:layout_constraintStart_toEndOf="@id/textview_sadness"
+            app:layout_constraintTop_toTopOf="@id/textview_sadness"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="불안 "
-                android:textColor="@color/anxiety"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/textview_anxiety_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/anxiety"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_wound"
+        <TextView
+            android:id="@+id/textview_wound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/layout_anxiety"
-            app:layout_constraintEnd_toStartOf="@id/layout_embarrassment"
-            app:layout_constraintStart_toEndOf="@id/layout_anxiety"
-            app:layout_constraintTop_toTopOf="@id/layout_anxiety">
+            android:text="상처 0 "
+            android:textColor="@color/wound"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_anxiety"
+            app:layout_constraintEnd_toStartOf="@id/textview_embarrassment"
+            app:layout_constraintStart_toEndOf="@id/textview_anxiety"
+            app:layout_constraintTop_toTopOf="@id/textview_anxiety"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="상처 "
-                android:textColor="@color/wound"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/textview_wound_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/wound"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_embarrassment"
+        <TextView
+            android:id="@+id/textview_embarrassment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/layout_wound"
-            app:layout_constraintEnd_toStartOf="@id/layout_anger"
-            app:layout_constraintStart_toEndOf="@id/layout_wound"
-            app:layout_constraintTop_toTopOf="@id/layout_wound">
+            android:text="당황 0 "
+            android:textColor="@color/embarrassment"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_wound"
+            app:layout_constraintEnd_toStartOf="@id/textview_anger"
+            app:layout_constraintStart_toEndOf="@id/textview_wound"
+            app:layout_constraintTop_toTopOf="@id/textview_wound"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="당황 "
-                android:textColor="@color/embarrassment"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/textview_embarrassment_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/embarrassment"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_anger"
+        <TextView
+            android:id="@+id/textview_anger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/layout_embarrassment"
+            android:text="분노 0 "
+            android:textColor="@color/anger"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_embarrassment"
             app:layout_constraintEnd_toEndOf="@id/recyclerview_words_i_wrote"
-            app:layout_constraintStart_toEndOf="@id/layout_embarrassment"
-            app:layout_constraintTop_toTopOf="@id/layout_embarrassment">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="분노 "
-                android:textColor="@color/anger"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/textview_anger_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/anger"
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="15dp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
+            app:layout_constraintStart_toEndOf="@id/textview_embarrassment"
+            app:layout_constraintTop_toTopOf="@id/textview_embarrassment"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

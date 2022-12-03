@@ -51,7 +51,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         setDatabaseListener()
         setRecyclerview()
         setClickListener()
-        setListener()
+        setSTTListener()
     }
 
     /**
@@ -244,7 +244,13 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
     }
 
     // STT
-    private fun setListener(){
+    /**
+     * @description - STT listener init
+     * @param - None
+     * @return - None
+     * @author - Hongsi-Taste
+     */
+    private fun setSTTListener(){
         recognitionListener = object: RecognitionListener{
             override fun onReadyForSpeech(params: Bundle?) {
                 Toast.makeText(applicationContext,"Recording start", Toast.LENGTH_SHORT).show()
@@ -314,13 +320,24 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
     }
 
+//    /**
+//     * @description - Gallery connection
+//     * @param - None
+//     * @return - None
+//     * @author - Hongsi-Taste
+//     */
 //    private fun startDefalultGalleryApp() {
 //        val intent = Intent()
 //        intent.type = "image/*"
 //        intent.action = Intent.ACTION_GET_CONTENT
 //        startActivityForResult(intent, DEFAULT_GALLERY_REQUEST_CODE)
 //    }
-//
+///**
+//     * @description - Opening default camera
+//     * @param - None
+//     * @return - None
+//     * @author - Hongsi-Taste
+//     */
 //    private fun openCamera() {
 //        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //
@@ -331,6 +348,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        }
 //    }
 //
+//    /**
+//     * @description - getting data from other apps
+//     * @param - requestCode: Int, resultCode: Int, data: Intent?
+//     * @return - data or None
+//     * @author - Hongsi-Taste
+//     */
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //
@@ -357,14 +380,24 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //            }
 //        }
 //    }
-//
+///**
+//     * @description - giving image a URI
+//     * @param - fileName: String, mimeType: String
+//     * @return - URI, values
+//     * @author - Hongsi-Taste
+//     */
 //    private fun createImageUri(filename: String, mimeType: String): Uri? {
 //        var values = ContentValues()
 //        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
 //        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
 //        return this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 //    }
-//
+///**
+//     * @description - giving image a file name
+//     * @param - None
+//     * @return - fileName: String
+//     * @author - Hongsi-Taste
+//     */
 //    private fun newFileName(): String {
 //        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
 //        val filename = sdf.format(System.currentTimeMillis())

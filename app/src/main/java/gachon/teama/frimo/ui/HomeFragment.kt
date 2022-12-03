@@ -22,9 +22,6 @@ class HomeFragment : Fragment() {
     // Database
     private lateinit var database: AppDatabase
 
-    // Friend
-    private lateinit var friend: ArrayList<Friend>
-
     /**
      * @description - 생명주기 onCreateView
      * @param - inflater(LayoutInflater)
@@ -49,6 +46,7 @@ class HomeFragment : Fragment() {
      * @author - namsh1125
      */
     override fun onResume() {
+
         super.onResume()
         setRecentlyTalkFriend()
     }
@@ -60,9 +58,9 @@ class HomeFragment : Fragment() {
      * @author - namsh1125
      */
     private fun initVariable() {
+
         binding = FragmentHomeBinding.inflate(layoutInflater)
         database = AppDatabase.getInstance(requireContext())!!
-        friend = database.friendDao().getFriendList() as ArrayList
     }
 
     /**
@@ -71,7 +69,7 @@ class HomeFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener(){
+    private fun setClickListener() {
 
         // Set button(my best friend) click listener
         binding.buttonMyBestFriend.setOnClickListener {
@@ -80,19 +78,20 @@ class HomeFragment : Fragment() {
 
         // Set layout(recently talk friend) click listener
         binding.layoutRecentlyTalkFriend.setOnClickListener {
+
             val intent = Intent(requireContext(), SetCharacterActivity::class.java)
             intent.putExtra("id", database.userDao().getRecentlyChatFriendId())
             startActivity(intent)
         }
 
-        with(binding){
+        with(binding) {
 
             // Set text(차분) click listener
             binding.textviewTheme1.setOnClickListener {
 
-                textviewFriendCount.text = getTheme1Friend().size.toString()
+                textviewFriendCount.text = getFriend("차분").size.toString()
                 textviewFriendTag.text = "차분한"
-                recyclerviewFriend.adapter = FriendsAdapter(getTheme1Friend())
+                recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
 
                 // 테두리 변경
                 textviewTheme1.background = resources.getDrawable(R.drawable.shape_border_fac883)
@@ -108,9 +107,9 @@ class HomeFragment : Fragment() {
             // Set text(친숙함) click listener
             binding.textviewTheme2.setOnClickListener {
 
-                textviewFriendCount.text = getTheme2Friend().size.toString()
+                textviewFriendCount.text = getFriend("친숙함").size.toString()
                 textviewFriendTag.text = "친숙한"
-                recyclerviewFriend.adapter = FriendsAdapter(getTheme2Friend())
+                recyclerviewFriend.adapter = FriendsAdapter(getFriend("친숙함"))
 
                 // 테두리 변경
                 textviewTheme1.background = null
@@ -126,9 +125,9 @@ class HomeFragment : Fragment() {
             // Set text(따뜻함) click listener
             binding.textviewTheme3.setOnClickListener {
 
-                textviewFriendCount.text = getTheme3Friend().size.toString()
+                textviewFriendCount.text = getFriend("따뜻함").size.toString()
                 textviewFriendTag.text = "따뜻한"
-                recyclerviewFriend.adapter = FriendsAdapter(getTheme3Friend())
+                recyclerviewFriend.adapter = FriendsAdapter(getFriend("따뜻함"))
 
                 // 테두리 변경
                 textviewTheme1.background = null
@@ -144,9 +143,9 @@ class HomeFragment : Fragment() {
             // Set text(존경) click listener
             binding.textviewTheme4.setOnClickListener {
 
-                textviewFriendCount.text = getTheme4Friend().size.toString()
+                textviewFriendCount.text = getFriend("존경").size.toString()
                 textviewFriendTag.text = "존경하는"
-                recyclerviewFriend.adapter = FriendsAdapter(getTheme4Friend())
+                recyclerviewFriend.adapter = FriendsAdapter(getFriend("존경"))
 
                 // 테두리 변경
                 textviewTheme1.background = null
@@ -163,42 +162,57 @@ class HomeFragment : Fragment() {
 
     /**
      * @description - Set recyclerview
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setRecyclerview() {
+
+        setRecommendFriendRecyclerview()
+        setFriendRecyclerview()
+    }
+
+    /**
+     * @description - Set recommend friend recyclerview
      * @see gachon.teama.frimo.adapter.RecommendFriendsAdapter
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setRecommendFriendRecyclerview() {
+
+        binding.recyclerviewRecommendFriend.setHasFixedSize(true)
+        binding.recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(getAllFriend())
+    }
+
+    /**
+     * @description - Set friend recyclerview
      * @see gachon.teama.frimo.adapter.FriendsAdapter
      * @param - None
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecyclerview(){
+    private fun setFriendRecyclerview() {
 
-        // Set recommend friend recyclerview
-        binding.recyclerviewRecommendFriend.setHasFixedSize(true)
-        binding.recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(friend)
-
-        // Set friend recyclerview
         binding.recyclerviewFriend.setHasFixedSize(true)
-        binding.recyclerviewFriend.adapter = FriendsAdapter(getTheme1Friend())
-
+        binding.recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
     }
 
     /**
-     * @description - 화면에 최근에 대화한 친구 셋팅
+     * @description - 최근에 대화한 친구 셋팅
      * @param - None
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecentlyTalkFriend(){
+    private fun setRecentlyTalkFriend() {
 
-        // 대화 경험 여부 (대화를 한 적이 없는 경우 최근 친구 id는 99)
-        var experience: Boolean = !(database.userDao().getRecentlyChatFriendId() == 99)
+        val recentlyTalkFriend = getRecentlyTalkFriend()
 
-        if (experience) {
+        if (recentlyTalkFriend != null) {
 
-            val recently_talk = friend[database.userDao().getRecentlyChatFriendId() - 1] // 배열은 0부터 시작
-
-            // layout에 최근 대화 친구 셋팅
-            binding.imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recently_talk.img_theme))
-            binding.textviewRecentlyTalkFriendName.text = recently_talk.name
+            // layout 셋팅
+            binding.imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recentlyTalkFriend.img_theme))
+            binding.textviewRecentlyTalkFriendName.text = recentlyTalkFriend.name
             binding.textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
 
         } else {
@@ -207,91 +221,52 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * @description - '차분' 태그를 포함하는 친구만 추출
+     * @description - 저장된 모든 친구를 가지고 오는 함수
      * @param - None
-     * @return - friend(ArrayList<Friend>) : '차분'의 태그를 포함하는 친구
+     * @return - friend(ArrayList<Friend>) : 저장된 모든 친구
      * @author - namsh1125
      */
-    private fun getTheme1Friend() : ArrayList<Friend> {
+    private fun getAllFriend(): ArrayList<Friend> {
+        return database.friendDao().getFriendList() as ArrayList
+    }
+
+    /**
+     * @description - 찾고자 하는 특성을 포함하는 친구만 추출
+     * @param - properties(String) : 찾고자 하는 친구의 특징
+     * @return - friend(ArrayList<Friend>) : 해당 특징을 가지고 있는 친구
+     * @author - namsh1125
+     */
+    private fun getFriend(properties: String): ArrayList<Friend> {
 
         // Get friend
-        var theme1Friend = friend.toMutableList()
+        var friend = database.friendDao().getFriendList() as MutableList
 
-        // Remove untagged friends
-        var notTheme1 = Predicate<Friend> { friend: Friend ->
-            !friend.tag.contains("#차분")
+        // 해당 특성을 가지고 있지 않은 친구들
+        var noProperties = Predicate<Friend> { friend: Friend ->
+            !friend.tag.contains(properties)
         }
-        theme1Friend.removeIf(notTheme1)
+        friend.removeIf(noProperties)
 
         // Return theme1(차분) friend
-        return theme1Friend as ArrayList<Friend>
-
-    }
-
-    /**
-     * @description - '친숙함' 태그를 포함하는 친구만 추출
-     * @param - None
-     * @return - friend(ArrayList<Friend>) : '친숙함'의 태그를 포함하는 친구
-     * @author - namsh1125
-     */
-    private fun getTheme2Friend() : ArrayList<Friend> {
-
-        // Get friend
-        var friend = database.friendDao().getFriendList().toMutableList()
-
-        // Remove untagged friends
-        var notTheme2 = Predicate<Friend> { friend: Friend ->
-            !friend.tag.contains("#친숙함")
-        }
-        friend.removeIf(notTheme2)
-
-        // Return theme2(친숙함) friend
         return friend as ArrayList<Friend>
 
     }
 
     /**
-     * @description - '따뜻함' 태그를 포함하는 친구만 추출
+     * @description - 최근에 대화한 친구를 가져오는 함수
      * @param - None
-     * @return - friend(ArrayList<Friend>) : '따뜻함'의 태그를 포함하는 친구
+     * @return - friend(Friend) : 최근에 대화한 친구
      * @author - namsh1125
      */
-    private fun getTheme3Friend() : ArrayList<Friend> {
+    private fun getRecentlyTalkFriend(): Friend? {
 
-        // Get friend
-        var friend = database.friendDao().getFriendList().toMutableList()
+        val recentlyTalkFriendId = database.userDao().getRecentlyChatFriendId()
 
-        // Remove untagged friends
-        var notTheme3 = Predicate<Friend> { friend: Friend ->
-            !friend.tag.contains("#따뜻함")
+        return if (recentlyTalkFriendId != 99) {
+            database.friendDao().getFriend(recentlyTalkFriendId)
+        } else {
+            null
         }
-        friend.removeIf(notTheme3)
-
-        // Return theme3(따뜻함) friend
-        return friend as ArrayList<Friend>
 
     }
-
-    /**
-     * @description - '존경' 태그를 포함하는 친구만 추출
-     * @param - None
-     * @return - friend(ArrayList<Friend>) : '존경'의 태그를 포함하는 친구
-     * @author - namsh1125
-     */
-    private fun getTheme4Friend() : ArrayList<Friend> {
-
-        // Get friend
-        var friend = database.friendDao().getFriendList().toMutableList()
-
-        // Remove untagged friends
-        var notTheme4 = Predicate<Friend> { friend: Friend ->
-            !friend.tag.contains("#존경")
-        }
-        friend.removeIf(notTheme4)
-
-        // Return theme4(존경) friend
-        return friend as ArrayList<Friend>
-
-    }
-
 }

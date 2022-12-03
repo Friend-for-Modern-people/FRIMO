@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.*
@@ -223,6 +222,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 showToast("추후 업데이트 예정입니다 :)")
             }
 
+            // 기획 변경으로 다음 버젼에서 출시
             // Set camera button click listener
             buttonCamera.setOnClickListener {
 

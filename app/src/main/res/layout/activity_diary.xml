@@ -195,81 +195,92 @@
             app:layout_constraintTop_toTopOf="@id/textview_keyword3"
             tools:ignore="HardcodedText" />
 
-        <View
-            android:id="@+id/boundary2"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_comment"
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
-            android:background="@color/gray6"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/boundary1"
             app:layout_constraintStart_toStartOf="@id/boundary1"
-            app:layout_constraintTop_toBottomOf="@id/textview_keyword1" />
+            app:layout_constraintTop_toBottomOf="@id/textview_keyword1">
 
-        <TextView
-            android:id="@+id/textview_comment_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="댓글 1개"
-            android:textColor="@color/gray5"
-            android:textSize="12dp"
-            app:layout_constraintStart_toStartOf="@id/boundary2"
-            app:layout_constraintTop_toBottomOf="@id/boundary2"
-            tools:ignore="HardcodedText" />
+            <View
+                android:id="@+id/boundary2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/gray6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageview_who_commented"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="@id/textview_comment_count"
-            app:layout_constraintTop_toBottomOf="@id/textview_comment_count"
-            tools:src="@drawable/img_profile_geuluteogi" />
+            <TextView
+                android:id="@+id/textview_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="댓글 1개"
+                android:textColor="@color/gray5"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="@id/boundary2"
+                app:layout_constraintTop_toBottomOf="@id/boundary2"
+                tools:ignore="HardcodedText" />
 
-        <TextView
-            android:id="@+id/textview_who_commented"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="이름"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@id/textview_when_commented"
-            app:layout_constraintStart_toEndOf="@id/imageview_who_commented"
-            app:layout_constraintTop_toTopOf="@id/imageview_who_commented"
-            tools:ignore="HardcodedText" />
+            <ImageView
+                android:id="@+id/imageview_who_commented"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/textview_comment_count"
+                app:layout_constraintTop_toBottomOf="@id/textview_comment_count"
+                tools:src="@drawable/img_profile_geuluteogi" />
 
-        <TextView
-            android:id="@+id/textview_when_commented"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="댓글 작성 날짜"
-            android:textColor="@color/white"
-            android:textSize="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/imageview_who_commented"
-            app:layout_constraintStart_toStartOf="@id/textview_who_commented"
-            app:layout_constraintTop_toBottomOf="@id/textview_who_commented"
-            tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/textview_who_commented"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="이름"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toTopOf="@id/textview_when_commented"
+                app:layout_constraintStart_toEndOf="@id/imageview_who_commented"
+                app:layout_constraintTop_toTopOf="@id/imageview_who_commented"
+                tools:ignore="HardcodedText" />
 
-        <TextView
-            android:id="@+id/textview_comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/shape_corners_3"
-            android:backgroundTint="@color/gray3"
-            android:padding="10dp"
-            android:text="코멘트 내용"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/boundary2"
-            app:layout_constraintStart_toStartOf="@id/imageview_who_commented"
-            app:layout_constraintTop_toBottomOf="@id/imageview_who_commented"
-            tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/textview_when_commented"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="댓글 작성 날짜"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageview_who_commented"
+                app:layout_constraintStart_toStartOf="@id/textview_who_commented"
+                app:layout_constraintTop_toBottomOf="@id/textview_who_commented"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/textview_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_corners_3"
+                android:backgroundTint="@color/gray3"
+                android:padding="10dp"
+                android:text="코멘트 내용"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/boundary2"
+                app:layout_constraintStart_toStartOf="@id/imageview_who_commented"
+                app:layout_constraintTop_toBottomOf="@id/imageview_who_commented"
+                tools:ignore="HardcodedText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

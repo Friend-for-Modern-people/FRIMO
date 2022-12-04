@@ -165,7 +165,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_send_data"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_corners_top_30"
         android:backgroundTint="@color/gray3"
         android:gravity="center_horizontal"

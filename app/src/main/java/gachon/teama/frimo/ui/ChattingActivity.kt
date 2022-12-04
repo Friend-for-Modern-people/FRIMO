@@ -1,12 +1,15 @@
 package gachon.teama.frimo.ui
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.google.firebase.database.*
 import gachon.teama.frimo.adapter.ChatAdapter
@@ -14,6 +17,8 @@ import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Chat
 import gachon.teama.frimo.databinding.ActivityChattingBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -30,6 +35,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
     private lateinit var userName: String
     private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
+    private var keyboardHeight = 0
 
     // STT
     private lateinit var speechRecognizer: SpeechRecognizer
@@ -46,11 +52,22 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @author - namsh1125, Hongsi-Taste
      */
     override fun initAfterBinding() {
+        val view:View = binding.root
+        var rootHeight = -1
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            if(rootHeight == -1) rootHeight = view.height
+            val visibleFrameSize = Rect()
+            view.getWindowVisibleDisplayFrame(visibleFrameSize)
+            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+            if(heightExceptKeyboard < rootHeight) {
+                keyboardHeight = rootHeight - heightExceptKeyboard
+            }
+        }
 
         initVariable()
         setDatabaseListener()
         setRecyclerview()
-        setClickListener()
+        setClickListener(view)
         setSTTListener()
     }
 
@@ -129,7 +146,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @return - None
      * @author - namsh1125, Hongsi-Taste
      */
-    private fun setClickListener() {
+    private fun setClickListener(view: View) {
 
         with(binding) {
 
@@ -151,6 +168,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             buttonFind.setOnClickListener {
                 layoutBasic.visibility = View.GONE
                 layoutSearch.visibility = View.VISIBLE
+                layoutSendData.visibility = View.GONE
+                hideKeyboard(view)
             }
 
             // Set search button click listener (search layout에서 돋보기 버튼)
@@ -184,21 +203,37 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             textviewTextCancel.setOnClickListener {
                 layoutBasic.visibility = View.VISIBLE
                 layoutSearch.visibility = View.GONE
+                hideKeyboard(view)
             }
 
             // Set '+' button click listener
             buttonPlus.setOnClickListener {
+                layoutSendData.setHeight(keyboardHeight)
 
                 // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
                 //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
-
-                if (layoutSendData.isShown) { // if it was already shown
-                    layoutSendData.visibility = View.GONE
-                    buttonPlus.animate().rotation(0f).setDuration(500).start()
-                } else { // If it hasn't already been shown
-                    layoutSendData.visibility = View.VISIBLE
-                    buttonPlus.animate().rotation(45f).setDuration(500).start()
+                lifecycleScope.launch {
+                    if(layoutSendData.isShown){
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                        layoutSendData.visibility = View.GONE
+//                        showKeyboard()
+                        delay(100)
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                        buttonPlus.animate().rotation(0f).setDuration(500).start()
+                    }
+                    else {
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                        layoutSendData.visibility = View.VISIBLE
+                        hideKeyboard(layoutSendData)
+                        delay(100)
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                        buttonPlus.animate().rotation(45f).setDuration(500).start()
+                    }
                 }
+            }
+
+            edittextChat.setOnClickListener {
+                layoutSendData.visibility = View.GONE
             }
 
             // Set send button click listener
@@ -317,6 +352,14 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //                TODO("Not yet implemented")
             }
 
+        }
+
+    }
+    private fun View.setHeight(value: Int) {
+        val lp = layoutParams
+        lp?.let {
+            lp.height = value
+            layoutParams = lp
         }
     }
 

@@ -7,27 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlin.collections.ArrayList
 
-/***
- * @see MainActivity
- * @see DiaryFragment
- * @see FilteredDetailDiaryActivity
- * @see DiaryActivity
- * MainActivity - DiaryFragment frame에 부착되어
- * 필터링 된 일기를 더 보기 위해 FilteredDetailDiaryActivity를 호출하고
- * 일기를 자세히 보기 위해 DiaryActivity 호출함
- */
 class DiaryFilteredByMonthFragment : Fragment() {
 
     // Binding
-    private lateinit var binding: FragmentFilteredDiaryBinding
-
-    // Database
-    private lateinit var database: AppDatabase
+    private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
 
     // Diary
     private lateinit var filter1Diary: ArrayList<Diary>
@@ -43,24 +30,11 @@ class DiaryFilteredByMonthFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         getDiary()
         setScreen()
         setClickListener()
 
         return binding.root
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentFilteredDiaryBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**

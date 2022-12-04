@@ -17,10 +17,10 @@ import java.util.function.Predicate
 class HomeFragment : Fragment() {
 
     // Binding
-    private lateinit var binding: FragmentHomeBinding
+    private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
     /**
      * @description - 생명주기 onCreateView
@@ -32,7 +32,6 @@ class HomeFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         setClickListener()
         setRecyclerview()
 
@@ -49,18 +48,6 @@ class HomeFragment : Fragment() {
 
         super.onResume()
         setRecentlyTalkFriend()
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentHomeBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**

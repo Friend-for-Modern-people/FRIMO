@@ -16,14 +16,15 @@ import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentDiaryBinding
+import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 
 class DiaryFragment : Fragment(){
 
     // Binding
-    private lateinit var binding: FragmentDiaryBinding
+    private val binding by lazy { FragmentDiaryBinding.inflate(layoutInflater) }
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
     /**
      * @description - 생명주기 onCreateView
@@ -35,23 +36,10 @@ class DiaryFragment : Fragment(){
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         setScreen()
         setClickListener()
 
         return binding.root // Inflate the layout for this fragment
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentDiaryBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**

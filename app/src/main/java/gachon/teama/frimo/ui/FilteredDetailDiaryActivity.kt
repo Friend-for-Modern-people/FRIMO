@@ -61,7 +61,7 @@ class FilteredDetailDiaryActivity :
         binding.textviewFilter.text = filter
 
         // Filtering된 Diary 갯수 설정
-        binding.textviewDiaryCount.text = filteredDiary.size.toString() + "개"
+        binding.textviewDiaryCount.text = "${filteredDiary.size} 개"
     }
 
     /**

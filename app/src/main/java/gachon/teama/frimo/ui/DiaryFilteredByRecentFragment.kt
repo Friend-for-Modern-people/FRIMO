@@ -38,18 +38,20 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setRecyclerView() {
-        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(getDiary())
+
+        val diary = getDiary()
+        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diary)
     }
 
     /**
-     * @description - Server에서 filtering된 diary 가져오기
+     * @description - Server에서 최신순으로 필터링된 diary 가져오기
      * @param - None
      * @return - None
      * @author - namsh1125
      */
     private fun getDiary() : ArrayList<Diary> {
 
-        // Todo: 서버에서 filtering된 diary 가져오기
+        // Todo: Server에서 최신순으로 필터링된 diary 가져오기
         val diaries: MutableList<Diary> = mutableListOf()
 
         diaries.add(Diary(id = 5, title = "5번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))

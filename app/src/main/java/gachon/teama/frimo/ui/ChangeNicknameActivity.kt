@@ -8,7 +8,7 @@ class ChangeNicknameActivity :
     BaseActivity<ActivityChangeNicknameBinding>(ActivityChangeNicknameBinding::inflate) {
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(this@ChangeNicknameActivity)!! }
 
     /**
      * @description - Binding 이후
@@ -17,19 +17,7 @@ class ChangeNicknameActivity :
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
-        initVariable()
         setClickListener()
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-        database = AppDatabase.getInstance(this@ChangeNicknameActivity)!!
     }
 
     /**

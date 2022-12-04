@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 class DiaryFilteredByYearFragment : Fragment() {
 
     // Binding
-    private lateinit var binding: FragmentFilteredDiaryBinding
+    private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
 
     // Diary
     private lateinit var filter1Diary: ArrayList<Diary>
@@ -31,23 +31,11 @@ class DiaryFilteredByYearFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         getDiary()
         setScreen()
         setClickListener()
 
         return binding.root
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentFilteredDiaryBinding.inflate(layoutInflater)
     }
 
     /**

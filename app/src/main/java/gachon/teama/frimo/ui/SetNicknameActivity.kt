@@ -11,7 +11,7 @@ import gachon.teama.frimo.databinding.ActivitySetNicknameBinding
 class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySetNicknameBinding::inflate) {
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(this@SetNicknameActivity)!! }
 
     /**
      * @description - Binding 이후
@@ -21,19 +21,8 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
      */
     override fun initAfterBinding() {
 
-        initVariable()
         setEdittext()
         setClickListener()
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-        database = AppDatabase.getInstance(this@SetNicknameActivity)!!
     }
 
     /**

@@ -108,11 +108,9 @@ class DiaryFragment : Fragment(){
         val filterMonth = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_month)
         val filterSentiment = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_sentiment)
         val filterRecent = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_recent)
-        var filterid : Int? = null
 
         filterYear.setOnClickListener {
 
-            filterid = filterYear.id // 어떤 필터가 걸렸는지 설정
             radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -121,9 +119,9 @@ class DiaryFragment : Fragment(){
             filterSentiment.setTextColor(resources.getColor(R.color.gray6))
             filterRecent.setTextColor(resources.getColor(R.color.gray6))
         }
+
         filterMonth.setOnClickListener {
 
-            filterid = filterMonth.id // 어떤 필터가 걸렸는지 설정
             radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -132,9 +130,9 @@ class DiaryFragment : Fragment(){
             filterSentiment.setTextColor(resources.getColor(R.color.gray6))
             filterRecent.setTextColor(resources.getColor(R.color.gray6))
         }
+
         filterSentiment.setOnClickListener {
 
-            filterid = filterSentiment.id // 어떤 필터가 걸렸는지 설정
             radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -143,9 +141,9 @@ class DiaryFragment : Fragment(){
             filterSentiment.setTextColor(resources.getColor(R.color.skin))
             filterRecent.setTextColor(resources.getColor(R.color.gray6))
         }
+
         filterRecent.setOnClickListener {
 
-            filterid = filterRecent.id // 어떤 필터가 걸렸는지 설정
             radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -159,13 +157,14 @@ class DiaryFragment : Fragment(){
         val buttonApply = popupWindow.contentView.findViewById<Button>(R.id.button_apply)
         buttonApply.setOnClickListener {
 
-            when(filterid) {
-
-                filterYear.id -> childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
-                filterMonth.id -> childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
-                filterSentiment.id -> childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredBySentimentFragment()).commit()
-                filterRecent.id -> childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByRecentFragment()).commit()
-                else -> Toast.makeText(requireContext(), "필터를 설정해주세요", Toast.LENGTH_SHORT).show()
+            if(filterYear.isChecked) {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
+            } else if(filterMonth.isChecked) {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
+            } else if(filterSentiment.isChecked) {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredBySentimentFragment()).commit()
+            } else {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByRecentFragment()).commit()
             }
 
             popupWindow.dismiss()

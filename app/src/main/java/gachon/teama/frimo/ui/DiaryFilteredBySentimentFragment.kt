@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.Diary
+import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlin.collections.ArrayList
 
 class DiaryFilteredBySentimentFragment : Fragment() {
 
     // Binding
-    private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
+    private val binding by lazy { FragmentDiaryFilteredSentimentBinding.inflate(layoutInflater) }
 
     // Diary
     private lateinit var filter1Diary: ArrayList<Diary>
@@ -45,61 +46,61 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setClickListener() {
 
-        binding.layoutFilter1Detail.setOnClickListener {
-
-            // Intent로 필터링된 diary 넣어 전달
-            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-            intent.putExtra("filter", "필터1")
-            intent.putExtra("filteredDiary", filter1Diary)
-            startActivity(intent)
-        }
-
-        binding.layoutFilter2Detail.setOnClickListener {
-
-            // Intent로 필터링된 diary 넣어 전달
-            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-            intent.putExtra("filter", "필터2")
-            intent.putExtra("filteredDiary", filter2Diary)
-            startActivity(intent)
-        }
-
-        // When filter1 diary1 clicked
-        binding.filter1Diary1.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter1Diary[0].id)
-            startActivity(intent)
-        }
-
-        // When filter1 diary2 clicked
-        binding.filter1Diary2.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter1Diary[1].id)
-            startActivity(intent)
-        }
-
-        // When filter2 diary1 clicked
-        binding.filter2Diary1.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter2Diary[0].id)
-            startActivity(intent)
-        }
-
-        // When filter2 diary2 clicked
-        binding.filter2Diary2.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter2Diary[1].id)
-            startActivity(intent)
-        }
+//        binding.layoutFilter1Detail.setOnClickListener {
+//
+//            // Intent로 필터링된 diary 넣어 전달
+//            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+//            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
+//            intent.putExtra("filter", "필터1")
+//            intent.putExtra("filteredDiary", filter1Diary)
+//            startActivity(intent)
+//        }
+//
+//        binding.layoutFilter2Detail.setOnClickListener {
+//
+//            // Intent로 필터링된 diary 넣어 전달
+//            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+//            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
+//            intent.putExtra("filter", "필터2")
+//            intent.putExtra("filteredDiary", filter2Diary)
+//            startActivity(intent)
+//        }
+//
+//        // When filter1 diary1 clicked
+//        binding.filter1Diary1.setOnClickListener {
+//
+//            // Intent로 diary id 넣어 전달
+//            val intent = Intent(requireContext(), DiaryActivity::class.java)
+//            intent.putExtra("id", filter1Diary[0].id)
+//            startActivity(intent)
+//        }
+//
+//        // When filter1 diary2 clicked
+//        binding.filter1Diary2.setOnClickListener {
+//
+//            // Intent로 diary id 넣어 전달
+//            val intent = Intent(requireContext(), DiaryActivity::class.java)
+//            intent.putExtra("id", filter1Diary[1].id)
+//            startActivity(intent)
+//        }
+//
+//        // When filter2 diary1 clicked
+//        binding.filter2Diary1.setOnClickListener {
+//
+//            // Intent로 diary id 넣어 전달
+//            val intent = Intent(requireContext(), DiaryActivity::class.java)
+//            intent.putExtra("id", filter2Diary[0].id)
+//            startActivity(intent)
+//        }
+//
+//        // When filter2 diary2 clicked
+//        binding.filter2Diary2.setOnClickListener {
+//
+//            // Intent로 diary id 넣어 전달
+//            val intent = Intent(requireContext(), DiaryActivity::class.java)
+//            intent.putExtra("id", filter2Diary[1].id)
+//            startActivity(intent)
+//        }
 
     }
 
@@ -111,31 +112,31 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setScreen() {
 
-        with(binding) {
-
-            // Todo: 해당 화면에 보여줄 diary가 없다면 visibility를 gone으로 설정
-
-           // Filter1 Diary1 셋팅
-            textviewFilter1Diary1Date.text = filter1Diary[0].created
-            textviewFilter1Diary1Sentiment.text = getTextSentiment(filter1Diary[0].sentiment)
-            imageViewFilter1Diary1.background.setTint(getColor(filter1Diary[0].sentiment))
-
-            // Filter1 Diary2 셋팅
-            textviewFilter1Diary2Date.text = filter1Diary[1].created
-            textviewFilter1Diary2Sentiment.text = getTextSentiment(filter1Diary[1].sentiment)
-            imageViewFilter1Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
-
-            // Filter2 Diary1 셋팅
-            textviewFilter2Diary1Date.text = filter2Diary[0].created
-            textviewFilter2Diary1Sentiment.text = getTextSentiment(filter2Diary[0].sentiment)
-            imageViewFilter2Diary1.background.setTint(getColor(filter2Diary[0].sentiment))
-
-            // Filter2 Diary2 셋팅
-            textviewFilter2Diary2Date.text = filter2Diary[1].created
-            textviewFilter2Diary2Sentiment.text = getTextSentiment(filter2Diary[1].sentiment)
-            imageViewFilter2Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
-
-        }
+//        with(binding) {
+//
+//            // Todo: 해당 화면에 보여줄 diary가 없다면 visibility를 gone으로 설정
+//
+//           // Filter1 Diary1 셋팅
+//            textviewFilter1Diary1Date.text = filter1Diary[0].created
+//            textviewFilter1Diary1Sentiment.text = getTextSentiment(filter1Diary[0].sentiment)
+//            imageViewFilter1Diary1.background.setTint(getColor(filter1Diary[0].sentiment))
+//
+//            // Filter1 Diary2 셋팅
+//            textviewFilter1Diary2Date.text = filter1Diary[1].created
+//            textviewFilter1Diary2Sentiment.text = getTextSentiment(filter1Diary[1].sentiment)
+//            imageViewFilter1Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
+//
+//            // Filter2 Diary1 셋팅
+//            textviewFilter2Diary1Date.text = filter2Diary[0].created
+//            textviewFilter2Diary1Sentiment.text = getTextSentiment(filter2Diary[0].sentiment)
+//            imageViewFilter2Diary1.background.setTint(getColor(filter2Diary[0].sentiment))
+//
+//            // Filter2 Diary2 셋팅
+//            textviewFilter2Diary2Date.text = filter2Diary[1].created
+//            textviewFilter2Diary2Sentiment.text = getTextSentiment(filter2Diary[1].sentiment)
+//            imageViewFilter2Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
+//
+//        }
 
     }
 

@@ -184,8 +184,11 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
 
                 popupWindow.dismiss()
 
-                // Todo: 감정 받아오기
-                // Todo: 서버에 추가할 단어와 감정, 카테고리를 함께 전송
+                // 전송할 data
+                val sentiment = getSelectedSentiment()
+                val category = binding.edittextCategory.toString()
+
+                // Todo: 서버에 추가할 단어(text)와 감정(sentiment), 카테고리(categiry)를 함께 전송
 
                 Toast.makeText(this@AddWordActivity, "추가되었습니다", Toast.LENGTH_SHORT).show()
                 finish()
@@ -194,4 +197,40 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
         }
 
     }
+
+    /**
+     * @description - 사용자가 추가하고 싶은 단어의 감정을 return하는 함수
+     * @param - None
+     * @return - sentiment(Int) : 사용자가 추가하고 싶은 단어의 감정
+     * @author - namsh1125
+     */
+    private fun getSelectedSentiment(): Int {
+
+        with(binding) {
+
+            if (radiobuttonAnger.isSelected) {
+                return anger
+            } else if (radiobuttonSadness.isSelected) {
+                return sadness
+            } else if (radiobuttonAnxiety.isSelected) {
+                return anxiety
+            } else if (radiobuttonWound.isSelected) {
+                return wound
+            } else if (radiobuttonEmbarrassment.isSelected) {
+                return embarrassment
+            } else {
+                return pleasure
+            }
+        }
+    }
+
+    companion object Sentiment {
+        const val anger = 0
+        const val sadness = 1
+        const val anxiety = 2
+        const val wound = 3
+        const val embarrassment = 4
+        const val pleasure = 5
+    }
+
 }

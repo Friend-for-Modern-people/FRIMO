@@ -29,6 +29,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
     override fun initAfterBinding() {
 
         setRecyclerview()
+        setRadiobutton()
         setClickListener()
     }
 
@@ -41,8 +42,9 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      */
     private fun setRecyclerview() {
 
-        // 현재 보여지고 있는 diary가 어떤 것인지 이전 activity에서 받아오기
+        // 사용자가 작성한 diary에 어떤 감정으로 어떤 단어를 사용했는지 받아오기
         val id = intent.getIntExtra("id", 0)
+        val words = getWords(id)
 
         // Set reyclerview
         FlexboxLayoutManager(this).apply {
@@ -50,10 +52,41 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             flexDirection = FlexDirection.ROW
             justifyContent = JustifyContent.FLEX_START
         }.let {
-            binding.recyclerviewWordsIWrote.layoutManager = it
-            binding.recyclerviewWordsIWrote.adapter = WordsAdapter(getWords(id))
+            binding.recyclerviewWords.layoutManager = it
+            binding.recyclerviewWords.adapter = WordsAdapter(words)
         }
 
+    }
+
+    /**
+     * @description - 서로 다른 group의 radiobutton이 클릭 되었을 때 이전 button 해제
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setRadiobutton() {
+
+        with(binding) {
+
+            radiobuttonPleasure.setOnClickListener {
+                radiogroup2.clearCheck()
+            }
+            radiobuttonSadness.setOnClickListener {
+                radiogroup2.clearCheck()
+            }
+            radiobuttonAnxiety.setOnClickListener {
+                radiogroup2.clearCheck()
+            }
+            radiobuttonWound.setOnClickListener {
+                radiogroup1.clearCheck()
+            }
+            radiobuttonEmbarrassment.setOnClickListener {
+                radiogroup1.clearCheck()
+            }
+            radiobuttonAnger.setOnClickListener {
+                radiogroup1.clearCheck()
+            }
+        }
     }
 
     /**
@@ -135,7 +168,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             showAtLocation(v, Gravity.CENTER, 0, 0)
 
             // Set textview
-            val text = binding.edittextWordsLikeToAdd.text
+            val text = binding.edittextAdd.text
             val textView = contentView.findViewById<TextView>(R.id.textview_text)
             textView.text = "\"${text}\"를(을}\n추가 하시겠어요?"
 

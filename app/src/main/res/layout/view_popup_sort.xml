@@ -15,78 +15,94 @@
         android:text="정렬"
         android:textColor="@color/white"
         android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@id/button_sort_year"
+        app:layout_constraintBottom_toTopOf="@id/radiogroup1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
-    <Button
-        android:id="@+id/button_sort_year"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp"
+    <RadioGroup
+        android:id="@+id/radiogroup1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_border_button"
-        android:text="년도 순"
-        android:textColor="@color/gray6"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/button_sort_sentiment"
-        app:layout_constraintEnd_toStartOf="@id/button_sort_month"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_text_sort"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/button_sort_month"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/shape_border_button"
-        android:text="월별 순"
-        android:textColor="@color/gray6"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/button_sort_year"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/radiogroup2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_sort_year"
-        app:layout_constraintTop_toTopOf="@id/button_sort_year"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_text_sort">
 
-    <Button
-        android:id="@+id/button_sort_sentiment"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/shape_border_button"
-        android:text="감정 순"
-        android:textColor="@color/gray6"
-        android:textSize="15dp"
+        <RadioButton
+            android:id="@+id/radiobutton_year"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_radiobutton"
+            android:button="@null"
+            android:gravity="center"
+            android:text="년도 순"
+            android:textColor="@color/gray6"
+            android:textSize="15dp"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_month"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_radiobutton"
+            android:button="@null"
+            android:gravity="center"
+            android:text="월별 순"
+            android:textColor="@color/gray6"
+            android:textSize="15dp"
+            tools:ignore="HardcodedText" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radiogroup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/button_apply"
-        app:layout_constraintEnd_toStartOf="@id/button_sort_recent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_sort_year"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/button_sort_recent"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/shape_border_button"
-        android:text="최근 생성 순"
-        android:textColor="@color/gray6"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/button_sort_sentiment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_sort_sentiment"
-        app:layout_constraintTop_toTopOf="@id/button_sort_sentiment"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radiogroup1">
+
+        <RadioButton
+            android:id="@+id/radiobutton_sentiment"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_radiobutton"
+            android:button="@null"
+            android:gravity="center"
+            android:text="감정 순"
+            android:textColor="@color/gray6"
+            android:textSize="15dp"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_recent"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_radiobutton"
+            android:button="@null"
+            android:gravity="center"
+            android:text="최근 생성 순"
+            android:textColor="@color/gray6"
+            android:textSize="15dp"
+            tools:ignore="HardcodedText" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/button_apply"
@@ -101,7 +117,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_sort_sentiment"
+        app:layout_constraintTop_toBottomOf="@id/radiogroup2"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,25 +7,28 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp">
 
         <TextView
             android:id="@+id/textview_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
             android:text="최근 생성 순"
             android:textColor="@color/white"
             android:textSize="17dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_filtered_diary"
             tools:ignore="HardcodedText" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_filtered_diary"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:paddingHorizontal="5dp"
             android:scrollbars="vertical"

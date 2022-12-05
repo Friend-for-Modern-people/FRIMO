@@ -55,12 +55,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      */
     override fun initAfterBinding() {
 
-        getKeyboardHeight()
         initVariable()
         setDatabaseListener()
         setRecyclerview()
         setClickListener()
         setSTTListener()
+
     }
 
     /**
@@ -71,20 +71,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      */
     private fun initVariable() {
 
-        // STT
+        // STT init and language setting
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
-    }
 
-    /**
-     * @description - Get keyboard height
-     * @param - None
-     * @return - None
-     * @author - Hongsi-Taste, namsh1125
-     */
-    private fun getKeyboardHeight() {
-
+        //get keyboard height
         val view:View = binding.root
         var rootHeight = -1
         view.viewTreeObserver.addOnGlobalLayoutListener {
@@ -220,10 +212,10 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
             // Set '+' button click listener
             buttonPlus.setOnClickListener {
+
                 layoutSendData.setHeight(keyboardHeight)
 
-                // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
-                //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
+                // 키보드와 '+'팝업이 동시에 뜨는 현상 방지
                 lifecycleScope.launch {
                     if(layoutSendData.isShown){
                         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
@@ -244,6 +236,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 }
             }
 
+            // 입력창을 눌렀을때 팝업과 키보드가 같이 뜨는 현상 방지
             edittextChat.setOnClickListener {
                 layoutSendData.visibility = View.GONE
             }
@@ -265,7 +258,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             buttonAlbum.setOnClickListener {
 
                 // startDefalultGalleryApp()
-                // Todo: (Not now) Album 이동
+                // Todo: (Not now) Album 이동 및 이미지 불러오기
                 showToast("추후 업데이트 예정입니다 :)")
             }
 
@@ -274,7 +267,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             buttonCamera.setOnClickListener {
 
 //                openCamera()
-                // Todo: (Not now) Camera 작동
+                // Todo: (Not now) Camera 작동 및 이미지 (저장)&불러오기
                 showToast("추후 업데이트 예정입니다 :)")
             }
 
@@ -305,19 +298,19 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onBeginningOfSpeech() {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onRmsChanged(rmsdB: Float) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onBufferReceived(buffer: ByteArray?) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onEndOfSpeech() {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onError(error: Int) {
@@ -346,6 +339,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
             }
 
+            //STT 결과를 텍스트로 입력창에 출력
             override fun onResults(results: Bundle?) {
 
                 val matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
@@ -360,17 +354,22 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onPartialResults(partialResults: Bundle?) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onEvent(eventType: Int, params: Bundle?) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
         }
 
     }
-
+    /**
+     * @description - extends View class and add setHeight fun.
+     * @param - value:Int
+     * @return - None
+     * @author - Hongsi-Taste
+     */
     private fun View.setHeight(value: Int) {
 
         val lp = layoutParams

@@ -196,27 +196,27 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         }
 
         // 기쁨 감정 갯수 설정
-        val textviewPleasure= popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
+        val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
         textviewPleasure.text = "기쁨 ${getWordsCount(pleasure)} "
 
         // 슬픔 감정 갯수 설정
-        val textviewSadness= popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
+        val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
         textviewSadness.text = "슬픔 ${getWordsCount(sadness)} "
 
         // 불안 감정 갯수 설정
-        val textviewAnxiety= popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
+        val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
         textviewAnxiety.text = "불안 ${getWordsCount(anxiety)} "
 
         // 상처 감정 갯수 설정
-        val textviewWound= popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
+        val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
         textviewWound.text = "상처 ${getWordsCount(wound)} "
 
         // 당황 감정 갯수 설정
-        val textviewEmbarrassment= popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
+        val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
         textviewEmbarrassment.text = "당황 ${getWordsCount(embarrassment)} "
 
         // 분노 감정 갯수 설정
-        val textviewAnger= popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
+        val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
         textviewAnger.text = "분노 ${getWordsCount(anger)} "
 
     }
@@ -232,8 +232,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         val words = getWords(getDiaryId())
         var count = 0
 
-        for(i in 0 until words.size){
-            if(words[i].sentiment == sentiment){
+        for (i in 0 until words.size) {
+            if (words[i].sentiment == sentiment) {
                 count++
             }
         }

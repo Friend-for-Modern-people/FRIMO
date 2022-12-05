@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.ui.DiaryActivity
-import gachon.teama.frimo.ui.FilteredDiaryFragment
 
 /**
  * @see gachon.teama.frimo.ui.FilteredDetailDiaryActivity

@@ -1,12 +1,15 @@
 package gachon.teama.frimo.ui
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.google.firebase.database.*
 import gachon.teama.frimo.adapter.ChatAdapter
@@ -14,6 +17,8 @@ import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Chat
 import gachon.teama.frimo.databinding.ActivityChattingBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -24,12 +29,15 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     // Database
     private val myRef: DatabaseReference = FirebaseDatabase.getInstance().reference
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(this@ChattingActivity)!! }
 
     // Chatting
-    private lateinit var userName: String
+    private val userName by lazy { database.userDao().getNickname() }
     private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
+
+    // Layout
+    private var keyboardHeight = 0
 
     // STT
     private lateinit var speechRecognizer: SpeechRecognizer
@@ -51,7 +59,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         setDatabaseListener()
         setRecyclerview()
         setClickListener()
-        setListener()
+        setSTTListener()
+
     }
 
     /**
@@ -62,15 +71,27 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      */
     private fun initVariable() {
 
-        database = AppDatabase.getInstance(this@ChattingActivity)!!
-
-        // Todo: (Not now) 카카오 로그인 구현시 카카오 토큰으로 변경해 채팅내역 가져오기
-        userName = "namseunghyeon"
-
-        // STT
-        var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        // STT init and language setting
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+
+        //get keyboard height
+        val view:View = binding.root
+        var rootHeight = -1
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            if(rootHeight == -1) {
+                rootHeight = view.height
+            }
+
+            val visibleFrameSize = Rect()
+            view.getWindowVisibleDisplayFrame(visibleFrameSize)
+
+            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+            if(heightExceptKeyboard < rootHeight) {
+                keyboardHeight = rootHeight - heightExceptKeyboard
+            }
+        }
     }
 
     /**
@@ -151,6 +172,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             buttonFind.setOnClickListener {
                 layoutBasic.visibility = View.GONE
                 layoutSearch.visibility = View.VISIBLE
+                layoutSendData.visibility = View.GONE
+                hideKeyboard(it)
             }
 
             // Set search button click listener (search layout에서 돋보기 버튼)
@@ -160,11 +183,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 // Keyboard 숨기기
                 hideKeyboard(it)
 
-                var word = edittextSearch.text.toString()
-                var position: MutableList<Int> = mutableListOf()
+                val word = edittextSearch.text.toString()
+                val position: MutableList<Int> = mutableListOf()
 
                 // 찾는 단어의 위치들
-                for (i in 0..chatList.size - 1) {
+                for (i in 0 until chatList.size) {
                     if (chatList[i].message.contains(word)) {
                         position.add(i)
 
@@ -184,21 +207,38 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             textviewTextCancel.setOnClickListener {
                 layoutBasic.visibility = View.VISIBLE
                 layoutSearch.visibility = View.GONE
+                hideKeyboard(it)
             }
 
             // Set '+' button click listener
             buttonPlus.setOnClickListener {
 
-                // Todo: 키보드랑 화면 동시에 뜨는 현상 제거
-                //  (참고) https://wooooooak.github.io/android/2020/07/30/emoticon_container/
+                layoutSendData.setHeight(keyboardHeight)
 
-                if (layoutSendData.isShown) { // if it was already shown
-                    layoutSendData.visibility = View.GONE
-                    buttonPlus.animate().rotation(0f).setDuration(500).start()
-                } else { // If it hasn't already been shown
-                    layoutSendData.visibility = View.VISIBLE
-                    buttonPlus.animate().rotation(45f).setDuration(500).start()
+                // 키보드와 '+'팝업이 동시에 뜨는 현상 방지
+                lifecycleScope.launch {
+                    if(layoutSendData.isShown){
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                        layoutSendData.visibility = View.GONE
+//                        showKeyboard()
+                        delay(100)
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                        buttonPlus.animate().rotation(0f).setDuration(500).start()
+                    }
+                    else {
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                        layoutSendData.visibility = View.VISIBLE
+                        hideKeyboard(layoutSendData)
+                        delay(100)
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                        buttonPlus.animate().rotation(45f).setDuration(500).start()
+                    }
                 }
+            }
+
+            // 입력창을 눌렀을때 팝업과 키보드가 같이 뜨는 현상 방지
+            edittextChat.setOnClickListener {
+                layoutSendData.visibility = View.GONE
             }
 
             // Set send button click listener
@@ -218,7 +258,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             buttonAlbum.setOnClickListener {
 
                 // startDefalultGalleryApp()
-                // Todo: (Not now) Album 이동
+                // Todo: (Not now) Album 이동 및 이미지 불러오기
                 showToast("추후 업데이트 예정입니다 :)")
             }
 
@@ -227,7 +267,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             buttonCamera.setOnClickListener {
 
 //                openCamera()
-                // Todo: (Not now) Camera 작동
+                // Todo: (Not now) Camera 작동 및 이미지 (저장)&불러오기
                 showToast("추후 업데이트 예정입니다 :)")
             }
 
@@ -243,31 +283,38 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     }
 
-    // STT
-    private fun setListener(){
+    /**
+     * @description - STT listener
+     * @param - None
+     * @return - None
+     * @author - Hongsi-Taste
+     */
+    private fun setSTTListener(){
+
         recognitionListener = object: RecognitionListener{
+
             override fun onReadyForSpeech(params: Bundle?) {
                 Toast.makeText(applicationContext,"Recording start", Toast.LENGTH_SHORT).show()
             }
 
             override fun onBeginningOfSpeech() {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onRmsChanged(rmsdB: Float) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onBufferReceived(buffer: ByteArray?) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onEndOfSpeech() {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onError(error: Int) {
-                var message: String
+                val message: String
                 when(error){
                     SpeechRecognizer.ERROR_AUDIO ->
                         message = "Audio Error"
@@ -288,11 +335,14 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                     else ->
                         message = "Unknown Error"
                 }
+
                 Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
             }
 
+            //STT 결과를 텍스트로 입력창에 출력
             override fun onResults(results: Bundle?) {
-                var matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+
+                val matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (matches != null) {
                     for(i in 0 until matches.size){
 
@@ -304,16 +354,37 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onPartialResults(partialResults: Bundle?) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
             override fun onEvent(eventType: Int, params: Bundle?) {
-//                TODO("Not yet implemented")
+                //TODO("Not yet implemented")
             }
 
         }
+
+    }
+    /**
+     * @description - extends View class and add setHeight fun.
+     * @param - value:Int
+     * @return - None
+     * @author - Hongsi-Taste
+     */
+    private fun View.setHeight(value: Int) {
+
+        val lp = layoutParams
+        lp?.let {
+            lp.height = value
+            layoutParams = lp
+        }
     }
 
+//    /**
+//     * @description - Gallery connection
+//     * @param - None
+//     * @return - None
+//     * @author - Hongsi-Taste
+//     */
 //    private fun startDefalultGalleryApp() {
 //        val intent = Intent()
 //        intent.type = "image/*"
@@ -321,6 +392,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        startActivityForResult(intent, DEFAULT_GALLERY_REQUEST_CODE)
 //    }
 //
+//    /**
+//     * @description - Opening default camera
+//     * @param - None
+//     * @return - None
+//     * @author - Hongsi-Taste
+//     */
 //    private fun openCamera() {
 //        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //
@@ -331,6 +408,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        }
 //    }
 //
+//    /**
+//     * @description - getting data from other apps
+//     * @param - requestCode: Int, resultCode: Int, data: Intent?
+//     * @return - data or None
+//     * @author - Hongsi-Taste
+//     */
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //
@@ -358,6 +441,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        }
 //    }
 //
+//    /**
+//     * @description - giving image a URI
+//     * @param - fileName: String, mimeType: String
+//     * @return - URI, values
+//     * @author - Hongsi-Taste
+//     */
 //    private fun createImageUri(filename: String, mimeType: String): Uri? {
 //        var values = ContentValues()
 //        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
@@ -365,6 +454,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        return this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 //    }
 //
+//    /**
+//     * @description - giving image a file name
+//     * @param - None
+//     * @return - fileName: String
+//     * @author - Hongsi-Taste
+//     */
 //    private fun newFileName(): String {
 //        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
 //        val filename = sdf.format(System.currentTimeMillis())

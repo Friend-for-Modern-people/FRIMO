@@ -56,7 +56,9 @@
         <!-- Diary -->
         <activity android:name=".ui.FilteredDetailDiaryActivity" />
         <activity android:name=".ui.DiaryActivity" />
-        <activity android:name=".ui.AddWordActivity" />
+        <activity
+            android:name=".ui.AddWordActivity"
+            android:windowSoftInputMode="adjustNothing" />
 
         <!-- Setting  -->
         <activity android:name=".ui.ChangeNicknameActivity" />

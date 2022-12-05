@@ -12,22 +12,10 @@ import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlin.collections.ArrayList
 
-/***
- * @see MainActivity
- * @see DiaryFragment
- * @see FilteredDetailDiaryActivity
- * @see DiaryActivity
- * MainActivity - DiaryFragment frame에 부착되어
- * 필터링 된 일기를 더 보기 위해 FilteredDetailDiaryActivity를 호출하고
- * 일기를 자세히 보기 위해 DiaryActivity 호출함
- */
-class FilteredDiaryFragment : Fragment() {
+class DiaryFilteredByYearFragment : Fragment() {
 
     // Binding
-    private lateinit var binding: FragmentFilteredDiaryBinding
-
-    // Database
-    private lateinit var database: AppDatabase
+    private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
 
     // Diary
     private lateinit var filter1Diary: ArrayList<Diary>
@@ -43,24 +31,11 @@ class FilteredDiaryFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         getDiary()
         setScreen()
         setClickListener()
 
         return binding.root
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentFilteredDiaryBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**
@@ -139,6 +114,8 @@ class FilteredDiaryFragment : Fragment() {
 
         with(binding) {
 
+            textviewFilter1.text = "2022년"
+            textviewFilter2.text = "2021년"
             // Todo: 해당 화면에 보여줄 diary가 없다면 visibility를 gone으로 설정
 
            // Filter1 Diary1 셋팅

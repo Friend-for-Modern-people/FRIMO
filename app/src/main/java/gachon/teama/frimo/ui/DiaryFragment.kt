@@ -7,19 +7,24 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupWindow
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentDiaryBinding
+import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 
 class DiaryFragment : Fragment(){
 
     // Binding
-    private lateinit var binding: FragmentDiaryBinding
+    private val binding by lazy { FragmentDiaryBinding.inflate(layoutInflater) }
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
     /**
      * @description - 생명주기 onCreateView
@@ -31,23 +36,10 @@ class DiaryFragment : Fragment(){
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         setScreen()
         setClickListener()
 
         return binding.root // Inflate the layout for this fragment
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentDiaryBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**
@@ -66,7 +58,7 @@ class DiaryFragment : Fragment(){
         binding.textviewDiaryCount.text = getDiaryCount().toString()
 
         // 최초 실행시 보이는 fragment
-        childFragmentManager.beginTransaction().replace(R.id.frame, FilteredDiaryFragment()).commit()
+        childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
 
     }
 
@@ -109,7 +101,75 @@ class DiaryFragment : Fragment(){
         // popup window 보여주기
         popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0)
 
-        // Todo: 어떤 필터링이 걸렸는지 내부 fragment에 알려주기
+        // Set radiobutton click listener
+        val radiogroup1 = popupWindow.contentView.findViewById<RadioGroup>(R.id.radiogroup1)
+        val radiogroup2 = popupWindow.contentView.findViewById<RadioGroup>(R.id.radiogroup2)
+        val filterYear = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_year)
+        val filterMonth = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_month)
+        val filterSentiment = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_sentiment)
+        val filterRecent = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_recent)
+
+        filterYear.setOnClickListener {
+
+            radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
+
+            // text 색상 변경
+            filterYear.setTextColor(resources.getColor(R.color.skin))
+            filterMonth.setTextColor(resources.getColor(R.color.gray6))
+            filterSentiment.setTextColor(resources.getColor(R.color.gray6))
+            filterRecent.setTextColor(resources.getColor(R.color.gray6))
+        }
+
+        filterMonth.setOnClickListener {
+
+            radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
+
+            // text 색상 변경
+            filterYear.setTextColor(resources.getColor(R.color.gray6))
+            filterMonth.setTextColor(resources.getColor(R.color.skin))
+            filterSentiment.setTextColor(resources.getColor(R.color.gray6))
+            filterRecent.setTextColor(resources.getColor(R.color.gray6))
+        }
+
+        filterSentiment.setOnClickListener {
+
+            radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
+
+            // text 색상 변경
+            filterYear.setTextColor(resources.getColor(R.color.gray6))
+            filterMonth.setTextColor(resources.getColor(R.color.gray6))
+            filterSentiment.setTextColor(resources.getColor(R.color.skin))
+            filterRecent.setTextColor(resources.getColor(R.color.gray6))
+        }
+
+        filterRecent.setOnClickListener {
+
+            radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
+
+            // text 색상 변경
+            filterYear.setTextColor(resources.getColor(R.color.gray6))
+            filterMonth.setTextColor(resources.getColor(R.color.gray6))
+            filterSentiment.setTextColor(resources.getColor(R.color.gray6))
+            filterRecent.setTextColor(resources.getColor(R.color.skin))
+        }
+
+        // Set apply button click listener
+        val buttonApply = popupWindow.contentView.findViewById<Button>(R.id.button_apply)
+        buttonApply.setOnClickListener {
+
+            if(filterYear.isChecked) {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
+            } else if(filterMonth.isChecked) {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
+            } else if(filterSentiment.isChecked) {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredBySentimentFragment()).commit()
+            } else {
+                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByRecentFragment()).commit()
+            }
+
+            popupWindow.dismiss()
+
+        }
 
     }
 

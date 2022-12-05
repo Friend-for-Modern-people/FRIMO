@@ -25,10 +25,10 @@ import gachon.teama.frimo.databinding.FragmentSettingBinding
 class SettingFragment : Fragment(){
 
     // Binding
-    private lateinit var binding: FragmentSettingBinding
+    private val binding by lazy { FragmentSettingBinding.inflate(layoutInflater) }
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
     /**
      * @description - 생명주기 onCreateView
@@ -40,7 +40,6 @@ class SettingFragment : Fragment(){
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        initVariable()
         setClickListener()
 
         return binding.root // Inflate the layout for this fragment
@@ -58,18 +57,6 @@ class SettingFragment : Fragment(){
 
         // Set user nickname
         binding.textviewNickname.text = database.userDao().getNickname()
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        binding = FragmentSettingBinding.inflate(layoutInflater)
-        database = AppDatabase.getInstance(requireContext())!!
     }
 
     /**

@@ -9,7 +9,7 @@ import gachon.teama.frimo.databinding.ActivitySetCharacterBinding
 
 class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivitySetCharacterBinding::inflate) {
 
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(this@SetCharacterActivity)!! }
     private lateinit var friend: Friend
 
     /**
@@ -32,8 +32,6 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @author - namsh1125
      */
     private fun initVariable() {
-
-        database = AppDatabase.getInstance(this@SetCharacterActivity)!!
 
         // Get friend information
         var id = intent.getIntExtra("id", 1)

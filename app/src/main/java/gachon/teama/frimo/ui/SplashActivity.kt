@@ -12,7 +12,7 @@ import gachon.teama.frimo.databinding.ActivitySplashBinding
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
     // Database
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(this@SplashActivity)!! }
 
     /**
      * @description - Binding 이후
@@ -47,7 +47,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
      */
     private fun setFriend(){
 
-        database = AppDatabase.getInstance(this@SplashActivity)!!
         var friendList = database.friendDao().getFriendList() as ArrayList
 
         // Add data if there is no character information in roomDB

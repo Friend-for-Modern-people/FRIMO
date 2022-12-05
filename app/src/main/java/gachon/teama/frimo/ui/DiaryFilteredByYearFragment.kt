@@ -149,25 +149,14 @@ class DiaryFilteredByYearFragment : Fragment() {
      * @author - namsh1125
      */
     private fun getColor(sentiment: Int): Int {
-        when (sentiment) {
-            pleasure -> {
-                return resources.getColor(R.color.pleasure)
-            }
-            sadness -> {
-                return resources.getColor(R.color.sadness)
-            }
-            anxiety -> {
-                return resources.getColor(R.color.anxiety)
-            }
-            wound -> {
-                return resources.getColor(R.color.wound)
-            }
-            embarrassment -> {
-                return resources.getColor(R.color.embarrassment)
-            }
-            else -> {
-                return resources.getColor(R.color.anger)
-            }
+
+        return when (sentiment) {
+            pleasure -> resources.getColor(R.color.pleasure)
+            sadness -> resources.getColor(R.color.sadness)
+            anxiety -> resources.getColor(R.color.anxiety)
+            wound -> resources.getColor(R.color.wound)
+            embarrassment -> resources.getColor(R.color.embarrassment)
+            else -> resources.getColor(R.color.anger)
         }
     }
 

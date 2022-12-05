@@ -7,7 +7,7 @@ public class RetrofitClient {  //used in SingleTon
     private static RetrofitClient instance = null;
     private static RetrofitAPI retrofitAPI;
 
-    private final static String BASE_URL ="";
+    private final static String BASE_URL ="http://localhost:80/app/";
 
     private RetrofitClient(){
         Retrofit retrofit  = new Retrofit.Builder()

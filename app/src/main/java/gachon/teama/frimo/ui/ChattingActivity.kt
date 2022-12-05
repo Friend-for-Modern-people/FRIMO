@@ -29,12 +29,14 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     // Database
     private val myRef: DatabaseReference = FirebaseDatabase.getInstance().reference
-    private lateinit var database: AppDatabase
+    private val database by lazy { AppDatabase.getInstance(this@ChattingActivity)!! }
 
     // Chatting
-    private lateinit var userName: String
+    private val userName by lazy { database.userDao().getNickname() }
     private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
+
+    // Layout
     private var keyboardHeight = 0
 
     // STT
@@ -52,22 +54,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @author - namsh1125, Hongsi-Taste
      */
     override fun initAfterBinding() {
-        val view:View = binding.root
-        var rootHeight = -1
-        view.viewTreeObserver.addOnGlobalLayoutListener {
-            if(rootHeight == -1) rootHeight = view.height
-            val visibleFrameSize = Rect()
-            view.getWindowVisibleDisplayFrame(visibleFrameSize)
-            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
-            if(heightExceptKeyboard < rootHeight) {
-                keyboardHeight = rootHeight - heightExceptKeyboard
-            }
-        }
 
+        getKeyboardHeight()
         initVariable()
         setDatabaseListener()
         setRecyclerview()
-        setClickListener(view)
+        setClickListener()
         setSTTListener()
     }
 
@@ -79,15 +71,35 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      */
     private fun initVariable() {
 
-        database = AppDatabase.getInstance(this@ChattingActivity)!!
-
-        // Todo: (Not now) 카카오 로그인 구현시 카카오 토큰으로 변경해 채팅내역 가져오기
-        userName = "namseunghyeon"
-
         // STT
-        var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+    }
+
+    /**
+     * @description - Get keyboard height
+     * @param - None
+     * @return - None
+     * @author - Hongsi-Taste, namsh1125
+     */
+    private fun getKeyboardHeight() {
+
+        val view:View = binding.root
+        var rootHeight = -1
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            if(rootHeight == -1) {
+                rootHeight = view.height
+            }
+
+            val visibleFrameSize = Rect()
+            view.getWindowVisibleDisplayFrame(visibleFrameSize)
+
+            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+            if(heightExceptKeyboard < rootHeight) {
+                keyboardHeight = rootHeight - heightExceptKeyboard
+            }
+        }
     }
 
     /**
@@ -146,7 +158,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @return - None
      * @author - namsh1125, Hongsi-Taste
      */
-    private fun setClickListener(view: View) {
+    private fun setClickListener() {
 
         with(binding) {
 
@@ -169,7 +181,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 layoutBasic.visibility = View.GONE
                 layoutSearch.visibility = View.VISIBLE
                 layoutSendData.visibility = View.GONE
-                hideKeyboard(view)
+                hideKeyboard(it)
             }
 
             // Set search button click listener (search layout에서 돋보기 버튼)
@@ -179,11 +191,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 // Keyboard 숨기기
                 hideKeyboard(it)
 
-                var word = edittextSearch.text.toString()
-                var position: MutableList<Int> = mutableListOf()
+                val word = edittextSearch.text.toString()
+                val position: MutableList<Int> = mutableListOf()
 
                 // 찾는 단어의 위치들
-                for (i in 0..chatList.size - 1) {
+                for (i in 0 until chatList.size) {
                     if (chatList[i].message.contains(word)) {
                         position.add(i)
 
@@ -203,7 +215,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             textviewTextCancel.setOnClickListener {
                 layoutBasic.visibility = View.VISIBLE
                 layoutSearch.visibility = View.GONE
-                hideKeyboard(view)
+                hideKeyboard(it)
             }
 
             // Set '+' button click listener
@@ -278,15 +290,16 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     }
 
-    // STT
     /**
-     * @description - STT listener init
+     * @description - STT listener
      * @param - None
      * @return - None
      * @author - Hongsi-Taste
      */
     private fun setSTTListener(){
+
         recognitionListener = object: RecognitionListener{
+
             override fun onReadyForSpeech(params: Bundle?) {
                 Toast.makeText(applicationContext,"Recording start", Toast.LENGTH_SHORT).show()
             }
@@ -308,7 +321,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onError(error: Int) {
-                var message: String
+                val message: String
                 when(error){
                     SpeechRecognizer.ERROR_AUDIO ->
                         message = "Audio Error"
@@ -329,11 +342,13 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                     else ->
                         message = "Unknown Error"
                 }
+
                 Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
             }
 
             override fun onResults(results: Bundle?) {
-                var matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+
+                val matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (matches != null) {
                     for(i in 0 until matches.size){
 
@@ -355,7 +370,9 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
 
     }
+
     private fun View.setHeight(value: Int) {
+
         val lp = layoutParams
         lp?.let {
             lp.height = value
@@ -375,7 +392,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        intent.action = Intent.ACTION_GET_CONTENT
 //        startActivityForResult(intent, DEFAULT_GALLERY_REQUEST_CODE)
 //    }
-///**
+//
+//    /**
 //     * @description - Opening default camera
 //     * @param - None
 //     * @return - None
@@ -423,7 +441,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //            }
 //        }
 //    }
-///**
+//
+//    /**
 //     * @description - giving image a URI
 //     * @param - fileName: String, mimeType: String
 //     * @return - URI, values
@@ -435,7 +454,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
 //        return this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 //    }
-///**
+//
+//    /**
 //     * @description - giving image a file name
 //     * @param - None
 //     * @return - fileName: String

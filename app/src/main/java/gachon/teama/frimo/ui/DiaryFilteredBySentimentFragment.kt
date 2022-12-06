@@ -31,7 +31,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        getDiary()
+//        getDiary()
         setScreen()
         setClickListener()
 
@@ -141,53 +141,12 @@ class DiaryFilteredBySentimentFragment : Fragment() {
     }
 
     /**
-     * @description - diary의 감정에 맞는 배경화면 색상을 return
-     * @param - sentiment(Int) : 해당 diary의 대표 감정
-     * @return - color(Int) : 해당 diary의 배경화면 색상
-     * @author - namsh1125
-     */
-    private fun getColor(sentiment: Int): Int {
-        when (sentiment) {
-            pleasure -> {
-                return resources.getColor(R.color.pleasure)
-            }
-            sadness -> {
-                return resources.getColor(R.color.sadness)
-            }
-            anxiety -> {
-                return resources.getColor(R.color.anxiety)
-            }
-            wound -> {
-                return resources.getColor(R.color.wound)
-            }
-            embarrassment -> {
-                return resources.getColor(R.color.embarrassment)
-            }
-            else -> {
-                return resources.getColor(R.color.anger)
-            }
-        }
-    }
-
-    /**
      * @description - Server에서 filtering된 diary 가져오기
-     * @param - None
-     * @return - None
+     * @param - sentiment(Int) : 필터링 기준
+     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들 (감정)
      * @author - namsh1125
      */
-    private fun getDiary() {
-
-        filter1Diary = getFilter1Diaries()
-        filter2Diary = getFilter2Diaries()
-    }
-
-    /**
-     * @description - 화면 상단에 보여줄 filtering된 diary를 Server에서 가져오기
-     * @param - None
-     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들
-     * @author - namsh1125
-     */
-    private fun getFilter1Diaries() : ArrayList<Diary>{
+    private fun getDiaries(sentiment: Int): ArrayList<Diary> {
 
         // Todo: 서버에서 filtering된 diary 가져오기
         val diaries: MutableList<Diary> = mutableListOf()
@@ -198,42 +157,6 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         diaries.add(Diary(id = 4, title = "4번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
 
         return diaries as ArrayList<Diary>
-    }
-
-    /**
-     * @description - 화면 하단에 보여줄 filtering된 diary를 Server에서 가져오기
-     * @param - None
-     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들
-     * @author - namsh1125
-     */
-    private fun getFilter2Diaries() : ArrayList<Diary>{
-
-        // Todo: 서버에서 filtering된 diary 가져오기
-        val diaries: MutableList<Diary> = mutableListOf()
-
-        diaries.add(Diary(id = 5, title = "5번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
-        diaries.add(Diary(id = 6, title = "6번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
-        diaries.add(Diary(id = 7, title = "7번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
-        diaries.add(Diary(id = 8, title = "8번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
-
-        return diaries as ArrayList<Diary>
-    }
-
-    /**
-     * @description - Type 변경 ( toString 같은 느낌 )
-     * @param - sentiment(Int) : 해당 diary의 대표 감정
-     * @return - sentiment(String) : String으로 변환된 해당 diary의 대표 감정
-     * @author - namsh1125
-     */
-    private fun getTextSentiment(sentiment: Int): String {
-        return when(sentiment){
-            anger -> "# 분노"
-            sadness -> "# 슬픔"
-            anxiety -> "# 불안"
-            wound -> "# 상처"
-            embarrassment -> "# 당황"
-            else -> "# 기쁨"
-        }
     }
 
     companion object Sentiment {

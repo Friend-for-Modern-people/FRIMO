@@ -82,6 +82,14 @@ public interface RetrofitAPI {
     Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyYear(@Path("userPK") String userPK, @Path("year") int year);
 
     /**
+     * @description - 감정별 일기를 가져오는 API
+     * @Param @Path Long {userpk} , @Path int {sent} //0~5
+     * @return - List<DiaryDto.GetDiaryResponseDto>
+     * @author - vivi108
+     */
+    @GET("diary/{userPK}/{sent}")
+    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbySent(@Path("userPK") String userPK, @Path("sent") int sent);
+    /**
      * @description - 작성된 일기의 개수를 가져오는 API
      * @Param @Path Long {userpk}
      * @return - Integer

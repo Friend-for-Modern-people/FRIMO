@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import java.time.LocalDate
@@ -68,8 +67,14 @@ class DiaryFilteredByYearFragment : Fragment() {
             startActivity(intent)
         }
 
+        // Set visibility
+        if(diary.size == 0) {
+            binding.filter1Diary1.visibility = View.GONE
+            binding.filter1Diary2.visibility = View.GONE
+        }
+
         // Set current year diary 1
-        if (diary[0] != null) {
+        if (diary.size >= 1) {
             binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
             binding.textviewFilter1Diary1Date.text = diary[0].created
             binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
@@ -87,7 +92,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         }
 
         // Set current year diary 2
-        if (diary[1] != null) {
+        if (diary.size >= 2) {
             binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
             binding.textviewFilter1Diary2Date.text = diary[1].created
             binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
@@ -125,13 +130,20 @@ class DiaryFilteredByYearFragment : Fragment() {
         binding.layoutFilter2Detail.setOnClickListener {
 
             val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            intent.putExtra("filter", "${year}년") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filter", "${year}") // 어떤 필터가 걸려있는지 전달
             intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
             startActivity(intent)
         }
 
+        // Set visibility
+        if(diary.size == 0) {
+            binding.layoutFilter2.visibility = View.GONE
+            binding.filter2Diary1.visibility = View.GONE
+            binding.filter2Diary2.visibility = View.GONE
+        }
+
         // Set last year diary 1
-        if (diary[0] != null) {
+        if (diary.size >= 1) {
             binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
             binding.textviewFilter2Diary1Date.text = diary[0].created
             binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
@@ -149,7 +161,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         }
 
         // Set last year diary 2
-        if (diary[1] != null) {
+        if (diary.size >= 2) {
             binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
             binding.textviewFilter2Diary2Date.text = diary[1].created
             binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
@@ -197,24 +209,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         val diary: MutableList<Diary> = mutableListOf()
 
         // Todo: Retrofit을 이용해 연도로 필터링된 diary 가져오기
-        diary.add(
-            Diary(
-                id = 5,
-                title = "5번째 일기",
-                content = "나는 오늘 햄버거를 먹었다",
-                created = "22.11.24",
-                sentiment = pleasure
-            )
-        )
-        diary.add(
-            Diary(
-                id = 6,
-                title = "6번째 일기",
-                content = "나는 오늘 햄버거를 먹었다",
-                created = "22.11.24",
-                sentiment = pleasure
-            )
-        )
+
 
         return diary as ArrayList
     }

@@ -26,7 +26,6 @@ class DiaryFilteredByRecentFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         setRecyclerView()
-
         return binding.root
     }
 
@@ -38,9 +37,7 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setRecyclerView() {
-
-        val diary = getDiary()
-        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diary)
+        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(getDiary())
     }
 
     /**
@@ -51,16 +48,11 @@ class DiaryFilteredByRecentFragment : Fragment() {
      */
     private fun getDiary() : ArrayList<Diary> {
 
-        // Todo: Server에서 최신순으로 필터링된 diary 가져오기
         val diaries: MutableList<Diary> = mutableListOf()
 
-        diaries.add(Diary(id = 5, title = "5번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
-        diaries.add(Diary(id = 6, title = "6번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
-        diaries.add(Diary(id = 7, title = "7번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
-        diaries.add(Diary(id = 8, title = "8번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
+        // Todo: Retrofit을 이용해 최신순으로 필터링된 diary 가져오기
 
         return diaries as ArrayList<Diary>
-
     }
 
     companion object Sentiment {

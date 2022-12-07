@@ -58,7 +58,7 @@ public interface RetrofitAPI {
      * @Param @return - Long userPK
      * @author - vivi108
      */
-    @GET("user/{userNN}")
+    @GET("user/userinfo/{userNN}")
     Call<UserDto.GetUserOnlyInfoResponseDto> getUserPk(@Path("userNN") String userNN);
 
     // **DIARY** TABLE BELOW ----------------------------------------------------------

@@ -31,7 +31,7 @@ public interface RetrofitAPI {
      * @return - 200 OK
      * @author - vivi108
      */
-    @GET("user/{userNN}")
+    @GET("user/NNcheck/{userNN}")
     Call<Boolean> checkUserNNDuplicate(@Path("userNN") Long userNN);
 
     /**
@@ -96,7 +96,7 @@ public interface RetrofitAPI {
      * @return - List<DiaryDto.GetDiaryResponseDto>
      * @author - vivi108
      */
-    @GET("diary/{userPK}/{sent}")
+    @GET("diary/{userPK}/mainSent/{sent}")
     Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbySent(@Path("userPK") Long userPK, @Path("sent") int sent);
     /**
      * @description - 작성된 일기의 개수를 가져오는 API

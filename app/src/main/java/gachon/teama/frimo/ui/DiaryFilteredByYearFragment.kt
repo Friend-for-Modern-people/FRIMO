@@ -130,7 +130,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         binding.layoutFilter2Detail.setOnClickListener {
 
             val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            intent.putExtra("filter", "${year}") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filter", "${year}년") // 어떤 필터가 걸려있는지 전달
             intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
             startActivity(intent)
         }

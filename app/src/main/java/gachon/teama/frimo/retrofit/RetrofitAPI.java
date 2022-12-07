@@ -32,7 +32,7 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @GET("user/{userNN}")
-    Call<Boolean> checkUserNNDuplicate(@Path("userNN") String userNN);
+    Call<Boolean> checkUserNNDuplicate(@Path("userNN") Long userNN);
 
     /**
      * @description - 회원탈퇴
@@ -41,7 +41,7 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @DELETE("user/{userPK}")
-    Call<String> deleteUser(@Path("userPK") String userPK);
+    Call<String> deleteUser(@Path("userPK") Long userPK);
 
     /**
      * @description - 회원조회
@@ -50,7 +50,16 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @GET("user/{userPK}")
-    Call<UserDto.GetUserOnlyInfoResponseDto> getUserInfo(@Path("userPK") String userPK);
+    Call<UserDto.GetUserOnlyInfoResponseDto> getUserInfo(@Path("userPK") Long userPK);
+
+    /**
+     * @description - 닉네임으로 pk 가져오기
+     * @Param @Path {userNN}
+     * @Param @return - Long userPK
+     * @author - vivi108
+     */
+    @GET("user/{userNN}")
+    Call<UserDto.GetUserOnlyInfoResponseDto> getUserPk(@Path("userNN") String userNN);
 
     // **DIARY** TABLE BELOW ----------------------------------------------------------
 
@@ -61,7 +70,7 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @GET("diary/{userPK}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiaries(@Path("userPK") String userPK);
+    Call<List<DiaryDto.GetDiaryResponseDto>> getDiaries(@Path("userPK") Long userPK);
 
     /**
      * @description - 월별 일기를 가져오는 API
@@ -70,16 +79,16 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @GET("diary/{userPK}/{month}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyMonth(@Path("userPK") String userPK, @Path("month") int month);
+    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyMonth(@Path("userPK") Long userPK, @Path("month") int month);
 
     /**
      * @description - 년도별 일기를 가져오는 API
-     * @Param @Path Long {userpk} , @Path int {year}
+     * @Param @Path Long {userpk} , @Path int {year}, @Path int {month}
      * @return - List<DiaryDto.GetDiaryResponseDto>
      * @author - vivi108
      */
-    @GET("diary/{userPK}/{year}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyYear(@Path("userPK") String userPK, @Path("year") int year);
+    @GET("diary/{userPK}/{year}/{month}")
+    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyYear(@Path("userPK") Long userPK, @Path("year") int year, @Path("month") int month);
 
     /**
      * @description - 감정별 일기를 가져오는 API
@@ -88,7 +97,7 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @GET("diary/{userPK}/{sent}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbySent(@Path("userPK") String userPK, @Path("sent") int sent);
+    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbySent(@Path("userPK") Long userPK, @Path("sent") int sent);
     /**
      * @description - 작성된 일기의 개수를 가져오는 API
      * @Param @Path Long {userpk}
@@ -96,7 +105,7 @@ public interface RetrofitAPI {
      * @author - vivi108
      */
     @GET("diary/{userPK}/cnt")
-    Call<Integer> getDiariesCnt(@Path("userPK") String userPK);
+    Call<Integer> getDiariesCnt(@Path("userPK") Long userPK);
 
     // **DIARY INTEREST TAG** TABLE BELOW ----------------------------------------------------------
     /**
@@ -129,6 +138,8 @@ public interface RetrofitAPI {
     @GET("tag/{userPK}/{diaryPK}")
     Call<List<DiaryInterestTagDto.GetTagResponseDto>> get4Tags(@Path("userPk") Long userPk,
                                                               @Path("diaryPk") Long diaryPk);
+
+
 
 
 }

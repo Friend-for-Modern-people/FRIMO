@@ -17,10 +17,6 @@ class DiaryFilteredBySentimentFragment : Fragment() {
     // Binding
     private val binding by lazy { FragmentDiaryFilteredSentimentBinding.inflate(layoutInflater) }
 
-    // Diary
-    private lateinit var filter1Diary: ArrayList<Diary>
-    private lateinit var filter2Diary: ArrayList<Diary>
-
     /**
      * @description - 생명주기 onCreateView
      * @param - inflater(LayoutInflater)
@@ -31,77 +27,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-//        getDiary()
         setScreen()
-        setClickListener()
-
         return binding.root
-    }
-
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setClickListener() {
-
-//        binding.layoutFilter1Detail.setOnClickListener {
-//
-//            // Intent로 필터링된 diary 넣어 전달
-//            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-//            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-//            intent.putExtra("filter", "필터1")
-//            intent.putExtra("filteredDiary", filter1Diary)
-//            startActivity(intent)
-//        }
-//
-//        binding.layoutFilter2Detail.setOnClickListener {
-//
-//            // Intent로 필터링된 diary 넣어 전달
-//            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-//            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-//            intent.putExtra("filter", "필터2")
-//            intent.putExtra("filteredDiary", filter2Diary)
-//            startActivity(intent)
-//        }
-//
-//        // When filter1 diary1 clicked
-//        binding.filter1Diary1.setOnClickListener {
-//
-//            // Intent로 diary id 넣어 전달
-//            val intent = Intent(requireContext(), DiaryActivity::class.java)
-//            intent.putExtra("id", filter1Diary[0].id)
-//            startActivity(intent)
-//        }
-//
-//        // When filter1 diary2 clicked
-//        binding.filter1Diary2.setOnClickListener {
-//
-//            // Intent로 diary id 넣어 전달
-//            val intent = Intent(requireContext(), DiaryActivity::class.java)
-//            intent.putExtra("id", filter1Diary[1].id)
-//            startActivity(intent)
-//        }
-//
-//        // When filter2 diary1 clicked
-//        binding.filter2Diary1.setOnClickListener {
-//
-//            // Intent로 diary id 넣어 전달
-//            val intent = Intent(requireContext(), DiaryActivity::class.java)
-//            intent.putExtra("id", filter2Diary[0].id)
-//            startActivity(intent)
-//        }
-//
-//        // When filter2 diary2 clicked
-//        binding.filter2Diary2.setOnClickListener {
-//
-//            // Intent로 diary id 넣어 전달
-//            val intent = Intent(requireContext(), DiaryActivity::class.java)
-//            intent.putExtra("id", filter2Diary[1].id)
-//            startActivity(intent)
-//        }
-
     }
 
     /**
@@ -112,31 +39,365 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setScreen() {
 
-//        with(binding) {
-//
-//            // Todo: 해당 화면에 보여줄 diary가 없다면 visibility를 gone으로 설정
-//
-//           // Filter1 Diary1 셋팅
-//            textviewFilter1Diary1Date.text = filter1Diary[0].created
-//            textviewFilter1Diary1Sentiment.text = getTextSentiment(filter1Diary[0].sentiment)
-//            imageViewFilter1Diary1.background.setTint(getColor(filter1Diary[0].sentiment))
-//
-//            // Filter1 Diary2 셋팅
-//            textviewFilter1Diary2Date.text = filter1Diary[1].created
-//            textviewFilter1Diary2Sentiment.text = getTextSentiment(filter1Diary[1].sentiment)
-//            imageViewFilter1Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
-//
-//            // Filter2 Diary1 셋팅
-//            textviewFilter2Diary1Date.text = filter2Diary[0].created
-//            textviewFilter2Diary1Sentiment.text = getTextSentiment(filter2Diary[0].sentiment)
-//            imageViewFilter2Diary1.background.setTint(getColor(filter2Diary[0].sentiment))
-//
-//            // Filter2 Diary2 셋팅
-//            textviewFilter2Diary2Date.text = filter2Diary[1].created
-//            textviewFilter2Diary2Sentiment.text = getTextSentiment(filter2Diary[1].sentiment)
-//            imageViewFilter2Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
-//
-//        }
+        setAnger()
+        setSadness()
+        setAnxiety()
+        setWound()
+        setEmbarrassment()
+        setPleasure()
+    }
+
+    /**
+     * @description - 분노로 filtering된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setAnger() {
+
+        val diary = getDiary(anger)
+
+        // Set layout
+        binding.textviewDiaryAngerCount.text = "${diary.size}개"
+
+        // Set layout (anger detail) click listener
+        binding.layoutAngerDetail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "#분노") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if (diary.size == 0) {
+            binding.layoutAnger.visibility = View.GONE
+        }
+
+        // Set anger diary 1
+        if (diary.size >= 1) {
+            binding.textviewAngerDiary1Date.text = diary[0].created
+        } else {
+            binding.angerDiary1.visibility = View.INVISIBLE
+        }
+
+        // Set anger diary 1 click listener
+        binding.angerDiary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set anger diary 2
+        if (diary.size >= 2) {
+            binding.textviewAngerDiary2Date.text = diary[1].created
+        } else {
+            binding.angerDiary2.visibility = View.INVISIBLE
+        }
+
+        // Set anger diary 2 click listener
+        binding.angerDiary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - 슬픔으로 filtering된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setSadness() {
+
+        val diary = getDiary(sadness)
+
+        // Set layout
+        binding.textviewDiarySadnessCount.text = "${diary.size}개"
+
+        // Set layout (sadness detail) click listener
+        binding.layoutSadnessDetail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "#슬픔") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if (diary.size == 0) {
+            binding.layoutSadness.visibility = View.GONE
+        }
+
+        // Set sadness diary 1
+        if (diary.size >= 1) {
+            binding.textviewSadnessDiary1Date.text = diary[0].created
+        } else {
+            binding.sadnessDiary1.visibility = View.INVISIBLE
+        }
+
+        // Set sadness diary 1 click listener
+        binding.sadnessDiary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set sadness diary 2
+        if (diary.size >= 2) {
+            binding.textviewSadnessDiary2Date.text = diary[1].created
+        } else {
+            binding.sadnessDiary2.visibility = View.INVISIBLE
+        }
+
+        // Set sadness diary 2 click listener
+        binding.sadnessDiary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - 불안으로 filtering된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setAnxiety() {
+
+        val diary = getDiary(anxiety)
+
+        // Set layout
+        binding.textviewDiaryAnxietyCount.text = "${diary.size}개"
+
+        // Set layout (anxiety detail) click listener
+        binding.layoutAnxietyDetail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "#불안") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if (diary.size == 0) {
+            binding.layoutAnxiety.visibility = View.GONE
+        }
+
+        // Set anxiety diary 1
+        if (diary.size >= 1) {
+            binding.textviewAnxietyDiary1Date.text = diary[0].created
+        } else {
+            binding.anxietyDiary1.visibility = View.INVISIBLE
+        }
+
+        // Set anxiety diary 1 click listener
+        binding.anxietyDiary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set anxiety diary 2
+        if (diary.size >= 2) {
+            binding.textviewAnxietyDiary2Date.text = diary[1].created
+        } else {
+            binding.anxietyDiary2.visibility = View.INVISIBLE
+        }
+
+        // Set anxiety diary 2 click listener
+        binding.anxietyDiary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - 상처로 filtering된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setWound() {
+
+        val diary = getDiary(wound)
+
+        // Set layout
+        binding.textviewDiaryWoundCount.text = "${diary.size}개"
+
+        // Set layout (wound detail) click listener
+        binding.layoutWoundDetail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "#상처") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if (diary.size == 0) {
+            binding.layoutWound.visibility = View.GONE
+        }
+
+        // Set wound diary 1
+        if (diary.size >= 1) {
+            binding.textviewWoundDiary1Date.text = diary[0].created
+        } else {
+            binding.woundDiary1.visibility = View.INVISIBLE
+        }
+
+        // Set wound diary 1 click listener
+        binding.woundDiary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set wound diary 2
+        if (diary.size >= 2) {
+            binding.textviewWoundDiary2Date.text = diary[1].created
+        } else {
+            binding.woundDiary2.visibility = View.INVISIBLE
+        }
+
+        // Set wound diary 2 click listener
+        binding.woundDiary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - 당황으로 filtering된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setEmbarrassment() {
+
+        val diary = getDiary(embarrassment)
+
+        // Set layout
+        binding.textviewDiaryEmbarrassmentCount.text = "${diary.size}개"
+
+        // Set layout (embarrassment detail) click listener
+        binding.layoutEmbarrassmentDetail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "#당황") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if (diary.size == 0) {
+            binding.layoutEmbarrassment.visibility = View.GONE
+        }
+
+        // Set embarrassment diary 1
+        if (diary.size >= 1) {
+            binding.textviewEmbarrassmentDiary1Date.text = diary[0].created
+        } else {
+            binding.embarrassmentDiary1.visibility = View.INVISIBLE
+        }
+
+        // Set embarrassment diary 1 click listener
+        binding.embarrassmentDiary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set embarrassment diary 2
+        if (diary.size >= 2) {
+            binding.textviewEmbarrassmentDiary2Date.text = diary[1].created
+        } else {
+            binding.embarrassmentDiary2.visibility = View.INVISIBLE
+        }
+
+        // Set embarrassment diary 2 click listener
+        binding.embarrassmentDiary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - 기쁨으로 filtering된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setPleasure() {
+
+        val diary = getDiary(pleasure)
+
+        // Set layout
+        binding.textviewDiaryPleasureCount.text = "${diary.size}개"
+
+        // Set layout (pleasure detail) click listener
+        binding.layoutPleasureDetail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "#기쁨") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if (diary.size == 0) {
+            binding.layoutPleasure.visibility = View.GONE
+        }
+
+        // Set pleasure diary 1
+        if (diary.size >= 1) {
+            binding.textviewPleasureDiary1Date.text = diary[0].created
+        } else {
+            binding.pleasureDiary1.visibility = View.INVISIBLE
+        }
+
+        // Set pleasure diary 1 click listener
+        binding.pleasureDiary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set pleasure diary 2
+        if (diary.size >= 2) {
+            binding.textviewPleasureDiary2Date.text = diary[1].created
+        } else {
+            binding.pleasureDiary2.visibility = View.INVISIBLE
+        }
+
+        // Set pleasure diary 2 click listener
+        binding.pleasureDiary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
 
     }
 
@@ -146,17 +407,14 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      * @return - diaries(Arraylist<Diary>) : 필터링된 diary들 (감정)
      * @author - namsh1125
      */
-    private fun getDiaries(sentiment: Int): ArrayList<Diary> {
+    private fun getDiary(sentiment: Int): ArrayList<Diary> {
 
-        // Todo: 서버에서 filtering된 diary 가져오기
-        val diaries: MutableList<Diary> = mutableListOf()
+        val diary: MutableList<Diary> = mutableListOf()
 
-        diaries.add(Diary(id = 1, title = "1번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
-        diaries.add(Diary(id = 2, title = "2번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
-        diaries.add(Diary(id = 3, title = "3번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
-        diaries.add(Diary(id = 4, title = "4번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
+        // Todo: 서버에서 감정별로 filtering된 diary 가져오기
 
-        return diaries as ArrayList<Diary>
+
+        return diary as ArrayList<Diary>
     }
 
     companion object Sentiment {

@@ -149,8 +149,6 @@ class DiaryFilteredByMonthFragment : Fragment() {
         // Set visibility
         if(diary.size == 0) {
             binding.layoutFilter2.visibility = View.GONE
-            binding.filter2Diary1.visibility = View.GONE
-            binding.filter2Diary2.visibility = View.GONE
         }
 
         // Set last month diary 1
@@ -254,12 +252,12 @@ class DiaryFilteredByMonthFragment : Fragment() {
      */
     private fun getTextSentiment(sentiment: Int): String {
         return when (sentiment) {
-            anger -> "# 분노"
-            sadness -> "# 슬픔"
-            anxiety -> "# 불안"
-            wound -> "# 상처"
-            embarrassment -> "# 당황"
-            else -> "# 기쁨"
+            anger -> "#분노"
+            sadness -> "#슬픔"
+            anxiety -> "#불안"
+            wound -> "#상처"
+            embarrassment -> "#당황"
+            else -> "#기쁨"
         }
     }
 

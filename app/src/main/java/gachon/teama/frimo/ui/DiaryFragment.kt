@@ -16,9 +16,14 @@ import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentDiaryBinding
-import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
+import gachon.teama.frimo.retrofit.DiaryAPI
+import gachon.teama.frimo.retrofit.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class DiaryFragment : Fragment(){
+
+class DiaryFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentDiaryBinding.inflate(layoutInflater) }
@@ -48,17 +53,17 @@ class DiaryFragment : Fragment(){
      * @return - None
      * @author - namsh1125
      */
-    private fun setScreen(){
+    private fun setScreen() {
 
         // Set user nickname
         binding.textviewNickname1.text = database.userDao().getNickname()
         binding.textviewNickname2.text = database.userDao().getNickname()
 
         // 일기장 개수 설정
-        binding.textviewDiaryCount.text = getDiaryCount().toString()
+        setDiaryCount()
 
-        // 최초 실행시 보이는 fragment
-        childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
+        // 최초 실행시 보이는 fragment 셋팅
+        childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
 
     }
 
@@ -68,7 +73,7 @@ class DiaryFragment : Fragment(){
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener(){
+    private fun setClickListener() {
 
         // Set filter button click listener
         binding.buttonFilter.setOnClickListener {
@@ -157,11 +162,11 @@ class DiaryFragment : Fragment(){
         val buttonApply = popupWindow.contentView.findViewById<Button>(R.id.button_apply)
         buttonApply.setOnClickListener {
 
-            if(filterYear.isChecked) {
+            if (filterYear.isChecked) {
                 childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
-            } else if(filterMonth.isChecked) {
+            } else if (filterMonth.isChecked) {
                 childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
-            } else if(filterSentiment.isChecked) {
+            } else if (filterSentiment.isChecked) {
                 childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredBySentimentFragment()).commit()
             } else {
                 childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByRecentFragment()).commit()
@@ -174,15 +179,46 @@ class DiaryFragment : Fragment(){
     }
 
     /**
-     * @description - Server에 유저가 작성한 diary의 갯수 받아오기
+     * @description - Server에 유저가 작성한 diary의 갯수 설정하기
      * @param - None
      * @return - None
      * @author - namsh1125
      */
-    private fun getDiaryCount(): Int{
+    private fun setDiaryCount() {
 
-        // Todo: 서버에서 저장된 diary의 갯수 가져오기
-        return 4
+        var diaryCount : Int? = null
+
+        val userID = database.userDao().getUserId()
+        val retrofit = RetrofitClient.getInstance()
+        val diaryAPI = retrofit.create(DiaryAPI::class.java)
+
+        diaryAPI.getDiaryCount(userID)
+            .enqueue(object : Callback<Int> {
+
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+
+                    if(response.isSuccessful) {
+
+                        // 정상적으로 통신이 성공된 경우
+                        diaryCount = response.body()!!
+                        binding.textviewDiaryCount.text = diaryCount.toString()
+                    } else {
+
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        diaryCount = 0
+                        binding.textviewDiaryCount.text = diaryCount.toString()
+                    }
+                }
+
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+
+                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
+                    binding.textviewDiaryCount.text = diaryCount.toString()
+                }
+
+            })
+
     }
 
 }

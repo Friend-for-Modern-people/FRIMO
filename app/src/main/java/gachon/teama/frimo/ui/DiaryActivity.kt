@@ -41,8 +41,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - id(Int) : diary id
      * @author - namsh1125
      */
-    private fun getDiaryId(): Int {
-        return intent.getIntExtra("id", 0)
+    private fun getDiaryId(): Long {
+        return intent.getLongExtra("id", 0)
     }
 
     /**
@@ -100,11 +100,11 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
     /**
      * @description - 서버로부터 사용자가 작성한 diary를 받아옴
-     * @param - id(Int) : 다이어리 id
+     * @param - id(Long) : 다이어리 id
      * @return - diary(Diary) : 사용자가 작성한 diary
      * @author - namsh1125
      */
-    private fun getDiary(id: Int): Diary {
+    private fun getDiary(id: Long): Diary {
 
         // Todo: 서버에서 해당 diary 받아오기
         val diary = Diary(
@@ -243,11 +243,11 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
     /**
      * @description - 서버로부터 사용자가 작성한 단어를 받아옴
-     * @param - id(Int) : 다이어리 id
+     * @param - id(Long) : 다이어리 id
      * @return - wordList(ArrayList<Word>) : 사용자가 작성한 단어들
      * @author - namsh1125
      */
-    private fun getWords(id: Int): ArrayList<Words> {
+    private fun getWords(id: Long): ArrayList<Words> {
 
         // Todo: 임시로 작성한 아래 코드 지우고 서버에서 data 받아오기
         val words: MutableList<Words> = mutableListOf()

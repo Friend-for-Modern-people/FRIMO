@@ -98,12 +98,12 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
 
     private fun getTextSentiment(sentiment: Int): String {
         return when(sentiment){
-            anger -> "# 분노"
-            sadness -> "# 슬픔"
-            anxiety -> "# 불안"
-            wound -> "# 상처"
-            embarrassment -> "# 당황"
-            else -> "# 기쁨"
+            anger -> "#분노"
+            sadness -> "#슬픔"
+            anxiety -> "#불안"
+            wound -> "#상처"
+            embarrassment -> "#당황"
+            else -> "#기쁨"
         }
     }
 

@@ -9,16 +9,13 @@ import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
+import java.time.LocalDate
 import kotlin.collections.ArrayList
 
 class DiaryFilteredByMonthFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
-
-    // Diary
-    private lateinit var filter1Diary: ArrayList<Diary>
-    private lateinit var filter2Diary: ArrayList<Diary>
 
     /**
      * @description - 생명주기 onCreateView
@@ -30,77 +27,8 @@ class DiaryFilteredByMonthFragment : Fragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        getDiary()
         setScreen()
-        setClickListener()
-
         return binding.root
-    }
-
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setClickListener() {
-
-        binding.layoutFilter1Detail.setOnClickListener {
-
-            // Intent로 필터링된 diary 넣어 전달
-            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-            intent.putExtra("filter", "필터1")
-            intent.putExtra("filteredDiary", filter1Diary)
-            startActivity(intent)
-        }
-
-        binding.layoutFilter2Detail.setOnClickListener {
-
-            // Intent로 필터링된 diary 넣어 전달
-            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            // Todo: 어떤 내용을 기반으로 필터링하는지 intent 수정 필요
-            intent.putExtra("filter", "필터2")
-            intent.putExtra("filteredDiary", filter2Diary)
-            startActivity(intent)
-        }
-
-        // When filter1 diary1 clicked
-        binding.filter1Diary1.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter1Diary[0].id)
-            startActivity(intent)
-        }
-
-        // When filter1 diary2 clicked
-        binding.filter1Diary2.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter1Diary[1].id)
-            startActivity(intent)
-        }
-
-        // When filter2 diary1 clicked
-        binding.filter2Diary1.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter2Diary[0].id)
-            startActivity(intent)
-        }
-
-        // When filter2 diary2 clicked
-        binding.filter2Diary2.setOnClickListener {
-
-            // Intent로 diary id 넣어 전달
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", filter2Diary[1].id)
-            startActivity(intent)
-        }
-
     }
 
     /**
@@ -111,32 +39,191 @@ class DiaryFilteredByMonthFragment : Fragment() {
      */
     private fun setScreen() {
 
-        with(binding) {
+        setCurrentMonth()
+        setLastMonth()
+    }
 
-            // Todo: 해당 화면에 보여줄 diary가 없다면 visibility를 gone으로 설정
+    /**
+     * @description - 현재 연월에 작성된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setCurrentMonth() {
 
-           // Filter1 Diary1 셋팅
-            textviewFilter1Diary1Date.text = filter1Diary[0].created
-            textviewFilter1Diary1Sentiment.text = getTextSentiment(filter1Diary[0].sentiment)
-            imageViewFilter1Diary1.background.setTint(getColor(filter1Diary[0].sentiment))
+        val year = getCurrentYear()
+        val month = getCurrentMonth()
+        val diary = getDiary(year = year, month = month)
 
-            // Filter1 Diary2 셋팅
-            textviewFilter1Diary2Date.text = filter1Diary[1].created
-            textviewFilter1Diary2Sentiment.text = getTextSentiment(filter1Diary[1].sentiment)
-            imageViewFilter1Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
+        // Set layout
+        binding.textviewFilter1.text = "${year}년 ${month}월"
+        binding.textviewFilter1DiaryCount.text = "${diary.size}개"
 
-            // Filter2 Diary1 셋팅
-            textviewFilter2Diary1Date.text = filter2Diary[0].created
-            textviewFilter2Diary1Sentiment.text = getTextSentiment(filter2Diary[0].sentiment)
-            imageViewFilter2Diary1.background.setTint(getColor(filter2Diary[0].sentiment))
+        // Set layout (Current month detail) click listener
+        binding.layoutFilter1Detail.setOnClickListener {
 
-            // Filter2 Diary2 셋팅
-            textviewFilter2Diary2Date.text = filter2Diary[1].created
-            textviewFilter2Diary2Sentiment.text = getTextSentiment(filter2Diary[1].sentiment)
-            imageViewFilter2Diary2.background.setTint(getColor(filter1Diary[1].sentiment))
-
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
         }
 
+        // Set visibility
+        if (diary.size == 0) {
+            binding.filter1Diary1.visibility = View.GONE
+            binding.filter1Diary2.visibility = View.GONE
+        }
+
+        // Set current month diary 1
+        if (diary.size >= 1) {
+            binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
+            binding.textviewFilter1Diary1Date.text = diary[0].created
+            binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+
+        } else {
+            binding.filter1Diary1.visibility = View.INVISIBLE
+        }
+
+        // Set current month diary 1 click listener
+        binding.filter1Diary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set current month diary 2
+        if (diary.size >= 2) {
+            binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
+            binding.textviewFilter1Diary2Date.text = diary[1].created
+            binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+
+        } else {
+            binding.filter1Diary2.visibility = View.INVISIBLE
+        }
+
+        // Set current month diary 2 click listener
+        binding.filter1Diary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - 지난달에 작성된 diary를 화면에 설정
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setLastMonth() {
+
+        val year = if (getCurrentMonth() - 1 == 0) {
+            getCurrentYear() - 1
+        } else {
+            getCurrentYear()
+        }
+
+        val month = if (getCurrentMonth() - 1 == 0) {
+            12
+        } else {
+            getCurrentMonth()
+        }
+        val diary = getDiary(year = year, month = month)
+
+        // Set layout
+        binding.textviewFilter2.text = "${year}년 ${month}월"
+        binding.textviewFilter2DiaryCount.text = "${diary.size}개"
+
+        // Set layout (last month detail) click listener
+        binding.layoutFilter2Detail.setOnClickListener {
+
+            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+            intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
+            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+            startActivity(intent)
+        }
+
+        // Set visibility
+        if(diary.size == 0) {
+            binding.layoutFilter2.visibility = View.GONE
+        }
+
+        // Set last month diary 1
+        if (diary.size >= 1) {
+            binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
+            binding.textviewFilter2Diary1Date.text = diary[0].created
+            binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+
+        } else {
+            binding.filter2Diary1.visibility = View.INVISIBLE
+        }
+
+        // Set last month diary 1 click listener
+        binding.filter2Diary1.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[0].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+        // Set last month diary 2
+        if (diary.size >= 2) {
+            binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
+            binding.textviewFilter2Diary2Date.text = diary[1].created
+            binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+
+        } else {
+            binding.filter2Diary2.visibility = View.INVISIBLE
+        }
+
+        // Set last month diary 2 click listener
+        binding.filter2Diary2.setOnClickListener {
+
+            val intent = Intent(requireContext(), DiaryActivity::class.java)
+            intent.putExtra("id", diary[1].id) // Diary id 전달
+            startActivity(intent)
+        }
+
+    }
+
+    /**
+     * @description - Server에서 해당 연월로 filtering된 diary 가져오기
+     * @param - year(Int) : 필터링하고자 하는 연도
+     * @param - month(Int) : 필터링하고자 하는 월
+     * @return - diary(ArrayList<Diary>) : 해당 연월로 필터링된 diary
+     * @author - namsh1125
+     */
+    private fun getDiary(year: Int, month: Int): ArrayList<Diary> {
+
+        val diary: MutableList<Diary> = mutableListOf()
+
+        // Todo: Retrofit을 이용해 해당 연월로 필터링된 diary 가져오기
+
+
+        return diary as ArrayList
+    }
+
+    /**
+     * @description - 현재 연도 받아오기
+     * @param - None
+     * @return - year(Int) : 현재 연도
+     * @author - namsh1125
+     */
+    private fun getCurrentYear(): Int {
+        return LocalDate.now().year
+    }
+
+    /**
+     * @description - 현재 달 받아오기
+     * @param - None
+     * @return - year(Int) : 현재 연도
+     * @author - namsh1125
+     */
+    private fun getCurrentMonth(): Int {
+        return LocalDate.now().monthValue
     }
 
     /**
@@ -158,69 +245,19 @@ class DiaryFilteredByMonthFragment : Fragment() {
     }
 
     /**
-     * @description - Server에서 filtering된 diary 가져오기
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun getDiary() {
-
-        filter1Diary = getFilter1Diaries()
-        filter2Diary = getFilter2Diaries()
-    }
-
-    /**
-     * @description - 화면 상단에 보여줄 filtering된 diary를 Server에서 가져오기
-     * @param - None
-     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들
-     * @author - namsh1125
-     */
-    private fun getFilter1Diaries() : ArrayList<Diary>{
-
-        // Todo: 서버에서 filtering된 diary 가져오기
-        val diaries: MutableList<Diary> = mutableListOf()
-
-        diaries.add(Diary(id = 1, title = "1번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
-        diaries.add(Diary(id = 2, title = "2번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
-        diaries.add(Diary(id = 3, title = "3번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
-        diaries.add(Diary(id = 4, title = "4번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
-
-        return diaries as ArrayList<Diary>
-    }
-
-    /**
-     * @description - 화면 하단에 보여줄 filtering된 diary를 Server에서 가져오기
-     * @param - None
-     * @return - diaries(Arraylist<Diary>) : 필터링된 diary들
-     * @author - namsh1125
-     */
-    private fun getFilter2Diaries() : ArrayList<Diary>{
-
-        // Todo: 서버에서 filtering된 diary 가져오기
-        val diaries: MutableList<Diary> = mutableListOf()
-
-        diaries.add(Diary(id = 5, title = "5번째 일기", content = "나는 오늘 햄버거를 먹었다", created = "22.11.24", sentiment = pleasure))
-        diaries.add(Diary(id = 6, title = "6번째 일기", content = "나는 오늘 게임을 했다", created = "22.11.25", sentiment = sadness))
-        diaries.add(Diary(id = 7, title = "7번째 일기", content = "나는 집에 가고싶다", created = "22.11.26", sentiment = embarrassment))
-        diaries.add(Diary(id = 8, title = "8번째 일기", content = "해외 여행 가고싶다", created = "22.11.27", sentiment = anxiety))
-
-        return diaries as ArrayList<Diary>
-    }
-
-    /**
      * @description - Type 변경 ( toString 같은 느낌 )
      * @param - sentiment(Int) : 해당 diary의 대표 감정
      * @return - sentiment(String) : String으로 변환된 해당 diary의 대표 감정
      * @author - namsh1125
      */
     private fun getTextSentiment(sentiment: Int): String {
-        return when(sentiment){
-            anger -> "# 분노"
-            sadness -> "# 슬픔"
-            anxiety -> "# 불안"
-            wound -> "# 상처"
-            embarrassment -> "# 당황"
-            else -> "# 기쁨"
+        return when (sentiment) {
+            anger -> "#분노"
+            sadness -> "#슬픔"
+            anxiety -> "#불안"
+            wound -> "#상처"
+            embarrassment -> "#당황"
+            else -> "#기쁨"
         }
     }
 

@@ -42,8 +42,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      */
     private fun setRecyclerview() {
 
-        // 사용자가 작성한 diary에 어떤 감정으로 어떤 단어를 사용했는지 받아오기
-        val id = intent.getIntExtra("id", 0)
+        val id = getDiaryId()
         val words = getWords(id)
 
         // Set reyclerview
@@ -56,6 +55,16 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             binding.recyclerviewWords.adapter = WordsAdapter(words)
         }
 
+    }
+
+    /**
+     * @description - 현재 보고 있는 창이 어떤 diary를 기반으로 하고 있는지 알려주는 함수
+     * @param - None
+     * @return - id(Int) : diary id
+     * @author - namsh1125
+     */
+    private fun getDiaryId() : Int{
+        return intent.getIntExtra("id", 0)
     }
 
     /**
@@ -188,13 +197,26 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
                 val sentiment = getSelectedSentiment()
                 val category = binding.edittextCategory.toString()
 
-                // Todo: 서버에 추가할 단어(text)와 감정(sentiment), 카테고리(categiry)를 함께 전송
+                AddWord(id = getDiaryId(), sentiment = sentiment, category = category)
 
                 Toast.makeText(this@AddWordActivity, "추가되었습니다", Toast.LENGTH_SHORT).show()
                 finish()
             }
 
         }
+
+    }
+
+    /**
+     * @description - 사용자가 추가하고 싶은 단어를 서버에 전송하는 함수
+     * @param - id(Int) : diary id
+     * @param - sentiment(Int) : 해당 단어의 감정
+     * @param - category(String) : 해당 단어를 어떤 분류로 할지
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun AddWord(id: Int, sentiment: Int, category: String) {
+        // Todo: 서버에 추가할 단어(text)와 감정(sentiment), 카테고리(categiry)를 함께 전송
 
     }
 

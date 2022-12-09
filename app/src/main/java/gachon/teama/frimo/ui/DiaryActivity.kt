@@ -17,8 +17,8 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.Diary
-import gachon.teama.frimo.data.remote.Words
+import gachon.teama.frimo.data.entities.Diary
+import gachon.teama.frimo.data.entities.Words
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {

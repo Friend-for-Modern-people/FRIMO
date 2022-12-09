@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
-import gachon.teama.frimo.data.remote.Diary
+import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
 import kotlin.collections.ArrayList
 

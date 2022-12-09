@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import gachon.teama.frimo.data.remote.Diary
+import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class DiaryFilteredBySentimentFragment : Fragment() {
@@ -74,7 +75,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set anger diary 1
         if (diary.size >= 1) {
-            binding.textviewAngerDiary1Date.text = diary[0].created
+            binding.textviewAngerDiary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.angerDiary1.visibility = View.INVISIBLE
         }
@@ -89,7 +90,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set anger diary 2
         if (diary.size >= 2) {
-            binding.textviewAngerDiary2Date.text = diary[1].created
+            binding.textviewAngerDiary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.angerDiary2.visibility = View.INVISIBLE
         }
@@ -133,7 +134,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set sadness diary 1
         if (diary.size >= 1) {
-            binding.textviewSadnessDiary1Date.text = diary[0].created
+            binding.textviewSadnessDiary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.sadnessDiary1.visibility = View.INVISIBLE
         }
@@ -148,7 +149,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set sadness diary 2
         if (diary.size >= 2) {
-            binding.textviewSadnessDiary2Date.text = diary[1].created
+            binding.textviewSadnessDiary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.sadnessDiary2.visibility = View.INVISIBLE
         }
@@ -192,7 +193,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set anxiety diary 1
         if (diary.size >= 1) {
-            binding.textviewAnxietyDiary1Date.text = diary[0].created
+            binding.textviewAnxietyDiary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.anxietyDiary1.visibility = View.INVISIBLE
         }
@@ -207,7 +208,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set anxiety diary 2
         if (diary.size >= 2) {
-            binding.textviewAnxietyDiary2Date.text = diary[1].created
+            binding.textviewAnxietyDiary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.anxietyDiary2.visibility = View.INVISIBLE
         }
@@ -251,7 +252,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set wound diary 1
         if (diary.size >= 1) {
-            binding.textviewWoundDiary1Date.text = diary[0].created
+            binding.textviewWoundDiary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.woundDiary1.visibility = View.INVISIBLE
         }
@@ -266,7 +267,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set wound diary 2
         if (diary.size >= 2) {
-            binding.textviewWoundDiary2Date.text = diary[1].created
+            binding.textviewWoundDiary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.woundDiary2.visibility = View.INVISIBLE
         }
@@ -310,7 +311,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set embarrassment diary 1
         if (diary.size >= 1) {
-            binding.textviewEmbarrassmentDiary1Date.text = diary[0].created
+            binding.textviewEmbarrassmentDiary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.embarrassmentDiary1.visibility = View.INVISIBLE
         }
@@ -325,7 +326,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set embarrassment diary 2
         if (diary.size >= 2) {
-            binding.textviewEmbarrassmentDiary2Date.text = diary[1].created
+            binding.textviewEmbarrassmentDiary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.embarrassmentDiary2.visibility = View.INVISIBLE
         }
@@ -369,7 +370,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set pleasure diary 1
         if (diary.size >= 1) {
-            binding.textviewPleasureDiary1Date.text = diary[0].created
+            binding.textviewPleasureDiary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.pleasureDiary1.visibility = View.INVISIBLE
         }
@@ -384,7 +385,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
         // Set pleasure diary 2
         if (diary.size >= 2) {
-            binding.textviewPleasureDiary2Date.text = diary[1].created
+            binding.textviewPleasureDiary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
         } else {
             binding.pleasureDiary2.visibility = View.INVISIBLE
         }

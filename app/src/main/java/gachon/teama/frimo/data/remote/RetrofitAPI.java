@@ -1,11 +1,8 @@
-package gachon.teama.frimo.retrofit;
+package gachon.teama.frimo.data.remote;
 
-import com.google.firebase.database.core.Repo;
 
 import java.util.List;
 
-import gachon.teama.frimo.data.entities.User;
-import gachon.teama.frimo.retrofit.dto.DiaryDto;
 import gachon.teama.frimo.retrofit.dto.DiaryInterestTagDto;
 import gachon.teama.frimo.retrofit.dto.UserDto;
 import retrofit2.Call;
@@ -60,52 +57,6 @@ public interface RetrofitAPI {
      */
     @GET("user/userinfo/{userNN}")
     Call<UserDto.GetUserOnlyInfoResponseDto> getUserPk(@Path("userNN") String userNN);
-
-    // **DIARY** TABLE BELOW ----------------------------------------------------------
-
-    /**
-     * @description - 최신순의 일기 가져오기
-     * @Param @Path {userpk}
-     * @return - List<DiaryDto.GetDiaryResponseDto>
-     * @author - vivi108
-     */
-    @GET("diary/{userPK}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiaries(@Path("userPK") Long userPK);
-
-    /**
-     * @description - 월별 일기를 가져오는 API
-     * @Param @Path Long {userpk} , @Path int {month}
-     * @return - List<DiaryDto.GetDiaryResponseDto>
-     * @author - vivi108
-     */
-    @GET("diary/{userPK}/{month}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyMonth(@Path("userPK") Long userPK, @Path("month") int month);
-
-    /**
-     * @description - 년도별 일기를 가져오는 API
-     * @Param @Path Long {userpk} , @Path int {year}, @Path int {month}
-     * @return - List<DiaryDto.GetDiaryResponseDto>
-     * @author - vivi108
-     */
-    @GET("diary/{userPK}/{year}/{month}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbyYear(@Path("userPK") Long userPK, @Path("year") int year, @Path("month") int month);
-
-    /**
-     * @description - 감정별 일기를 가져오는 API
-     * @Param @Path Long {userpk} , @Path int {sent} //0~5
-     * @return - List<DiaryDto.GetDiaryResponseDto>
-     * @author - vivi108
-     */
-    @GET("diary/{userPK}/mainSent/{sent}")
-    Call<List<DiaryDto.GetDiaryResponseDto>> getDiariesbySent(@Path("userPK") Long userPK, @Path("sent") int sent);
-    /**
-     * @description - 작성된 일기의 개수를 가져오는 API
-     * @Param @Path Long {userpk}
-     * @return - Integer
-     * @author - vivi108
-     */
-    @GET("diary/{userPK}/cnt")
-    Call<Integer> getDiariesCnt(@Path("userPK") Long userPK);
 
     // **DIARY INTEREST TAG** TABLE BELOW ----------------------------------------------------------
     /**

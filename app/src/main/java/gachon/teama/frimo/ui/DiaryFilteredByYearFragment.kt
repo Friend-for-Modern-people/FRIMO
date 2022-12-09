@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.remote.Diary
+import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class DiaryFilteredByYearFragment : Fragment() {
@@ -76,7 +77,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         // Set current year diary 1
         if (diary.size >= 1) {
             binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
-            binding.textviewFilter1Diary1Date.text = diary[0].created
+            binding.textviewFilter1Diary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
             binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
 
         } else {
@@ -94,7 +95,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         // Set current year diary 2
         if (diary.size >= 2) {
             binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
-            binding.textviewFilter1Diary2Date.text = diary[1].created
+            binding.textviewFilter1Diary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
             binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
 
         } else {
@@ -143,7 +144,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         // Set last year diary 1
         if (diary.size >= 1) {
             binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
-            binding.textviewFilter2Diary1Date.text = diary[0].created
+            binding.textviewFilter2Diary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
             binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
 
         } else {
@@ -161,7 +162,7 @@ class DiaryFilteredByYearFragment : Fragment() {
         // Set last year diary 2
         if (diary.size >= 2) {
             binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
-            binding.textviewFilter2Diary2Date.text = diary[1].created
+            binding.textviewFilter2Diary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
             binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
 
         } else {

@@ -1,4 +1,4 @@
-package gachon.teama.frimo.data.remote
+package gachon.teama.frimo.data.entities
 
 data class Words(
     val word: String, // 내가 쓴 단어들

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.remote.Chat
+import gachon.teama.frimo.data.entities.Chat
 import java.text.SimpleDateFormat
 
 class ChatAdapter(private var ChatList: MutableList<Chat>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

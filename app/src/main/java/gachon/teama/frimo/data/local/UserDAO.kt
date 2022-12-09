@@ -23,6 +23,14 @@ interface UserDAO {
     @Query("UPDATE User Set nickname = :nickname")
     fun updateNickname(nickname: String) : Void
 
+    // Get user id
+    @Query("Select userId from User")
+    fun getUserId() : Long
+
+    // Update user id
+    @Query("UPDATE User Set userId = :id")
+    fun updateUserId(id: Long) : Void
+
     // Get recently chat date
     @Query("Select recently_chat_date from User")
     fun getRecentlyChatDate() : String

@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
-import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlin.collections.ArrayList
 
 class DiaryFilteredBySentimentFragment : Fragment() {

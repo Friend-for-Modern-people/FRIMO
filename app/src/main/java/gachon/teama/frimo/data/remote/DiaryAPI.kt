@@ -25,7 +25,7 @@ interface DiaryAPI {
 
     // 유저가 특정 감정으로 작성한 diary를 가져오는 API
     @GET("diary/{userPK}/mainSent/{sent}")
-    fun getDiaryBySentiment(@Path("userPK") userId: Long, @Path("sent") sentiment: Int) : Call<List<Diary>>
+    fun getDiaryBySentiment(@Path("userPK") userId: Long, @Path("sent") sentiment: Int) : Call<List<Diary>> // sent :0~5
 
 }
 

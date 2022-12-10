@@ -1,15 +1,35 @@
-package gachon.teama.frimo.data.remote;
+package gachon.teama.frimo.data.remote
 
+import gachon.teama.frimo.retrofit.dto.UserDto
+import retrofit2.Call
+import retrofit2.http.*
 
-import gachon.teama.frimo.retrofit.dto.UserDto;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+interface UserAPI {
 
-public interface RetrofitAPI {
+    // 회원 가입
+    @POST("user")
+    fun registUser(@Body use: UserDto.RegistRequestDto): Call<String>
+
+    // 닉네임 중복 확인
+    // Todo: 닉네임이 String이 아니라 Long임. 확인 필요.
+    @GET("user/NNcheck/{userNN}")
+    fun checkDuplicateNickname(@Path("userNN") nickname: Long): Call<Boolean>
+
+    // 회원 탈퇴
+    @DELETE("user/{userPK}")
+    fun deleteUser(@Path("userPK") userId: Long): Call<String>
+
+    // user 조회
+    @GET("user/{userPK}")
+    fun getUserInfo(@Path("userPK") userId: Long): Call<UserDto.GetUserOnlyInfoResponseDto>
+
+    // user id 가져오기
+    @GET("user/userinfo/{userNN}")
+    fun getUserId(@Path("userNN") nickname: String): Call<UserDto.GetUserOnlyInfoResponseDto>
+}
+
+/*
+
     /**
      * @description - 회원가입
      * @RequestBody UserDto.registRequestDto
@@ -55,4 +75,4 @@ public interface RetrofitAPI {
     @GET("user/userinfo/{userNN}")
     Call<UserDto.GetUserOnlyInfoResponseDto> getUserPk(@Path("userNN") String userNN);
 
-}
+ */

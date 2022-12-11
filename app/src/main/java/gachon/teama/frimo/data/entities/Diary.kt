@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import gachon.teama.frimo.retrofit.dao.User
 import kotlinx.parcelize.Parcelize
-import java.time.LocalDateTime
 
 // Todo: 키워드, 댓글 추가 방법 알아볼 것
 @Parcelize

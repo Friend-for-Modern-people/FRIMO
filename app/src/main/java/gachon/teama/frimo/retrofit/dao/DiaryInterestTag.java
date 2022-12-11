@@ -1,5 +1,6 @@
 package gachon.teama.frimo.retrofit.dao;
 
+import gachon.teama.frimo.data.entities.Diary;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

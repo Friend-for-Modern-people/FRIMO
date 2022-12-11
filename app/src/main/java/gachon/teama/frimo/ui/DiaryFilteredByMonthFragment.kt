@@ -68,21 +68,14 @@ class DiaryFilteredByMonthFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        val userId : Long = database.userDao().getUserId()
-
-        diaryAPI.getDiaryByMonth(year = year, month = month, userId = userId)
+        diaryAPI.getDiaryByMonth(year = year, month = month, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>>{
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-                    if(response.isSuccessful) {
-
-                        // 정상적으로 통신이 성공된 경우
-                        Log.d("Current Month Retrofit", "통신 성공")
+                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
                         val diary : ArrayList<Diary> = response.body() as ArrayList
-                        Log.d("current month response body", response.body().toString())
-                        Log.d("current month diary", diary.toString())
 
                         // Set layout
                         binding.textviewFilter1.text = "${year}년 ${month}월"
@@ -139,25 +132,16 @@ class DiaryFilteredByMonthFragment : Fragment() {
                             startActivity(intent)
                         }
 
-                    } else {
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
 
-                        Log.d("Current Month Retrofit", "통신 성공, body null")
-
-                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                        Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) {
-
-                    Log.d("Current Month Retrofit", "통신 실패")
-                    Log.d("Current Month Retrofit", t.message.toString())
-                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
 
             })
-
 
     }
 
@@ -184,18 +168,14 @@ class DiaryFilteredByMonthFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        val userId : Long = database.userDao().getUserId()
-
-        diaryAPI.getDiaryByMonth(year = year, month = month, userId = userId)
+        diaryAPI.getDiaryByMonth(year = year, month = month, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>>{
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
-                    if(response.isSuccessful) {
 
-                        // 정상적으로 통신이 성공된 경우
-                        Log.d("Retrofit", "통신 성공")
+                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+
                         val diary : ArrayList<Diary> = response.body() as ArrayList
-                        Log.d("diary", diary.toString())
 
                         // Set layout
                         binding.textviewFilter2.text = "${year}년 ${month}월"
@@ -251,25 +231,15 @@ class DiaryFilteredByMonthFragment : Fragment() {
                             startActivity(intent)
                         }
 
-                    } else {
-                        Log.d("Retrofit", "통신 성공, body null")
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
 
-                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                        Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) {
-
-                    Log.d("Retrofit", "통신 실패")
-
-                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })
-
-
-
 
     }
 

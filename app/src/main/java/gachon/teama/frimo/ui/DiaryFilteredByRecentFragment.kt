@@ -52,29 +52,22 @@ class DiaryFilteredByRecentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        val userId : Long = database.userDao().getUserId()
-
-        diaryAPI.getDiary(userId = userId)
+        diaryAPI.getDiary(userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-                        // 정상적으로 통신이 성공된 경우
                         val diary : ArrayList<Diary> = response.body() as ArrayList
                         binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diary)
 
-                    } else {
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
 
-                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                        Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) {
-
-                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
 

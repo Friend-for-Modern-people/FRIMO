@@ -20,7 +20,9 @@ import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.entities.Words
+import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryAPI
+import gachon.teama.frimo.data.remote.DiaryInterestAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
 import retrofit2.Call
@@ -28,6 +30,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
+
+    // Database
+    private val database by lazy { AppDatabase.getInstance(this)!! }
 
     /**
      * @description - Binding 이후
@@ -60,12 +65,17 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun setScreen() {
 
         setDiary()
-        // Todo: 키워드 셋팅
+        setKeyword()
         // Todo: (Not now) 댓글 셋팅
-
 
     }
 
+    /**
+     * @description - 서버에서 diary 정보 받아와 화면에 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
     private fun setDiary() {
 
         val retrofit = RetrofitClient.getInstance()
@@ -128,6 +138,75 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                 }
 
                 override fun onFailure(call: Call<Diary>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+    }
+
+    /**
+     * @description - 서버에서 diary의 핵심 키워드 받아와 화면에 셋팅
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setKeyword() {
+
+        val retrofit = RetrofitClient.getInstance()
+        val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
+
+        diaryInterestAPI.getFourWord(userId = database.userDao().getUserId(), diaryId = getDiaryId())
+            .enqueue(object : Callback<List<Words>> {
+
+                override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
+
+                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+
+                        var keywords : List<Words> = response.body() as List<Words>
+
+                        if(keywords.size == 0) {
+
+                            binding.textviewKeyword1.visibility = View.INVISIBLE
+                            binding.textviewKeyword2.visibility = View.INVISIBLE
+                            binding.textviewKeyword3.visibility = View.INVISIBLE
+                            binding.textviewKeyword4.visibility = View.INVISIBLE
+
+                        } else if (keywords.size == 1) {
+
+                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                            binding.textviewKeyword2.visibility = View.INVISIBLE
+                            binding.textviewKeyword3.visibility = View.INVISIBLE
+                            binding.textviewKeyword4.visibility = View.INVISIBLE
+
+                        } else if (keywords.size == 2) {
+
+                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                            binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                            binding.textviewKeyword3.visibility = View.INVISIBLE
+                            binding.textviewKeyword4.visibility = View.INVISIBLE
+
+                        } else if (keywords.size == 3 ) {
+
+                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                            binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                            binding.textviewKeyword3.text = "# ${keywords[2].word}"
+                            binding.textviewKeyword4.visibility = View.INVISIBLE
+
+                        } else {
+
+                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                            binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                            binding.textviewKeyword3.text = "# ${keywords[2].word}"
+                            binding.textviewKeyword4.text = "# ${keywords[3].word}"
+
+                        }
+
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })

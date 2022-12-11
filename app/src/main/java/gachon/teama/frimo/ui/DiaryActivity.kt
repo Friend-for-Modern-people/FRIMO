@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -19,9 +20,12 @@ import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.entities.Words
+import gachon.teama.frimo.data.remote.DiaryAPI
+import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
-import gachon.teama.frimo.retrofit.dao.User
-import java.time.LocalDateTime
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
@@ -55,73 +59,79 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     private fun setScreen() {
 
-        // Get diary
-        val id = getDiaryId()
-        val diary = getDiary(id)
+        setDiary()
+        // Todo: 키워드 셋팅
+        // Todo: (Not now) 댓글 셋팅
 
-        with(binding) {
 
-            textviewDate.text = diary.createdString
-            textviewDiaryTitle.text = diary.title
-            textviewDiaryContents.text = diary.content
-            textviewSentiment.text = getTextSentiment(diary.sentiment)
-
-            // 감정에 맞게 태그 및 그림 배경 변경
-            when (diary.sentiment) {
-                pleasure -> {
-                    textviewSentiment.background.setTint(resources.getColor(R.color.pleasure))
-                    imageViewDiary.background.setTint(resources.getColor(R.color.pleasure))
-                }
-                sadness -> {
-                    textviewSentiment.background.setTint(resources.getColor(R.color.sadness))
-                    imageViewDiary.background.setTint(resources.getColor(R.color.sadness))
-                }
-                anxiety -> {
-                    textviewSentiment.background.setTint(resources.getColor(R.color.anxiety))
-                    imageViewDiary.background.setTint(resources.getColor(R.color.anxiety))
-                }
-                wound -> {
-                    textviewSentiment.background.setTint(resources.getColor(R.color.wound))
-                    imageViewDiary.background.setTint(resources.getColor(R.color.wound))
-                }
-                embarrassment -> {
-                    textviewSentiment.background.setTint(resources.getColor(R.color.embarrassment))
-                    imageViewDiary.background.setTint(resources.getColor(R.color.embarrassment))
-                }
-                anger -> {
-                    textviewSentiment.background.setTint(resources.getColor(R.color.anger))
-                    imageViewDiary.background.setTint(resources.getColor(R.color.anger))
-                }
-            }
-
-            // Todo: 키워드 셋팅
-            // Todo: (Not now) 댓글 셋팅
-
-        }
     }
 
-    /**
-     * @description - 서버로부터 사용자가 작성한 diary를 받아옴
-     * @param - id(Long) : 다이어리 id
-     * @return - diary(Diary) : 사용자가 작성한 diary
-     * @author - namsh1125
-     */
-    private fun getDiary(id: Long): Diary {
+    private fun setDiary() {
 
-        // Todo: 서버에서 해당 diary 받아오기
-        val diary = Diary(
-            id = 1,
-            title = "1번째 일기",
-            content = "나는 오늘 햄버거를 먹었다",
-            created = "${LocalDateTime.now()}",
-            createdString = "${LocalDateTime.now()}",
-            sentiment = pleasure,
-            createdMonth = LocalDateTime.now().monthValue,
-            createdYear = LocalDateTime.now().year,
-            user = User("1", "test")
-        )
+        val retrofit = RetrofitClient.getInstance()
+        val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        return diary
+        diaryAPI.getDiaryById(diaryId = getDiaryId())
+            .enqueue(object : Callback<Diary> {
+
+                override fun onResponse(call: Call<Diary>, response: Response<Diary>) {
+
+                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+
+                        val diary : Diary = response.body() as Diary
+
+                        with(binding) {
+
+                            textviewDate.text = diary.createdString
+                            textviewDiaryTitle.text = diary.title
+                            textviewDiaryContents.text = diary.content
+                            textviewSentiment.text = getTextSentiment(diary.sentiment)
+
+                            // 감정에 맞게 태그 및 그림 배경 변경
+                            when (diary.sentiment) {
+                                pleasure -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.pleasure))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.pleasure))
+                                }
+                                sadness -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.sadness))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.sadness))
+                                }
+                                anxiety -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.anxiety))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.anxiety))
+                                }
+                                wound -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.wound))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.wound))
+                                }
+                                embarrassment -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.embarrassment))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.embarrassment))
+                                }
+                                anger -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.anger))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.anger))
+                                }
+                                else -> {
+                                    textviewSentiment.background.setTint(resources.getColor(R.color.black))
+                                    imageViewDiary.background.setTint(resources.getColor(R.color.black))
+                                }
+                            }
+
+                        }
+
+
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+
+                    }
+                }
+
+                override fun onFailure(call: Call<Diary>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+            })
+
     }
 
     /**
@@ -294,7 +304,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
             wound -> "# 상처"
             embarrassment -> "# 당황"
             pleasure -> "# 기쁨"
-            else -> "#에러"
+            else -> "# 에러"
         }
     }
 

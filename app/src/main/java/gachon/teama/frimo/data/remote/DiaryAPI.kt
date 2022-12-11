@@ -27,6 +27,10 @@ interface DiaryAPI {
     @GET("diary/{userPK}/mainSent/{sent}")
     fun getDiaryBySentiment(@Path("userPK") userId: Long, @Path("sent") sentiment: Int) : Call<List<Diary>> // sent :0~5
 
+    // diary id로 해당 diary 가져오는 API
+    @GET("diary/{diaryPK}/only1")
+    fun getDiaryById(@Path("diaryPK") diaryId: Long) : Call<Diary>
+
 }
 
 /*

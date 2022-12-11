@@ -181,23 +181,16 @@ class DiaryFilteredByYearFragment : Fragment() {
                             startActivity(intent)
                         }
 
-                        // Set visibility
-                        if(diary.size == 0) {
-                            binding.layoutFilter2.visibility = View.GONE
-                        }
-
                         // Set last year diary 1
                         if (diary.size >= 1) {
 
-                            binding.filter1Diary1.visibility = View.VISIBLE
-                            binding.filter1Diary2.visibility = View.INVISIBLE
+                            binding.filter2Diary1.visibility = View.VISIBLE
+                            binding.filter2Diary2.visibility = View.INVISIBLE
 
                             binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
                             binding.textviewFilter2Diary1Date.text = diary[0].createdString
                             binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
 
-                        } else {
-                            binding.filter2Diary1.visibility = View.INVISIBLE
                         }
 
                         // Set last year diary 1 click listener
@@ -211,15 +204,12 @@ class DiaryFilteredByYearFragment : Fragment() {
                         // Set last year diary 2
                         if (diary.size >= 2) {
 
-                            binding.filter1Diary1.visibility = View.VISIBLE
-                            binding.filter1Diary2.visibility = View.VISIBLE
+                            binding.filter2Diary2.visibility = View.VISIBLE
 
                             binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
                             binding.textviewFilter2Diary2Date.text = diary[1].createdString
                             binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
 
-                        } else {
-                            binding.filter2Diary2.visibility = View.INVISIBLE
                         }
 
                         // Set last year diary 2 click listener
@@ -258,7 +248,8 @@ class DiaryFilteredByYearFragment : Fragment() {
             anxiety -> resources.getColor(R.color.anxiety)
             wound -> resources.getColor(R.color.wound)
             embarrassment -> resources.getColor(R.color.embarrassment)
-            else -> resources.getColor(R.color.anger)
+            anger -> resources.getColor(R.color.anger)
+            else -> resources.getColor(R.color.black)
         }
     }
 
@@ -286,7 +277,8 @@ class DiaryFilteredByYearFragment : Fragment() {
             anxiety -> "#불안"
             wound -> "#상처"
             embarrassment -> "#당황"
-            else -> "#기쁨"
+            pleasure -> "#기쁨"
+            else -> "#에러"
         }
     }
 

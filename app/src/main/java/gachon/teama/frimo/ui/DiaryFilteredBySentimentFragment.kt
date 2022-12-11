@@ -502,7 +502,6 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         // Set pleasure diary 2
                         if (diary.size >= 2) {
 
-                            binding.pleasureDiary1.visibility = View.VISIBLE
                             binding.pleasureDiary2.visibility = View.VISIBLE
 
                             binding.textviewPleasureDiary2Date.text = diary[1].createdString

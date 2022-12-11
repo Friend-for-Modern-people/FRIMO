@@ -83,6 +83,13 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
                     )
                 )
             }
+            else -> {
+                viewHolder.imageView.background.setTint(
+                    viewHolder.itemView.context.resources.getColor(
+                        R.color.black
+                    )
+                )
+            }
         }
 
         // When recyclerview item(diary) clicked
@@ -103,7 +110,8 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
             anxiety -> "#불안"
             wound -> "#상처"
             embarrassment -> "#당황"
-            else -> "#기쁨"
+            pleasure -> "#기쁨"
+            else -> "#에러"
         }
     }
 

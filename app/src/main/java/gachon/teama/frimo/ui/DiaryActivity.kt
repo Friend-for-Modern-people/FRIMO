@@ -293,7 +293,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
             anxiety -> "# 불안"
             wound -> "# 상처"
             embarrassment -> "# 당황"
-            else -> "# 기쁨"
+            pleasure -> "# 기쁨"
+            else -> "#에러"
         }
     }
 

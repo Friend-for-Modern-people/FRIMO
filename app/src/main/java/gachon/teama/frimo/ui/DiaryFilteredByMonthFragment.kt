@@ -89,14 +89,12 @@ class DiaryFilteredByMonthFragment : Fragment() {
                             startActivity(intent)
                         }
 
-                        // Set visibility
-                        if (diary.size == 0) {
-                            binding.filter1Diary1.visibility = View.GONE
-                            binding.filter1Diary2.visibility = View.GONE
-                        }
-
                         // Set current month diary 1
                         if (diary.size >= 1) {
+
+                            binding.filter1Diary1.visibility = View.VISIBLE
+                            binding.filter1Diary2.visibility = View.INVISIBLE
+
                             binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
                             binding.textviewFilter1Diary1Date.text = diary[0].createdString
                             binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
@@ -115,6 +113,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
 
                         // Set current month diary 2
                         if (diary.size >= 2) {
+
+                            binding.filter1Diary1.visibility = View.VISIBLE
+                            binding.filter1Diary2.visibility = View.VISIBLE
+
                             binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
                             binding.textviewFilter1Diary2Date.text = diary[1].createdString
                             binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
@@ -196,6 +198,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
 
                         // Set last month diary 1
                         if (diary.size >= 1) {
+
+                            binding.filter1Diary1.visibility = View.VISIBLE
+                            binding.filter1Diary2.visibility = View.INVISIBLE
+
                             binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
                             binding.textviewFilter2Diary1Date.text = diary[0].createdString
                             binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
@@ -214,6 +220,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
 
                         // Set last month diary 2
                         if (diary.size >= 2) {
+
+                            binding.filter1Diary1.visibility = View.VISIBLE
+                            binding.filter1Diary2.visibility = View.VISIBLE
+
                             binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
                             binding.textviewFilter2Diary2Date.text = diary[1].createdString
                             binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)

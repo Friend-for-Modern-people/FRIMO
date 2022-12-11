@@ -1,19 +1,30 @@
 package gachon.teama.frimo.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.data.entities.Diary
+import gachon.teama.frimo.data.local.AppDatabase
+import gachon.teama.frimo.data.remote.DiaryAPI
+import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
-import kotlin.collections.ArrayList
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DiaryFilteredByRecentFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentDiaryFilteredRecentlyBinding.inflate(layoutInflater) }
+
+    // Database
+    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
     /**
      * @description - 생명주기 onCreateView
@@ -37,22 +48,39 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setRecyclerView() {
-        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(getDiary())
-    }
 
-    /**
-     * @description - Server에서 최신순으로 필터링된 diary 가져오기
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun getDiary() : ArrayList<Diary> {
+        val retrofit = RetrofitClient.getInstance()
+        val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        val diaries: MutableList<Diary> = mutableListOf()
+        val userId : Long = database.userDao().getUserId()
 
-        // Todo: Retrofit을 이용해 최신순으로 필터링된 diary 가져오기
+        diaryAPI.getDiary(userId = userId)
+            .enqueue(object : Callback<List<Diary>> {
 
-        return diaries as ArrayList<Diary>
+                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+
+                    if(response.isSuccessful) {
+
+                        // 정상적으로 통신이 성공된 경우
+                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diary)
+
+                    } else {
+
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) {
+
+                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+
+
     }
 
     companion object Sentiment {

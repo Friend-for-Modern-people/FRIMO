@@ -11,9 +11,8 @@ interface UserAPI {
     fun registUser(@Body use: UserDto.RegistRequestDto): Call<String>
 
     // 닉네임 중복 확인
-    // Todo: 닉네임이 String이 아니라 Long임. 확인 필요.
     @GET("user/NNcheck/{userNN}")
-    fun checkDuplicateNickname(@Path("userNN") nickname: Long): Call<Boolean>
+    fun checkDuplicateNickname(@Path("userNN") nickname: String): Call<Boolean>
 
     // 회원 탈퇴
     @DELETE("user/{userPK}")

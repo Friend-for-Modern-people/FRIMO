@@ -37,7 +37,7 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.textView_date.text = dataSet[position].created
+        viewHolder.textView_date.text = dataSet[position].createdString
         viewHolder.textView_sentiment.text = getTextSentiment(dataSet[position].sentiment)
 
         // 이미지 배경 셋팅

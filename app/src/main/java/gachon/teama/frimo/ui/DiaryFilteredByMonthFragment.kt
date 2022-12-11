@@ -2,21 +2,31 @@ package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Diary
+import gachon.teama.frimo.data.local.AppDatabase
+import gachon.teama.frimo.data.remote.DiaryAPI
+import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class DiaryFilteredByMonthFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
+
+    // Database
+    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
     /**
      * @description - 생명주기 onCreateView
@@ -54,62 +64,100 @@ class DiaryFilteredByMonthFragment : Fragment() {
 
         val year = getCurrentYear()
         val month = getCurrentMonth()
-        val diary = getDiary(year = year, month = month)
 
-        // Set layout
-        binding.textviewFilter1.text = "${year}년 ${month}월"
-        binding.textviewFilter1DiaryCount.text = "${diary.size}개"
+        val retrofit = RetrofitClient.getInstance()
+        val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        // Set layout (Current month detail) click listener
-        binding.layoutFilter1Detail.setOnClickListener {
+        val userId : Long = database.userDao().getUserId()
 
-            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
-            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-            startActivity(intent)
-        }
+        diaryAPI.getDiaryByMonth(year = year, month = month, userId = userId)
+            .enqueue(object : Callback<List<Diary>>{
 
-        // Set visibility
-        if (diary.size == 0) {
-            binding.filter1Diary1.visibility = View.GONE
-            binding.filter1Diary2.visibility = View.GONE
-        }
+                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-        // Set current month diary 1
-        if (diary.size >= 1) {
-            binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
-            binding.textviewFilter1Diary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
-            binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+                    if(response.isSuccessful) {
 
-        } else {
-            binding.filter1Diary1.visibility = View.INVISIBLE
-        }
+                        // 정상적으로 통신이 성공된 경우
+                        Log.d("Current Month Retrofit", "통신 성공")
 
-        // Set current month diary 1 click listener
-        binding.filter1Diary1.setOnClickListener {
+                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        Log.d("current month response body", response.body().toString())
+                        Log.d("current month diary", diary.toString())
 
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary[0].id) // Diary id 전달
-            startActivity(intent)
-        }
+                        // Set layout
+                        binding.textviewFilter1.text = "${year}년 ${month}월"
+                        binding.textviewFilter1DiaryCount.text = "${diary.size}개"
 
-        // Set current month diary 2
-        if (diary.size >= 2) {
-            binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
-            binding.textviewFilter1Diary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
-            binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+                        // Set layout (Current month detail) click listener
+                        binding.layoutFilter1Detail.setOnClickListener {
 
-        } else {
-            binding.filter1Diary2.visibility = View.INVISIBLE
-        }
+                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                            intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
+                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+                            startActivity(intent)
+                        }
 
-        // Set current month diary 2 click listener
-        binding.filter1Diary2.setOnClickListener {
+                        // Set visibility
+                        if (diary.size == 0) {
+                            binding.filter1Diary1.visibility = View.GONE
+                            binding.filter1Diary2.visibility = View.GONE
+                        }
 
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary[1].id) // Diary id 전달
-            startActivity(intent)
-        }
+                        // Set current month diary 1
+                        if (diary.size >= 1) {
+                            binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
+                            binding.textviewFilter1Diary1Date.text = diary[0].createdString
+                            binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+
+                        } else {
+                            binding.filter1Diary1.visibility = View.INVISIBLE
+                        }
+
+                        // Set current month diary 1 click listener
+                        binding.filter1Diary1.setOnClickListener {
+
+                            val intent = Intent(requireContext(), DiaryActivity::class.java)
+                            intent.putExtra("id", diary[0].id) // Diary id 전달
+                            startActivity(intent)
+                        }
+
+                        // Set current month diary 2
+                        if (diary.size >= 2) {
+                            binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
+                            binding.textviewFilter1Diary2Date.text = diary[1].createdString
+                            binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+
+                        } else {
+                            binding.filter1Diary2.visibility = View.INVISIBLE
+                        }
+
+                        // Set current month diary 2 click listener
+                        binding.filter1Diary2.setOnClickListener {
+
+                            val intent = Intent(requireContext(), DiaryActivity::class.java)
+                            intent.putExtra("id", diary[1].id) // Diary id 전달
+                            startActivity(intent)
+                        }
+
+                    } else {
+
+                        Log.d("Current Month Retrofit", "통신 성공, body null")
+
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) {
+
+                    Log.d("Current Month Retrofit", "통신 실패")
+                    Log.d("Current Month Retrofit", t.message.toString())
+                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+
 
     }
 
@@ -130,82 +178,101 @@ class DiaryFilteredByMonthFragment : Fragment() {
         val month = if (getCurrentMonth() - 1 == 0) {
             12
         } else {
-            getCurrentMonth()
-        }
-        val diary = getDiary(year = year, month = month)
-
-        // Set layout
-        binding.textviewFilter2.text = "${year}년 ${month}월"
-        binding.textviewFilter2DiaryCount.text = "${diary.size}개"
-
-        // Set layout (last month detail) click listener
-        binding.layoutFilter2Detail.setOnClickListener {
-
-            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-            intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
-            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-            startActivity(intent)
+            getCurrentMonth() - 1
         }
 
-        // Set visibility
-        if(diary.size == 0) {
-            binding.layoutFilter2.visibility = View.GONE
-        }
+        val retrofit = RetrofitClient.getInstance()
+        val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        // Set last month diary 1
-        if (diary.size >= 1) {
-            binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
-            binding.textviewFilter2Diary1Date.text = diary[0].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
-            binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+        val userId : Long = database.userDao().getUserId()
 
-        } else {
-            binding.filter2Diary1.visibility = View.INVISIBLE
-        }
+        diaryAPI.getDiaryByMonth(year = year, month = month, userId = userId)
+            .enqueue(object : Callback<List<Diary>>{
 
-        // Set last month diary 1 click listener
-        binding.filter2Diary1.setOnClickListener {
+                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+                    if(response.isSuccessful) {
 
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary[0].id) // Diary id 전달
-            startActivity(intent)
-        }
+                        // 정상적으로 통신이 성공된 경우
+                        Log.d("Retrofit", "통신 성공")
+                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        Log.d("diary", diary.toString())
 
-        // Set last month diary 2
-        if (diary.size >= 2) {
-            binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
-            binding.textviewFilter2Diary2Date.text = diary[1].created.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
-            binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+                        // Set layout
+                        binding.textviewFilter2.text = "${year}년 ${month}월"
+                        binding.textviewFilter2DiaryCount.text = "${diary.size}개"
 
-        } else {
-            binding.filter2Diary2.visibility = View.INVISIBLE
-        }
+                        // Set layout (last month detail) click listener
+                        binding.layoutFilter2Detail.setOnClickListener {
 
-        // Set last month diary 2 click listener
-        binding.filter2Diary2.setOnClickListener {
+                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                            intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
+                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
+                            startActivity(intent)
+                        }
 
-            val intent = Intent(requireContext(), DiaryActivity::class.java)
-            intent.putExtra("id", diary[1].id) // Diary id 전달
-            startActivity(intent)
-        }
+                        // Set visibility
+                        if (diary.size == 0) {
+                            binding.layoutFilter2.visibility = View.GONE
+                        }
+
+                        // Set last month diary 1
+                        if (diary.size >= 1) {
+                            binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
+                            binding.textviewFilter2Diary1Date.text = diary[0].createdString
+                            binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+
+                        } else {
+                            binding.filter2Diary1.visibility = View.INVISIBLE
+                        }
+
+                        // Set last month diary 1 click listener
+                        binding.filter2Diary1.setOnClickListener {
+
+                            val intent = Intent(requireContext(), DiaryActivity::class.java)
+                            intent.putExtra("id", diary[0].id) // Diary id 전달
+                            startActivity(intent)
+                        }
+
+                        // Set last month diary 2
+                        if (diary.size >= 2) {
+                            binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
+                            binding.textviewFilter2Diary2Date.text = diary[1].createdString
+                            binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+
+                        } else {
+                            binding.filter2Diary2.visibility = View.INVISIBLE
+                        }
+
+                        // Set last month diary 2 click listener
+                        binding.filter2Diary2.setOnClickListener {
+
+                            val intent = Intent(requireContext(), DiaryActivity::class.java)
+                            intent.putExtra("id", diary[1].id) // Diary id 전달
+                            startActivity(intent)
+                        }
+
+                    } else {
+                        Log.d("Retrofit", "통신 성공, body null")
+
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Toast.makeText(requireContext(), "통신 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) {
+
+                    Log.d("Retrofit", "통신 실패")
+
+                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
+
 
     }
 
-    /**
-     * @description - Server에서 해당 연월로 filtering된 diary 가져오기
-     * @param - year(Int) : 필터링하고자 하는 연도
-     * @param - month(Int) : 필터링하고자 하는 월
-     * @return - diary(ArrayList<Diary>) : 해당 연월로 필터링된 diary
-     * @author - namsh1125
-     */
-    private fun getDiary(year: Int, month: Int): ArrayList<Diary> {
-
-        val diary: MutableList<Diary> = mutableListOf()
-
-        // Todo: Retrofit을 이용해 해당 연월로 필터링된 diary 가져오기
-
-
-        return diary as ArrayList
-    }
 
     /**
      * @description - 현재 연도 받아오기

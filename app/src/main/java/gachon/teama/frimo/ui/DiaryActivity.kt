@@ -20,6 +20,8 @@ import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.entities.Words
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
+import gachon.teama.frimo.retrofit.dao.User
+import java.time.LocalDateTime
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
@@ -59,7 +61,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         with(binding) {
 
-            textviewDate.text = diary.created
+            textviewDate.text = diary.createdString
             textviewDiaryTitle.text = diary.title
             textviewDiaryContents.text = diary.content
             textviewSentiment.text = getTextSentiment(diary.sentiment)
@@ -111,8 +113,12 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
             id = 1,
             title = "1번째 일기",
             content = "나는 오늘 햄버거를 먹었다",
-            created = "22.11.24",
+            created = "${LocalDateTime.now()}",
+            createdString = "${LocalDateTime.now()}",
             sentiment = pleasure,
+            createdMonth = LocalDateTime.now().monthValue,
+            createdYear = LocalDateTime.now().year,
+            user = User("1", "test")
         )
 
         return diary

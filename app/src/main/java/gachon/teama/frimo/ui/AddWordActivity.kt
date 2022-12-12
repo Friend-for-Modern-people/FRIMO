@@ -16,9 +16,18 @@ import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Words
+import gachon.teama.frimo.data.local.AppDatabase
+import gachon.teama.frimo.data.remote.DiaryInterestAPI
+import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
+
+    // Database
+    private val database by lazy { AppDatabase.getInstance(this)!! }
 
     /**
      * @description - Binding 이후
@@ -42,18 +51,36 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      */
     private fun setRecyclerview() {
 
-        val id = getDiaryId()
-        val words = getWords(id)
+        val retrofit = RetrofitClient.getInstance()
+        val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        // Set reyclerview
-        FlexboxLayoutManager(this).apply {
-            flexWrap = FlexWrap.WRAP
-            flexDirection = FlexDirection.ROW
-            justifyContent = JustifyContent.FLEX_START
-        }.let {
-            binding.recyclerviewWords.layoutManager = it
-            binding.recyclerviewWords.adapter = WordsAdapter(words)
-        }
+        diaryInterestAPI.getWord(userId = database.userDao().getUserId(), diaryId = getDiaryId())
+            .enqueue(object : Callback<List<Words>> {
+
+                override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
+
+                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+
+                        val words: ArrayList<Words> = response.body() as ArrayList
+
+                        FlexboxLayoutManager(this@AddWordActivity).apply {
+                            flexWrap = FlexWrap.WRAP
+                            flexDirection = FlexDirection.ROW
+                            justifyContent = JustifyContent.FLEX_START
+                        }.let {
+                            binding.recyclerviewWords.layoutManager = it
+                            binding.recyclerviewWords.adapter = WordsAdapter(words)
+                        }
+
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(this@AddWordActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+            })
 
     }
 
@@ -96,21 +123,6 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
                 radiogroup1.clearCheck()
             }
         }
-    }
-
-    /**
-     * @description - 서버로부터 사용자가 작성한 단어를 받아옴
-     * @param - id(Int) : 다이어리 id
-     * @return - wordList(ArrayList<Word>) : 사용자가 작성한 단어들
-     * @author - namsh1125
-     */
-    private fun getWords(id: Long): ArrayList<Words> {
-
-        // Todo: 임시로 작성한 아래 코드 지우고 서버에서 data 받아오기
-        val words: MutableList<Words> = mutableListOf()
-
-
-        return words as ArrayList<Words>
     }
 
     /**

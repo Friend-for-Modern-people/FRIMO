@@ -163,43 +163,40 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
                     if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-                        var keywords : List<Words> = response.body() as List<Words>
+                        val keywords : List<Words> = response.body() as List<Words>
 
-                        if(keywords.size == 0) {
+                        when(keywords.size) {
 
-                            binding.textviewKeyword1.visibility = View.INVISIBLE
-                            binding.textviewKeyword2.visibility = View.INVISIBLE
-                            binding.textviewKeyword3.visibility = View.INVISIBLE
-                            binding.textviewKeyword4.visibility = View.INVISIBLE
-
-                        } else if (keywords.size == 1) {
-
-                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                            binding.textviewKeyword2.visibility = View.INVISIBLE
-                            binding.textviewKeyword3.visibility = View.INVISIBLE
-                            binding.textviewKeyword4.visibility = View.INVISIBLE
-
-                        } else if (keywords.size == 2) {
-
-                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                            binding.textviewKeyword2.text = "# ${keywords[1].word}"
-                            binding.textviewKeyword3.visibility = View.INVISIBLE
-                            binding.textviewKeyword4.visibility = View.INVISIBLE
-
-                        } else if (keywords.size == 3 ) {
-
-                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                            binding.textviewKeyword2.text = "# ${keywords[1].word}"
-                            binding.textviewKeyword3.text = "# ${keywords[2].word}"
-                            binding.textviewKeyword4.visibility = View.INVISIBLE
-
-                        } else {
-
-                            binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                            binding.textviewKeyword2.text = "# ${keywords[1].word}"
-                            binding.textviewKeyword3.text = "# ${keywords[2].word}"
-                            binding.textviewKeyword4.text = "# ${keywords[3].word}"
-
+                            1 -> {
+                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                                binding.textviewKeyword2.visibility = View.INVISIBLE
+                                binding.textviewKeyword3.visibility = View.INVISIBLE
+                                binding.textviewKeyword4.visibility = View.INVISIBLE
+                            }
+                            2 -> {
+                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                                binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                                binding.textviewKeyword3.visibility = View.INVISIBLE
+                                binding.textviewKeyword4.visibility = View.INVISIBLE
+                            }
+                            3 -> {
+                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                                binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                                binding.textviewKeyword3.text = "# ${keywords[2].word}"
+                                binding.textviewKeyword4.visibility = View.INVISIBLE
+                            }
+                            4 -> {
+                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                                binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                                binding.textviewKeyword3.text = "# ${keywords[2].word}"
+                                binding.textviewKeyword4.text = "# ${keywords[3].word}"
+                            }
+                            else -> {
+                                binding.textviewKeyword1.visibility = View.INVISIBLE
+                                binding.textviewKeyword2.visibility = View.INVISIBLE
+                                binding.textviewKeyword3.visibility = View.INVISIBLE
+                                binding.textviewKeyword4.visibility = View.INVISIBLE
+                            }
                         }
 
                     } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -350,8 +347,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         var count = 0
 
-        for (i in 0 until words.size) {
-            if (words[i].sentiment == sentiment) {
+        for (element in words) {
+            if (element.sentiment == sentiment) {
                 count++
             }
         }

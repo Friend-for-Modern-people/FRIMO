@@ -1,9 +1,6 @@
 package gachon.teama.frimo.data.remote
 
-import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.entities.Words
-import gachon.teama.frimo.retrofit.dao.DiaryInterestTag
-import gachon.teama.frimo.retrofit.dto.DiaryInterestTagDto
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,7 +19,7 @@ interface DiaryInterestAPI {
 
     // 단어 추가하는 API
     @POST("tag/{userPK}/{diaryPK}")
-    fun addWord(@Path("userPK") userId: Long, @Path("diaryPK") diaryId: Long, @Body addTagRequestDto: DiaryInterestTagDto.AddTagRequestDto) : Call<String>
+    fun addWord(@Path("userPK") userId: Long, @Path("diaryPK") diaryId: Long, @Body words: Words) : Call<String>
 
 }
 

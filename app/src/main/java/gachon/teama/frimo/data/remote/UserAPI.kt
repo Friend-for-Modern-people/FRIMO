@@ -1,6 +1,6 @@
 package gachon.teama.frimo.data.remote
 
-import gachon.teama.frimo.retrofit.dto.UserDto
+import gachon.teama.frimo.data.entities.UserDto
 import retrofit2.Call
 import retrofit2.http.*
 

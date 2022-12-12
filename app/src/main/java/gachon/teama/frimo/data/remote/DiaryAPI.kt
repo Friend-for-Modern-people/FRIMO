@@ -1,6 +1,7 @@
 package gachon.teama.frimo.data.remote
 
 import gachon.teama.frimo.data.entities.Diary
+import gachon.teama.frimo.data.entities.DiaryDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -30,6 +31,10 @@ interface DiaryAPI {
     // diary id로 해당 diary 가져오는 API
     @GET("diary/{diaryPK}/only1")
     fun getDiaryById(@Path("diaryPK") diaryId: Long) : Call<Diary>
+
+    // 일기 하나 가져오는 API
+    @GET("diary/{diaryPK}/only1")
+    fun getOneDiary(@Path("diaryPK") diaryId: Long) : Call<DiaryDto>
 
 }
 

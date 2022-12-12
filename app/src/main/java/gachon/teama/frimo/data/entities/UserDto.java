@@ -1,4 +1,4 @@
-package gachon.teama.frimo.retrofit.dto;
+package gachon.teama.frimo.data.entities;
 
 
 import lombok.AccessLevel;
@@ -27,13 +27,6 @@ public class UserDto {
         private String userId;
         private String userNN;
 
-        @Builder
-        public GetUserOnlyInfoResponseDto(Long userPk, String userId, String userNN) {
-            this.userPk = userPk;
-            this.userId = userId;
-            this.userNN = userNN;
-
-        }
     }
 
 

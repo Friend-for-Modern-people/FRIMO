@@ -16,6 +16,7 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
+import gachon.teama.frimo.data.entities.DiaryInterestTagDto
 import gachon.teama.frimo.data.entities.Words
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryInterestAPI
@@ -157,10 +158,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
 
             // Set popup window
             contentView = inflater.inflate(R.layout.view_popup_add_word, null) // 팝업으로 띄울 화면
-            setWindowLayoutMode(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ) // popup window 크기 설정
+            setWindowLayoutMode(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) // popup window 크기 설정
             isTouchable = true // popup window 터치 되도록
             isFocusable = true // 포커스
 
@@ -186,6 +184,37 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             val buttonAdd = contentView.findViewById<TextView>(R.id.textview_text_add)
             buttonAdd.setOnClickListener {
 
+                val word = DiaryInterestTagDto.AddTagRequestDto(
+                    getDiaryId(),
+                    binding.edittextAdd.text.toString(),
+                    getSelectedSentiment().toLong(),
+                    binding.edittextCategory.text.toString()
+                )
+
+                val retrofit = RetrofitClient.getInstance()
+                val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
+
+                diaryInterestAPI.addWord(word = word)
+                    .enqueue(object : Callback<String>{
+
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+
+                            if(response.isSuccessful && response.code() == 201) {
+
+                                popupWindow.dismiss()
+                                finish()
+                                Toast.makeText(this@AddWordActivity, "성공!", Toast.LENGTH_SHORT).show()
+
+                            } else {
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<String>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                            Toast.makeText(this@AddWordActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
             }
 
         }
@@ -202,18 +231,20 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
 
         with(binding) {
 
-            if (radiobuttonAnger.isSelected) {
-                return anger
-            } else if (radiobuttonSadness.isSelected) {
-                return sadness
-            } else if (radiobuttonAnxiety.isSelected) {
-                return anxiety
-            } else if (radiobuttonWound.isSelected) {
-                return wound
-            } else if (radiobuttonEmbarrassment.isSelected) {
-                return embarrassment
+            if (radiobuttonAnger.isChecked) {
+                return angerDetail
+            } else if (radiobuttonSadness.isChecked) {
+                return sadnessDetail
+            } else if (radiobuttonAnxiety.isChecked) {
+                return anxietyDetail
+            } else if (radiobuttonWound.isChecked) {
+                return woundDetail
+            } else if (radiobuttonEmbarrassment.isChecked) {
+                return embarrassmentDetail
+            } else if (radiobuttonPleasure.isChecked){
+                return pleasureDetail
             } else {
-                return pleasure
+                return error
             }
         }
     }
@@ -231,6 +262,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
         const val woundDetail = 28
         const val embarrassmentDetail = 37
         const val pleasureDetail = 46
+        const val error = 99
     }
 
 }

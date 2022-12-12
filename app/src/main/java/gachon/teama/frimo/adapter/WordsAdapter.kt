@@ -55,6 +55,9 @@ class WordsAdapter(private val dataSet: ArrayList<Words>) : RecyclerView.Adapter
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_pleasure_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.pleasure))
             }
+            else -> {
+                viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.black))
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package gachon.teama.frimo.data.remote
 
 import gachon.teama.frimo.data.entities.DiaryInterestTagDto
+import gachon.teama.frimo.data.entities.Words
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,11 +12,11 @@ interface DiaryInterestAPI {
 
     // 사용자가 작성한 단어를 모두 받아오는 API
     @GET("tag/{diaryPK}")
-    fun getWord(@Path("diaryPK") diaryId : Long) : Call<List<DiaryInterestTagDto.GetTagResponseDto>>
+    fun getWord(@Path("diaryPK") diaryId : Long) : Call<List<Words>>
 
     // 사용자가 작성한 대표 단어 4개만 받아오는 API
     @GET("tag/{diaryPK}/only4")
-    fun getFourWord(@Path("diaryPK") diaryId : Long) : Call<List<DiaryInterestTagDto.GetTagResponseDto>>
+    fun getFourWord(@Path("diaryPK") diaryId : Long) : Call<List<Words>>
 
     // 단어 추가하는 API
     @POST("tag")

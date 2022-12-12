@@ -1,6 +1,7 @@
 package gachon.teama.frimo.ui
 
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -25,9 +26,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
-
-    // Database
-    private val database by lazy { AppDatabase.getInstance(this)!! }
 
     /**
      * @description - Binding 이후
@@ -54,7 +52,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getWord(userId = database.userDao().getUserId(), diaryId = getDiaryId())
+        diaryInterestAPI.getWord(diaryId = getDiaryId())
             .enqueue(object : Callback<List<Words>> {
 
                 override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
@@ -184,36 +182,13 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
                 popupWindow.dismiss()
             }
 
-            // Set logout button click listener
-            val buttonLogout = contentView.findViewById<TextView>(R.id.textview_text_add)
-            buttonLogout.setOnClickListener {
+            // Set add button click listener
+            val buttonAdd = contentView.findViewById<TextView>(R.id.textview_text_add)
+            buttonAdd.setOnClickListener {
 
-                popupWindow.dismiss()
-
-                // 전송할 data
-                val sentiment = getSelectedSentiment()
-                val category = binding.edittextCategory.toString()
-
-                AddWord(id = getDiaryId(), sentiment = sentiment, category = category)
-
-                Toast.makeText(this@AddWordActivity, "추가되었습니다", Toast.LENGTH_SHORT).show()
-                finish()
             }
 
         }
-
-    }
-
-    /**
-     * @description - 사용자가 추가하고 싶은 단어를 서버에 전송하는 함수
-     * @param - id(Long) : diary id
-     * @param - sentiment(Int) : 해당 단어의 감정
-     * @param - category(String) : 해당 단어를 어떤 분류로 할지
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun AddWord(id: Long, sentiment: Int, category: String) {
-        // Todo: 서버에 추가할 단어(text)와 감정(sentiment), 카테고리(categiry)를 함께 전송
 
     }
 
@@ -250,6 +225,12 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
         const val wound = 3
         const val embarrassment = 4
         const val pleasure = 5
+        const val angerDetail = 1
+        const val sadnessDetail = 10
+        const val anxietyDetail = 19
+        const val woundDetail = 28
+        const val embarrassmentDetail = 37
+        const val pleasureDetail = 46
     }
 
 }

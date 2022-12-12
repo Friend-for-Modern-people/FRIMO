@@ -10,16 +10,16 @@ import retrofit2.http.Path
 interface DiaryInterestAPI {
 
     // 사용자가 작성한 단어를 모두 받아오는 API
-    @GET("tag/{userPK}/{diaryPK}")
-    fun getWord(@Path("userPK") userId : Long, @Path("diaryPK") diaryId : Long) : Call<List<Words>>
+    @GET("tag/{diaryPK}")
+    fun getWord(@Path("diaryPK") diaryId : Long) : Call<List<Words>>
 
     // 사용자가 작성한 대표 단어 4개만 받아오는 API
-    @GET("tag/{userPK}/{diaryPK}/only4")
-    fun getFourWord(@Path("userPK") userId : Long, @Path("diaryPK") diaryId : Long) : Call<List<Words>>
+    @GET("tag/{diaryPK}/only4")
+    fun getFourWord(@Path("diaryPK") diaryId : Long) : Call<List<Words>>
 
     // 단어 추가하는 API
-    @POST("tag/{userPK}/{diaryPK}")
-    fun addWord(@Path("userPK") userId: Long, @Path("diaryPK") diaryId: Long, @Body words: Words) : Call<String>
+    @POST("tag")
+    fun addWord(@Body word: Words) : Call<String>
 
 }
 

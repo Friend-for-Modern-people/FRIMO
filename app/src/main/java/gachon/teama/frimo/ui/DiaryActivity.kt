@@ -32,9 +32,6 @@ import retrofit2.Response
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(this)!! }
-
     /**
      * @description - Binding 이후
      * @param - None
@@ -156,7 +153,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getFourWord(userId = database.userDao().getUserId(), diaryId = getDiaryId())
+        diaryInterestAPI.getFourWord(diaryId = getDiaryId())
             .enqueue(object : Callback<List<Words>> {
 
                 override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
@@ -280,7 +277,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getWord(userId = database.userDao().getUserId(), diaryId = getDiaryId())
+        diaryInterestAPI.getWord(diaryId = getDiaryId())
             .enqueue(object : Callback<List<Words>>{
 
                 override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
@@ -288,8 +285,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                     if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
                         val words: ArrayList<Words> = response.body() as ArrayList
-
-                        Log.d("Retrofit", response.toString())
 
                         FlexboxLayoutManager(this@DiaryActivity).apply {
                             flexWrap = FlexWrap.WRAP
@@ -326,7 +321,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                         textviewAnger.text = "분노 ${getWordsCount(words, anger)} "
 
                     } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                        Log.d("Retrofit", response.toString())
+
                     }
                 }
 

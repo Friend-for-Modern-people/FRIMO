@@ -2,6 +2,7 @@ package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -248,7 +249,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun showPopupwindow(v: View) {
 
         val id = getDiaryId()
-        val words = getWords(id)
         val popupWindow = PopupWindow(v)
         val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -279,40 +279,64 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         }
 
-        // Set (Popupwindow) reyclerview
-        FlexboxLayoutManager(this).apply {
-            flexWrap = FlexWrap.WRAP
-            flexDirection = FlexDirection.ROW
-            justifyContent = JustifyContent.FLEX_START
-        }.let {
-            val recyclerView = popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
-            recyclerView.layoutManager = it
-            recyclerView.adapter = WordsAdapter(words)
-        }
+        // (Popupwindow) reyclerview 설정 및 감정 갯수 설정
+        val retrofit = RetrofitClient.getInstance()
+        val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        // 기쁨 감정 갯수 설정
-        val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
-        textviewPleasure.text = "기쁨 ${getWordsCount(pleasure)} "
+        diaryInterestAPI.getWord(userId = database.userDao().getUserId(), diaryId = getDiaryId())
+            .enqueue(object : Callback<List<Words>>{
 
-        // 슬픔 감정 갯수 설정
-        val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
-        textviewSadness.text = "슬픔 ${getWordsCount(sadness)} "
+                override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
 
-        // 불안 감정 갯수 설정
-        val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
-        textviewAnxiety.text = "불안 ${getWordsCount(anxiety)} "
+                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-        // 상처 감정 갯수 설정
-        val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
-        textviewWound.text = "상처 ${getWordsCount(wound)} "
+                        val words: ArrayList<Words> = response.body() as ArrayList
 
-        // 당황 감정 갯수 설정
-        val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
-        textviewEmbarrassment.text = "당황 ${getWordsCount(embarrassment)} "
+                        Log.d("Retrofit", response.toString())
 
-        // 분노 감정 갯수 설정
-        val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
-        textviewAnger.text = "분노 ${getWordsCount(anger)} "
+                        FlexboxLayoutManager(this@DiaryActivity).apply {
+                            flexWrap = FlexWrap.WRAP
+                            flexDirection = FlexDirection.ROW
+                            justifyContent = JustifyContent.FLEX_START
+                        }.let {
+                            val recyclerView = popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
+                            recyclerView.layoutManager = it
+                            recyclerView.adapter = WordsAdapter(words)
+                        }
+
+                        // 기쁨 감정 갯수 설정
+                        val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
+                        textviewPleasure.text = "기쁨 ${getWordsCount(words, pleasure)} "
+
+                        // 슬픔 감정 갯수 설정
+                        val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
+                        textviewSadness.text = "슬픔 ${getWordsCount(words, sadness)} "
+
+                        // 불안 감정 갯수 설정
+                        val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
+                        textviewAnxiety.text = "불안 ${getWordsCount(words, anxiety)} "
+
+                        // 상처 감정 갯수 설정
+                        val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
+                        textviewWound.text = "상처 ${getWordsCount(words, wound)} "
+
+                        // 당황 감정 갯수 설정
+                        val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
+                        textviewEmbarrassment.text = "당황 ${getWordsCount(words, embarrassment)} "
+
+                        // 분노 감정 갯수 설정
+                        val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
+                        textviewAnger.text = "분노 ${getWordsCount(words, anger)} "
+
+                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Log.d("Retrofit", response.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                    Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
+                }
+            })
 
     }
 
@@ -322,9 +346,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - count(Int) : 찾고자 하는 감정으로 사용자가 작성한 단어의 갯수
      * @author - namsh1125
      */
-    private fun getWordsCount(sentiment: Int): Int {
+    private fun getWordsCount(words: List<Words>, sentiment: Int): Int {
 
-        val words = getWords(getDiaryId())
         var count = 0
 
         for (i in 0 until words.size) {
@@ -334,39 +357,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         }
 
         return count
-    }
-
-    /**
-     * @description - 서버로부터 사용자가 작성한 단어를 받아옴
-     * @param - id(Long) : 다이어리 id
-     * @return - wordList(ArrayList<Word>) : 사용자가 작성한 단어들
-     * @author - namsh1125
-     */
-    private fun getWords(id: Long): ArrayList<Words> {
-
-        // Todo: 임시로 작성한 아래 코드 지우고 서버에서 data 받아오기
-        val words: MutableList<Words> = mutableListOf()
-
-        words.add(Words("사랑", 5))
-        words.add(Words("슬퍼", 1))
-        words.add(Words("놀라워", 4))
-        words.add(Words("불안", 2))
-        words.add(Words("분노", 0))
-        words.add(Words("상처", 3))
-        words.add(Words("불안", 2))
-        words.add(Words("분노", 0))
-        words.add(Words("상처", 3))
-        words.add(Words("사랑", 5))
-        words.add(Words("슬퍼", 1))
-        words.add(Words("놀라워", 4))
-        words.add(Words("사랑", 5))
-        words.add(Words("슬퍼", 1))
-        words.add(Words("놀라워", 4))
-        words.add(Words("불안", 2))
-        words.add(Words("분노", 0))
-        words.add(Words("상처", 3))
-
-        return words as ArrayList<Words>
     }
 
     /**

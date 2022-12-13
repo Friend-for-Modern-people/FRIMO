@@ -12,8 +12,8 @@
 
 ## Developer
 
-> Kwon woo hyuk - Hongsi-Taste
-Nam seung hyeon - namsh1125
+> Kwon woo hyuk - Hongsi-Taste  
+Nam seung hyeon - namsh1125  
 Hyun do yeon - vivi108
 > 
 

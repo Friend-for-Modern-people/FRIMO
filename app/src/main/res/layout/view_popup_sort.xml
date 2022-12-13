@@ -14,7 +14,7 @@
         android:layout_marginVertical="20dp"
         android:text="정렬"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@id/radiogroup1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="년도 순"
             android:textColor="@color/gray6"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <RadioButton
@@ -58,7 +58,7 @@
             android:gravity="center"
             android:text="월별 순"
             android:textColor="@color/gray6"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
     </RadioGroup>
@@ -85,7 +85,7 @@
             android:gravity="center"
             android:text="감정 순"
             android:textColor="@color/gray6"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <RadioButton
@@ -99,7 +99,7 @@
             android:gravity="center"
             android:text="최근 생성 순"
             android:textColor="@color/gray6"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
     </RadioGroup>
@@ -113,7 +113,7 @@
         android:background="@drawable/shape_button"
         android:text="확인"
         android:textColor="@color/gray4"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

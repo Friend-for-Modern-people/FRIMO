@@ -13,7 +13,7 @@
         android:layout_marginTop="70dp"
         android:text="안녕하세요 :)"
         android:textColor="@color/white"
-        android:textSize="22dp"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
@@ -25,7 +25,7 @@
         android:layout_marginTop="20dp"
         android:text="프리모에서는\n다음 권한을 사용하오니 허용해주세요"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_hello"
         app:layout_constraintTop_toBottomOf="@id/textview_text_hello"
         tools:ignore="HardcodedText" />
@@ -38,7 +38,7 @@
         android:layout_marginTop="40dp"
         android:text="프리모 이용 약관 전체 동의"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_hello"
         app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority"
         tools:ignore="HardcodedText" />
@@ -71,7 +71,7 @@
         android:layout_marginTop="30dp"
         android:text="파일 접근 권한이 필요합니다"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/boundary"
         tools:ignore="HardcodedText" />
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority1"
         tools:ignore="HardcodedText" />
@@ -104,7 +104,7 @@
         android:layout_marginTop="20dp"
         android:text="인터넷 권한이 필요합니다"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority1"
         tools:ignore="HardcodedText" />
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority2"
         tools:ignore="HardcodedText" />
@@ -137,7 +137,7 @@
         android:layout_marginTop="20dp"
         android:text="카메라 권한이 필요합니다"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority2"
         tools:ignore="HardcodedText" />
@@ -148,7 +148,7 @@
         android:layout_height="wrap_content"
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority3"
         tools:ignore="HardcodedText" />
@@ -170,7 +170,7 @@
         android:layout_marginTop="20dp"
         android:text="마이크 권한이 필요합니다"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_give_authority3"
         tools:ignore="HardcodedText" />
@@ -181,7 +181,7 @@
         android:layout_height="wrap_content"
         android:text="권한을 수락해주세요"
         android:textColor="@color/red1"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/textview_text_authority_all"
         app:layout_constraintTop_toBottomOf="@id/textview_text_authority4"
         tools:ignore="HardcodedText" />
@@ -206,7 +206,7 @@
         android:enabled="false"
         android:text="다음"
         android:textColor="@color/gray4"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

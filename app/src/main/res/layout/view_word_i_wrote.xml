@@ -12,7 +12,7 @@
         android:layout_marginVertical="5dp"
         android:background="@drawable/shape_words_pleasure_related"
         android:text="단어"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

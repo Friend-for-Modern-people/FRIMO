@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="FRIMO"
         android:textColor="@color/white"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@id/imageview_profile"
         app:layout_constraintTop_toTopOf="@id/imageview_profile"
@@ -41,7 +41,7 @@
         android:padding="10dp"
         android:text="메세지 내용"
         android:textColor="@color/fColor1"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/textview_nickname"
         app:layout_constraintTop_toBottomOf="@id/textview_nickname"
         tools:ignore="HardcodedText" />
@@ -53,7 +53,7 @@
         android:layout_marginTop="5dp"
         android:text="시간"
         android:textColor="@color/white"
-        android:textSize="10dp"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@id/textview_nickname"
         app:layout_constraintTop_toBottomOf="@id/textview_message"
         tools:ignore="HardcodedText" />

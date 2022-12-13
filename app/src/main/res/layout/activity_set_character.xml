@@ -23,7 +23,7 @@
         android:layout_marginTop="30dp"
         android:text="친구"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_back"
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textColor="@color/white"
-        android:textSize="22dp"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="@id/imageview_friend_profile"
         app:layout_constraintTop_toBottomOf="@id/imageview_friend_profile"
         tools:ignore="HardcodedText"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="따뜻함 "
             android:textColor="@color/skin"
-            android:textSize="12dp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/skin"
-            android:textSize="12dp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText"
             tools:text="77" />
 
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:text="%"
             android:textColor="@color/skin"
-            android:textSize="12dp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
         <View
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:text="공감 "
             android:textColor="@color/skin"
-            android:textSize="12dp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/skin"
-            android:textSize="12dp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText"
             tools:text="23" />
 
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:text="%"
             android:textColor="@color/skin"
-            android:textSize="12dp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -152,7 +152,7 @@
         android:layout_marginTop="30dp"
         android:text="소개"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/imageview_friend_profile"
         app:layout_constraintTop_toBottomOf="@id/textview_friend_characteristic"
         tools:ignore="HardcodedText" />
@@ -163,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@id/layout_like_button"
         app:layout_constraintStart_toStartOf="@id/textview_text_introduce"
         app:layout_constraintTop_toBottomOf="@id/textview_text_introduce"
@@ -188,7 +188,7 @@
             android:layout_marginTop="10dp"
             android:text="사는 곳"
             android:textColor="@color/white"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="10dp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -239,7 +239,7 @@
             android:layout_marginTop="10dp"
             android:text="키"
             android:textColor="@color/white"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -262,7 +262,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="10dp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -289,7 +289,7 @@
             android:layout_marginTop="10dp"
             android:text="선호"
             android:textColor="@color/white"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -312,7 +312,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="10dp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -331,7 +331,7 @@
         android:background="@drawable/shape_button"
         android:text="대화 시작하기"
         android:textColor="@color/gray4"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

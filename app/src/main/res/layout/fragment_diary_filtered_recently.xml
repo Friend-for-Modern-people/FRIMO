@@ -18,7 +18,7 @@
             android:layout_marginTop="15dp"
             android:text="최근 생성 순"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_filtered_diary"

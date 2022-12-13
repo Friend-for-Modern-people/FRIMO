@@ -23,7 +23,7 @@
         android:layout_marginTop="30dp"
         android:text="도움 가이드"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +46,7 @@
             android:layout_marginVertical="20dp"
             android:text="프리모는 어떤 앱인가요?"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -90,7 +90,7 @@
             android:layout_marginVertical="20dp"
             android:text="프리모는 현대사회에서 받는 스트레스나 마음 속에 담아 두었던 말을 다양한 친구들과 나누는 앱이에요"
             android:textColor="@color/white"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <View
@@ -116,7 +116,7 @@
             android:layout_marginVertical="20dp"
             android:text="일기장이 생성이 안되어 있어요"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -159,7 +159,7 @@
             android:layout_marginVertical="20dp"
             android:text="일기장은 프리모 친구들과 대화 이후에 새벽 3시에 생성되니 걱정 마세요 :)"
             android:textColor="@color/white"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <View
@@ -184,7 +184,7 @@
             android:layout_marginVertical="20dp"
             android:text="질문 목록"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -226,7 +226,7 @@
             android:layout_marginVertical="20dp"
             android:text="조만간 업데이트 하겠습니다 :)"
             android:textColor="@color/white"
-            android:textSize="15dp"
+            android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <View

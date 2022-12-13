@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:text="오늘은 어떤 친구와\n마음 이야기를 나눠볼까요?"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_marginTop="10dp"
                     android:text="오늘은 이 친구들과 이야기해도 좋을 것 같아요"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:text="최근 대화 나눈 친구"
                     android:textColor="@color/white"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     tools:ignore="HardcodedText" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:textColor="@color/white"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         app:layout_constraintBottom_toTopOf="@id/textview_when_talked"
                         app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_friend"
                         app:layout_constraintTop_toTopOf="parent"
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:textColor="@color/gray5"
-                        android:textSize="12dp"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/imageview_recently_talk_friend"
                         app:layout_constraintTop_toBottomOf="@id/textview_recently_talk_friend_name"
@@ -158,7 +158,7 @@
                 android:layout_marginTop="30dp"
                 android:text="친구 테마"
                 android:textColor="@color/white"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
                 app:layout_constraintTop_toBottomOf="@id/layout_recently_talk"
                 tools:ignore="HardcodedText" />
@@ -173,7 +173,7 @@
                 android:paddingVertical="3dp"
                 android:text="차분"
                 android:textColor="@color/skin"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@id/textview_theme2"
                 app:layout_constraintStart_toStartOf="@id/imageview_logo"
                 app:layout_constraintTop_toBottomOf="@id/textview_text_set_friend_theme"
@@ -188,7 +188,7 @@
                 android:paddingVertical="3dp"
                 android:text="친숙함"
                 android:textColor="@color/gray5"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
                 app:layout_constraintEnd_toStartOf="@id/textview_theme3"
                 app:layout_constraintStart_toEndOf="@id/textview_theme1"
@@ -204,7 +204,7 @@
                 android:paddingVertical="3dp"
                 android:text="따뜻함"
                 android:textColor="@color/gray5"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
                 app:layout_constraintEnd_toStartOf="@id/textview_theme4"
                 app:layout_constraintStart_toEndOf="@id/textview_theme2"
@@ -220,7 +220,7 @@
                 android:paddingVertical="3dp"
                 android:text="존경"
                 android:textColor="@color/gray5"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_theme1"
                 app:layout_constraintStart_toEndOf="@id/textview_theme3"
                 app:layout_constraintTop_toTopOf="@id/textview_theme1"
@@ -251,14 +251,14 @@
                     android:layout_height="wrap_content"
                     android:text="2"
                     android:textColor="@color/white"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="명의 "
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -267,7 +267,7 @@
                     android:layout_height="wrap_content"
                     android:text="차분한"
                     android:textColor="@color/skin"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -275,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:text=" 친구들이 있어요"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>

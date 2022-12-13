@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     tools:ignore="HardcodedText"
                     tools:text="User nickname" />
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="님의 마음 일기장이"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     tools:ignore="HardcodedText"
                     tools:text="Diary count" />
 
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="개 쌓였어요"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:text="000"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:text="님 오늘 하루도 수고했어요 :)"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>

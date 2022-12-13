@@ -24,7 +24,7 @@
             android:gravity="center"
             android:text="어디가시려구요...?  :(\n돌아와요..."
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="17sp"
             tools:ignore="HardcodedText" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +41,7 @@
                 android:gravity="center"
                 android:text="취소"
                 android:textColor="@color/gray3"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/textview_text_logout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:text="로그아웃"
                 android:textColor="@color/gray3"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textview_text_cancel"

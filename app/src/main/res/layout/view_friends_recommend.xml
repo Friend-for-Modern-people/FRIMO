@@ -30,7 +30,7 @@
         android:padding="5dp"
         android:text="추천 친구"
         android:textColor="@color/white"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

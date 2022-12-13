@@ -164,28 +164,28 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                         when(keywords.size) {
 
                             1 -> {
-                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
                                 binding.textviewKeyword2.visibility = View.INVISIBLE
                                 binding.textviewKeyword3.visibility = View.INVISIBLE
                                 binding.textviewKeyword4.visibility = View.INVISIBLE
                             }
                             2 -> {
-                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                                binding.textviewKeyword2.text = "# ${keywords[1].word}"
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
                                 binding.textviewKeyword3.visibility = View.INVISIBLE
                                 binding.textviewKeyword4.visibility = View.INVISIBLE
                             }
                             3 -> {
-                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                                binding.textviewKeyword2.text = "# ${keywords[1].word}"
-                                binding.textviewKeyword3.text = "# ${keywords[2].word}"
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
+                                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
                                 binding.textviewKeyword4.visibility = View.INVISIBLE
                             }
                             4 -> {
-                                binding.textviewKeyword1.text = "# ${keywords[0].word}"
-                                binding.textviewKeyword2.text = "# ${keywords[1].word}"
-                                binding.textviewKeyword3.text = "# ${keywords[2].word}"
-                                binding.textviewKeyword4.text = "# ${keywords[3].word}"
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
+                                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
+                                binding.textviewKeyword4.text = getString(R.string.set_diary_keyword, keywords[3].word)
                             }
                             else -> {
                                 binding.textviewKeyword1.visibility = View.INVISIBLE
@@ -297,29 +297,27 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
                         // 기쁨 감정 갯수 설정
                         val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
-                        textviewPleasure.text = "기쁨 ${getWordsCount(words, pleasure)} "
+                        textviewPleasure.text = getString(R.string.set_diary_pleasure_count, getWordsCount(words, pleasure))
 
                         // 슬픔 감정 갯수 설정
                         val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
-                        textviewSadness.text = "슬픔 ${getWordsCount(words, sadness)} "
+                        textviewSadness.text = getString(R.string.set_diary_sadness_count, getWordsCount(words, sadness))
 
                         // 불안 감정 갯수 설정
                         val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
-                        textviewAnxiety.text = "불안 ${getWordsCount(words, anxiety)} "
+                        textviewAnxiety.text = getString(R.string.set_diary_anxiety_count, getWordsCount(words, anxiety))
 
                         // 상처 감정 갯수 설정
                         val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
-                        textviewWound.text = "상처 ${getWordsCount(words, wound)} "
+                        textviewWound.text = getString(R.string.set_diary_wound_count, getWordsCount(words, wound))
 
                         // 당황 감정 갯수 설정
                         val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
-                        textviewEmbarrassment.text = "당황 ${getWordsCount(words, embarrassment)} "
+                        textviewEmbarrassment.text = getString(R.string.set_diary_embarrassment_count, getWordsCount(words, embarrassment))
 
                         // 분노 감정 갯수 설정
                         val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
-                        textviewAnger.text = "분노 ${getWordsCount(words, anger)} "
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        textviewAnger.text = getString(R.string.set_diary_anger_count, getWordsCount(words, anger))
 
                     }
                 }

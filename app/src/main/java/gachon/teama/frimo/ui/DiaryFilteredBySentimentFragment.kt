@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryAPI
@@ -33,7 +34,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      * @return - v(View)
      * @author - namsh1125
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         setScreen()
         return binding.root
@@ -76,7 +77,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewDiaryAngerCount.text = "${diary.size}개"
+                        binding.textviewDiaryAngerCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (anger detail) click listener
                         binding.layoutAngerDetail.setOnClickListener {
@@ -155,7 +156,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewDiarySadnessCount.text = "${diary.size}개"
+                        binding.textviewDiarySadnessCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (sadness detail) click listener
                         binding.layoutSadnessDetail.setOnClickListener {
@@ -234,7 +235,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewDiaryAnxietyCount.text = "${diary.size}개"
+                        binding.textviewDiaryAnxietyCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (anxiety detail) click listener
                         binding.layoutAnxietyDetail.setOnClickListener {
@@ -313,7 +314,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewDiaryWoundCount.text = "${diary.size}개"
+                        binding.textviewDiaryWoundCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (wound detail) click listener
                         binding.layoutWoundDetail.setOnClickListener {
@@ -392,7 +393,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewDiaryEmbarrassmentCount.text = "${diary.size}개"
+                        binding.textviewDiaryEmbarrassmentCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (embarrassment detail) click listener
                         binding.layoutEmbarrassmentDetail.setOnClickListener {
@@ -471,7 +472,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewDiaryPleasureCount.text = "${diary.size}개"
+                        binding.textviewDiaryPleasureCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (pleasure detail) click listener
                         binding.layoutPleasureDetail.setOnClickListener {

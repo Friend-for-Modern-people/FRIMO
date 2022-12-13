@@ -32,7 +32,7 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @return - v(View)
      * @author - namsh1125
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         setRecyclerView()
         return binding.root

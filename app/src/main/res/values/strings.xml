@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">FRIMO</string>
+
+    <!-- Set diary -->
+    <string name="set_diary_count">%1$d개</string>
+    <string name="set_diary_year">%1$d년</string>
+    <string name="set_diary_year_and_month">%1$d년 %2$d월</string>
+    <string name="set_diary_keyword"># %1$s</string>
+    <string name="set_diary_pleasure_count">기쁨 %1$d&#160;</string>
+    <string name="set_diary_sadness_count">슬픔 %1$d&#160;</string>
+    <string name="set_diary_anxiety_count">불안 %1$d&#160;</string>
+    <string name="set_diary_wound_count">상처 %1$d&#160;</string>
+    <string name="set_diary_embarrassment_count">당황 %1$d&#160;</string>
+    <string name="set_diary_anger_count">분노 %1$d&#160;</string>
+
 </resources>

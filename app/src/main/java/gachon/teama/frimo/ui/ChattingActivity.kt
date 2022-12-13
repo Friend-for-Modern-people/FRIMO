@@ -43,7 +43,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var recognitionListener: RecognitionListener
 
-//    // Cam&Gallery
+//    // Cam & Gallery
 //    private var DEFAULT_GALLERY_REQUEST_CODE = 1
 //    private var TAKE_PICTURE = 1
 
@@ -298,19 +298,19 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onBeginningOfSpeech() {
-                //TODO("Not yet implemented")
+
             }
 
             override fun onRmsChanged(rmsdB: Float) {
-                //TODO("Not yet implemented")
+
             }
 
             override fun onBufferReceived(buffer: ByteArray?) {
-                //TODO("Not yet implemented")
+
             }
 
             override fun onEndOfSpeech() {
-                //TODO("Not yet implemented")
+
             }
 
             override fun onError(error: Int) {
@@ -354,11 +354,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onPartialResults(partialResults: Bundle?) {
-                //TODO("Not yet implemented")
+
             }
 
             override fun onEvent(eventType: Int, params: Bundle?) {
-                //TODO("Not yet implemented")
+
             }
 
         }

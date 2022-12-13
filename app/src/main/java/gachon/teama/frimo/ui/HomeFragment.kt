@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.FriendsAdapter
@@ -31,7 +32,7 @@ class HomeFragment : Fragment() {
      * @return - v(View)
      * @author - namsh1125
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         setClickListener()
         setRecyclerview()
@@ -82,7 +83,7 @@ class HomeFragment : Fragment() {
                 recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
 
                 // 테두리 변경
-                textviewTheme1.background = resources.getDrawable(R.drawable.shape_border_fac883)
+                textviewTheme1.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
                 textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
                 textviewTheme2.background = null
                 textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
@@ -102,7 +103,7 @@ class HomeFragment : Fragment() {
                 // 테두리 변경
                 textviewTheme1.background = null
                 textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
-                textviewTheme2.background = resources.getDrawable(R.drawable.shape_border_fac883)
+                textviewTheme2.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
                 textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
                 textviewTheme3.background = null
                 textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
@@ -122,7 +123,7 @@ class HomeFragment : Fragment() {
                 textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme2.background = null
                 textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
-                textviewTheme3.background = resources.getDrawable(R.drawable.shape_border_fac883)
+                textviewTheme3.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
                 textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
                 textviewTheme4.background = null
                 textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
@@ -142,7 +143,7 @@ class HomeFragment : Fragment() {
                 textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme3.background = null
                 textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
-                textviewTheme4.background = resources.getDrawable(R.drawable.shape_border_fac883)
+                textviewTheme4.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
                 textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
             }
         }
@@ -199,7 +200,7 @@ class HomeFragment : Fragment() {
         if (recentlyTalkFriend != null) {
 
             // layout 셋팅
-            binding.imageviewRecentlyTalkFriend.setImageDrawable(getResources().getDrawable(recentlyTalkFriend.img_theme))
+            binding.imageviewRecentlyTalkFriend.setImageDrawable(ResourcesCompat.getDrawable(resources, recentlyTalkFriend.img_theme, null))
             binding.textviewRecentlyTalkFriendName.text = recentlyTalkFriend.name
             binding.textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
 

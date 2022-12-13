@@ -203,8 +203,6 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
                                 finish()
                                 Toast.makeText(this@AddWordActivity, "성공!", Toast.LENGTH_SHORT).show()
 
-                            } else {
-
                             }
                         }
 

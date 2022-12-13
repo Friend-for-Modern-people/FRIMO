@@ -36,7 +36,7 @@ class DiaryFilteredByYearFragment : Fragment() {
      * @return - v(View)
      * @author - namsh1125
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         setScreen()
         return binding.root
@@ -77,8 +77,8 @@ class DiaryFilteredByYearFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewFilter1.text = "${year}년"
-                        binding.textviewFilter1DiaryCount.text = "${diary.size}개"
+                        binding.textviewFilter1.text = getString(R.string.set_diary_year, year)
+                        binding.textviewFilter1DiaryCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (current year detail) click listener
                         binding.layoutFilter1Detail.setOnClickListener {
@@ -170,8 +170,8 @@ class DiaryFilteredByYearFragment : Fragment() {
                         val diary : ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewFilter2.text = "${year}년"
-                        binding.textviewFilter2DiaryCount.text = "${diary.size}개"
+                        binding.textviewFilter2.text = getString(R.string.set_diary_year, year)
+                        binding.textviewFilter2DiaryCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (last year detail) click listener
                         binding.layoutFilter2Detail.setOnClickListener {

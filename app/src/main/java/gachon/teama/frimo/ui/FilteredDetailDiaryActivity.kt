@@ -1,5 +1,6 @@
 package gachon.teama.frimo.ui
 
+import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Diary
@@ -57,7 +58,7 @@ class FilteredDetailDiaryActivity :
         binding.textviewFilter.text = intent.getStringExtra("filter")
 
         // Filtering된 Diary 갯수 설정
-        binding.textviewDiaryCount.text = "${getDiary().size} 개"
+        binding.textviewDiaryCount.text = getString(R.string.set_diary_count, getDiary().size)
     }
 
     /**

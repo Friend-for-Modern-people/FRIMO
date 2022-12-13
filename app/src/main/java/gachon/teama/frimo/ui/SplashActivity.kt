@@ -47,7 +47,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
      */
     private fun setFriend(){
 
-        var friendList = database.friendDao().getFriendList() as ArrayList
+        val friendList = database.friendDao().getFriendList() as ArrayList
 
         // Add data if there is no character information in roomDB
         if (friendList.isEmpty()) {

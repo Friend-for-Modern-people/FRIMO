@@ -2,7 +2,6 @@ package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -21,7 +21,6 @@ import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.entities.Words
-import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.DiaryInterestAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
@@ -98,32 +97,32 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                             // 감정에 맞게 태그 및 그림 배경 변경
                             when (diary.sentiment) {
                                 pleasure -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.pleasure))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.pleasure))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.pleasure))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.pleasure))
                                 }
                                 sadness -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.sadness))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.sadness))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.sadness))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.sadness))
                                 }
                                 anxiety -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.anxiety))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.anxiety))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.anxiety))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.anxiety))
                                 }
                                 wound -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.wound))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.wound))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.wound))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.wound))
                                 }
                                 embarrassment -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.embarrassment))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.embarrassment))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.embarrassment))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.embarrassment))
                                 }
                                 anger -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.anger))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.anger))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.anger))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.anger))
                                 }
                                 else -> {
-                                    textviewSentiment.background.setTint(resources.getColor(R.color.black))
-                                    imageViewDiary.background.setTint(resources.getColor(R.color.black))
+                                    textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.black))
+                                    imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, R.color.black))
                                 }
                             }
 

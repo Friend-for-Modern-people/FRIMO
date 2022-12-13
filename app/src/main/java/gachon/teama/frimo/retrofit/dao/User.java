@@ -3,7 +3,6 @@ package gachon.teama.frimo.retrofit.dao;
 import java.io.Serializable;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -39,15 +39,20 @@ class ChangeNicknameActivity :
             buttonChange.setOnClickListener {
 
                 val name = edittextNickname.text.toString()
+                val beforeNickname = database.userDao().getNickname()
 
-                if (name == "") {
-                    showToast("변경할 닉네임을 입력하세요!")
-                } else if (name == database.userDao().getNickname()) {
-                    showToast("중복되지 않는 닉네임을 입력하세요!")
-                } else {
-                    database.userDao().updateNickname(name) // 내부 저장소에 변경된 닉네임 업데이트
-                    showToast("닉네임이 변경되었어요!")
-                    finish() // Finish activity
+                when (name) {
+                    "" -> {
+                        showToast("변경할 닉네임을 입력하세요!")
+                    }
+                    beforeNickname -> {
+                        showToast("중복되지 않는 닉네임을 입력하세요!")
+                    }
+                    else -> {
+                        database.userDao().updateNickname(name) // 내부 저장소에 변경된 닉네임 업데이트
+                        showToast("닉네임이 변경되었어요!")
+                        finish() // Finish activity
+                    }
                 }
             }
 

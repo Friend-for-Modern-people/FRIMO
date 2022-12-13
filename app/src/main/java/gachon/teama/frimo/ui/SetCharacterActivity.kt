@@ -1,16 +1,21 @@
 package gachon.teama.frimo.ui
 
 import android.content.Intent
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivitySetCharacterBinding
 
 class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivitySetCharacterBinding::inflate) {
 
+    // Database
     private val database by lazy { AppDatabase.getInstance(this@SetCharacterActivity)!! }
-    private lateinit var friend: Friend
+
+    // Friend
+    private val id by lazy { intent.getIntExtra("id", 1) }
+    private val friend by lazy { database.friendDao().getFriend(id) }
 
     /**
      * @description - Binding 이후
@@ -20,32 +25,8 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      */
     override fun initAfterBinding() {
 
-        initVariable()
         setScreen()
         setClickListener()
-    }
-
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initVariable() {
-
-        // Get friend information
-        var id = intent.getIntExtra("id", 1)
-        friend = getFriend(id)
-    }
-
-    /**
-     * @description - 친구 정보 가져오기
-     * @param - id(Int) : 친구 id
-     * @return - friend(Friend) : 친구 정보
-     * @author - namsh1125
-     */
-    private fun getFriend(id: Int) : Friend {
-        return database.friendDao().getFriend(id)
     }
 
     /**
@@ -68,7 +49,7 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
 
                 friend.like = !friend.like // Update like
                 setLike() // Update screen
-                database.friendDao().updateFriendLike(friend.id, friend.like) // Update DB
+                database.friendDao().updateFriendLike(id, friend.like) // Update DB
             }
 
             // Set start button click listener
@@ -77,8 +58,8 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
                 // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
 
                 // Start chatting activity
-                var intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
-                intent.putExtra("id", friend.id)
+                val intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
+                intent.putExtra("id", id)
                 startActivity(intent)
             }
 
@@ -97,16 +78,16 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
 
         with(binding) {
 
-            imageviewFriendProfile.setImageDrawable(getDrawable(friend.img_profile))
+            imageviewFriendProfile.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_profile))
             textviewFriendName.text = friend.name
             textviewFriendWarmthRate.text = friend.warmth.toString()
             textviewFriendSympathyRate.text = friend.sympathy.toString()
             textviewFriendIntroduction.text = friend.introduce
-            imageviewFriendLive.setImageDrawable(getDrawable(friend.img_live))
+            imageviewFriendLive.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_live))
             textviewFriendLive.text = friend.live
-            imageviewFriendHeight.setImageDrawable(getDrawable(friend.img_height))
+            imageviewFriendHeight.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_height))
             textviewFriendHeight.text = friend.height
-            imageviewFriendPrefer.setImageDrawable(getDrawable(friend.img_prefer))
+            imageviewFriendPrefer.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_prefer))
             textviewFriendPrefer.text = friend.prefer
         }
     }
@@ -120,9 +101,9 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
     private fun setLike() {
 
         if (friend.like) {
-            binding.imageButtonLike.background.setTint(resources.getColor(R.color.like))
+            binding.imageButtonLike.background.setTint(ContextCompat.getColor(this, R.color.like))
         } else {
-            binding.imageButtonLike.background.setTint(resources.getColor(R.color.unlike))
+            binding.imageButtonLike.background.setTint(ContextCompat.getColor(this, R.color.unlike))
         }
     }
 

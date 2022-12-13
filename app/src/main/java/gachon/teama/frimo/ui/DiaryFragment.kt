@@ -12,6 +12,7 @@ import android.widget.PopupWindow
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
@@ -119,10 +120,10 @@ class DiaryFragment : Fragment() {
             radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
 
             // text 색상 변경
-            filterYear.setTextColor(resources.getColor(R.color.skin))
-            filterMonth.setTextColor(resources.getColor(R.color.gray6))
-            filterSentiment.setTextColor(resources.getColor(R.color.gray6))
-            filterRecent.setTextColor(resources.getColor(R.color.gray6))
+            filterYear.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+            filterMonth.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterSentiment.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
         }
 
         filterMonth.setOnClickListener {
@@ -130,10 +131,10 @@ class DiaryFragment : Fragment() {
             radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
 
             // text 색상 변경
-            filterYear.setTextColor(resources.getColor(R.color.gray6))
-            filterMonth.setTextColor(resources.getColor(R.color.skin))
-            filterSentiment.setTextColor(resources.getColor(R.color.gray6))
-            filterRecent.setTextColor(resources.getColor(R.color.gray6))
+            filterYear.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterMonth.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+            filterSentiment.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
         }
 
         filterSentiment.setOnClickListener {
@@ -141,10 +142,10 @@ class DiaryFragment : Fragment() {
             radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
 
             // text 색상 변경
-            filterYear.setTextColor(resources.getColor(R.color.gray6))
-            filterMonth.setTextColor(resources.getColor(R.color.gray6))
-            filterSentiment.setTextColor(resources.getColor(R.color.skin))
-            filterRecent.setTextColor(resources.getColor(R.color.gray6))
+            filterYear.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterMonth.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterSentiment.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+            filterRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
         }
 
         filterRecent.setOnClickListener {
@@ -152,10 +153,10 @@ class DiaryFragment : Fragment() {
             radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
 
             // text 색상 변경
-            filterYear.setTextColor(resources.getColor(R.color.gray6))
-            filterMonth.setTextColor(resources.getColor(R.color.gray6))
-            filterSentiment.setTextColor(resources.getColor(R.color.gray6))
-            filterRecent.setTextColor(resources.getColor(R.color.skin))
+            filterYear.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterMonth.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterSentiment.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray6))
+            filterRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
         }
 
         // Set apply button click listener

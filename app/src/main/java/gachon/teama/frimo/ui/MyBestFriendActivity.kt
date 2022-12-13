@@ -83,7 +83,7 @@ class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityM
         val likeFriend = database.friendDao().getFriendList().toMutableList()
 
         val unlikeFriend = Predicate<Friend> { friend: Friend ->
-            friend.like.equals(false)
+            !friend.like
         }
 
         likeFriend.removeIf(unlikeFriend)

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Diary
@@ -267,13 +268,13 @@ class DiaryFilteredByMonthFragment : Fragment() {
     private fun getColor(sentiment: Int): Int {
 
         return when (sentiment) {
-            pleasure -> resources.getColor(R.color.pleasure)
-            sadness -> resources.getColor(R.color.sadness)
-            anxiety -> resources.getColor(R.color.anxiety)
-            wound -> resources.getColor(R.color.wound)
-            embarrassment -> resources.getColor(R.color.embarrassment)
-            anger -> resources.getColor(R.color.anger)
-            else -> resources.getColor(R.color.black)
+            pleasure -> ContextCompat.getColor(requireContext(), R.color.pleasure)
+            sadness -> ContextCompat.getColor(requireContext(), R.color.sadness)
+            anxiety -> ContextCompat.getColor(requireContext(), R.color.anxiety)
+            wound -> ContextCompat.getColor(requireContext(), R.color.wound)
+            embarrassment -> ContextCompat.getColor(requireContext(), R.color.embarrassment)
+            anger -> ContextCompat.getColor(requireContext(), R.color.anger)
+            else -> ContextCompat.getColor(requireContext(), R.color.black)
         }
     }
 

@@ -1,7 +1,6 @@
 package gachon.teama.frimo.data.entities;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import gachon.teama.frimo.retrofit.dao.User;
 import lombok.AccessLevel;

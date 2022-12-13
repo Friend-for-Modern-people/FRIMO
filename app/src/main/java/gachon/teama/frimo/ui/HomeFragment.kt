@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.FriendsAdapter
@@ -82,13 +83,13 @@ class HomeFragment : Fragment() {
 
                 // 테두리 변경
                 textviewTheme1.background = resources.getDrawable(R.drawable.shape_border_fac883)
-                textviewTheme1.setTextColor(resources.getColor(R.color.skin))
+                textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
                 textviewTheme2.background = null
-                textviewTheme2.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme3.background = null
-                textviewTheme3.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme4.background = null
-                textviewTheme4.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
             }
 
             // Set text(친숙함) click listener
@@ -100,13 +101,13 @@ class HomeFragment : Fragment() {
 
                 // 테두리 변경
                 textviewTheme1.background = null
-                textviewTheme1.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme2.background = resources.getDrawable(R.drawable.shape_border_fac883)
-                textviewTheme2.setTextColor(resources.getColor(R.color.skin))
+                textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
                 textviewTheme3.background = null
-                textviewTheme3.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme4.background = null
-                textviewTheme4.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
             }
 
             // Set text(따뜻함) click listener
@@ -118,13 +119,13 @@ class HomeFragment : Fragment() {
 
                 // 테두리 변경
                 textviewTheme1.background = null
-                textviewTheme1.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme2.background = null
-                textviewTheme2.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme3.background = resources.getDrawable(R.drawable.shape_border_fac883)
-                textviewTheme3.setTextColor(resources.getColor(R.color.skin))
+                textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
                 textviewTheme4.background = null
-                textviewTheme4.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
             }
 
             // Set text(존경) click listener
@@ -136,13 +137,13 @@ class HomeFragment : Fragment() {
 
                 // 테두리 변경
                 textviewTheme1.background = null
-                textviewTheme1.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme2.background = null
-                textviewTheme2.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme3.background = null
-                textviewTheme3.setTextColor(resources.getColor(R.color.gray5))
+                textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
                 textviewTheme4.background = resources.getDrawable(R.drawable.shape_border_fac883)
-                textviewTheme4.setTextColor(resources.getColor(R.color.skin))
+                textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
             }
         }
     }
@@ -226,10 +227,10 @@ class HomeFragment : Fragment() {
     private fun getFriend(properties: String): ArrayList<Friend> {
 
         // Get friend
-        var friend = database.friendDao().getFriendList() as MutableList
+        val friend = database.friendDao().getFriendList() as MutableList
 
         // 해당 특성을 가지고 있지 않은 친구들
-        var noProperties = Predicate<Friend> { friend: Friend ->
+        val noProperties = Predicate<Friend> { friend: Friend ->
             !friend.tag.contains(properties)
         }
         friend.removeIf(noProperties)

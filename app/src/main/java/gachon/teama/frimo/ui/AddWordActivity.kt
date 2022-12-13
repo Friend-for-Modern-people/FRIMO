@@ -1,7 +1,6 @@
 package gachon.teama.frimo.ui
 
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.DiaryInterestTagDto
 import gachon.teama.frimo.data.entities.Words
-import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryInterestAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.ActivityAddWordBinding

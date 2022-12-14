@@ -25,10 +25,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
@@ -44,7 +44,9 @@
         <activity android:name=".ui.OnboardingActivity" />
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.AuthorityActivity" />
-        <activity android:name=".ui.SetNicknameActivity" />
+        <activity
+            android:name=".ui.SetNicknameActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".ui.MainActivity" />
 
         <!-- Chatting -->
@@ -62,7 +64,9 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <!-- Setting  -->
-        <activity android:name=".ui.ChangeNicknameActivity" />
+        <activity
+            android:name=".ui.ChangeNicknameActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".ui.NoticeActivity" />
         <activity android:name=".ui.GuideActivity" />
 

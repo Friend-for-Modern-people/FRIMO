@@ -71,16 +71,6 @@ class DiaryFilteredByRecentFragment : Fragment() {
 
             })
 
-
-    }
-
-    companion object Sentiment {
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
     }
 
 }

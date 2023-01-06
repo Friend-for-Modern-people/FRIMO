@@ -14,6 +14,7 @@ import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,23 +69,30 @@ class DiaryFilteredByMonthFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryByMonth(year = year, month = month, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>>{
+        diaryAPI.getDiaryByMonth(
+            year = year,
+            month = month,
+            userId = database.userDao().getUserId()
+        )
+            .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        val diary: ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewFilter1.text = getString(R.string.set_diary_year_and_month, year, month)
-                        binding.textviewFilter1DiaryCount.text = getString(R.string.set_diary_count, diary.size)
+                        binding.textviewFilter1.text =
+                            getString(R.string.set_diary_year_and_month, year, month)
+                        binding.textviewFilter1DiaryCount.text =
+                            getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (Current month detail) click listener
                         binding.layoutFilter1Detail.setOnClickListener {
 
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                            val intent =
+                                Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
                             intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
                             intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
                             startActivity(intent)
@@ -96,9 +104,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
                             binding.filter1Diary1.visibility = View.VISIBLE
                             binding.filter1Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
+                            binding.imageViewFilter1Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
                             binding.textviewFilter1Diary1Date.text = diary[0].createdString
-                            binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+                            binding.textviewFilter1Diary1Sentiment.text =
+                                getTextSentiment(diary[0].sentiment)
 
                         }
 
@@ -115,9 +124,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
 
                             binding.filter1Diary2.visibility = View.VISIBLE
 
-                            binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
+                            binding.imageViewFilter1Diary2.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[1].sentiment)))
                             binding.textviewFilter1Diary2Date.text = diary[1].createdString
-                            binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+                            binding.textviewFilter1Diary2Sentiment.text =
+                                getTextSentiment(diary[1].sentiment)
 
                         }
 
@@ -134,7 +144,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(
+                    call: Call<List<Diary>>,
+                    t: Throwable
+                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
 
@@ -165,23 +178,30 @@ class DiaryFilteredByMonthFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryByMonth(year = year, month = month, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>>{
+        diaryAPI.getDiaryByMonth(
+            year = year,
+            month = month,
+            userId = database.userDao().getUserId()
+        )
+            .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        val diary: ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewFilter2.text = getString(R.string.set_diary_year_and_month, year, month)
-                        binding.textviewFilter2DiaryCount.text = getString(R.string.set_diary_count, diary.size)
+                        binding.textviewFilter2.text =
+                            getString(R.string.set_diary_year_and_month, year, month)
+                        binding.textviewFilter2DiaryCount.text =
+                            getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (last month detail) click listener
                         binding.layoutFilter2Detail.setOnClickListener {
 
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                            val intent =
+                                Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
                             intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
                             intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
                             startActivity(intent)
@@ -193,9 +213,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
                             binding.filter2Diary1.visibility = View.VISIBLE
                             binding.filter2Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
+                            binding.imageViewFilter2Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
                             binding.textviewFilter2Diary1Date.text = diary[0].createdString
-                            binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+                            binding.textviewFilter2Diary1Sentiment.text =
+                                getTextSentiment(diary[0].sentiment)
 
                         }
 
@@ -212,9 +233,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
 
                             binding.filter2Diary2.visibility = View.VISIBLE
 
-                            binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
+                            binding.imageViewFilter2Diary2.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[1].sentiment)))
                             binding.textviewFilter2Diary2Date.text = diary[1].createdString
-                            binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+                            binding.textviewFilter2Diary2Sentiment.text =
+                                getTextSentiment(diary[1].sentiment)
 
                         }
 
@@ -231,7 +253,10 @@ class DiaryFilteredByMonthFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(
+                    call: Call<List<Diary>>,
+                    t: Throwable
+                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -266,15 +291,14 @@ class DiaryFilteredByMonthFragment : Fragment() {
      * @author - namsh1125
      */
     private fun getColor(sentiment: Int): Int {
-
         return when (sentiment) {
-            pleasure -> ContextCompat.getColor(requireContext(), R.color.pleasure)
-            sadness -> ContextCompat.getColor(requireContext(), R.color.sadness)
-            anxiety -> ContextCompat.getColor(requireContext(), R.color.anxiety)
-            wound -> ContextCompat.getColor(requireContext(), R.color.wound)
-            embarrassment -> ContextCompat.getColor(requireContext(), R.color.embarrassment)
-            anger -> ContextCompat.getColor(requireContext(), R.color.anger)
-            else -> ContextCompat.getColor(requireContext(), R.color.black)
+            Sentiment.Pleasure.value -> R.color.pleasure
+            Sentiment.Sadness.value -> R.color.sadness
+            Sentiment.Anxiety.value -> R.color.anxiety
+            Sentiment.Wound.value -> R.color.wound
+            Sentiment.Embarrassment.value -> R.color.embarrassment
+            Sentiment.Anger.value -> R.color.anger
+            else -> R.color.black
         }
     }
 
@@ -286,23 +310,18 @@ class DiaryFilteredByMonthFragment : Fragment() {
      */
     private fun getTextSentiment(sentiment: Int): String {
         return when (sentiment) {
-            anger -> "#분노"
-            sadness -> "#슬픔"
-            anxiety -> "#불안"
-            wound -> "#상처"
-            embarrassment -> "#당황"
-            pleasure -> "#기쁨"
+            Sentiment.Anger.value -> "#분노"
+            Sentiment.Sadness.value -> "#슬픔"
+            Sentiment.Anxiety.value -> "#불안"
+            Sentiment.Wound.value -> "#상처"
+            Sentiment.Embarrassment.value -> "#당황"
+            Sentiment.Pleasure.value -> "#기쁨"
             else -> "#에러"
         }
     }
 
-    companion object Sentiment {
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
+    enum class Sentiment(val value: Int) {
+        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
 
 }

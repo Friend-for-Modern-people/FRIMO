@@ -95,7 +95,7 @@ class DiaryFilteredByYearFragment : Fragment() {
                             binding.filter1Diary1.visibility = View.VISIBLE
                             binding.filter1Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter1Diary1.background.setTint(getColor(diary[0].sentiment))
+                            binding.imageViewFilter1Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
                             binding.textviewFilter1Diary1Date.text = diary[0].createdString
                             binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
 
@@ -117,7 +117,7 @@ class DiaryFilteredByYearFragment : Fragment() {
                             binding.filter1Diary1.visibility = View.VISIBLE
                             binding.filter1Diary2.visibility = View.VISIBLE
 
-                            binding.imageViewFilter1Diary2.background.setTint(getColor(diary[1].sentiment))
+                            binding.imageViewFilter1Diary2.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[1].sentiment)))
                             binding.textviewFilter1Diary2Date.text = diary[1].createdString
                             binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
 
@@ -188,7 +188,7 @@ class DiaryFilteredByYearFragment : Fragment() {
                             binding.filter2Diary1.visibility = View.VISIBLE
                             binding.filter2Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter2Diary1.background.setTint(getColor(diary[0].sentiment))
+                            binding.imageViewFilter2Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
                             binding.textviewFilter2Diary1Date.text = diary[0].createdString
                             binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
 
@@ -207,7 +207,7 @@ class DiaryFilteredByYearFragment : Fragment() {
 
                             binding.filter2Diary2.visibility = View.VISIBLE
 
-                            binding.imageViewFilter2Diary2.background.setTint(getColor(diary[1].sentiment))
+                            binding.imageViewFilter2Diary2.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[1].sentiment)))
                             binding.textviewFilter2Diary2Date.text = diary[1].createdString
                             binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
 
@@ -242,15 +242,14 @@ class DiaryFilteredByYearFragment : Fragment() {
      * @author - namsh1125
      */
     private fun getColor(sentiment: Int): Int {
-
         return when (sentiment) {
-            pleasure -> ContextCompat.getColor(requireContext(), R.color.pleasure)
-            sadness -> ContextCompat.getColor(requireContext(), R.color.sadness)
-            anxiety -> ContextCompat.getColor(requireContext(), R.color.anxiety)
-            wound -> ContextCompat.getColor(requireContext(), R.color.wound)
-            embarrassment -> ContextCompat.getColor(requireContext(), R.color.embarrassment)
-            anger -> ContextCompat.getColor(requireContext(), R.color.anger)
-            else -> ContextCompat.getColor(requireContext(), R.color.black)
+            Sentiment.Pleasure.value -> R.color.pleasure
+            Sentiment.Sadness.value -> R.color.sadness
+            Sentiment.Anxiety.value -> R.color.anxiety
+            Sentiment.Wound.value -> R.color.wound
+            Sentiment.Embarrassment.value -> R.color.embarrassment
+            Sentiment.Anger.value -> R.color.anger
+            else -> R.color.black
         }
     }
 
@@ -271,25 +270,19 @@ class DiaryFilteredByYearFragment : Fragment() {
      * @author - namsh1125
      */
     private fun getTextSentiment(sentiment: Int): String {
-
         return when (sentiment) {
-            anger -> "#분노"
-            sadness -> "#슬픔"
-            anxiety -> "#불안"
-            wound -> "#상처"
-            embarrassment -> "#당황"
-            pleasure -> "#기쁨"
+            Sentiment.Anger.value -> "#분노"
+            Sentiment.Sadness.value -> "#슬픔"
+            Sentiment.Anxiety.value -> "#불안"
+            Sentiment.Wound.value -> "#상처"
+            Sentiment.Embarrassment.value -> "#당황"
+            Sentiment.Pleasure.value -> "#기쁨"
             else -> "#에러"
         }
     }
 
-    companion object Sentiment {
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
+    enum class Sentiment(val value: Int) {
+        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
 
 }

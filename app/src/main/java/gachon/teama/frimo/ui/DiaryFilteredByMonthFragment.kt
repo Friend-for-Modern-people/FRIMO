@@ -161,17 +161,8 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
      */
     private fun setLastMonth() {
 
-        val year = if (getCurrentMonth() - 1 == 0) {
-            getCurrentYear() - 1
-        } else {
-            getCurrentYear()
-        }
-
-        val month = if (getCurrentMonth() - 1 == 0) {
-            12
-        } else {
-            getCurrentMonth() - 1
-        }
+        val year = getLastMonthYear()
+        val month = getLastMonth()
 
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)

@@ -160,7 +160,7 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
      */
     private fun setLastYear() {
 
-        val year = getCurrentYear() - 1
+        val year = getLastYear()
 
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)

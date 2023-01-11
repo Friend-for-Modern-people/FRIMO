@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.local.AppDatabase
@@ -17,10 +16,10 @@ import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
 import kotlin.collections.ArrayList
+import gachon.teama.frimo.base.DiaryFragment
 
-class DiaryFilteredByYearFragment : Fragment() {
+class DiaryFilteredByYearFragment : DiaryFragment() {
 
     // Binding
     private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
@@ -72,9 +71,9 @@ class DiaryFilteredByYearFragment : Fragment() {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        val diary: ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
                         binding.textviewFilter1.text = getString(R.string.set_diary_year, year)
@@ -95,9 +94,15 @@ class DiaryFilteredByYearFragment : Fragment() {
                             binding.filter1Diary1.visibility = View.VISIBLE
                             binding.filter1Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter1Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
+                            binding.imageViewFilter1Diary1.background.setTint(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    getColor(diary[0].sentiment)
+                                )
+                            )
                             binding.textviewFilter1Diary1Date.text = diary[0].createdString
-                            binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+                            binding.textviewFilter1Diary1Sentiment.text =
+                                getTextSentiment(diary[0].sentiment)
 
                         } else {
                             binding.filter1Diary1.visibility = View.INVISIBLE
@@ -165,9 +170,9 @@ class DiaryFilteredByYearFragment : Fragment() {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
+                        val diary: ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
                         binding.textviewFilter2.text = getString(R.string.set_diary_year, year)
@@ -233,56 +238,6 @@ class DiaryFilteredByYearFragment : Fragment() {
 
             })
 
-    }
-
-    /**
-     * @description - diary의 감정에 맞는 배경화면 색상을 return
-     * @param - sentiment(Int) : 해당 diary의 대표 감정
-     * @return - color(Int) : 해당 diary의 배경화면 색상
-     * @author - namsh1125
-     */
-    private fun getColor(sentiment: Int): Int {
-        return when (sentiment) {
-            Sentiment.Pleasure.value -> R.color.pleasure
-            Sentiment.Sadness.value -> R.color.sadness
-            Sentiment.Anxiety.value -> R.color.anxiety
-            Sentiment.Wound.value -> R.color.wound
-            Sentiment.Embarrassment.value -> R.color.embarrassment
-            Sentiment.Anger.value -> R.color.anger
-            else -> R.color.black
-        }
-    }
-
-    /**
-     * @description - 현재 연도 받아오기
-     * @param - None
-     * @return - year(Int) : 현재 연도
-     * @author - namsh1125
-     */
-    private fun getCurrentYear(): Int {
-        return LocalDate.now().year
-    }
-
-    /**
-     * @description - Type 변경 ( toString 같은 느낌 )
-     * @param - sentiment(Int) : 해당 diary의 대표 감정
-     * @return - sentiment(String) : String으로 변환된 해당 diary의 대표 감정
-     * @author - namsh1125
-     */
-    private fun getTextSentiment(sentiment: Int): String {
-        return when (sentiment) {
-            Sentiment.Anger.value -> "#분노"
-            Sentiment.Sadness.value -> "#슬픔"
-            Sentiment.Anxiety.value -> "#불안"
-            Sentiment.Wound.value -> "#상처"
-            Sentiment.Embarrassment.value -> "#당황"
-            Sentiment.Pleasure.value -> "#기쁨"
-            else -> "#에러"
-        }
-    }
-
-    enum class Sentiment(val value: Int) {
-        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
 
 }

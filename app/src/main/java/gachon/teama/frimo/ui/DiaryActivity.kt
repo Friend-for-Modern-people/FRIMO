@@ -31,6 +31,8 @@ import retrofit2.Response
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
+    private val diaryId by lazy { intent.getLongExtra("id", 0) }
+
     /**
      * @description - Binding 이후
      * @param - None
@@ -38,20 +40,10 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setScreen()
         setClickListener()
     }
 
-    /**
-     * @description - 현재 화면에 보여지고 있는 diary의 id 가져오기
-     * @param - None
-     * @return - id(Int) : diary id
-     * @author - namsh1125
-     */
-    private fun getDiaryId(): Long {
-        return intent.getLongExtra("id", 0)
-    }
 
     /**
      * @description - 서버에서 받아온 diary를 화면에 셋팅
@@ -78,7 +70,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryById(diaryId = getDiaryId())
+        diaryAPI.getDiaryById(diaryId)
             .enqueue(object : Callback<Diary> {
 
                 override fun onResponse(call: Call<Diary>, response: Response<Diary>) {
@@ -88,117 +80,12 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                         val diary: Diary = response.body() as Diary
 
                         with(binding) {
-
                             textviewDate.text = diary.createdString
                             textviewDiaryTitle.text = diary.title
                             textviewDiaryContents.text = diary.content
                             textviewSentiment.text = getTextSentiment(diary.sentiment)
-
-                            // 감정에 맞게 태그 및 그림 배경 변경
-                            when (diary.sentiment) {
-                                Sentiment.Pleasure.value -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.pleasure
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.pleasure
-                                        )
-                                    )
-                                }
-                                Sentiment.Sadness.value -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.sadness
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.sadness
-                                        )
-                                    )
-                                }
-                                Sentiment.Anxiety.value -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.anxiety
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.anxiety
-                                        )
-                                    )
-                                }
-                                Sentiment.Wound.value -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.wound
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.wound
-                                        )
-                                    )
-                                }
-                                Sentiment.Embarrassment.value -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.embarrassment
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.embarrassment
-                                        )
-                                    )
-                                }
-                                Sentiment.Anger.value -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.anger
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.anger
-                                        )
-                                    )
-                                }
-                                else -> {
-                                    textviewSentiment.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.black
-                                        )
-                                    )
-                                    imageViewDiary.background.setTint(
-                                        ContextCompat.getColor(
-                                            this@DiaryActivity,
-                                            R.color.black
-                                        )
-                                    )
-                                }
-                            }
-
+                            setColor(diary.sentiment)
                         }
-
-
                     } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
 
                     }
@@ -215,6 +102,17 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     }
 
     /**
+     * @description - 감정에 맞게 태그 및 그림 배경 변경
+     * @param - color(Int) : 해당 다이어리 대표 감정
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setColor(color: Int) = with(binding) {
+        binding.textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
+        imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
+    }
+
+    /**
      * @description - 서버에서 diary의 핵심 키워드 받아와 화면에 셋팅
      * @param - None
      * @return - None
@@ -225,7 +123,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getFourWord(diaryId = getDiaryId())
+        diaryInterestAPI.getFourWord(diaryId)
             .enqueue(object : Callback<List<Words>> {
 
                 override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
@@ -327,7 +225,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     private fun showPopupwindow(v: View) {
 
-        val id = getDiaryId()
         val popupWindow = PopupWindow(v)
         val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -353,19 +250,18 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
             // Run activity
             val intent = Intent(this, AddWordActivity::class.java)
-            intent.putExtra("id", id)
+            intent.putExtra("id", diaryId)
             startActivity(intent)
 
             // Dismiss popup window
             popupWindow.dismiss()
-
         }
 
         // (Popupwindow) reyclerview 설정 및 감정 갯수 설정
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getWord(diaryId = getDiaryId())
+        diaryInterestAPI.getWord(diaryId)
             .enqueue(object : Callback<List<Words>> {
 
                 override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {

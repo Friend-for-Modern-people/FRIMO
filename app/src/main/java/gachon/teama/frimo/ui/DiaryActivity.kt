@@ -52,7 +52,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @author - namsh1125
      */
     private fun setScreen() {
-
         setDiary()
         setKeyword()
         // Todo: (Not now) 댓글 셋팅
@@ -84,17 +83,14 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                             textviewDiaryTitle.text = diary.title
                             textviewDiaryContents.text = diary.content
                             textviewSentiment.text = getTextSentiment(diary.sentiment)
-                            setColor(diary.sentiment)
+                            setColor(getSentimentColor(diary.sentiment))
                         }
                     } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
 
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<Diary>,
-                    t: Throwable
-                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<Diary>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -107,8 +103,8 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setColor(color: Int) = with(binding) {
-        binding.textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
+    private fun setColor(color: Int) = with(binding){
+        textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
         imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
     }
 
@@ -135,38 +131,28 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                         when (keywords.size) {
 
                             1 -> {
-                                binding.textviewKeyword1.text =
-                                    getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
                                 binding.textviewKeyword2.visibility = View.INVISIBLE
                                 binding.textviewKeyword3.visibility = View.INVISIBLE
                                 binding.textviewKeyword4.visibility = View.INVISIBLE
                             }
                             2 -> {
-                                binding.textviewKeyword1.text =
-                                    getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.text =
-                                    getString(R.string.set_diary_keyword, keywords[1].word)
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
                                 binding.textviewKeyword3.visibility = View.INVISIBLE
                                 binding.textviewKeyword4.visibility = View.INVISIBLE
                             }
                             3 -> {
-                                binding.textviewKeyword1.text =
-                                    getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.text =
-                                    getString(R.string.set_diary_keyword, keywords[1].word)
-                                binding.textviewKeyword3.text =
-                                    getString(R.string.set_diary_keyword, keywords[2].word)
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
+                                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
                                 binding.textviewKeyword4.visibility = View.INVISIBLE
                             }
                             4 -> {
-                                binding.textviewKeyword1.text =
-                                    getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.text =
-                                    getString(R.string.set_diary_keyword, keywords[1].word)
-                                binding.textviewKeyword3.text =
-                                    getString(R.string.set_diary_keyword, keywords[2].word)
-                                binding.textviewKeyword4.text =
-                                    getString(R.string.set_diary_keyword, keywords[3].word)
+                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
+                                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
+                                binding.textviewKeyword4.text = getString(R.string.set_diary_keyword, keywords[3].word)
                             }
                             else -> {
                                 binding.textviewKeyword1.visibility = View.INVISIBLE
@@ -181,10 +167,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<List<Words>>,
-                    t: Throwable
-                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -282,48 +265,39 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                         }
 
                         // 기쁨 감정 갯수 설정
-                        val textviewPleasure =
-                            popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
+                        val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
                         textviewPleasure.text = getString(
                             R.string.set_diary_pleasure_count,
                             getWordsCount(words, Sentiment.Pleasure)
                         )
 
                         // 슬픔 감정 갯수 설정
-                        val textviewSadness =
-                            popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
+                        val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
                         textviewSadness.text = getString(
                             R.string.set_diary_sadness_count,
                             getWordsCount(words, Sentiment.Sadness)
                         )
 
                         // 불안 감정 갯수 설정
-                        val textviewAnxiety =
-                            popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
+                        val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
                         textviewAnxiety.text = getString(
                             R.string.set_diary_anxiety_count,
                             getWordsCount(words, Sentiment.Anxiety)
                         )
 
                         // 상처 감정 갯수 설정
-                        val textviewWound =
-                            popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
+                        val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
                         textviewWound.text = getString(
                             R.string.set_diary_wound_count,
                             getWordsCount(words, Sentiment.Wound)
                         )
 
                         // 당황 감정 갯수 설정
-                        val textviewEmbarrassment =
-                            popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
-                        textviewEmbarrassment.text = getString(
-                            R.string.set_diary_embarrassment_count,
-                            getWordsCount(words, Sentiment.Embarrassment)
-                        )
+                        val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
+                        textviewEmbarrassment.text = getString(R.string.set_diary_embarrassment_count, getWordsCount(words, Sentiment.Embarrassment))
 
                         // 분노 감정 갯수 설정
-                        val textviewAnger =
-                            popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
+                        val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
                         textviewAnger.text = getString(
                             R.string.set_diary_anger_count,
                             getWordsCount(words, Sentiment.Anger)
@@ -332,10 +306,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<List<Words>>,
-                    t: Throwable
-                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -367,6 +338,24 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
             Sentiment.Embarrassment.value -> "#당황"
             Sentiment.Pleasure.value -> "#기쁨"
             else -> "#에러"
+        }
+    }
+
+    /**
+     * @description - diary의 감정에 맞는 배경화면 색상을 return
+     * @param - sentiment(Int) : 해당 diary의 대표 감정
+     * @return - color(Int) : 해당 diary의 배경화면 색상
+     * @author - namsh1125
+     */
+    fun getSentimentColor(sentiment: Int): Int {
+        return when (sentiment) {
+            Sentiment.Pleasure.value -> R.color.pleasure
+            Sentiment.Sadness.value -> R.color.sadness
+            Sentiment.Anxiety.value -> R.color.anxiety
+            Sentiment.Wound.value -> R.color.wound
+            Sentiment.Embarrassment.value -> R.color.embarrassment
+            Sentiment.Anger.value -> R.color.anger
+            else -> R.color.black
         }
     }
 

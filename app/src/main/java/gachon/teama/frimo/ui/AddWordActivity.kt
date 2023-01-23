@@ -26,6 +26,8 @@ import retrofit2.Response
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
 
+    private val diaryId by lazy { intent.getLongExtra("id", 0) }
+
     /**
      * @description - Binding 이후
      * @param - None
@@ -33,7 +35,6 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setRecyclerview()
         setRadiobutton()
         setClickListener()
@@ -51,7 +52,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getWord(diaryId = getDiaryId())
+        diaryInterestAPI.getWord(diaryId)
             .enqueue(object : Callback<List<Words>> {
 
                 override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
@@ -82,43 +83,29 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
     }
 
     /**
-     * @description - 현재 보고 있는 창이 어떤 diary를 기반으로 하고 있는지 알려주는 함수
-     * @param - None
-     * @return - id(Int) : diary id
-     * @author - namsh1125
-     */
-    private fun getDiaryId(): Long {
-        return intent.getLongExtra("id", 0)
-    }
-
-    /**
      * @description - 서로 다른 group의 radiobutton이 클릭 되었을 때 이전 button 해제
      * @param - None
      * @return - None
      * @author - namsh1125
      */
-    private fun setRadiobutton() {
-
-        with(binding) {
-
-            radiobuttonPleasure.setOnClickListener {
-                radiogroup2.clearCheck()
-            }
-            radiobuttonSadness.setOnClickListener {
-                radiogroup2.clearCheck()
-            }
-            radiobuttonAnxiety.setOnClickListener {
-                radiogroup2.clearCheck()
-            }
-            radiobuttonWound.setOnClickListener {
-                radiogroup1.clearCheck()
-            }
-            radiobuttonEmbarrassment.setOnClickListener {
-                radiogroup1.clearCheck()
-            }
-            radiobuttonAnger.setOnClickListener {
-                radiogroup1.clearCheck()
-            }
+    private fun setRadiobutton() = with(binding) {
+        radiobuttonPleasure.setOnClickListener {
+            radiogroup2.clearCheck()
+        }
+        radiobuttonSadness.setOnClickListener {
+            radiogroup2.clearCheck()
+        }
+        radiobuttonAnxiety.setOnClickListener {
+            radiogroup2.clearCheck()
+        }
+        radiobuttonWound.setOnClickListener {
+            radiogroup1.clearCheck()
+        }
+        radiobuttonEmbarrassment.setOnClickListener {
+            radiogroup1.clearCheck()
+        }
+        radiobuttonAnger.setOnClickListener {
+            radiogroup1.clearCheck()
         }
     }
 
@@ -128,15 +115,15 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
         // Set back button click listener
-        binding.buttonBack.setOnClickListener {
+        buttonBack.setOnClickListener {
             finish()
         }
 
         // Set add button click listener
-        binding.buttonAdd.setOnClickListener {
+        buttonAdd.setOnClickListener {
             showPopupwindow(it)
         }
     }
@@ -183,26 +170,23 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             buttonAdd.setOnClickListener {
 
                 val word = DiaryInterestTagDto.AddTagRequestDto(
-                    getDiaryId(),
+                    diaryId,
                     binding.edittextAdd.text.toString(),
-                    getSelectedSentiment().toLong(),
+                    getSelectedSentiment(),
                     binding.edittextCategory.text.toString()
                 )
 
                 val retrofit = RetrofitClient.getInstance()
                 val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-                diaryInterestAPI.addWord(word = word)
-                    .enqueue(object : Callback<String>{
+                diaryInterestAPI.addWord(word = word).enqueue(object : Callback<String> {
 
                         override fun onResponse(call: Call<String>, response: Response<String>) {
 
-                            if(response.isSuccessful && response.code() == 201) {
-
+                            if (response.isSuccessful && response.code() == 201) {
                                 popupWindow.dismiss()
                                 finish()
                                 Toast.makeText(this@AddWordActivity, "성공!", Toast.LENGTH_SHORT).show()
-
                             }
                         }
 
@@ -223,42 +207,31 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @return - sentiment(Int) : 사용자가 추가하고 싶은 단어의 감정
      * @author - namsh1125
      */
-    private fun getSelectedSentiment(): Int {
-
-        with(binding) {
-
-            if (radiobuttonAnger.isChecked) {
-                return angerDetail
-            } else if (radiobuttonSadness.isChecked) {
-                return sadnessDetail
-            } else if (radiobuttonAnxiety.isChecked) {
-                return anxietyDetail
-            } else if (radiobuttonWound.isChecked) {
-                return woundDetail
-            } else if (radiobuttonEmbarrassment.isChecked) {
-                return embarrassmentDetail
-            } else if (radiobuttonPleasure.isChecked){
-                return pleasureDetail
-            } else {
-                return error
-            }
+    private fun getSelectedSentiment(): Long = with(binding) {
+        if (radiobuttonAnger.isChecked) {
+            return Sentiment.AngerDetail.value
+        } else if (radiobuttonSadness.isChecked) {
+            return Sentiment.SadnessDetail.value
+        } else if (radiobuttonAnxiety.isChecked) {
+            return Sentiment.AnxietyDetail.value
+        } else if (radiobuttonWound.isChecked) {
+            return Sentiment.WoundDetail.value
+        } else if (radiobuttonEmbarrassment.isChecked) {
+            return Sentiment.EmbarrassmentDetail.value
+        } else if (radiobuttonPleasure.isChecked) {
+            return Sentiment.PleasureDetail.value
+        } else {
+            return Sentiment.Error.value
         }
     }
 
-    companion object Sentiment {
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
-        const val angerDetail = 1
-        const val sadnessDetail = 10
-        const val anxietyDetail = 19
-        const val woundDetail = 28
-        const val embarrassmentDetail = 37
-        const val pleasureDetail = 46
-        const val error = 99
+    enum class Sentiment(val value: Long) {
+        AngerDetail(1),
+        SadnessDetail(10),
+        AnxietyDetail(19),
+        WoundDetail(28),
+        EmbarrassmentDetail(37),
+        PleasureDetail(46),
+        Error(99)
     }
-
 }

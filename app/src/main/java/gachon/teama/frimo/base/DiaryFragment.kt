@@ -33,7 +33,7 @@ abstract class DiaryFragment : Fragment() {
      * @author - namsh1125
      */
     fun getLastYear(): Int {
-        return LocalDate.now().year
+        return getCurrentYear() - 1
     }
 
     /**

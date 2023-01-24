@@ -2,6 +2,7 @@ package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -132,11 +133,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                 diaryInterestAPI.getFourWord(diaryId)
             }
 
-            binding.textviewKeyword1.visibility = View.INVISIBLE
-            binding.textviewKeyword2.visibility = View.INVISIBLE
-            binding.textviewKeyword3.visibility = View.INVISIBLE
-            binding.textviewKeyword4.visibility = View.INVISIBLE
-
             if (keywords.size >= 1) {
                 binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
                 binding.textviewKeyword1.visibility = View.VISIBLE
@@ -152,9 +148,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                 binding.textviewKeyword3.visibility = View.VISIBLE
             }
 
-            if (keywords.size == 4) {
+            if (keywords.size >= 4) {
                 binding.textviewKeyword4.text = getString(R.string.set_diary_keyword, keywords[3].word)
-                binding.textviewKeyword4.visibility = View.INVISIBLE
+                binding.textviewKeyword4.visibility = View.VISIBLE
             }
         }
     }
@@ -198,10 +194,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         // Set popup window
         popupWindow.contentView = inflater.inflate(R.layout.view_words_i_wrote, null) // 팝업으로 띄울 화면
-        popupWindow.setWindowLayoutMode(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        ) // popup window 크기 설정
+        popupWindow.setWindowLayoutMode(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT) // popup window 크기 설정
         popupWindow.isTouchable = true // popup window 터치 되도록
         popupWindow.isFocusable = true // 포커스
 
@@ -243,39 +236,26 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                             flexDirection = FlexDirection.ROW
                             justifyContent = JustifyContent.FLEX_START
                         }.let {
-                            val recyclerView =
-                                popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
+                            val recyclerView = popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
                             recyclerView.layoutManager = it
                             recyclerView.adapter = WordsAdapter(words)
                         }
 
                         // 기쁨 감정 갯수 설정
                         val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
-                        textviewPleasure.text = getString(
-                            R.string.set_diary_pleasure_count,
-                            getWordsCount(words, Sentiment.Pleasure)
-                        )
+                        textviewPleasure.text = getString(R.string.set_diary_pleasure_count, getWordsCount(words, Sentiment.Pleasure))
 
                         // 슬픔 감정 갯수 설정
                         val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
-                        textviewSadness.text = getString(
-                            R.string.set_diary_sadness_count,
-                            getWordsCount(words, Sentiment.Sadness)
-                        )
+                        textviewSadness.text = getString(R.string.set_diary_sadness_count, getWordsCount(words, Sentiment.Sadness))
 
                         // 불안 감정 갯수 설정
                         val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
-                        textviewAnxiety.text = getString(
-                            R.string.set_diary_anxiety_count,
-                            getWordsCount(words, Sentiment.Anxiety)
-                        )
+                        textviewAnxiety.text = getString(R.string.set_diary_anxiety_count, getWordsCount(words, Sentiment.Anxiety))
 
                         // 상처 감정 갯수 설정
                         val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
-                        textviewWound.text = getString(
-                            R.string.set_diary_wound_count,
-                            getWordsCount(words, Sentiment.Wound)
-                        )
+                        textviewWound.text = getString(R.string.set_diary_wound_count, getWordsCount(words, Sentiment.Wound))
 
                         // 당황 감정 갯수 설정
                         val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
@@ -283,10 +263,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
                         // 분노 감정 갯수 설정
                         val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
-                        textviewAnger.text = getString(
-                            R.string.set_diary_anger_count,
-                            getWordsCount(words, Sentiment.Anger)
-                        )
+                        textviewAnger.text = getString(R.string.set_diary_anger_count, getWordsCount(words, Sentiment.Anger))
 
                     }
                 }

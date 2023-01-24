@@ -11,18 +11,17 @@ import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentDiaryBinding
 import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DiaryFragment : Fragment() {
 
@@ -187,39 +186,15 @@ class DiaryFragment : Fragment() {
      */
     private fun setDiaryCount() {
 
-        var diaryCount : Int? = null
-
-        val userID = database.userDao().getUserId()
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryCount(userID)
-            .enqueue(object : Callback<Int> {
-
-                override fun onResponse(call: Call<Int>, response: Response<Int>) {
-
-                    if(response.isSuccessful) {
-
-                        // 정상적으로 통신이 성공된 경우
-                        diaryCount = response.body()!!
-                        binding.textviewDiaryCount.text = diaryCount.toString()
-                    } else {
-
-                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                        diaryCount = 0
-                        binding.textviewDiaryCount.text = diaryCount.toString()
-                    }
-                }
-
-                override fun onFailure(call: Call<Int>, t: Throwable) {
-
-                    // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                    binding.textviewDiaryCount.text = diaryCount.toString()
-                }
-
-            })
-
+        lifecycleScope.launch {
+            val count = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryCount(database.userDao().getUserId())
+            }
+            binding.textviewDiaryCount.text = count.toString()
+        }
     }
 
 }

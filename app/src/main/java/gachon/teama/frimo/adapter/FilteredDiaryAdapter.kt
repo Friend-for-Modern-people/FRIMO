@@ -11,7 +11,7 @@ import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.ui.DiaryActivity
 
-class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
+class FilteredDiaryAdapter(private val dataSet: List<Diary>) :
     RecyclerView.Adapter<FilteredDiaryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -39,58 +39,7 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
 
         viewHolder.textView_date.text = dataSet[position].createdString
         viewHolder.textView_sentiment.text = getTextSentiment(dataSet[position].sentiment)
-
-        // 이미지 배경 셋팅
-        when (dataSet[position].sentiment) {
-            pleasure -> viewHolder.imageView.background.setTint(
-                viewHolder.itemView.context.resources.getColor(
-                    R.color.pleasure
-                )
-            )
-
-            sadness -> {
-                viewHolder.imageView.background.setTint(
-                    viewHolder.itemView.context.resources.getColor(
-                        R.color.sadness
-                    )
-                )
-            }
-            anxiety -> {
-                viewHolder.imageView.background.setTint(
-                    viewHolder.itemView.context.resources.getColor(
-                        R.color.anxiety
-                    )
-                )
-            }
-            wound -> {
-                viewHolder.imageView.background.setTint(
-                    viewHolder.itemView.context.resources.getColor(
-                        R.color.wound
-                    )
-                )
-            }
-            embarrassment -> {
-                viewHolder.imageView.background.setTint(
-                    viewHolder.itemView.context.resources.getColor(
-                        R.color.embarrassment
-                    )
-                )
-            }
-            anger -> {
-                viewHolder.imageView.background.setTint(
-                    viewHolder.itemView.context.resources.getColor(
-                        R.color.anger
-                    )
-                )
-            }
-            else -> {
-                viewHolder.imageView.background.setTint(
-                    viewHolder.itemView.context.resources.getColor(
-                        R.color.black
-                    )
-                )
-            }
-        }
+        viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(getSentimentColor(dataSet[position].sentiment)))
 
         // When recyclerview item(diary) clicked
         viewHolder.itemView.setOnClickListener {
@@ -104,24 +53,37 @@ class FilteredDiaryAdapter(private val dataSet: ArrayList<Diary>) :
     override fun getItemCount() = dataSet.size
 
     private fun getTextSentiment(sentiment: Int): String {
-        return when(sentiment){
-            anger -> "#분노"
-            sadness -> "#슬픔"
-            anxiety -> "#불안"
-            wound -> "#상처"
-            embarrassment -> "#당황"
-            pleasure -> "#기쁨"
+        return when (sentiment) {
+            Sentiment.Anger.value -> "#분노"
+            Sentiment.Sadness.value -> "#슬픔"
+            Sentiment.Anxiety.value -> "#불안"
+            Sentiment.Wound.value -> "#상처"
+            Sentiment.Embarrassment.value -> "#당황"
+            Sentiment.Pleasure.value -> "#기쁨"
             else -> "#에러"
         }
     }
 
-    companion object Sentiment {
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
+    /**
+     * @description - diary의 감정에 맞는 배경화면 색상을 return
+     * @param - sentiment(Int) : 해당 diary의 대표 감정
+     * @return - color(Int) : 해당 diary의 배경화면 색상
+     * @author - namsh1125
+     */
+    fun getSentimentColor(sentiment: Int): Int {
+        return when (sentiment) {
+            Sentiment.Pleasure.value -> R.color.pleasure
+            Sentiment.Sadness.value -> R.color.sadness
+            Sentiment.Anxiety.value -> R.color.anxiety
+            Sentiment.Wound.value -> R.color.wound
+            Sentiment.Embarrassment.value -> R.color.embarrassment
+            Sentiment.Anger.value -> R.color.anger
+            else -> R.color.black
+        }
+    }
+
+    enum class Sentiment(val value: Int) {
+        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
 
 }

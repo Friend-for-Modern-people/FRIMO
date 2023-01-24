@@ -70,8 +70,8 @@ class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBind
      * @return - diary(ArrayList<Diary>) : 이전 화면에서 전달 받은 filtering된 diary
      * @author - namsh1125
      */
-    private fun getDiary(): ArrayList<Diary> {
-        return intent.getSerializableExtra("filteredDiary") as ArrayList<Diary>
+    private fun getDiary(): List<Diary> {
+        return intent.getSerializableExtra("filteredDiary") as List<Diary>
     }
 
 }

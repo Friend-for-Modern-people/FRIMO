@@ -10,11 +10,11 @@ interface DiaryAPI {
 
     // 유저가 작성한 일기를 최신순으로 가져오는 API
     @GET("diary/{userPK}")
-    fun getDiary(@Path("userPK") userId: Long) : Call<List<Diary>>
+    suspend fun getDiary(@Path("userPK") userId: Long) : List<Diary>
 
     // 유저가 작성한 일기의 개수를 가져오는 API
     @GET("diary/{userPK}/cnt")
-    fun getDiaryCount(@Path("userPK") userId: Long) : Call<Int>
+    suspend fun getDiaryCount(@Path("userPK") userId: Long) : Int
 
     // 유저가 특정 연도에 작성한 diary를 가져오는 API
     @GET("diary/{userPK}/{year}")

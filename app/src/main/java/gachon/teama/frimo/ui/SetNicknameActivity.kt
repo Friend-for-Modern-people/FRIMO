@@ -1,6 +1,5 @@
 package gachon.teama.frimo.ui
 
-import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import gachon.teama.frimo.base.BaseActivity
@@ -20,7 +19,6 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setEdittext()
         setClickListener()
     }
@@ -31,10 +29,10 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
      * @return - None
      * @author - namsh1125
      */
-    private fun setEdittext() {
+    private fun setEdittext() = with(binding) {
 
         // Activate button when available nickname is entered
-        binding.edittextNickname.addTextChangedListener(object : TextWatcher {
+        edittextNickname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -51,10 +49,10 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
         // Set next button click listener
-        binding.buttonNext.setOnClickListener {
+        buttonNext.setOnClickListener {
 
             val name: String = binding.edittextNickname.text.toString()
             val userId : Long = 1
@@ -65,8 +63,7 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
             // 내부 저장소에 유저 정보 저장하기
             // 대화를 한 적이 없는 경우 최근 캐릭터 id는 99로 설정
             database.userDao().insert(User(nickname = name, userId = userId, recently_chat_friend_id = 99, recently_chat_date = ""))
-
-            startActivity(Intent(this, MainActivity::class.java))
+            startNextActivity(MainActivity::class.java)
         }
     }
 

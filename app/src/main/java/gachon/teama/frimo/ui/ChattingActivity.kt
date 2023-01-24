@@ -54,13 +54,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @author - namsh1125, Hongsi-Taste
      */
     override fun initAfterBinding() {
-
         initVariable()
         setDatabaseListener()
         setRecyclerview()
         setClickListener()
         setSTTListener()
-
     }
 
     /**
@@ -77,10 +75,10 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
 
         //get keyboard height
-        val view:View = binding.root
+        val view: View = binding.root
         var rootHeight = -1
         view.viewTreeObserver.addOnGlobalLayoutListener {
-            if(rootHeight == -1) {
+            if (rootHeight == -1) {
                 rootHeight = view.height
             }
 
@@ -88,7 +86,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             view.getWindowVisibleDisplayFrame(visibleFrameSize)
 
             val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
-            if(heightExceptKeyboard < rootHeight) {
+            if (heightExceptKeyboard < rootHeight) {
                 keyboardHeight = rootHeight - heightExceptKeyboard
             }
         }
@@ -139,9 +137,9 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecyclerview() {
-        binding.recyclerviewChatting.setHasFixedSize(true)
-        binding.recyclerviewChatting.adapter = mAdapter
+    private fun setRecyclerview() = with(binding) {
+        recyclerviewChatting.setHasFixedSize(true)
+        recyclerviewChatting.adapter = mAdapter
     }
 
     /**
@@ -150,137 +148,130 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @return - None
      * @author - namsh1125, Hongsi-Taste
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
-        with(binding) {
+        // Set back button click listener
+        buttonBack.setOnClickListener {
 
-            // Set back button click listener
-            buttonBack.setOnClickListener {
+            // 최근 대화 날짜 저장
+            val now = LocalDate.now().format(DateTimeFormatter.ofPattern("yy.MM.dd")) // 현재 날짜
+            database.userDao().updateRecentlyChatDate(now)
 
-                // 최근 대화 날짜 저장
-                val now = LocalDate.now().format(DateTimeFormatter.ofPattern("yy.MM.dd")) // 현재 날짜
-                database.userDao().updateRecentlyChatDate(now)
+            // 최근 대화 친구 저장
+            val recentlyTalkFriendId = intent.getIntExtra("id", 99)
+            database.userDao().updateRecentlyChatFriendId(recentlyTalkFriendId)
 
-                // 최근 대화 친구 저장
-                val recentlyTalkFriendId = intent.getIntExtra("id", 99)
-                database.userDao().updateRecentlyChatFriendId(recentlyTalkFriendId)
+            finish()
+        }
 
-                finish()
-            }
+        // Set find button click listener (basic layout에서 돋보기 버튼)
+        buttonFind.setOnClickListener {
+            layoutBasic.visibility = View.GONE
+            layoutSearch.visibility = View.VISIBLE
+            layoutSendData.visibility = View.GONE
+            hideKeyboard(it)
+        }
 
-            // Set find button click listener (basic layout에서 돋보기 버튼)
-            buttonFind.setOnClickListener {
-                layoutBasic.visibility = View.GONE
-                layoutSearch.visibility = View.VISIBLE
-                layoutSendData.visibility = View.GONE
-                hideKeyboard(it)
-            }
+        // Set search button click listener (search layout에서 돋보기 버튼)
+        // Fixme: 채팅 내용 중 딱 한 개의 채팅만 존재하는 경우만 의도하는 대로 동작. 해결 필요
+        buttonSearch.setOnClickListener {
 
-            // Set search button click listener (search layout에서 돋보기 버튼)
-            // Fixme: 채팅 내용 중 딱 한 개의 채팅만 존재하는 경우만 의도하는 대로 동작. 해결 필요
-            buttonSearch.setOnClickListener {
+            // Keyboard 숨기기
+            hideKeyboard(it)
 
-                // Keyboard 숨기기
-                hideKeyboard(it)
+            val word = edittextSearch.text.toString()
+            val position: MutableList<Int> = mutableListOf()
 
-                val word = edittextSearch.text.toString()
-                val position: MutableList<Int> = mutableListOf()
+            // 찾는 단어의 위치들
+            for (i in 0 until chatList.size) {
+                if (chatList[i].message.contains(word)) {
+                    position.add(i)
 
-                // 찾는 단어의 위치들
-                for (i in 0 until chatList.size) {
-                    if (chatList[i].message.contains(word)) {
-                        position.add(i)
-
-                        val smoothScroller: RecyclerView.SmoothScroller by lazy {
-                            object : LinearSmoothScroller(this@ChattingActivity) {
-                                override fun getVerticalSnapPreference() = SNAP_TO_START
-                            }
+                    val smoothScroller: RecyclerView.SmoothScroller by lazy {
+                        object : LinearSmoothScroller(this@ChattingActivity) {
+                            override fun getVerticalSnapPreference() = SNAP_TO_START
                         }
-                        smoothScroller.targetPosition = i
-                        recyclerviewChatting.layoutManager?.startSmoothScroll(smoothScroller)
                     }
+                    smoothScroller.targetPosition = i
+                    recyclerviewChatting.layoutManager?.startSmoothScroll(smoothScroller)
                 }
-
-            }
-
-            // Set cancel text click listener
-            textviewTextCancel.setOnClickListener {
-                layoutBasic.visibility = View.VISIBLE
-                layoutSearch.visibility = View.GONE
-                hideKeyboard(it)
-            }
-
-            // Set '+' button click listener
-            buttonPlus.setOnClickListener {
-
-                layoutSendData.setHeight(keyboardHeight)
-
-                // 키보드와 '+'팝업이 동시에 뜨는 현상 방지
-                lifecycleScope.launch {
-                    if(layoutSendData.isShown){
-                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-                        layoutSendData.visibility = View.GONE
-//                        showKeyboard()
-                        delay(100)
-                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-                        buttonPlus.animate().rotation(0f).setDuration(500).start()
-                    }
-                    else {
-                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-                        layoutSendData.visibility = View.VISIBLE
-                        hideKeyboard(layoutSendData)
-                        delay(100)
-                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-                        buttonPlus.animate().rotation(45f).setDuration(500).start()
-                    }
-                }
-            }
-
-            // 입력창을 눌렀을때 팝업과 키보드가 같이 뜨는 현상 방지
-            edittextChat.setOnClickListener {
-                layoutSendData.visibility = View.GONE
-            }
-
-            // Set send button click listener
-            buttonSend.setOnClickListener {
-
-                // Send message
-                val msg: String = edittextChat.text.toString()
-                val chat = Chat("Me", msg, Date())
-                myRef.child(userName).child("chat").push().setValue(chat)
-                    .addOnCompleteListener {
-                        edittextChat.setText("")
-                    }
-            }
-
-            // 기획 변경으로 다음 버젼에서 출시
-            // Set album button click listener
-            buttonAlbum.setOnClickListener {
-
-                // startDefalultGalleryApp()
-                // Todo: (Not now) Album 이동 및 이미지 불러오기
-                showToast("추후 업데이트 예정입니다 :)")
-            }
-
-            // 기획 변경으로 다음 버젼에서 출시
-            // Set camera button click listener
-            buttonCamera.setOnClickListener {
-
-//                openCamera()
-                // Todo: (Not now) Camera 작동 및 이미지 (저장)&불러오기
-                showToast("추후 업데이트 예정입니다 :)")
-            }
-
-            // Set voice button click listener
-            buttonVoice.setOnClickListener {
-
-                speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
-                speechRecognizer.setRecognitionListener(recognitionListener)
-                speechRecognizer.startListening(intent)
             }
 
         }
 
+        // Set cancel text click listener
+        textviewTextCancel.setOnClickListener {
+            layoutBasic.visibility = View.VISIBLE
+            layoutSearch.visibility = View.GONE
+            hideKeyboard(it)
+        }
+
+        // Set '+' button click listener
+        buttonPlus.setOnClickListener {
+
+            layoutSendData.setHeight(keyboardHeight)
+
+            // 키보드와 '+'팝업이 동시에 뜨는 현상 방지
+            lifecycleScope.launch {
+                if (layoutSendData.isShown) {
+                    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                    layoutSendData.visibility = View.GONE
+//                        showKeyboard()
+                    delay(100)
+                    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    buttonPlus.animate().rotation(0f).setDuration(500).start()
+                } else {
+                    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                    layoutSendData.visibility = View.VISIBLE
+                    hideKeyboard(layoutSendData)
+                    delay(100)
+                    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    buttonPlus.animate().rotation(45f).setDuration(500).start()
+                }
+            }
+        }
+
+        // 입력창을 눌렀을때 팝업과 키보드가 같이 뜨는 현상 방지
+        edittextChat.setOnClickListener {
+            layoutSendData.visibility = View.GONE
+        }
+
+        // Set send button click listener
+        buttonSend.setOnClickListener {
+
+            // Send message
+            val msg: String = edittextChat.text.toString()
+            val chat = Chat("Me", msg, Date())
+            myRef.child(userName).child("chat").push().setValue(chat)
+                .addOnCompleteListener {
+                    edittextChat.setText("")
+                }
+        }
+
+        // 기획 변경으로 다음 버젼에서 출시
+        // Set album button click listener
+        buttonAlbum.setOnClickListener {
+
+            // startDefalultGalleryApp()
+            // Todo: (Not now) Album 이동 및 이미지 불러오기
+            showToast("추후 업데이트 예정입니다 :)")
+        }
+
+        // 기획 변경으로 다음 버젼에서 출시
+        // Set camera button click listener
+        buttonCamera.setOnClickListener {
+
+//                openCamera()
+            // Todo: (Not now) Camera 작동 및 이미지 (저장)&불러오기
+            showToast("추후 업데이트 예정입니다 :)")
+        }
+
+        // Set voice button click listener
+        buttonVoice.setOnClickListener {
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
+            speechRecognizer.setRecognitionListener(recognitionListener)
+            speechRecognizer.startListening(intent)
+        }
     }
 
     /**
@@ -289,12 +280,12 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @return - None
      * @author - Hongsi-Taste
      */
-    private fun setSTTListener(){
+    private fun setSTTListener() {
 
-        recognitionListener = object: RecognitionListener{
+        recognitionListener = object : RecognitionListener {
 
             override fun onReadyForSpeech(params: Bundle?) {
-                Toast.makeText(applicationContext,"Recording start", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Recording start", Toast.LENGTH_SHORT).show()
             }
 
             override fun onBeginningOfSpeech() {
@@ -315,28 +306,19 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
             override fun onError(error: Int) {
                 val message: String
-                when(error){
-                    SpeechRecognizer.ERROR_AUDIO ->
-                        message = "Audio Error"
-                    SpeechRecognizer.ERROR_CLIENT ->
-                        message = "Client Error"
-                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ->
-                        message = "No permissions"
-                    SpeechRecognizer.ERROR_NETWORK ->
-                        message = "Network Error"
-                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT ->
-                        message = "Network TIMEOUT"
-                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY ->
-                        message = "Recognizer is busy"
-                    SpeechRecognizer.ERROR_SERVER ->
-                        message = "SERVER is weird"
-                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT ->
-                        message = "Speech Time Exceeded"
-                    else ->
-                        message = "Unknown Error"
+                when (error) {
+                    SpeechRecognizer.ERROR_AUDIO -> message = "Audio Error"
+                    SpeechRecognizer.ERROR_CLIENT -> message = "Client Error"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> message = "No permissions"
+                    SpeechRecognizer.ERROR_NETWORK -> message = "Network Error"
+                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> message = "Network TIMEOUT"
+                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> message = "Recognizer is busy"
+                    SpeechRecognizer.ERROR_SERVER -> message = "SERVER is weird"
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> message = "Speech Time Exceeded"
+                    else -> message = "Unknown Error"
                 }
 
-                Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
             }
 
             //STT 결과를 텍스트로 입력창에 출력
@@ -344,11 +326,9 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
                 val matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (matches != null) {
-                    for(i in 0 until matches.size){
-
+                    for (i in 0 until matches.size) {
                         val text = binding.edittextChat.text.toString()
-
-                        binding.edittextChat.setText(text + " "+ matches[i])
+                        binding.edittextChat.setText(text + " " + matches[i])
                     }
                 }
             }
@@ -364,6 +344,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
 
     }
+
     /**
      * @description - extends View class and add setHeight fun.
      * @param - value:Int

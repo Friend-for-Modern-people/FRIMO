@@ -36,7 +36,6 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         setScreen()
         return binding.root
     }
@@ -48,7 +47,6 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
      * @author - namsh1125
      */
     private fun setScreen() {
-
         setCurrentYear()
         setLastYear()
     }

@@ -24,7 +24,6 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setScreen()
         setClickListener()
     }
@@ -35,34 +34,30 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
-        with(binding) {
+        // Set back button click listener
+        buttonBack.setOnClickListener {
+            finish()
+        }
 
-            // Set back button click listener
-            buttonBack.setOnClickListener {
-                finish()
-            }
+        // Set like button click listener
+        layoutLikeButton.setOnClickListener {
 
-            // Set like button click listener
-            layoutLikeButton.setOnClickListener {
+            friend.like = !friend.like // Update like
+            setLike() // Update screen
+            database.friendDao().updateFriendLike(id, friend.like) // Update DB
+        }
 
-                friend.like = !friend.like // Update like
-                setLike() // Update screen
-                database.friendDao().updateFriendLike(id, friend.like) // Update DB
-            }
+        // Set start button click listener
+        buttonChatStart.setOnClickListener {
 
-            // Set start button click listener
-            buttonChatStart.setOnClickListener {
+            // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
 
-                // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
-
-                // Start chatting activity
-                val intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
-                intent.putExtra("id", id)
-                startActivity(intent)
-            }
-
+            // Start chatting activity
+            val intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
+            intent.putExtra("id", id)
+            startActivity(intent)
         }
     }
 
@@ -72,24 +67,20 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @return - None
      * @author - namsh1125
      */
-    private fun setScreen() {
+    private fun setScreen() = with(binding) {
 
         setLike()
-
-        with(binding) {
-
-            imageviewFriendProfile.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_profile))
-            textviewFriendName.text = friend.name
-            textviewFriendWarmthRate.text = friend.warmth.toString()
-            textviewFriendSympathyRate.text = friend.sympathy.toString()
-            textviewFriendIntroduction.text = friend.introduce
-            imageviewFriendLive.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_live))
-            textviewFriendLive.text = friend.live
-            imageviewFriendHeight.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_height))
-            textviewFriendHeight.text = friend.height
-            imageviewFriendPrefer.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_prefer))
-            textviewFriendPrefer.text = friend.prefer
-        }
+        imageviewFriendProfile.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_profile))
+        textviewFriendName.text = friend.name
+        textviewFriendWarmthRate.text = friend.warmth.toString()
+        textviewFriendSympathyRate.text = friend.sympathy.toString()
+        textviewFriendIntroduction.text = friend.introduce
+        imageviewFriendLive.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_live))
+        textviewFriendLive.text = friend.live
+        imageviewFriendHeight.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_height))
+        textviewFriendHeight.text = friend.height
+        imageviewFriendPrefer.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_prefer))
+        textviewFriendPrefer.text = friend.prefer
     }
 
     /**
@@ -99,7 +90,6 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @author - namsh1125
      */
     private fun setLike() {
-
         if (friend.like) {
             binding.imageButtonLike.background.setTint(ContextCompat.getColor(this, R.color.like))
         } else {

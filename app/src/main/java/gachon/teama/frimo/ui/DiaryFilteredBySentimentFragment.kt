@@ -67,7 +67,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = anger, userId = database.userDao().getUserId())
+        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anger.value, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -146,7 +146,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = sadness, userId = database.userDao().getUserId())
+        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Sadness.value, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -225,7 +225,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = anxiety, userId = database.userDao().getUserId())
+        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anxiety.value, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -304,7 +304,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = wound, userId = database.userDao().getUserId())
+        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Wound.value, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -383,7 +383,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = embarrassment, userId = database.userDao().getUserId())
+        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Embarrassment.value, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -462,7 +462,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = pleasure, userId = database.userDao().getUserId())
+        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Pleasure.value, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -529,13 +529,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
 
     }
 
-    companion object Sentiment {
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
+    enum class Sentiment(val value: Int) {
+        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
-
 }

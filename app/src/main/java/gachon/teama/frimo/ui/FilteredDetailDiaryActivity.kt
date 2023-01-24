@@ -15,8 +15,7 @@ import gachon.teama.frimo.databinding.ActivityFilteredDetailDiaryBinding
  * RecyclerView에 FilteredDiaryAapter를 사용
  */
 
-class FilteredDetailDiaryActivity :
-    BaseActivity<ActivityFilteredDetailDiaryBinding>(ActivityFilteredDetailDiaryBinding::inflate) {
+class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBinding>(ActivityFilteredDetailDiaryBinding::inflate) {
 
     /**
      * @description - Binding 이후
@@ -25,7 +24,6 @@ class FilteredDetailDiaryActivity :
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setScreen()
         setClickListener()
     }
@@ -36,10 +34,8 @@ class FilteredDetailDiaryActivity :
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
-
-        // When back button clicked
-        binding.buttonBack.setOnClickListener {
+    private fun setClickListener() = with(binding) {
+        buttonBack.setOnClickListener { // When back button clicked
             finish()
         }
     }
@@ -50,15 +46,10 @@ class FilteredDetailDiaryActivity :
      * @return - None
      * @author - namsh1125
      */
-    private fun setScreen() {
-
+    private fun setScreen() = with(binding) {
         setRecyclerview()
-
-        // 어떤 필터 조건이 걸렸는지 설정
-        binding.textviewFilter.text = intent.getStringExtra("filter")
-
-        // Filtering된 Diary 갯수 설정
-        binding.textviewDiaryCount.text = getString(R.string.set_diary_count, getDiary().size)
+        textviewFilter.text = intent.getStringExtra("filter") // 어떤 필터 조건이 걸렸는지 설정
+        textviewDiaryCount.text = getString(R.string.set_diary_count, getDiary().size) // Filtering된 Diary 갯수 설정
     }
 
     /**
@@ -68,9 +59,9 @@ class FilteredDetailDiaryActivity :
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecyclerview() {
-        binding.recyclerviewFilteredDiary.setHasFixedSize(true)
-        binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(getDiary())
+    private fun setRecyclerview() = with(binding) {
+        recyclerviewFilteredDiary.setHasFixedSize(true)
+        recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(getDiary())
     }
 
     /**

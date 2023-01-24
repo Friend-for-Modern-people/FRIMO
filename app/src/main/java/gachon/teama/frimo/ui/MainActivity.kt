@@ -13,7 +13,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setScreen()
         initNavigationBar()
     }
@@ -34,8 +33,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
      * @return - None
      * @author - namsh1125
      */
-    private fun initNavigationBar() {
-        binding.navigationbar.run {
+    private fun initNavigationBar() = with(binding) {
+        navigationbar.run {
             setOnItemSelectedListener{ item ->
                 when (item.itemId) {
                     R.id.home -> { // Home

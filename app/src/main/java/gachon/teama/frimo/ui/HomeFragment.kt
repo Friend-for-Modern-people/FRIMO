@@ -14,7 +14,6 @@ import gachon.teama.frimo.adapter.RecommendFriendsAdapter
 import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentHomeBinding
-import java.util.function.Predicate
 
 class HomeFragment : Fragment() {
 
@@ -33,10 +32,8 @@ class HomeFragment : Fragment() {
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         setClickListener()
         setRecyclerview()
-
         return binding.root // Inflate the layout for this fragment
     }
 
@@ -47,7 +44,6 @@ class HomeFragment : Fragment() {
      * @author - namsh1125
      */
     override fun onResume() {
-
         super.onResume()
         setRecentlyTalkFriend()
     }
@@ -156,7 +152,6 @@ class HomeFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setRecyclerview() {
-
         setRecommendFriendRecyclerview()
         setFriendRecyclerview()
     }
@@ -168,10 +163,9 @@ class HomeFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecommendFriendRecyclerview() {
-
-        binding.recyclerviewRecommendFriend.setHasFixedSize(true)
-        binding.recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(getAllFriend())
+    private fun setRecommendFriendRecyclerview() = with(binding) {
+        recyclerviewRecommendFriend.setHasFixedSize(true)
+        recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(getAllFriend())
     }
 
     /**
@@ -181,10 +175,9 @@ class HomeFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setFriendRecyclerview() {
-
-        binding.recyclerviewFriend.setHasFixedSize(true)
-        binding.recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
+    private fun setFriendRecyclerview() = with(binding) {
+        recyclerviewFriend.setHasFixedSize(true)
+        recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
     }
 
     /**
@@ -193,19 +186,19 @@ class HomeFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecentlyTalkFriend() {
+    private fun setRecentlyTalkFriend() = with(binding) {
 
         val recentlyTalkFriend = getRecentlyTalkFriend()
 
         if (recentlyTalkFriend != null) {
 
             // layout 셋팅
-            binding.imageviewRecentlyTalkFriend.setImageDrawable(ResourcesCompat.getDrawable(resources, recentlyTalkFriend.img_theme, null))
-            binding.textviewRecentlyTalkFriendName.text = recentlyTalkFriend.name
-            binding.textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
+            imageviewRecentlyTalkFriend.setImageDrawable(ResourcesCompat.getDrawable(resources, recentlyTalkFriend.img_theme, null))
+            textviewRecentlyTalkFriendName.text = recentlyTalkFriend.name
+            textviewWhenTalked.text = database.userDao().getRecentlyChatDate()
 
         } else {
-            binding.layoutRecentlyTalk.visibility = View.GONE
+            layoutRecentlyTalk.visibility = View.GONE
         }
     }
 
@@ -222,23 +215,13 @@ class HomeFragment : Fragment() {
     /**
      * @description - 찾고자 하는 특성을 포함하는 친구만 추출
      * @param - properties(String) : 찾고자 하는 친구의 특징
-     * @return - friend(ArrayList<Friend>) : 해당 특징을 가지고 있는 친구
+     * @return - friend(List<Friend>) : 해당 특징을 가지고 있는 친구
      * @author - namsh1125
      */
-    private fun getFriend(properties: String): ArrayList<Friend> {
-
-        // Get friend
-        val friend = database.friendDao().getFriendList() as MutableList
-
-        // 해당 특성을 가지고 있지 않은 친구들
-        val noProperties = Predicate<Friend> { friend: Friend ->
-            !friend.tag.contains(properties)
+    private fun getFriend(properties: String): List<Friend> {
+        return database.friendDao().getFriendList().filter {
+            it.tag.contains(properties)
         }
-        friend.removeIf(noProperties)
-
-        // Return theme1(차분) friend
-        return friend as ArrayList<Friend>
-
     }
 
     /**

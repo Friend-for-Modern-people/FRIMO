@@ -14,7 +14,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-
         setScreen()
         setClickListener()
     }
@@ -26,7 +25,6 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
      * @author - namsh1125
      */
     private fun setScreen() {
-
         binding.viewpager.adapter = OnboardingFragmentAdapter(this)
         binding.dotsIndicator.attachTo(binding.viewpager)
     }
@@ -37,9 +35,8 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
-
-        binding.buttonNext.setOnClickListener {
+    private fun setClickListener() = with(binding) {
+        buttonNext.setOnClickListener {
             startNextActivity(LoginActivity::class.java)
         }
     }

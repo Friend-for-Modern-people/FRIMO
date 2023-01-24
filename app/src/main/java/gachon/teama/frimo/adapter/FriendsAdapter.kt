@@ -11,7 +11,7 @@ import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.ui.SetCharacterActivity
 
-class FriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
+class FriendsAdapter(private val dataSet: List<Friend>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

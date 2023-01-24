@@ -36,7 +36,6 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         setScreen()
         return binding.root
     }
@@ -48,7 +47,6 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
      * @author - namsh1125
      */
     private fun setScreen() {
-
         setCurrentMonth()
         setLastMonth()
     }
@@ -67,11 +65,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryByMonth(
-            year = year,
-            month = month,
-            userId = database.userDao().getUserId()
-        )
+        diaryAPI.getDiaryByMonth(year = year, month = month, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -81,16 +75,13 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
                         val diary: ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewFilter1.text =
-                            getString(R.string.set_diary_year_and_month, year, month)
-                        binding.textviewFilter1DiaryCount.text =
-                            getString(R.string.set_diary_count, diary.size)
+                        binding.textviewFilter1.text = getString(R.string.set_diary_year_and_month, year, month)
+                        binding.textviewFilter1DiaryCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (Current month detail) click listener
                         binding.layoutFilter1Detail.setOnClickListener {
 
-                            val intent =
-                                Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
                             intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
                             intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
                             startActivity(intent)
@@ -104,8 +95,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
 
                             binding.imageViewFilter1Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
                             binding.textviewFilter1Diary1Date.text = diary[0].createdString
-                            binding.textviewFilter1Diary1Sentiment.text =
-                                getTextSentiment(diary[0].sentiment)
+                            binding.textviewFilter1Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
 
                         }
 
@@ -142,10 +132,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<List<Diary>>,
-                    t: Throwable
-                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
 
@@ -167,11 +154,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryByMonth(
-            year = year,
-            month = month,
-            userId = database.userDao().getUserId()
-        )
+        diaryAPI.getDiaryByMonth(year = year, month = month, userId = database.userDao().getUserId())
             .enqueue(object : Callback<List<Diary>> {
 
                 override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
@@ -181,16 +164,13 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
                         val diary: ArrayList<Diary> = response.body() as ArrayList
 
                         // Set layout
-                        binding.textviewFilter2.text =
-                            getString(R.string.set_diary_year_and_month, year, month)
-                        binding.textviewFilter2DiaryCount.text =
-                            getString(R.string.set_diary_count, diary.size)
+                        binding.textviewFilter2.text = getString(R.string.set_diary_year_and_month, year, month)
+                        binding.textviewFilter2DiaryCount.text = getString(R.string.set_diary_count, diary.size)
 
                         // Set layout (last month detail) click listener
                         binding.layoutFilter2Detail.setOnClickListener {
 
-                            val intent =
-                                Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
                             intent.putExtra("filter", "${year}년 ${month}월") // 어떤 필터가 걸려있는지 전달
                             intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
                             startActivity(intent)
@@ -242,10 +222,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<List<Diary>>,
-                    t: Throwable
-                ) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
+                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
                     Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
                 }
             })

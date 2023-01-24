@@ -103,7 +103,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setColor(color: Int) = with(binding){
+    private fun setColor(color: Int) = with(binding) {
         textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
         imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
     }

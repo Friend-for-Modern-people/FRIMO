@@ -1,6 +1,5 @@
 package gachon.teama.frimo.ui
 
-import android.content.Intent
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.databinding.ActivityLoginBinding
 
@@ -22,12 +21,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
         // Set login button click listener
-        binding.buttonLogin.setOnClickListener{
+        buttonLogin.setOnClickListener{
             // Todo: (Not now) Kakao login 구현 및 관련 내용 저장
-            startActivity(Intent(this, AuthorityActivity::class.java))
+            startNextActivity(AuthorityActivity::class.java)
         }
     }
 

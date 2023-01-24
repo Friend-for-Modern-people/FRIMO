@@ -27,51 +27,47 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
-        with(binding){
+        // Set back button click listener
+        buttonBack.setOnClickListener {
+            finish()
+        }
 
-            // Set back button click listener
-            buttonBack.setOnClickListener {
-                finish()
+        // Set guide1 layout click listener
+        layoutGuide1.setOnClickListener {
+
+            if (layoutGuide1Detail.isShown) { // If the layout is showing
+                layoutGuide1Detail.visibility = View.GONE
+                buttonDetail1.animate().rotation(0f).setDuration(100).start()
+            } else { // If the layout isn't showing
+                layoutGuide1Detail.visibility = View.VISIBLE
+                buttonDetail1.animate().rotation(90f).setDuration(100).start()
             }
+        }
 
-            // Set guide1 layout click listener
-            layoutGuide1.setOnClickListener {
+        // Set guide2 layout click listener
+        layoutGuide2.setOnClickListener {
 
-                if (layoutGuide1Detail.isShown) { // If the layout is showing
-                    layoutGuide1Detail.visibility = View.GONE
-                    buttonDetail1.animate().rotation(0f).setDuration(100).start()
-                } else { // If the layout isn't showing
-                    layoutGuide1Detail.visibility = View.VISIBLE
-                    buttonDetail1.animate().rotation(90f).setDuration(100).start()
-                }
+            if (layoutGuide2Detail.isShown) { // If the layout is showing
+                layoutGuide2Detail.visibility = View.GONE
+                buttonDetail2.animate().rotation(0f).setDuration(100).start()
+            } else { // If the layout isn't showing
+                layoutGuide2Detail.visibility = View.VISIBLE
+                buttonDetail2.animate().rotation(90f).setDuration(100).start()
             }
+        }
 
-            // Set guide2 layout click listener
-            layoutGuide2.setOnClickListener {
+        // Set guide3 layout click listener
+        layoutGuide3.setOnClickListener {
 
-                if (layoutGuide2Detail.isShown) { // If the layout is showing
-                    layoutGuide2Detail.visibility = View.GONE
-                    buttonDetail2.animate().rotation(0f).setDuration(100).start()
-                } else { // If the layout isn't showing
-                    layoutGuide2Detail.visibility = View.VISIBLE
-                    buttonDetail2.animate().rotation(90f).setDuration(100).start()
-                }
+            if (layoutGuide3Detail.isShown) { // If the layout is showing
+                layoutGuide3Detail.visibility = View.GONE
+                buttonDetail3.animate().rotation(0f).setDuration(100).start()
+            } else { // If the layout isn't showing
+                layoutGuide3Detail.visibility = View.VISIBLE
+                buttonDetail3.animate().rotation(90f).setDuration(100).start()
             }
-
-            // Set guide3 layout click listener
-            layoutGuide3.setOnClickListener {
-
-                if (layoutGuide3Detail.isShown) { // If the layout is showing
-                    layoutGuide3Detail.visibility = View.GONE
-                    buttonDetail3.animate().rotation(0f).setDuration(100).start()
-                } else { // If the layout isn't showing
-                    layoutGuide3Detail.visibility = View.VISIBLE
-                    buttonDetail3.animate().rotation(90f).setDuration(100).start()
-                }
-            }
-
         }
     }
 }

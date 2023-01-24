@@ -22,7 +22,7 @@ import gachon.teama.frimo.databinding.FragmentSettingBinding
  * @see GuideActivity
  */
 
-class SettingFragment : Fragment(){
+class SettingFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentSettingBinding.inflate(layoutInflater) }
@@ -39,9 +39,7 @@ class SettingFragment : Fragment(){
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         setClickListener()
-
         return binding.root // Inflate the layout for this fragment
     }
 
@@ -51,12 +49,9 @@ class SettingFragment : Fragment(){
      * @return - None
      * @author - namsh1125
      */
-    override fun onResume() {
-
+    override fun onResume() = with(binding) {
         super.onResume()
-
-        // Set user nickname
-        binding.textviewNickname.text = database.userDao().getNickname()
+        textviewNickname.text = database.userDao().getNickname() // Set user nickname
     }
 
     /**
@@ -65,25 +60,25 @@ class SettingFragment : Fragment(){
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
         // Set change nickname button click listener
-        binding.buttonChangeNickname.setOnClickListener {
+        buttonChangeNickname.setOnClickListener {
             startActivity(Intent(requireContext(), ChangeNicknameActivity::class.java))
         }
 
         // Set notice layout click listener
-        binding.layoutNotice.setOnClickListener {
+        layoutNotice.setOnClickListener {
             startActivity(Intent(requireContext(), NoticeActivity::class.java))
         }
 
         // Set guide layout click listener
-        binding.layoutGuide.setOnClickListener {
+        layoutGuide.setOnClickListener {
             startActivity(Intent(requireContext(), GuideActivity::class.java))
         }
 
         // Set logout button click listener
-        binding.buttonLogout.setOnClickListener {
+        buttonLogout.setOnClickListener {
             showPopupwindow(it)
         }
 
@@ -95,12 +90,12 @@ class SettingFragment : Fragment(){
      * @return - None
      * @author - namsh1125
      */
-    private fun showPopupwindow(v:View){
+    private fun showPopupwindow(v: View) {
 
         val popupWindow = PopupWindow(v)
         val inflater = context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        with(popupWindow){
+        with(popupWindow) {
 
             contentView = inflater.inflate(R.layout.view_popup_logout, null) // 팝업으로 띄울 화면
             setWindowLayoutMode(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) // popup window 크기 설정

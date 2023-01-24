@@ -38,58 +38,50 @@ class AuthorityActivity : BaseActivity<ActivityAuthorityBinding>(ActivityAuthori
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
-        with(binding) {
+        // Set all checkbox click listener
+        checkboxAll.setOnClickListener {
+            if (checkboxAll.isChecked) {
+                checkboxFile.isChecked = true
+                checkboxInternet.isChecked = true
+                checkboxCamera.isChecked = true
+                checkboxMic.isChecked = true
+                setScreen()
 
-            // Set all checkbox click listener
-            checkboxAll.setOnClickListener {
-
-                if (checkboxAll.isChecked) {
-
-                    checkboxFile.isChecked = true
-                    checkboxInternet.isChecked = true
-                    checkboxCamera.isChecked = true
-                    checkboxMic.isChecked = true
-                    setScreen()
-
-                } else {
-
-                    checkboxFile.isChecked = false
-                    checkboxInternet.isChecked = false
-                    checkboxCamera.isChecked = false
-                    checkboxMic.isChecked = false
-                    setScreen()
-                }
-
-            }
-
-            // Set file checkbox click listener
-            checkboxFile.setOnClickListener {
+            } else {
+                checkboxFile.isChecked = false
+                checkboxInternet.isChecked = false
+                checkboxCamera.isChecked = false
+                checkboxMic.isChecked = false
                 setScreen()
             }
+        }
 
-            // Set internet checkbox click listener
-            checkboxInternet.setOnClickListener {
-                setScreen()
-            }
+        // Set file checkbox click listener
+        checkboxFile.setOnClickListener {
+            setScreen()
+        }
 
-            // Set camera checkbox click listener
-            checkboxCamera.setOnClickListener {
-                setScreen()
-            }
+        // Set internet checkbox click listener
+        checkboxInternet.setOnClickListener {
+            setScreen()
+        }
 
-            // Set mic checkbox click listener
-            checkboxMic.setOnClickListener {
-                setScreen()
-            }
+        // Set camera checkbox click listener
+        checkboxCamera.setOnClickListener {
+            setScreen()
+        }
+
+        // Set mic checkbox click listener
+        checkboxMic.setOnClickListener {
+            setScreen()
         }
 
         // Set start button click listener
-        binding.buttonNext.setOnClickListener {
+        buttonNext.setOnClickListener {
             checkPermissionsAndRun()
         }
-
     }
 
     /**
@@ -98,44 +90,40 @@ class AuthorityActivity : BaseActivity<ActivityAuthorityBinding>(ActivityAuthori
      * @return - None
      * @author - namsh1125
      */
-    private fun setScreen() {
+    private fun setScreen() = with(binding) {
 
-        with(binding) {
+        // 하위 체크박스 선택 여부에 따라 전체 동의 체크 박스 선택 변경
+        checkboxAll.isChecked = checkboxFile.isChecked && checkboxInternet.isChecked && checkboxCamera.isChecked && checkboxMic.isChecked
 
-            // 하위 체크박스 선택 여부에 따라 전체 동의 체크 박스 선택 변경
-            checkboxAll.isChecked = checkboxFile.isChecked && checkboxInternet.isChecked && checkboxCamera.isChecked && checkboxMic.isChecked
+        // 모든 권한을 주겠다고 유저에게 허락이 떨어지면 다음 화면으로 넘어가는 버튼 활성화
+        buttonNext.isEnabled = checkboxAll.isChecked
 
-            // 모든 권한을 주겠다고 유저에게 허락이 떨어지면 다음 화면으로 넘어가는 버튼 활성화
-            buttonNext.isEnabled = checkboxAll.isChecked
+        // File 체크버튼 클릭 여부 확인
+        if (checkboxFile.isChecked) {
+            textviewTextGiveAuthority1.visibility = View.GONE
+        } else {
+            textviewTextGiveAuthority1.visibility = View.VISIBLE
+        }
 
-            // File 체크버튼 클릭 여부 확인
-            if (checkboxFile.isChecked) {
-               textviewTextGiveAuthority1.visibility = View.GONE
-            } else {
-                textviewTextGiveAuthority1.visibility = View.VISIBLE
-            }
+        // Internet 체크버튼 클릭 여부 확인
+        if (checkboxInternet.isChecked) {
+            textviewTextGiveAuthority2.visibility = View.GONE
+        } else {
+            textviewTextGiveAuthority2.visibility = View.VISIBLE
+        }
 
-            // Internet 체크버튼 클릭 여부 확인
-            if (checkboxInternet.isChecked) {
-                textviewTextGiveAuthority2.visibility = View.GONE
-            } else {
-                textviewTextGiveAuthority2.visibility = View.VISIBLE
-            }
+        // Mic 체크버튼 클릭 여부 확인
+        if (checkboxMic.isChecked) {
+            textviewTextGiveAuthority4.visibility = View.GONE
+        } else {
+            textviewTextGiveAuthority4.visibility = View.VISIBLE
+        }
 
-            // Mic 체크버튼 클릭 여부 확인
-            if (checkboxMic.isChecked) {
-                textviewTextGiveAuthority4.visibility = View.GONE
-            } else {
-                textviewTextGiveAuthority4.visibility = View.VISIBLE
-            }
-
-            // Camera 체크버튼 클릭 여부 확인
-            if (checkboxCamera.isChecked) {
-                textviewTextGiveAuthority3.visibility = View.GONE
-            } else {
-                textviewTextGiveAuthority3.visibility = View.VISIBLE
-            }
-
+        // Camera 체크버튼 클릭 여부 확인
+        if (checkboxCamera.isChecked) {
+            textviewTextGiveAuthority3.visibility = View.GONE
+        } else {
+            textviewTextGiveAuthority3.visibility = View.VISIBLE
         }
     }
 
@@ -175,6 +163,7 @@ class AuthorityActivity : BaseActivity<ActivityAuthorityBinding>(ActivityAuthori
      * @author - namsh1125
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
@@ -190,6 +179,6 @@ class AuthorityActivity : BaseActivity<ActivityAuthorityBinding>(ActivityAuthori
             }
         }
 
-        startActivity(Intent(this, SetNicknameActivity::class.java))
+        startNextActivity(SetNicknameActivity::class.java)
     }
 }

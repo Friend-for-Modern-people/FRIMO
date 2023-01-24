@@ -11,6 +11,7 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -25,6 +26,10 @@ import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.DiaryInterestAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +45,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-        setScreen()
+        runBlocking {
+            setScreen()
+        }
         setClickListener()
     }
 
@@ -51,7 +58,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setScreen() {
+    private suspend fun setScreen() {
         setDiary()
         setKeyword()
         // Todo: (Not now) 댓글 셋팅
@@ -114,64 +121,42 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setKeyword() {
+    private suspend fun setKeyword() {
 
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getFourWord(diaryId)
-            .enqueue(object : Callback<List<Words>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
+            val keywords = withContext(Dispatchers.IO) {
+                diaryInterestAPI.getFourWord(diaryId)
+            }
 
-                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            binding.textviewKeyword1.visibility = View.INVISIBLE
+            binding.textviewKeyword2.visibility = View.INVISIBLE
+            binding.textviewKeyword3.visibility = View.INVISIBLE
+            binding.textviewKeyword4.visibility = View.INVISIBLE
 
-                        val keywords: List<Words> = response.body() as List<Words>
+            if (keywords.size >= 1) {
+                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
+                binding.textviewKeyword1.visibility = View.VISIBLE
+            }
 
-                        when (keywords.size) {
+            if (keywords.size >= 2) {
+                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
+                binding.textviewKeyword2.visibility = View.VISIBLE
+            }
 
-                            1 -> {
-                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.visibility = View.INVISIBLE
-                                binding.textviewKeyword3.visibility = View.INVISIBLE
-                                binding.textviewKeyword4.visibility = View.INVISIBLE
-                            }
-                            2 -> {
-                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
-                                binding.textviewKeyword3.visibility = View.INVISIBLE
-                                binding.textviewKeyword4.visibility = View.INVISIBLE
-                            }
-                            3 -> {
-                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
-                                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
-                                binding.textviewKeyword4.visibility = View.INVISIBLE
-                            }
-                            4 -> {
-                                binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
-                                binding.textviewKeyword2.text = getString(R.string.set_diary_keyword, keywords[1].word)
-                                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
-                                binding.textviewKeyword4.text = getString(R.string.set_diary_keyword, keywords[3].word)
-                            }
-                            else -> {
-                                binding.textviewKeyword1.visibility = View.INVISIBLE
-                                binding.textviewKeyword2.visibility = View.INVISIBLE
-                                binding.textviewKeyword3.visibility = View.INVISIBLE
-                                binding.textviewKeyword4.visibility = View.INVISIBLE
-                            }
-                        }
+            if (keywords.size >= 3) {
+                binding.textviewKeyword3.text = getString(R.string.set_diary_keyword, keywords[2].word)
+                binding.textviewKeyword3.visibility = View.VISIBLE
+            }
 
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
-
+            if (keywords.size == 4) {
+                binding.textviewKeyword4.text = getString(R.string.set_diary_keyword, keywords[3].word)
+                binding.textviewKeyword4.visibility = View.INVISIBLE
+            }
+        }
     }
 
     /**

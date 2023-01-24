@@ -16,7 +16,7 @@ interface DiaryInterestAPI {
 
     // 사용자가 작성한 대표 단어 4개만 받아오는 API
     @GET("tag/{diaryPK}/only4")
-    fun getFourWord(@Path("diaryPK") diaryId : Long) : Call<List<Words>>
+    suspend fun getFourWord(@Path("diaryPK") diaryId : Long) : List<Words>
 
     // 단어 추가하는 API
     @POST("tag")

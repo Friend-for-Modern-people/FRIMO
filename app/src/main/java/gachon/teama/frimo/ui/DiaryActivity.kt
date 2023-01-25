@@ -152,7 +152,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         // Set detail button click listener
         binding.buttonDetail.setOnClickListener {
-            showPopupwindow(it)
+            runBlocking {
+                showPopupwindow(it)
+            }
         }
 
     }
@@ -163,7 +165,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun showPopupwindow(v: View) {
+    private suspend fun showPopupwindow(v: View) {
 
         val popupWindow = PopupWindow(v)
         val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -198,57 +200,46 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getWord(diaryId)
-            .enqueue(object : Callback<List<Words>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
+            val words = withContext(Dispatchers.IO) {
+                diaryInterestAPI.getWord(diaryId)
+            }
 
-                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            FlexboxLayoutManager(this@DiaryActivity).apply {
+                flexWrap = FlexWrap.WRAP
+                flexDirection = FlexDirection.ROW
+                justifyContent = JustifyContent.FLEX_START
+            }.let {
+                val recyclerView = popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
+                recyclerView.layoutManager = it
+                recyclerView.adapter = WordsAdapter(words)
+            }
 
-                        val words: ArrayList<Words> = response.body() as ArrayList
+            // 기쁨 감정 갯수 설정
+            val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
+            textviewPleasure.text = getString(R.string.set_diary_pleasure_count, getWordsCount(words, Sentiment.Pleasure))
 
-                        FlexboxLayoutManager(this@DiaryActivity).apply {
-                            flexWrap = FlexWrap.WRAP
-                            flexDirection = FlexDirection.ROW
-                            justifyContent = JustifyContent.FLEX_START
-                        }.let {
-                            val recyclerView = popupWindow.contentView.findViewById<RecyclerView>(R.id.recyclerview_words_i_wrote)
-                            recyclerView.layoutManager = it
-                            recyclerView.adapter = WordsAdapter(words)
-                        }
+            // 슬픔 감정 갯수 설정
+            val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
+            textviewSadness.text = getString(R.string.set_diary_sadness_count, getWordsCount(words, Sentiment.Sadness))
 
-                        // 기쁨 감정 갯수 설정
-                        val textviewPleasure = popupWindow.contentView.findViewById<TextView>(R.id.textview_pleasure)
-                        textviewPleasure.text = getString(R.string.set_diary_pleasure_count, getWordsCount(words, Sentiment.Pleasure))
+            // 불안 감정 갯수 설정
+            val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
+            textviewAnxiety.text = getString(R.string.set_diary_anxiety_count, getWordsCount(words, Sentiment.Anxiety))
 
-                        // 슬픔 감정 갯수 설정
-                        val textviewSadness = popupWindow.contentView.findViewById<TextView>(R.id.textview_sadness)
-                        textviewSadness.text = getString(R.string.set_diary_sadness_count, getWordsCount(words, Sentiment.Sadness))
+            // 상처 감정 갯수 설정
+            val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
+            textviewWound.text = getString(R.string.set_diary_wound_count, getWordsCount(words, Sentiment.Wound))
 
-                        // 불안 감정 갯수 설정
-                        val textviewAnxiety = popupWindow.contentView.findViewById<TextView>(R.id.textview_anxiety)
-                        textviewAnxiety.text = getString(R.string.set_diary_anxiety_count, getWordsCount(words, Sentiment.Anxiety))
+            // 당황 감정 갯수 설정
+            val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
+            textviewEmbarrassment.text = getString(R.string.set_diary_embarrassment_count, getWordsCount(words, Sentiment.Embarrassment))
 
-                        // 상처 감정 갯수 설정
-                        val textviewWound = popupWindow.contentView.findViewById<TextView>(R.id.textview_wound)
-                        textviewWound.text = getString(R.string.set_diary_wound_count, getWordsCount(words, Sentiment.Wound))
-
-                        // 당황 감정 갯수 설정
-                        val textviewEmbarrassment = popupWindow.contentView.findViewById<TextView>(R.id.textview_embarrassment)
-                        textviewEmbarrassment.text = getString(R.string.set_diary_embarrassment_count, getWordsCount(words, Sentiment.Embarrassment))
-
-                        // 분노 감정 갯수 설정
-                        val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
-                        textviewAnger.text = getString(R.string.set_diary_anger_count, getWordsCount(words, Sentiment.Anger))
-
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
-
+            // 분노 감정 갯수 설정
+            val textviewAnger = popupWindow.contentView.findViewById<TextView>(R.id.textview_anger)
+            textviewAnger.text = getString(R.string.set_diary_anger_count, getWordsCount(words, Sentiment.Anger))
+        }
     }
 
     /**

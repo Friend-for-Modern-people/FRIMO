@@ -32,10 +32,6 @@ interface DiaryAPI {
     @GET("diary/{diaryPK}/only1")
     suspend fun getDiaryById(@Path("diaryPK") diaryId: Long) : Diary
 
-    // 일기 하나 가져오는 API
-    @GET("diary/{diaryPK}/only1")
-    fun getOneDiary(@Path("diaryPK") diaryId: Long) : Call<DiaryDto>
-
 }
 
 /*

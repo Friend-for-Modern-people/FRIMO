@@ -2,7 +2,6 @@ package gachon.teama.frimo.ui
 
 import gachon.teama.frimo.adapter.FriendsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivityMyBestFriendBinding
 
@@ -20,17 +19,27 @@ class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityM
     override fun initAfterBinding() {
         setScreen()
         setClickListener()
-        setRecyclerview()
     }
 
     /**
      * @description - 화면 셋팅
+     * @see gachon.teama.frimo.adapter.FriendsAdapter
      * @param - None
      * @return - None
      * @author - namsh1125
      */
     private fun setScreen() = with(binding) {
-        textviewBestFriendCount.text = getLikeFriend().size.toString()
+
+        val likeFriend = database.friendDao().getFriendList().filter {
+            it.like
+        } // 좋아요 누른 친구 리스트
+
+        // 좋아요 누른 친구 숫자 설정
+        textviewBestFriendCount.text = likeFriend.size.toString()
+
+        // Set RecyclerView
+        recyclerviewMyBestFriend.setHasFixedSize(true)
+        recyclerviewMyBestFriend.adapter = FriendsAdapter(likeFriend)
     }
 
     /**
@@ -40,32 +49,9 @@ class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityM
      * @author - namsh1125
      */
     private fun setClickListener() = with(binding) {
-        buttonBack.setOnClickListener { // Set back button click listener
+        buttonBack.setOnClickListener {
             finish()
         }
     }
 
-    /**
-     * @description - Set recyclerview
-     * @see gachon.teama.frimo.adapter.FriendsAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setRecyclerview() = with(binding) {
-        recyclerviewMyBestFriend.setHasFixedSize(true)
-        recyclerviewMyBestFriend.adapter = FriendsAdapter(getLikeFriend())
-    }
-
-    /**
-     * @description - 좋아요 누른 친구 가져오기
-     * @param - None
-     * @return - friend(List<Friend>) : 좋아요 누른 친구
-     * @author - namsh1125
-     */
-    private fun getLikeFriend() : List<Friend> {
-        return database.friendDao().getFriendList().filter {
-            it.like
-        }
-    }
 }

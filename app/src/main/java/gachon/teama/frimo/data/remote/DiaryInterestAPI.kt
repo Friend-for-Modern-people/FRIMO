@@ -12,7 +12,7 @@ interface DiaryInterestAPI {
 
     // 사용자가 작성한 단어를 모두 받아오는 API
     @GET("tag/{diaryPK}")
-    fun getWord(@Path("diaryPK") diaryId : Long) : Call<List<Words>>
+    suspend fun getWord(@Path("diaryPK") diaryId : Long) : List<Words>
 
     // 사용자가 작성한 대표 단어 4개만 받아오는 API
     @GET("tag/{diaryPK}/only4")

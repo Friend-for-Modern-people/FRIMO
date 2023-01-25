@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -16,10 +17,13 @@ import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.DiaryInterestTagDto
-import gachon.teama.frimo.data.entities.Words
 import gachon.teama.frimo.data.remote.DiaryInterestAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +39,9 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-        setRecyclerview()
+        runBlocking {
+            setRecyclerview()
+        }
         setRadiobutton()
         setClickListener()
     }
@@ -47,39 +53,25 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecyclerview() {
+    private suspend fun setRecyclerview() {
 
         val retrofit = RetrofitClient.getInstance()
         val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
 
-        diaryInterestAPI.getWord(diaryId)
-            .enqueue(object : Callback<List<Words>> {
+        lifecycleScope.launch {
+            val words = withContext(Dispatchers.IO) {
+                diaryInterestAPI.getWord(diaryId)
+            }
 
-                override fun onResponse(call: Call<List<Words>>, response: Response<List<Words>>) {
-
-                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
-
-                        val words: ArrayList<Words> = response.body() as ArrayList
-
-                        FlexboxLayoutManager(this@AddWordActivity).apply {
-                            flexWrap = FlexWrap.WRAP
-                            flexDirection = FlexDirection.ROW
-                            justifyContent = JustifyContent.FLEX_START
-                        }.let {
-                            binding.recyclerviewWords.layoutManager = it
-                            binding.recyclerviewWords.adapter = WordsAdapter(words)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Words>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(this@AddWordActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
-
+            FlexboxLayoutManager(this@AddWordActivity).apply {
+                flexWrap = FlexWrap.WRAP
+                flexDirection = FlexDirection.ROW
+                justifyContent = JustifyContent.FLEX_START
+            }.let {
+                binding.recyclerviewWords.layoutManager = it
+                binding.recyclerviewWords.adapter = WordsAdapter(words)
+            }
+        }
     }
 
     /**
@@ -226,12 +218,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
     }
 
     enum class Sentiment(val value: Long) {
-        AngerDetail(1),
-        SadnessDetail(10),
-        AnxietyDetail(19),
-        WoundDetail(28),
-        EmbarrassmentDetail(37),
-        PleasureDetail(46),
-        Error(99)
+        AngerDetail(1), SadnessDetail(10), AnxietyDetail(19), WoundDetail(28),
+        EmbarrassmentDetail(37), PleasureDetail(46), Error(99)
     }
 }

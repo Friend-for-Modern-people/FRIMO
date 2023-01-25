@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.entities.Words
 
-class WordsAdapter(private val dataSet: ArrayList<Words>) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
+class WordsAdapter(private val dataSet: List<Words>) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

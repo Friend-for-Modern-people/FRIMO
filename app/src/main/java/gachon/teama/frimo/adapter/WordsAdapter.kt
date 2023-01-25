@@ -21,7 +21,6 @@ class WordsAdapter(private val dataSet: ArrayList<Words>) : RecyclerView.Adapter
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.view_word_i_wrote, viewGroup, false)
         return ViewHolder(view)
     }
@@ -31,27 +30,27 @@ class WordsAdapter(private val dataSet: ArrayList<Words>) : RecyclerView.Adapter
 
         // Set textview background and color
         when(dataSet[position].sentiment){
-            anger -> {
+            Sentiment.Anger.value -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_anger_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.anger))
             }
-            sadness -> {
+            Sentiment.Sadness.value -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_sadness_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.sadness))
             }
-            anxiety -> {
+            Sentiment.Anxiety.value -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_anxiety_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.anxiety))
             }
-            wound -> {
+            Sentiment.Wound.value -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_wound_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.wound))
             }
-            embarrassment -> {
+            Sentiment.Embarrassment.value -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_embarrassment_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.embarrassment))
             }
-            pleasure -> {
+            Sentiment.Pleasure.value -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_pleasure_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.pleasure))
             }
@@ -63,12 +62,8 @@ class WordsAdapter(private val dataSet: ArrayList<Words>) : RecyclerView.Adapter
 
     override fun getItemCount() = dataSet.size
 
-    companion object Sentiment{
-        const val anger = 0
-        const val sadness = 1
-        const val anxiety = 2
-        const val wound = 3
-        const val embarrassment = 4
-        const val pleasure = 5
+    enum class Sentiment(val value: Int) {
+        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
+
 }

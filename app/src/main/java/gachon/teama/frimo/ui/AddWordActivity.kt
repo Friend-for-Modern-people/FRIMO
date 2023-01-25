@@ -208,20 +208,20 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     private fun getSelectedSentiment(): Long = with(binding) {
-        if (radiobuttonAnger.isChecked) {
-            return Sentiment.AngerDetail.value
+        return if (radiobuttonAnger.isChecked) {
+            Sentiment.AngerDetail.value
         } else if (radiobuttonSadness.isChecked) {
-            return Sentiment.SadnessDetail.value
+            Sentiment.SadnessDetail.value
         } else if (radiobuttonAnxiety.isChecked) {
-            return Sentiment.AnxietyDetail.value
+            Sentiment.AnxietyDetail.value
         } else if (radiobuttonWound.isChecked) {
-            return Sentiment.WoundDetail.value
+            Sentiment.WoundDetail.value
         } else if (radiobuttonEmbarrassment.isChecked) {
-            return Sentiment.EmbarrassmentDetail.value
+            Sentiment.EmbarrassmentDetail.value
         } else if (radiobuttonPleasure.isChecked) {
-            return Sentiment.PleasureDetail.value
+            Sentiment.PleasureDetail.value
         } else {
-            return Sentiment.Error.value
+            Sentiment.Error.value
         }
     }
 

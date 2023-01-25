@@ -72,48 +72,24 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private fun setDiary() {
+    private suspend fun setDiary() {
 
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryById(diaryId)
-            .enqueue(object : Callback<Diary> {
-
-                override fun onResponse(call: Call<Diary>, response: Response<Diary>) {
-
-                    if (response.isSuccessful) { // 정상적으로 통신이 성공된 경우
-
-                        val diary: Diary = response.body() as Diary
-
-                        with(binding) {
-                            textviewDate.text = diary.createdString
-                            textviewDiaryTitle.text = diary.title
-                            textviewDiaryContents.text = diary.content
-                            textviewSentiment.text = getTextSentiment(diary.sentiment)
-                            setColor(getSentimentColor(diary.sentiment))
-                        }
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-                }
-
-                override fun onFailure(call: Call<Diary>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(this@DiaryActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
-
-    }
-
-    /**
-     * @description - 감정에 맞게 태그 및 그림 배경 변경
-     * @param - color(Int) : 해당 다이어리 대표 감정
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setColor(color: Int) = with(binding) {
-        textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
-        imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, color))
+        lifecycleScope.launch {
+            val diary = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryById(diaryId)
+            }
+            with(binding) {
+                textviewDate.text = diary.createdString
+                textviewDiaryTitle.text = diary.title
+                textviewDiaryContents.text = diary.content
+                textviewSentiment.text = getTextSentiment(diary.sentiment)
+                textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, getSentimentColor(diary.sentiment)))
+                imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, getSentimentColor(diary.sentiment)))
+            }
+        }
     }
 
     /**
@@ -309,7 +285,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - color(Int) : 해당 diary의 배경화면 색상
      * @author - namsh1125
      */
-    fun getSentimentColor(sentiment: Int): Int {
+    private fun getSentimentColor(sentiment: Int): Int {
         return when (sentiment) {
             Sentiment.Pleasure.value -> R.color.pleasure
             Sentiment.Sadness.value -> R.color.sadness

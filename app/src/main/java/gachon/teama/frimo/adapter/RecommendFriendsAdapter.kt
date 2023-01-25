@@ -34,7 +34,6 @@ class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) :
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.view_friends_recommend, viewGroup, false)
         return ViewHolder(view)
     }

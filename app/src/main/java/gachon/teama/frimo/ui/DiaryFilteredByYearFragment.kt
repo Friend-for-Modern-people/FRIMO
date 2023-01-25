@@ -92,15 +92,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                             binding.filter1Diary1.visibility = View.VISIBLE
                             binding.filter1Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter1Diary1.background.setTint(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    getColor(diary[0].sentiment)
-                                )
-                            )
+                            binding.imageViewFilter1Diary1.background.setTint(ContextCompat.getColor(requireContext(), diary[0].getSentimentColor()))
                             binding.textviewFilter1Diary1Date.text = diary[0].createdString
-                            binding.textviewFilter1Diary1Sentiment.text =
-                                getTextSentiment(diary[0].sentiment)
+                            binding.textviewFilter1Diary1Sentiment.text = diary[0].getTextSentiment()
 
                         } else {
                             binding.filter1Diary1.visibility = View.INVISIBLE
@@ -120,9 +114,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                             binding.filter1Diary1.visibility = View.VISIBLE
                             binding.filter1Diary2.visibility = View.VISIBLE
 
-                            binding.imageViewFilter1Diary2.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[1].sentiment)))
+                            binding.imageViewFilter1Diary2.background.setTint(ContextCompat.getColor(requireContext(), diary[1].getSentimentColor()))
                             binding.textviewFilter1Diary2Date.text = diary[1].createdString
-                            binding.textviewFilter1Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+                            binding.textviewFilter1Diary2Sentiment.text = diary[1].getTextSentiment()
 
                         } else {
                             binding.filter1Diary2.visibility = View.INVISIBLE
@@ -191,9 +185,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                             binding.filter2Diary1.visibility = View.VISIBLE
                             binding.filter2Diary2.visibility = View.INVISIBLE
 
-                            binding.imageViewFilter2Diary1.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[0].sentiment)))
+                            binding.imageViewFilter2Diary1.background.setTint(ContextCompat.getColor(requireContext(), diary[0].getSentimentColor()))
                             binding.textviewFilter2Diary1Date.text = diary[0].createdString
-                            binding.textviewFilter2Diary1Sentiment.text = getTextSentiment(diary[0].sentiment)
+                            binding.textviewFilter2Diary1Sentiment.text = diary[0].getTextSentiment()
 
                         }
 
@@ -210,9 +204,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
 
                             binding.filter2Diary2.visibility = View.VISIBLE
 
-                            binding.imageViewFilter2Diary2.background.setTint(ContextCompat.getColor(requireContext(), getColor(diary[1].sentiment)))
+                            binding.imageViewFilter2Diary2.background.setTint(ContextCompat.getColor(requireContext(), diary[1].getSentimentColor()))
                             binding.textviewFilter2Diary2Date.text = diary[1].createdString
-                            binding.textviewFilter2Diary2Sentiment.text = getTextSentiment(diary[1].sentiment)
+                            binding.textviewFilter2Diary2Sentiment.text = diary[1].getTextSentiment()
 
                         }
 

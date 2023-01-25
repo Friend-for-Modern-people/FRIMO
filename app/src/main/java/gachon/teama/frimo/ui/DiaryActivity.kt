@@ -2,7 +2,6 @@ package gachon.teama.frimo.ui
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupWindow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +19,6 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.entities.Words
 import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.DiaryInterestAPI
@@ -31,9 +28,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
@@ -85,9 +79,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
                 textviewDate.text = diary.createdString
                 textviewDiaryTitle.text = diary.title
                 textviewDiaryContents.text = diary.content
-                textviewSentiment.text = getTextSentiment(diary.sentiment)
-                textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, getSentimentColor(diary.sentiment)))
-                imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, getSentimentColor(diary.sentiment)))
+                textviewSentiment.text = diary.getTextSentiment()
+                textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, diary.getSentimentColor()))
+                imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, diary.getSentimentColor()))
             }
         }
     }
@@ -250,42 +244,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     private fun getWordsCount(words: List<Words>, sentiment: Sentiment): Int {
         return words.filter { it.sentiment == sentiment.value }.size
-    }
-
-    /**
-     * @description - Type 변경 ( toString 같은 느낌 )
-     * @param - sentiment(Int) : 해당 diary의 대표 감정
-     * @return - sentiment(String) : String으로 변환된 해당 diary의 대표 감정
-     * @author - namsh1125
-     */
-    private fun getTextSentiment(sentiment: Int): String {
-        return when (sentiment) {
-            Sentiment.Anger.value -> "#분노"
-            Sentiment.Sadness.value -> "#슬픔"
-            Sentiment.Anxiety.value -> "#불안"
-            Sentiment.Wound.value -> "#상처"
-            Sentiment.Embarrassment.value -> "#당황"
-            Sentiment.Pleasure.value -> "#기쁨"
-            else -> "#에러"
-        }
-    }
-
-    /**
-     * @description - diary의 감정에 맞는 배경화면 색상을 return
-     * @param - sentiment(Int) : 해당 diary의 대표 감정
-     * @return - color(Int) : 해당 diary의 배경화면 색상
-     * @author - namsh1125
-     */
-    private fun getSentimentColor(sentiment: Int): Int {
-        return when (sentiment) {
-            Sentiment.Pleasure.value -> R.color.pleasure
-            Sentiment.Sadness.value -> R.color.sadness
-            Sentiment.Anxiety.value -> R.color.anxiety
-            Sentiment.Wound.value -> R.color.wound
-            Sentiment.Embarrassment.value -> R.color.embarrassment
-            Sentiment.Anger.value -> R.color.anger
-            else -> R.color.black
-        }
     }
 
     enum class Sentiment(val value: Int) {

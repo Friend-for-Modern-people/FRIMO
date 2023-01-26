@@ -13,7 +13,6 @@ import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class DiaryFilteredByRecentFragment : Fragment() {
@@ -33,9 +32,7 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        runBlocking {
-            setRecyclerView()
-        }
+        setRecyclerView()
         return binding.root
     }
 
@@ -46,7 +43,7 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private suspend fun setRecyclerView() {
+    private fun setRecyclerView() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 

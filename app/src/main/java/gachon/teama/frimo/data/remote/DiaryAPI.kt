@@ -1,7 +1,6 @@
 package gachon.teama.frimo.data.remote
 
 import gachon.teama.frimo.data.entities.Diary
-import gachon.teama.frimo.data.entities.DiaryDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,11 +17,11 @@ interface DiaryAPI {
 
     // 유저가 특정 연도에 작성한 diary를 가져오는 API
     @GET("diary/{userPK}/{year}")
-    fun getDiaryByYear(@Path("userPK") userId: Long, @Path("year") year: Int) : Call<List<Diary>>
+    suspend fun getDiaryByYear(@Path("userPK") userId: Long, @Path("year") year: Int) : List<Diary>
 
     // 유저가 특정 달에 작성한 diary를 가져오는 API
     @GET("diary/{userPK}/{year}/{month}")
-    fun getDiaryByMonth(@Path("userPK") userId: Long, @Path("year") year: Int, @Path("month") month: Int) : Call<List<Diary>>
+    suspend fun getDiaryByMonth(@Path("userPK") userId: Long, @Path("year") year: Int, @Path("month") month: Int) : List<Diary>
 
     // 유저가 특정 감정으로 작성한 diary를 가져오는 API
     @GET("diary/{userPK}/mainSent/{sent}")

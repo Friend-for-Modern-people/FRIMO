@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.entities.Diary
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.collections.ArrayList
 
 class DiaryFilteredBySentimentFragment : Fragment() {
@@ -26,6 +25,9 @@ class DiaryFilteredBySentimentFragment : Fragment() {
     // Database
     private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
+    // User
+    private val userId by lazy { database.userDao().getUserId() }
+
     /**
      * @description - 생명주기 onCreateView
      * @param - inflater(LayoutInflater)
@@ -35,7 +37,6 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         setScreen()
         return binding.root
     }
@@ -47,7 +48,6 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setScreen() {
-
         setAnger()
         setSadness()
         setAnxiety()
@@ -67,72 +67,53 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anger.value, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+            val diaries = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anger.value, userId = userId)
+            } as ArrayList
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            // Set layout
+            binding.textviewDiaryAngerCount.text = getString(R.string.set_diary_count, diaries.size)
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
-
-                        // Set layout
-                        binding.textviewDiaryAngerCount.text = getString(R.string.set_diary_count, diary.size)
-
-                        // Set layout (anger detail) click listener
-                        binding.layoutAngerDetail.setOnClickListener {
-
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                            intent.putExtra("filter", "#분노") // 어떤 필터가 걸려있는지 전달
-                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-                            startActivity(intent)
-                        }
-
-                        // Set anger diary 1
-                        if (diary.size >= 1) {
-
-                            binding.angerDiary1.visibility = View.VISIBLE
-                            binding.angerDiary2.visibility = View.INVISIBLE
-
-                            binding.textviewAngerDiary1Date.text = diary[0].createdString
-                        }
-
-                        // Set anger diary 1 click listener
-                        binding.angerDiary1.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[0].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                        // Set anger diary 2
-                        if (diary.size >= 2) {
-
-                            binding.angerDiary1.visibility = View.VISIBLE
-                            binding.angerDiary2.visibility = View.VISIBLE
-
-                            binding.textviewAngerDiary2Date.text = diary[1].createdString
-                        }
-
-                        // Set anger diary 2 click listener
-                        binding.angerDiary2.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[1].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-
+            // Set layout (anger detail) click listener
+            binding.layoutAngerDetail.setOnClickListener {
+                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                intent.apply {
+                    this.putExtra("filter", "#분노") // 어떤 필터가 걸려있는지 전달
+                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
                 }
+                startActivity(intent)
+            }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            // Set anger diary 1
+            if (diaries.size >= 1) {
+                binding.angerDiary1.visibility = View.VISIBLE
+                binding.angerDiary2.visibility = View.INVISIBLE
 
+                binding.textviewAngerDiary1Date.text = diaries[0].createdString
+            }
+
+            // Set anger diary 1 click listener
+            binding.angerDiary1.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[0].id) // Diary id 전달
+                startActivity(intent)
+            }
+
+            // Set anger diary 2
+            if (diaries.size >= 2) {
+                binding.angerDiary2.visibility = View.VISIBLE
+                binding.textviewAngerDiary2Date.text = diaries[1].createdString
+            }
+
+            // Set anger diary 2 click listener
+            binding.angerDiary2.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[1].id) // Diary id 전달
+                startActivity(intent)
+            }
+        }
     }
 
     /**
@@ -146,72 +127,53 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Sadness.value, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+            val diaries = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Sadness.value, userId = userId)
+            } as ArrayList
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            // Set layout
+            binding.textviewDiarySadnessCount.text = getString(R.string.set_diary_count, diaries.size)
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
-
-                        // Set layout
-                        binding.textviewDiarySadnessCount.text = getString(R.string.set_diary_count, diary.size)
-
-                        // Set layout (sadness detail) click listener
-                        binding.layoutSadnessDetail.setOnClickListener {
-
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                            intent.putExtra("filter", "#슬픔") // 어떤 필터가 걸려있는지 전달
-                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-                            startActivity(intent)
-                        }
-
-                        // Set sadness diary 1
-                        if (diary.size >= 1) {
-
-                            binding.sadnessDiary1.visibility = View.VISIBLE
-                            binding.sadnessDiary2.visibility = View.INVISIBLE
-
-                            binding.textviewSadnessDiary1Date.text = diary[0].createdString
-                        }
-
-                        // Set sadness diary 1 click listener
-                        binding.sadnessDiary1.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[0].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                        // Set sadness diary 2
-                        if (diary.size >= 2) {
-
-                            binding.sadnessDiary1.visibility = View.VISIBLE
-                            binding.sadnessDiary2.visibility = View.VISIBLE
-
-                            binding.textviewSadnessDiary2Date.text = diary[1].createdString
-                        }
-
-                        // Set sadness diary 2 click listener
-                        binding.sadnessDiary2.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[1].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-
+            // Set layout (sadness detail) click listener
+            binding.layoutSadnessDetail.setOnClickListener {
+                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                intent.apply {
+                    this.putExtra("filter", "#슬픔") // 어떤 필터가 걸려있는지 전달
+                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
                 }
+                startActivity(intent)
+            }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            // Set sadness diary 1
+            if (diaries.size >= 1) {
+                binding.sadnessDiary1.visibility = View.VISIBLE
+                binding.sadnessDiary2.visibility = View.INVISIBLE
 
+                binding.textviewSadnessDiary1Date.text = diaries[0].createdString
+            }
+
+            // Set sadness diary 1 click listener
+            binding.sadnessDiary1.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[0].id) // Diary id 전달
+                startActivity(intent)
+            }
+
+            // Set sadness diary 2
+            if (diaries.size >= 2) {
+                binding.sadnessDiary2.visibility = View.VISIBLE
+                binding.textviewSadnessDiary2Date.text = diaries[1].createdString
+            }
+
+            // Set sadness diary 2 click listener
+            binding.sadnessDiary2.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[1].id) // Diary id 전달
+                startActivity(intent)
+            }
+        }
     }
 
     /**
@@ -225,72 +187,53 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anxiety.value, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+            val diaries = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anxiety.value, userId = userId)
+            } as ArrayList
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            // Set layout
+            binding.textviewDiaryAnxietyCount.text = getString(R.string.set_diary_count, diaries.size)
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
-
-                        // Set layout
-                        binding.textviewDiaryAnxietyCount.text = getString(R.string.set_diary_count, diary.size)
-
-                        // Set layout (anxiety detail) click listener
-                        binding.layoutAnxietyDetail.setOnClickListener {
-
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                            intent.putExtra("filter", "#불안") // 어떤 필터가 걸려있는지 전달
-                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-                            startActivity(intent)
-                        }
-
-                        // Set anxiety diary 1
-                        if (diary.size >= 1) {
-
-                            binding.anxietyDiary1.visibility = View.VISIBLE
-                            binding.anxietyDiary2.visibility = View.INVISIBLE
-
-                            binding.textviewAnxietyDiary1Date.text = diary[0].createdString
-                        }
-
-                        // Set anxiety diary 1 click listener
-                        binding.anxietyDiary1.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[0].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                        // Set anxiety diary 2
-                        if (diary.size >= 2) {
-
-                            binding.anxietyDiary1.visibility = View.VISIBLE
-                            binding.anxietyDiary2.visibility = View.VISIBLE
-
-                            binding.textviewAnxietyDiary2Date.text = diary[1].createdString
-                        }
-
-                        // Set anxiety diary 2 click listener
-                        binding.anxietyDiary2.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[1].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-
+            // Set layout (anxiety detail) click listener
+            binding.layoutAnxietyDetail.setOnClickListener {
+                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                intent.apply {
+                    this.putExtra("filter", "#불안") // 어떤 필터가 걸려있는지 전달
+                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
                 }
+                startActivity(intent)
+            }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            // Set anxiety diary 1
+            if (diaries.size >= 1) {
+                binding.anxietyDiary1.visibility = View.VISIBLE
+                binding.anxietyDiary2.visibility = View.INVISIBLE
 
+                binding.textviewAnxietyDiary1Date.text = diaries[0].createdString
+            }
+
+            // Set anxiety diary 1 click listener
+            binding.anxietyDiary1.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[0].id) // Diary id 전달
+                startActivity(intent)
+            }
+
+            // Set anxiety diary 2
+            if (diaries.size >= 2) {
+                binding.anxietyDiary2.visibility = View.VISIBLE
+                binding.textviewAnxietyDiary2Date.text = diaries[1].createdString
+            }
+
+            // Set anxiety diary 2 click listener
+            binding.anxietyDiary2.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[1].id) // Diary id 전달
+                startActivity(intent)
+            }
+        }
     }
 
     /**
@@ -304,72 +247,53 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Wound.value, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+            val diaries = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Wound.value, userId = userId)
+            } as ArrayList
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            // Set layout
+            binding.textviewDiaryWoundCount.text = getString(R.string.set_diary_count, diaries.size)
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
-
-                        // Set layout
-                        binding.textviewDiaryWoundCount.text = getString(R.string.set_diary_count, diary.size)
-
-                        // Set layout (wound detail) click listener
-                        binding.layoutWoundDetail.setOnClickListener {
-
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                            intent.putExtra("filter", "#상처") // 어떤 필터가 걸려있는지 전달
-                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-                            startActivity(intent)
-                        }
-
-                        // Set wound diary 1
-                        if (diary.size >= 1) {
-
-                            binding.woundDiary1.visibility = View.VISIBLE
-                            binding.woundDiary2.visibility = View.INVISIBLE
-
-                            binding.textviewWoundDiary1Date.text = diary[0].createdString
-                        }
-
-                        // Set wound diary 1 click listener
-                        binding.woundDiary1.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[0].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                        // Set wound diary 2
-                        if (diary.size >= 2) {
-
-                            binding.woundDiary1.visibility = View.VISIBLE
-                            binding.woundDiary2.visibility = View.VISIBLE
-
-                            binding.textviewWoundDiary2Date.text = diary[1].createdString
-                        }
-
-                        // Set wound diary 2 click listener
-                        binding.woundDiary2.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[1].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-
+            // Set layout (wound detail) click listener
+            binding.layoutWoundDetail.setOnClickListener {
+                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                intent.apply {
+                    this.putExtra("filter", "#상처") // 어떤 필터가 걸려있는지 전달
+                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
                 }
+                startActivity(intent)
+            }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            // Set wound diary 1
+            if (diaries.size >= 1) {
+                binding.woundDiary1.visibility = View.VISIBLE
+                binding.woundDiary2.visibility = View.INVISIBLE
 
+                binding.textviewWoundDiary1Date.text = diaries[0].createdString
+            }
+
+            // Set wound diary 1 click listener
+            binding.woundDiary1.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[0].id) // Diary id 전달
+                startActivity(intent)
+            }
+
+            // Set wound diary 2
+            if (diaries.size >= 2) {
+                binding.woundDiary2.visibility = View.VISIBLE
+                binding.textviewWoundDiary2Date.text = diaries[1].createdString
+            }
+
+            // Set wound diary 2 click listener
+            binding.woundDiary2.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[1].id) // Diary id 전달
+                startActivity(intent)
+            }
+        }
     }
 
     /**
@@ -383,72 +307,53 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Embarrassment.value, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+            val diaries = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Embarrassment.value, userId = userId)
+            } as ArrayList
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            // Set layout
+            binding.textviewDiaryEmbarrassmentCount.text = getString(R.string.set_diary_count, diaries.size)
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
-
-                        // Set layout
-                        binding.textviewDiaryEmbarrassmentCount.text = getString(R.string.set_diary_count, diary.size)
-
-                        // Set layout (embarrassment detail) click listener
-                        binding.layoutEmbarrassmentDetail.setOnClickListener {
-
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                            intent.putExtra("filter", "#당황") // 어떤 필터가 걸려있는지 전달
-                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-                            startActivity(intent)
-                        }
-
-                        // Set embarrassment diary 1
-                        if (diary.size >= 1) {
-
-                            binding.embarrassmentDiary1.visibility = View.VISIBLE
-                            binding.embarrassmentDiary2.visibility = View.INVISIBLE
-
-                            binding.textviewEmbarrassmentDiary1Date.text = diary[0].createdString
-                        }
-
-                        // Set embarrassment diary 1 click listener
-                        binding.embarrassmentDiary1.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[0].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                        // Set embarrassment diary 2
-                        if (diary.size >= 2) {
-
-                            binding.embarrassmentDiary1.visibility = View.VISIBLE
-                            binding.embarrassmentDiary2.visibility = View.VISIBLE
-
-                            binding.textviewEmbarrassmentDiary2Date.text = diary[1].createdString
-                        }
-
-                        // Set embarrassment diary 2 click listener
-                        binding.embarrassmentDiary2.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[1].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-
+            // Set layout (embarrassment detail) click listener
+            binding.layoutEmbarrassmentDetail.setOnClickListener {
+                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                intent.apply {
+                    this.putExtra("filter", "#당황") // 어떤 필터가 걸려있는지 전달
+                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
                 }
+                startActivity(intent)
+            }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            // Set embarrassment diary 1
+            if (diaries.size >= 1) {
+                binding.embarrassmentDiary1.visibility = View.VISIBLE
+                binding.embarrassmentDiary2.visibility = View.INVISIBLE
 
+                binding.textviewEmbarrassmentDiary1Date.text = diaries[0].createdString
+            }
+
+            // Set embarrassment diary 1 click listener
+            binding.embarrassmentDiary1.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[0].id) // Diary id 전달
+                startActivity(intent)
+            }
+
+            // Set embarrassment diary 2
+            if (diaries.size >= 2) {
+                binding.embarrassmentDiary2.visibility = View.VISIBLE
+                binding.textviewEmbarrassmentDiary2Date.text = diaries[1].createdString
+            }
+
+            // Set embarrassment diary 2 click listener
+            binding.embarrassmentDiary2.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[1].id) // Diary id 전달
+                startActivity(intent)
+            }
+        }
     }
 
     /**
@@ -462,71 +367,53 @@ class DiaryFilteredBySentimentFragment : Fragment() {
         val retrofit = RetrofitClient.getInstance()
         val diaryAPI = retrofit.create(DiaryAPI::class.java)
 
-        diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Pleasure.value, userId = database.userDao().getUserId())
-            .enqueue(object : Callback<List<Diary>> {
+        lifecycleScope.launch {
 
-                override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
+            val diaries = withContext(Dispatchers.IO) {
+                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Pleasure.value, userId = userId)
+            } as ArrayList
 
-                    if(response.isSuccessful) { // 정상적으로 통신이 성공된 경우
+            // Set layout
+            binding.textviewDiaryPleasureCount.text = getString(R.string.set_diary_count, diaries.size)
 
-                        val diary : ArrayList<Diary> = response.body() as ArrayList
-
-                        // Set layout
-                        binding.textviewDiaryPleasureCount.text = getString(R.string.set_diary_count, diary.size)
-
-                        // Set layout (pleasure detail) click listener
-                        binding.layoutPleasureDetail.setOnClickListener {
-
-                            val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                            intent.putExtra("filter", "#기쁨") // 어떤 필터가 걸려있는지 전달
-                            intent.putExtra("filteredDiary", diary) // 필터링된 diary 전달
-                            startActivity(intent)
-                        }
-
-                        // Set pleasure diary 1
-                        if (diary.size >= 1) {
-
-                            binding.pleasureDiary1.visibility = View.VISIBLE
-                            binding.pleasureDiary2.visibility = View.INVISIBLE
-
-                            binding.textviewPleasureDiary1Date.text = diary[0].createdString
-                        }
-
-                        // Set pleasure diary 1 click listener
-                        binding.pleasureDiary1.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[0].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                        // Set pleasure diary 2
-                        if (diary.size >= 2) {
-
-                            binding.pleasureDiary2.visibility = View.VISIBLE
-
-                            binding.textviewPleasureDiary2Date.text = diary[1].createdString
-                        }
-
-                        // Set pleasure diary 2 click listener
-                        binding.pleasureDiary2.setOnClickListener {
-
-                            val intent = Intent(requireContext(), DiaryActivity::class.java)
-                            intent.putExtra("id", diary[1].id) // Diary id 전달
-                            startActivity(intent)
-                        }
-
-                    } else { // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-
-                    }
-
+            // Set layout (pleasure detail) click listener
+            binding.layoutPleasureDetail.setOnClickListener {
+                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
+                intent.apply {
+                    this.putExtra("filter", "#기쁨") // 어떤 필터가 걸려있는지 전달
+                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
                 }
+                startActivity(intent)
+            }
 
-                override fun onFailure(call: Call<List<Diary>>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                    Toast.makeText(requireContext(), "통신 실패!", Toast.LENGTH_SHORT).show()
-                }
-            })
+            // Set pleasure diary 1
+            if (diaries.size >= 1) {
+                binding.pleasureDiary1.visibility = View.VISIBLE
+                binding.pleasureDiary2.visibility = View.INVISIBLE
 
+                binding.textviewPleasureDiary1Date.text = diaries[0].createdString
+            }
+
+            // Set pleasure diary 1 click listener
+            binding.pleasureDiary1.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[0].id) // Diary id 전달
+                startActivity(intent)
+            }
+
+            // Set pleasure diary 2
+            if (diaries.size >= 2) {
+                binding.pleasureDiary2.visibility = View.VISIBLE
+                binding.textviewPleasureDiary2Date.text = diaries[1].createdString
+            }
+
+            // Set pleasure diary 2 click listener
+            binding.pleasureDiary2.setOnClickListener {
+                val intent = Intent(requireContext(), DiaryActivity::class.java)
+                intent.putExtra("id", diaries[1].id) // Diary id 전달
+                startActivity(intent)
+            }
+        }
     }
 
     enum class Sentiment(val value: Int) {

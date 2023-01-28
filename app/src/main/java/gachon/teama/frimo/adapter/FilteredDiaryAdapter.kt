@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.entities.Diary
+import gachon.teama.frimo.data.remote.DiaryAPI.Diary
 import gachon.teama.frimo.ui.DiaryActivity
 
 class FilteredDiaryAdapter(private val dataSet: List<Diary>) :
@@ -28,7 +28,8 @@ class FilteredDiaryAdapter(private val dataSet: List<Diary>) :
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.view_diary, viewGroup, false)
+        val view =
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.view_diary, viewGroup, false)
         return ViewHolder(view)
     }
 
@@ -36,7 +37,11 @@ class FilteredDiaryAdapter(private val dataSet: List<Diary>) :
 
         viewHolder.textView_date.text = dataSet[position].createdString
         viewHolder.textView_sentiment.text = dataSet[position].getTextSentiment()
-        viewHolder.imageView.background.setTint(viewHolder.itemView.context.resources.getColor(dataSet[position].getSentimentColor()))
+        viewHolder.imageView.background.setTint(
+            viewHolder.itemView.context.resources.getColor(
+                dataSet[position].getSentimentColor()
+            )
+        )
 
         // When recyclerview item(diary) clicked
         viewHolder.itemView.setOnClickListener {

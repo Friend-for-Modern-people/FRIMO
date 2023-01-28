@@ -1,6 +1,7 @@
 package gachon.teama.frimo.ui
 
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -16,17 +16,10 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.DiaryInterestTagDto
-import gachon.teama.frimo.data.remote.DiaryInterestAPI
-import gachon.teama.frimo.data.remote.RetrofitClient
+import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.*
+import gachon.teama.frimo.data.remote.DiaryInterestAPI.AddWordRequest
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
 
@@ -55,13 +48,8 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      */
     private suspend fun setRecyclerview() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
-
-        lifecycleScope.launch {
-            val words = withContext(Dispatchers.IO) {
-                diaryInterestAPI.getWord(diaryId)
-            }
+        CoroutineScope(Dispatchers.Main).launch {
+            val words = Server.getWord(diaryId)
 
             FlexboxLayoutManager(this@AddWordActivity).apply {
                 flexWrap = FlexWrap.WRAP
@@ -161,36 +149,20 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             val buttonAdd = contentView.findViewById<TextView>(R.id.textview_text_add)
             buttonAdd.setOnClickListener {
 
-                val word = DiaryInterestTagDto.AddTagRequestDto(
-                    diaryId,
-                    binding.edittextAdd.text.toString(),
-                    getSelectedSentiment(),
-                    binding.edittextCategory.text.toString()
-                )
+                val request = AddWordRequest(diaryId, binding.edittextAdd.text.toString(), getSelectedSentiment(), binding.edittextCategory.text.toString())
 
-                val retrofit = RetrofitClient.getInstance()
-                val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
-
-                diaryInterestAPI.addWord(word = word).enqueue(object : Callback<String> {
-
-                        override fun onResponse(call: Call<String>, response: Response<String>) {
-
-                            if (response.isSuccessful && response.code() == 201) {
-                                popupWindow.dismiss()
-                                finish()
-                                Toast.makeText(this@AddWordActivity, "성공!", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<String>, t: Throwable) { // 통신 실패 (인터넷 끊김, 예외 발생 등 시스템적인 이유)
-                            Toast.makeText(this@AddWordActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (Server.addWord(request)) {
+                        popupWindow.dismiss()
+                        finish()
+                        Toast.makeText(this@AddWordActivity, "성공!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@AddWordActivity, "통신 실패!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
 
         }
-
     }
 
     /**

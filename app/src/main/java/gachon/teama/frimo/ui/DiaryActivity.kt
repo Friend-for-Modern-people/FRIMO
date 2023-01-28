@@ -21,13 +21,10 @@ import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.entities.Words
 import gachon.teama.frimo.data.remote.DiaryAPI
-import gachon.teama.frimo.data.remote.DiaryInterestAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
+import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::inflate) {
 
@@ -94,14 +91,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      */
     private suspend fun setKeyword() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
+        CoroutineScope(Dispatchers.Main).launch {
 
-        lifecycleScope.launch {
-
-            val keywords = withContext(Dispatchers.IO) {
-                diaryInterestAPI.getFourWord(diaryId)
-            }
+            val keywords = Server.getFourWord(diaryId)
 
             if (keywords.size >= 1) {
                 binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
@@ -191,14 +183,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
         }
 
         // (Popupwindow) reyclerview 설정 및 감정 갯수 설정
-        val retrofit = RetrofitClient.getInstance()
-        val diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
+        CoroutineScope(Dispatchers.Main).launch {
 
-        lifecycleScope.launch {
-
-            val words = withContext(Dispatchers.IO) {
-                diaryInterestAPI.getWord(diaryId)
-            }
+            val words = Server.getWord(diaryId)
 
             FlexboxLayoutManager(this@DiaryActivity).apply {
                 flexWrap = FlexWrap.WRAP

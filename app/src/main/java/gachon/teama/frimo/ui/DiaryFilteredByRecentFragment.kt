@@ -5,23 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.DiaryAPI
-import gachon.teama.frimo.data.remote.RetrofitClient
+import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DiaryFilteredByRecentFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentDiaryFilteredRecentlyBinding.inflate(layoutInflater) }
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
+    // User
+    private val userId by lazy { AppDatabase.getInstance(requireContext())!!.userDao().getUserId() }
 
     /**
      * @description - 생명주기 onCreateView
@@ -43,15 +41,10 @@ class DiaryFilteredByRecentFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setRecyclerView() {
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiary(userId = database.userDao().getUserId())
-            }
-            binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diaries)
+    private fun setRecyclerView() = with(binding) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiary(userId)
+            recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diaries)
         }
     }
 }

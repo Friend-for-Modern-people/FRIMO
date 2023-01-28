@@ -31,9 +31,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-        runBlocking {
-            setRecyclerview()
-        }
+        setRecyclerview()
         setRadiobutton()
         setClickListener()
     }
@@ -45,7 +43,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @return - None
      * @author - namsh1125
      */
-    private suspend fun setRecyclerview() {
+    private fun setRecyclerview() {
 
         CoroutineScope(Dispatchers.Main).launch {
             val words = Server.getWord(diaryId)

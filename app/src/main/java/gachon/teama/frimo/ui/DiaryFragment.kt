@@ -13,15 +13,13 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentDiaryBinding
-import gachon.teama.frimo.data.remote.DiaryAPI
-import gachon.teama.frimo.data.remote.RetrofitClient
+import gachon.teama.frimo.data.remote.Server
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DiaryFragment : Fragment() {
 
@@ -40,10 +38,8 @@ class DiaryFragment : Fragment() {
      * @author - namsh1125
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         setScreen()
         setClickListener()
-
         return binding.root // Inflate the layout for this fragment
     }
 
@@ -54,17 +50,35 @@ class DiaryFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setScreen() {
-
-        // Set user nickname
-        binding.textviewNickname1.text = database.userDao().getNickname()
-        binding.textviewNickname2.text = database.userDao().getNickname()
-
-        // 일기장 개수 설정
+        setNickname()
         setDiaryCount()
 
         // 최초 실행시 보이는 fragment 셋팅
         childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
+    }
 
+    /**
+     * @description - 화면에 user nickname 설정하기
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setNickname() = with(binding) {
+        textviewNickname1.text = database.userDao().getNickname()
+        textviewNickname2.text = database.userDao().getNickname()
+    }
+
+    /**
+     * @description - 화면에 유저가 작성한 diary의 갯수 설정하기
+     * @param - None
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun setDiaryCount() = with(binding) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val count = Server.getDiaryCount(userId = database.userDao().getUserId())
+            textviewDiaryCount.text = count.toString()
+        }
     }
 
     /**
@@ -173,28 +187,6 @@ class DiaryFragment : Fragment() {
             }
 
             popupWindow.dismiss()
-
-        }
-
-    }
-
-    /**
-     * @description - Server에 유저가 작성한 diary의 갯수 설정하기
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setDiaryCount() {
-
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-            val count = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryCount(database.userDao().getUserId())
-            }
-            binding.textviewDiaryCount.text = count.toString()
         }
     }
-
 }

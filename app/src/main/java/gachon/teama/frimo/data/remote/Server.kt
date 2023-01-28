@@ -1,6 +1,5 @@
 package gachon.teama.frimo.data.remote
 
-import android.util.Log
 import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -8,12 +7,12 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import gachon.teama.frimo.data.remote.DiaryInterestAPI.AddWordRequest
+import gachon.teama.frimo.data.remote.DiaryAPI.Diary
 
 object Server {
 
-    private val tag = Server::class.java.name
-
     private const val URL = "http://218.48.213.10:80/app/"
+    private val diaryAPI: DiaryAPI
     private val diaryInterestAPI: DiaryInterestAPI
 
     init {
@@ -25,16 +24,48 @@ object Server {
             .client(client)
             .build()
 
+        diaryAPI = retrofit.create(DiaryAPI::class.java)
         diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
+    }
+
+    // ---------- Diary api ----------
+
+    // 유저가 작성한 일기를 최신순으로 가져옴
+    suspend fun getDiary(userId: Long): List<Diary> = withContext(Dispatchers.IO) {
+        val response = diaryAPI.getDiary(userId)
+        if (response.isSuccessful) {
+            return@withContext response.body()!!
+        } else {
+            throw Exception(response.errorBody()?.charStream()?.readText())
+        }
+    }
+
+    // 유저가 작성한 일기의 개수를 가져오는 API
+    suspend fun getDiaryCount(userId: Long): Int = withContext(Dispatchers.IO) {
+        val response = diaryAPI.getDiaryCount(userId)
+        if (response.isSuccessful) {
+            return@withContext response.body()!!
+        } else {
+            throw Exception(response.errorBody()?.charStream()?.readText())
+        }
+    }
+
+
+    // Diary id로 해당 diary를 가져옴
+    suspend fun getDiaryById(diaryId: Long): Diary = withContext(Dispatchers.IO) {
+        val response = diaryAPI.getDiaryById(diaryId)
+        if (response.isSuccessful) {
+            return@withContext response.body()!!
+        } else {
+            throw Exception(response.errorBody()?.charStream()?.readText())
+        }
     }
 
     // ---------- Diary interest api ----------
 
-    suspend fun getWord(request: Long): List<Words> = withContext(Dispatchers.IO) {
-
-        Log.d(tag, "Thread is ${Thread.currentThread().name}")
-
-        val response = diaryInterestAPI.getWord(request)
+    // 사용자가 작성한 단어를 모두 받아옴
+    suspend fun getWord(diaryId: Long): List<Words> = withContext(Dispatchers.IO) {
+        val response = diaryInterestAPI.getWord(diaryId)
         if (response.isSuccessful) {
             return@withContext response.body()!!
         } else {
@@ -42,11 +73,9 @@ object Server {
         }
     }
 
-    suspend fun getFourWord(request: Long): List<Words> = withContext(Dispatchers.IO) {
-
-        Log.d(tag, "Thread is ${Thread.currentThread().name}")
-
-        val response = diaryInterestAPI.getFourWord(request)
+    // 사용자가 작성한 대표 단어 4개만 받아옴
+    suspend fun getFourWord(diaryId: Long): List<Words> = withContext(Dispatchers.IO) {
+        val response = diaryInterestAPI.getFourWord(diaryId)
         if (response.isSuccessful) {
             return@withContext response.body()!!
         } else {
@@ -54,10 +83,8 @@ object Server {
         }
     }
 
+    // 사용자가 추가하고 싶은 단어를 추가함
     suspend fun addWord(request: AddWordRequest): Boolean = withContext(Dispatchers.IO) {
-
-        Log.d(tag, "Thread is ${Thread.currentThread().name}")
-
         val response = diaryInterestAPI.addWord(request)
         return@withContext response.isSuccessful && response.code() == 201
     }

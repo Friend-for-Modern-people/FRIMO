@@ -10,7 +10,6 @@ import android.widget.ImageButton
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -20,8 +19,6 @@ import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
-import gachon.teama.frimo.data.remote.DiaryAPI
-import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
 import kotlinx.coroutines.*
@@ -37,9 +34,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-        runBlocking {
-            setScreen()
-        }
+        setScreen()
         setClickListener()
     }
 
@@ -50,7 +45,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private suspend fun setScreen() {
+    private fun setScreen() {
         setDiary()
         setKeyword()
         // Todo: (Not now) 댓글 셋팅
@@ -63,23 +58,17 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private suspend fun setDiary() {
+    private fun setDiary() = with(binding) {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
+        CoroutineScope(Dispatchers.Main).launch {
+            val diary = Server.getDiaryById(diaryId)
 
-        lifecycleScope.launch {
-            val diary = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryById(diaryId)
-            }
-            with(binding) {
-                textviewDate.text = diary.createdString
-                textviewDiaryTitle.text = diary.title
-                textviewDiaryContents.text = diary.content
-                textviewSentiment.text = diary.getTextSentiment()
-                textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, diary.getSentimentColor()))
-                imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, diary.getSentimentColor()))
-            }
+            textviewDate.text = diary.createdString
+            textviewDiaryTitle.text = diary.title
+            textviewDiaryContents.text = diary.content
+            textviewSentiment.text = diary.getTextSentiment()
+            textviewSentiment.background.setTint(ContextCompat.getColor(this@DiaryActivity, diary.getSentimentColor()))
+            imageViewDiary.background.setTint(ContextCompat.getColor(this@DiaryActivity, diary.getSentimentColor()))
         }
     }
 
@@ -89,10 +78,9 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - None
      * @author - namsh1125
      */
-    private suspend fun setKeyword() {
+    private fun setKeyword() {
 
         CoroutineScope(Dispatchers.Main).launch {
-
             val keywords = Server.getFourWord(diaryId)
 
             if (keywords.size >= 1) {
@@ -184,7 +172,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         // (Popupwindow) reyclerview 설정 및 감정 갯수 설정
         CoroutineScope(Dispatchers.Main).launch {
-
             val words = Server.getWord(diaryId)
 
             FlexboxLayoutManager(this@DiaryActivity).apply {

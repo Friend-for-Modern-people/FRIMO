@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import gachon.teama.frimo.R
 import gachon.teama.frimo.retrofit.dao.User
 import kotlinx.parcelize.Parcelize
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -12,11 +13,11 @@ interface DiaryAPI {
 
     // 유저가 작성한 일기를 최신순으로 가져오는 API
     @GET("diary/{userPK}")
-    suspend fun getDiary(@Path("userPK") userId: Long) : List<Diary>
+    suspend fun getDiary(@Path("userPK") userId: Long) : Response<List<Diary>>
 
     // 유저가 작성한 일기의 개수를 가져오는 API
     @GET("diary/{userPK}/cnt")
-    suspend fun getDiaryCount(@Path("userPK") userId: Long) : Int
+    suspend fun getDiaryCount(@Path("userPK") userId: Long) : Response<Int>
 
     // 유저가 특정 연도에 작성한 diary를 가져오는 API
     @GET("diary/{userPK}/{year}")
@@ -32,7 +33,7 @@ interface DiaryAPI {
 
     // diary id로 해당 diary 가져오는 API
     @GET("diary/{diaryPK}/only1")
-    suspend fun getDiaryById(@Path("diaryPK") diaryId: Long) : Diary
+    suspend fun getDiaryById(@Path("diaryPK") diaryId: Long) : Response<Diary>
 
     // Todo: 키워드, 댓글 추가 방법 알아볼 것
     @Parcelize

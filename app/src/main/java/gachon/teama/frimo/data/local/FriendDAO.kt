@@ -1,7 +1,6 @@
 package gachon.teama.frimo.data.local
 
 import androidx.room.*
-import gachon.teama.frimo.data.entities.Friend
 
 @Dao
 interface FriendDAO {

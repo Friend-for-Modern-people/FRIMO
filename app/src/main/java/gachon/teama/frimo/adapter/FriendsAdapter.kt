@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.entities.Friend
+import gachon.teama.frimo.data.local.Friend
 import gachon.teama.frimo.ui.SetCharacterActivity
 
 class FriendsAdapter(private val dataSet: List<Friend>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {

@@ -5,7 +5,7 @@ import android.os.Looper
 import android.util.Log
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.Friend
+import gachon.teama.frimo.data.local.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivitySplashBinding
 

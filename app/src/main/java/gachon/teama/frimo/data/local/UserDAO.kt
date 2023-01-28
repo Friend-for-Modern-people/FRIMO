@@ -1,11 +1,11 @@
 package gachon.teama.frimo.data.local
 
 import androidx.room.*
-import gachon.teama.frimo.data.entities.User
 import java.util.*
 
 @Dao
 interface UserDAO {
+
     @Insert
     fun insert(user: User)
 

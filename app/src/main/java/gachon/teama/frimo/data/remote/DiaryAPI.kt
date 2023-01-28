@@ -51,7 +51,7 @@ interface DiaryAPI {
 
         /**
          * @description - Type 변경 ( toString 같은 느낌 )
-         * @param - sentiment(Int) : 해당 diary의 대표 감정
+         * @param - None
          * @return - sentiment(String) : String으로 변환된 해당 diary의 대표 감정
          * @author - namsh1125
          */
@@ -69,7 +69,7 @@ interface DiaryAPI {
 
         /**
          * @description - diary의 감정에 맞는 배경화면 색상을 return
-         * @param - sentiment(Int) : 해당 diary의 대표 감정
+         * @param - None
          * @return - color(Int) : 해당 diary의 배경화면 색상
          * @author - namsh1125
          */

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.FriendsAdapter
 import gachon.teama.frimo.adapter.RecommendFriendsAdapter
-import gachon.teama.frimo.data.entities.Friend
+import gachon.teama.frimo.data.local.Friend
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentHomeBinding
 

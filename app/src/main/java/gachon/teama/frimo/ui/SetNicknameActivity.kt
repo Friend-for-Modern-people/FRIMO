@@ -3,7 +3,7 @@ package gachon.teama.frimo.ui
 import android.text.Editable
 import android.text.TextWatcher
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.User
+import gachon.teama.frimo.data.local.User
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.ActivitySetNicknameBinding
 

@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.entities.Friend
+import gachon.teama.frimo.data.local.Friend
 import gachon.teama.frimo.ui.SetCharacterActivity
 
-class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) :
-    RecyclerView.Adapter<RecommendFriendsAdapter.ViewHolder>() {
+class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adapter<RecommendFriendsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

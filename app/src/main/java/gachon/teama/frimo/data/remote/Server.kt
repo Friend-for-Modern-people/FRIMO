@@ -1,7 +1,7 @@
 package gachon.teama.frimo.data.remote
 
 import android.util.Log
-import gachon.teama.frimo.data.entities.Words
+import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient

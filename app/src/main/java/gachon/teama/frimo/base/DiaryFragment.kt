@@ -1,7 +1,6 @@
 package gachon.teama.frimo.base
 
 import androidx.fragment.app.Fragment
-import gachon.teama.frimo.R
 import java.time.LocalDate
 
 abstract class DiaryFragment : Fragment() {

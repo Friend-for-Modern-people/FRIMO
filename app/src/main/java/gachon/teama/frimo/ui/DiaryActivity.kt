@@ -19,7 +19,7 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.entities.Words
+import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
 import gachon.teama.frimo.data.remote.DiaryAPI
 import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.data.remote.Server

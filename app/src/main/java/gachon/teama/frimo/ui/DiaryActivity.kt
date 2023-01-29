@@ -18,6 +18,7 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
+import gachon.teama.frimo.data.remote.Diary.Sentiment
 import gachon.teama.frimo.data.remote.DiaryKeywords
 import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
@@ -219,9 +220,4 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun getWordsCount(words: List<DiaryKeywords>, sentiment: Sentiment): Int {
         return words.filter { it.sentiment == sentiment.value }.size
     }
-
-    enum class Sentiment(val value: Int) {
-        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
-    }
-
 }

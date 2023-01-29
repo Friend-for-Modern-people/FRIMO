@@ -18,6 +18,7 @@ import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
 import kotlinx.coroutines.*
+import gachon.teama.frimo.data.remote.Diary.SentimentDetail
 import gachon.teama.frimo.data.remote.DiaryKeywordsAPI.AddWordRequest
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
@@ -170,24 +171,19 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      */
     private fun getSelectedSentiment(): Long = with(binding) {
         return if (radiobuttonAnger.isChecked) {
-            Sentiment.AngerDetail.value
+            SentimentDetail.AngerDetail.value
         } else if (radiobuttonSadness.isChecked) {
-            Sentiment.SadnessDetail.value
+            SentimentDetail.SadnessDetail.value
         } else if (radiobuttonAnxiety.isChecked) {
-            Sentiment.AnxietyDetail.value
+            SentimentDetail.AnxietyDetail.value
         } else if (radiobuttonWound.isChecked) {
-            Sentiment.WoundDetail.value
+            SentimentDetail.WoundDetail.value
         } else if (radiobuttonEmbarrassment.isChecked) {
-            Sentiment.EmbarrassmentDetail.value
+            SentimentDetail.EmbarrassmentDetail.value
         } else if (radiobuttonPleasure.isChecked) {
-            Sentiment.PleasureDetail.value
+            SentimentDetail.PleasureDetail.value
         } else {
-            Sentiment.Error.value
+            SentimentDetail.Error.value
         }
-    }
-
-    enum class Sentiment(val value: Long) {
-        AngerDetail(1), SadnessDetail(10), AnxietyDetail(19), WoundDetail(28),
-        EmbarrassmentDetail(37), PleasureDetail(46), Error(99)
     }
 }

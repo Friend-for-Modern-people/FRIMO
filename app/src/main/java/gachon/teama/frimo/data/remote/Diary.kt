@@ -59,4 +59,9 @@ class Diary(
     enum class Sentiment(val value: Int) {
         Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
+
+    enum class SentimentDetail(val value: Long) {
+        AngerDetail(1), SadnessDetail(10), AnxietyDetail(19), WoundDetail(28),
+        EmbarrassmentDetail(37), PleasureDetail(46), Error(99)
+    }
 }

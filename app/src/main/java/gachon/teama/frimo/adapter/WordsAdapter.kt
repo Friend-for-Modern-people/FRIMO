@@ -8,13 +8,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.remote.DiaryKeywords
+import gachon.teama.frimo.data.remote.Diary.Sentiment
 
 class WordsAdapter(private val dataSet: List<DiaryKeywords>) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val textview: TextView
-
         init {
             textview = view.findViewById(R.id.textview_word)
         }
@@ -61,9 +60,4 @@ class WordsAdapter(private val dataSet: List<DiaryKeywords>) : RecyclerView.Adap
     }
 
     override fun getItemCount() = dataSet.size
-
-    enum class Sentiment(val value: Int) {
-        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
-    }
-
 }

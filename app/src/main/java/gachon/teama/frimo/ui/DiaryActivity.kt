@@ -18,7 +18,7 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
+import gachon.teama.frimo.data.remote.DiaryKeywords
 import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
 import kotlinx.coroutines.*
@@ -216,7 +216,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @return - count(Int) : 찾고자 하는 감정으로 사용자가 작성한 단어의 갯수
      * @author - namsh1125
      */
-    private fun getWordsCount(words: List<Words>, sentiment: Sentiment): Int {
+    private fun getWordsCount(words: List<DiaryKeywords>, sentiment: Sentiment): Int {
         return words.filter { it.sentiment == sentiment.value }.size
     }
 

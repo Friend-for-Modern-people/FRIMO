@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.remote.DiaryAPI.Diary
+import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.ui.DiaryActivity
 
 class FilteredDiaryAdapter(private val dataSet: List<Diary>) :

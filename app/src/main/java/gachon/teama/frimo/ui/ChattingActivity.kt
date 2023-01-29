@@ -15,7 +15,7 @@ import com.google.firebase.database.*
 import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.entities.Chat
+import gachon.teama.frimo.data.remote.Chat
 import gachon.teama.frimo.databinding.ActivityChattingBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

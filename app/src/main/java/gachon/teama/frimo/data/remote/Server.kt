@@ -1,19 +1,17 @@
 package gachon.teama.frimo.data.remote
 
-import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import gachon.teama.frimo.data.remote.DiaryInterestAPI.AddWordRequest
-import gachon.teama.frimo.data.remote.DiaryAPI.Diary
+import gachon.teama.frimo.data.remote.DiaryKeywordsAPI.AddWordRequest
 
 object Server {
 
     private const val URL = "http://218.48.213.10:80/app/"
     private val diaryAPI: DiaryAPI
-    private val diaryInterestAPI: DiaryInterestAPI
+    private val diaryKeywordsAPI: DiaryKeywordsAPI
 
     init {
         val client = OkHttpClient.Builder().build()
@@ -25,7 +23,7 @@ object Server {
             .build()
 
         diaryAPI = retrofit.create(DiaryAPI::class.java)
-        diaryInterestAPI = retrofit.create(DiaryInterestAPI::class.java)
+        diaryKeywordsAPI = retrofit.create(DiaryKeywordsAPI::class.java)
     }
 
     // ---------- Diary api ----------
@@ -64,8 +62,8 @@ object Server {
     // ---------- Diary interest api ----------
 
     // 사용자가 작성한 단어를 모두 받아옴
-    suspend fun getWord(diaryId: Long): List<Words> = withContext(Dispatchers.IO) {
-        val response = diaryInterestAPI.getWord(diaryId)
+    suspend fun getWord(diaryId: Long): List<DiaryKeywords> = withContext(Dispatchers.IO) {
+        val response = diaryKeywordsAPI.getWord(diaryId)
         if (response.isSuccessful) {
             return@withContext response.body()!!
         } else {
@@ -74,8 +72,8 @@ object Server {
     }
 
     // 사용자가 작성한 대표 단어 4개만 받아옴
-    suspend fun getFourWord(diaryId: Long): List<Words> = withContext(Dispatchers.IO) {
-        val response = diaryInterestAPI.getFourWord(diaryId)
+    suspend fun getFourWord(diaryId: Long): List<DiaryKeywords> = withContext(Dispatchers.IO) {
+        val response = diaryKeywordsAPI.getFourWord(diaryId)
         if (response.isSuccessful) {
             return@withContext response.body()!!
         } else {
@@ -85,7 +83,7 @@ object Server {
 
     // 사용자가 추가하고 싶은 단어를 추가함
     suspend fun addWord(request: AddWordRequest): Boolean = withContext(Dispatchers.IO) {
-        val response = diaryInterestAPI.addWord(request)
+        val response = diaryKeywordsAPI.addWord(request)
         return@withContext response.isSuccessful && response.code() == 201
     }
 

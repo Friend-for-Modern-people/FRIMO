@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import gachon.teama.frimo.R
-import gachon.teama.frimo.data.remote.DiaryInterestAPI.Words
+import gachon.teama.frimo.data.remote.DiaryKeywords
 
-class WordsAdapter(private val dataSet: List<Words>) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
+class WordsAdapter(private val dataSet: List<DiaryKeywords>) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

@@ -1,4 +1,4 @@
-package gachon.teama.frimo.data.entities
+package gachon.teama.frimo.data.remote
 
 import java.util.*
 

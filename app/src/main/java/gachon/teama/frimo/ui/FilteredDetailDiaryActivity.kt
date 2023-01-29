@@ -3,7 +3,7 @@ package gachon.teama.frimo.ui
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.DiaryAPI.Diary
+import gachon.teama.frimo.data.remote.Diary
 import gachon.teama.frimo.databinding.ActivityFilteredDetailDiaryBinding
 
 /**

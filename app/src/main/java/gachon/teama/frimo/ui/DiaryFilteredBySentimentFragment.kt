@@ -6,27 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.DiaryAPI
-import gachon.teama.frimo.data.remote.RetrofitClient
+import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.collections.ArrayList
 
 class DiaryFilteredBySentimentFragment : Fragment() {
 
     // Binding
     private val binding by lazy { FragmentDiaryFilteredSentimentBinding.inflate(layoutInflater) }
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
-
     // User
-    private val userId by lazy { database.userDao().getUserId() }
+    private val userId by lazy { AppDatabase.getInstance(requireContext())!!.userDao().getUserId() }
 
     /**
      * @description - 생명주기 onCreateView
@@ -64,14 +58,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setAnger() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anger.value, userId = userId)
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Anger.value)
 
             // Set layout
             binding.textviewDiaryAngerCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -124,14 +112,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setSadness() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Sadness.value, userId = userId)
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Sadness.value)
 
             // Set layout
             binding.textviewDiarySadnessCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -184,14 +166,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setAnxiety() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Anxiety.value, userId = userId)
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Anxiety.value)
 
             // Set layout
             binding.textviewDiaryAnxietyCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -244,14 +220,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setWound() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Wound.value, userId = userId)
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Wound.value)
 
             // Set layout
             binding.textviewDiaryWoundCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -304,14 +274,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setEmbarrassment() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Embarrassment.value, userId = userId)
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Embarrassment.value)
 
             // Set layout
             binding.textviewDiaryEmbarrassmentCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -364,14 +328,8 @@ class DiaryFilteredBySentimentFragment : Fragment() {
      */
     private fun setPleasure() {
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryBySentiment(sentiment = Sentiment.Pleasure.value, userId = userId)
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Pleasure.value)
 
             // Set layout
             binding.textviewDiaryPleasureCount.text = getString(R.string.set_diary_count, diaries.size)

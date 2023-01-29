@@ -26,7 +26,7 @@ object Server {
         diaryKeywordsAPI = retrofit.create(DiaryKeywordsAPI::class.java)
     }
 
-    // ---------- Diary api ----------
+    // ---------- Diary API ----------
 
     // 유저가 작성한 일기를 최신순으로 가져옴
     suspend fun getDiary(userId: Long): List<Diary> = withContext(Dispatchers.IO) {
@@ -48,6 +48,35 @@ object Server {
         }
     }
 
+    // 유저가 특정 연도에 작성한 diary를 가져오는 API
+    suspend fun getDiaryByYear(userId: Long, year: Int): ArrayList<Diary> = withContext(Dispatchers.IO) {
+        val response = diaryAPI.getDiaryByYear(userId, year)
+        if (response.isSuccessful) {
+            return@withContext response.body()!! as ArrayList
+        } else {
+            throw Exception(response.errorBody()?.charStream()?.readText())
+        }
+    }
+
+    // 유저가 특정 달에 작성한 diary를 가져오는 API
+    suspend fun getDiaryByMonth(userId: Long, year: Int, month: Int): ArrayList<Diary> = withContext(Dispatchers.IO) {
+        val response = diaryAPI.getDiaryByMonth(userId, year, month)
+        if (response.isSuccessful) {
+            return@withContext response.body()!! as ArrayList
+        } else {
+            throw Exception(response.errorBody()?.charStream()?.readText())
+        }
+    }
+
+    // 유저가 특정 감정으로 작성한 diary를 가져오는 API
+    suspend fun getDiaryBySentiment(userId: Long, sentiment: Int): ArrayList<Diary> = withContext(Dispatchers.IO) {
+        val response = diaryAPI.getDiaryBySentiment(userId, sentiment)
+        if (response.isSuccessful) {
+            return@withContext response.body()!! as ArrayList
+        } else {
+            throw Exception(response.errorBody()?.charStream()?.readText())
+        }
+    }
 
     // Diary id로 해당 diary를 가져옴
     suspend fun getDiaryById(diaryId: Long): Diary = withContext(Dispatchers.IO) {
@@ -59,7 +88,7 @@ object Server {
         }
     }
 
-    // ---------- Diary interest api ----------
+    // ---------- Diary Interest API ----------
 
     // 사용자가 작성한 단어를 모두 받아옴
     suspend fun getWord(diaryId: Long): List<DiaryKeywords> = withContext(Dispatchers.IO) {

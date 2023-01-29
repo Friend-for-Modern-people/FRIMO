@@ -6,25 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.DiaryAPI
-import gachon.teama.frimo.data.remote.RetrofitClient
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
-import kotlin.collections.ArrayList
 import gachon.teama.frimo.base.DiaryFragment
+import gachon.teama.frimo.data.remote.Server
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DiaryFilteredByYearFragment : DiaryFragment() {
 
     // Binding
     private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
+    // User
+    private val userId by lazy { AppDatabase.getInstance(requireContext())!!.userDao().getUserId() }
 
     /**
      * @description - 생명주기 onCreateView
@@ -60,14 +57,8 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
 
         val year = getCurrentYear()
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryByYear(year = year, userId = database.userDao().getUserId())
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryByYear(userId, year)
 
             // Set layout
             binding.textviewFilter1.text = getString(R.string.set_diary_year, year)
@@ -128,14 +119,8 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
 
         val year = getLastYear()
 
-        val retrofit = RetrofitClient.getInstance()
-        val diaryAPI = retrofit.create(DiaryAPI::class.java)
-
-        lifecycleScope.launch {
-
-            val diaries = withContext(Dispatchers.IO) {
-                diaryAPI.getDiaryByYear(year = year, userId = database.userDao().getUserId())
-            } as ArrayList
+        CoroutineScope(Dispatchers.Main).launch {
+            val diaries = Server.getDiaryByYear(userId, year)
 
             // Set layout
             binding.textviewFilter2.text = getString(R.string.set_diary_year, year)

@@ -1,3 +1,10 @@
+package gachon.teama.frimo.data.remote
+
+data class Chatting(
+    val message: String
+)
+
+/*
 package gachon.teama.frimo.data.entities;
 
 import lombok.AccessLevel;
@@ -17,3 +24,4 @@ public class ChattingDto {
         this.message = message;
     }
 }
+ */

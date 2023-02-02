@@ -1,20 +1,20 @@
 package gachon.teama.frimo.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
+import gachon.teama.frimo.base.DiaryFragment
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.Diary.Sentiment
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DiaryFilteredBySentimentFragment : Fragment() {
+class DiaryFilteredBySentimentFragment : DiaryFragment() {
 
     // Binding
     private val binding by lazy { FragmentDiaryFilteredSentimentBinding.inflate(layoutInflater) }
@@ -65,14 +65,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
             binding.textviewDiaryAngerCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (anger detail) click listener
-            binding.layoutAngerDetail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "#분노") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutAngerDetail.setOnClickListener(DetailClickListener("#분노", diaries))
 
             // Set anger diary 1
             if (diaries.size >= 1) {
@@ -80,26 +73,18 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                 binding.angerDiary2.visibility = View.INVISIBLE
 
                 binding.textviewAngerDiary1Date.text = diaries[0].createdString
-            }
 
-            // Set anger diary 1 click listener
-            binding.angerDiary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set anger diary 1 click listener
+                binding.angerDiary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set anger diary 2
             if (diaries.size >= 2) {
                 binding.angerDiary2.visibility = View.VISIBLE
                 binding.textviewAngerDiary2Date.text = diaries[1].createdString
-            }
 
-            // Set anger diary 2 click listener
-            binding.angerDiary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set anger diary 2 click listener
+                binding.angerDiary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }
@@ -119,14 +104,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
             binding.textviewDiarySadnessCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (sadness detail) click listener
-            binding.layoutSadnessDetail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "#슬픔") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutSadnessDetail.setOnClickListener(DetailClickListener("#슬픔", diaries))
 
             // Set sadness diary 1
             if (diaries.size >= 1) {
@@ -134,26 +112,18 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                 binding.sadnessDiary2.visibility = View.INVISIBLE
 
                 binding.textviewSadnessDiary1Date.text = diaries[0].createdString
-            }
 
-            // Set sadness diary 1 click listener
-            binding.sadnessDiary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set sadness diary 1 click listener
+                binding.sadnessDiary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set sadness diary 2
             if (diaries.size >= 2) {
                 binding.sadnessDiary2.visibility = View.VISIBLE
                 binding.textviewSadnessDiary2Date.text = diaries[1].createdString
-            }
 
-            // Set sadness diary 2 click listener
-            binding.sadnessDiary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set sadness diary 2 click listener
+                binding.sadnessDiary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }
@@ -173,14 +143,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
             binding.textviewDiaryAnxietyCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (anxiety detail) click listener
-            binding.layoutAnxietyDetail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "#불안") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutAnxietyDetail.setOnClickListener(DetailClickListener("#불안", diaries))
 
             // Set anxiety diary 1
             if (diaries.size >= 1) {
@@ -188,26 +151,18 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                 binding.anxietyDiary2.visibility = View.INVISIBLE
 
                 binding.textviewAnxietyDiary1Date.text = diaries[0].createdString
-            }
 
-            // Set anxiety diary 1 click listener
-            binding.anxietyDiary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set anxiety diary 1 click listener
+                binding.anxietyDiary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set anxiety diary 2
             if (diaries.size >= 2) {
                 binding.anxietyDiary2.visibility = View.VISIBLE
                 binding.textviewAnxietyDiary2Date.text = diaries[1].createdString
-            }
 
-            // Set anxiety diary 2 click listener
-            binding.anxietyDiary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set anxiety diary 2 click listener
+                binding.anxietyDiary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }
@@ -227,14 +182,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
             binding.textviewDiaryWoundCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (wound detail) click listener
-            binding.layoutWoundDetail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "#상처") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutWoundDetail.setOnClickListener(DetailClickListener("#상처", diaries))
 
             // Set wound diary 1
             if (diaries.size >= 1) {
@@ -242,26 +190,18 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                 binding.woundDiary2.visibility = View.INVISIBLE
 
                 binding.textviewWoundDiary1Date.text = diaries[0].createdString
-            }
 
-            // Set wound diary 1 click listener
-            binding.woundDiary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set wound diary 1 click listener
+                binding.woundDiary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set wound diary 2
             if (diaries.size >= 2) {
                 binding.woundDiary2.visibility = View.VISIBLE
                 binding.textviewWoundDiary2Date.text = diaries[1].createdString
-            }
 
-            // Set wound diary 2 click listener
-            binding.woundDiary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set wound diary 2 click listener
+                binding.woundDiary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }
@@ -281,14 +221,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
             binding.textviewDiaryEmbarrassmentCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (embarrassment detail) click listener
-            binding.layoutEmbarrassmentDetail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "#당황") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutEmbarrassmentDetail.setOnClickListener(DetailClickListener("#당황", diaries))
 
             // Set embarrassment diary 1
             if (diaries.size >= 1) {
@@ -296,26 +229,18 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                 binding.embarrassmentDiary2.visibility = View.INVISIBLE
 
                 binding.textviewEmbarrassmentDiary1Date.text = diaries[0].createdString
-            }
 
-            // Set embarrassment diary 1 click listener
-            binding.embarrassmentDiary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set embarrassment diary 1 click listener
+                binding.embarrassmentDiary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set embarrassment diary 2
             if (diaries.size >= 2) {
                 binding.embarrassmentDiary2.visibility = View.VISIBLE
                 binding.textviewEmbarrassmentDiary2Date.text = diaries[1].createdString
-            }
 
-            // Set embarrassment diary 2 click listener
-            binding.embarrassmentDiary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set embarrassment diary 2 click listener
+                binding.embarrassmentDiary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }
@@ -335,14 +260,7 @@ class DiaryFilteredBySentimentFragment : Fragment() {
             binding.textviewDiaryPleasureCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (pleasure detail) click listener
-            binding.layoutPleasureDetail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "#기쁨") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutPleasureDetail.setOnClickListener(DetailClickListener("#기쁨", diaries))
 
             // Set pleasure diary 1
             if (diaries.size >= 1) {
@@ -350,31 +268,19 @@ class DiaryFilteredBySentimentFragment : Fragment() {
                 binding.pleasureDiary2.visibility = View.INVISIBLE
 
                 binding.textviewPleasureDiary1Date.text = diaries[0].createdString
-            }
 
-            // Set pleasure diary 1 click listener
-            binding.pleasureDiary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set pleasure diary 1 click listener
+                binding.pleasureDiary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set pleasure diary 2
             if (diaries.size >= 2) {
                 binding.pleasureDiary2.visibility = View.VISIBLE
                 binding.textviewPleasureDiary2Date.text = diaries[1].createdString
-            }
 
-            // Set pleasure diary 2 click listener
-            binding.pleasureDiary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set pleasure diary 2 click listener
+                binding.pleasureDiary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
-    }
-
-    enum class Sentiment(val value: Int) {
-        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
     }
 }

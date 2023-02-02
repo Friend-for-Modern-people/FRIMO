@@ -65,14 +65,7 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
             binding.textviewFilter1DiaryCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (current year detail) click listener
-            binding.layoutFilter1Detail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "${year}년") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutFilter1Detail.setOnClickListener(DetailClickListener("${year}년", diaries))
 
             // Set current year diary 1
             if (diaries.size >= 1) {
@@ -82,13 +75,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                 binding.imageViewFilter1Diary1.background.setTint(ContextCompat.getColor(requireContext(), diaries[0].getSentimentColor()))
                 binding.textviewFilter1Diary1Date.text = diaries[0].createdString
                 binding.textviewFilter1Diary1Sentiment.text = diaries[0].getTextSentiment()
-            }
 
-            // Set current year diary 1 click listener
-            binding.filter1Diary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set current year diary 1 click listener
+                binding.filter1Diary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set current year diary 2
@@ -98,13 +87,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                 binding.imageViewFilter1Diary2.background.setTint(ContextCompat.getColor(requireContext(), diaries[1].getSentimentColor()))
                 binding.textviewFilter1Diary2Date.text = diaries[1].createdString
                 binding.textviewFilter1Diary2Sentiment.text = diaries[1].getTextSentiment()
-            }
 
-            // Set current year diary 2 click listener
-            binding.filter1Diary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set current year diary 2 click listener
+                binding.filter1Diary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }
@@ -127,14 +112,7 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
             binding.textviewFilter2DiaryCount.text = getString(R.string.set_diary_count, diaries.size)
 
             // Set layout (last year detail) click listener
-            binding.layoutFilter2Detail.setOnClickListener {
-                val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
-                intent.apply {
-                    this.putExtra("filter", "${year}년") // 어떤 필터가 걸려있는지 전달
-                    this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
-                }
-                startActivity(intent)
-            }
+            binding.layoutFilter2Detail.setOnClickListener(DetailClickListener("${year}년", diaries))
 
             // Set last year diary 1
             if (diaries.size >= 1) {
@@ -144,13 +122,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                 binding.imageViewFilter2Diary1.background.setTint(ContextCompat.getColor(requireContext(), diaries[0].getSentimentColor()))
                 binding.textviewFilter2Diary1Date.text = diaries[0].createdString
                 binding.textviewFilter2Diary1Sentiment.text = diaries[0].getTextSentiment()
-            }
 
-            // Set last year diary 1 click listener
-            binding.filter2Diary1.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[0].id) // Diary id 전달
-                startActivity(intent)
+                // Set last year diary 1 click listener
+                binding.filter2Diary1.setOnClickListener(DiaryClickListener(diaries[0].id))
             }
 
             // Set last year diary 2
@@ -160,13 +134,9 @@ class DiaryFilteredByYearFragment : DiaryFragment() {
                 binding.imageViewFilter2Diary2.background.setTint(ContextCompat.getColor(requireContext(), diaries[1].getSentimentColor()))
                 binding.textviewFilter2Diary2Date.text = diaries[1].createdString
                 binding.textviewFilter2Diary2Sentiment.text = diaries[1].getTextSentiment()
-            }
 
-            // Set last year diary 2 click listener
-            binding.filter2Diary2.setOnClickListener {
-                val intent = Intent(requireContext(), DiaryActivity::class.java)
-                intent.putExtra("id", diaries[1].id) // Diary id 전달
-                startActivity(intent)
+                // Set last year diary 2 click listener
+                binding.filter2Diary2.setOnClickListener(DiaryClickListener(diaries[1].id))
             }
         }
     }

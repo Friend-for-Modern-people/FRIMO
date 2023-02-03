@@ -7,8 +7,10 @@ import gachon.teama.frimo.databinding.ActivityMyBestFriendBinding
 
 class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityMyBestFriendBinding::inflate) {
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(this)!! }
+    // 좋아요 누른 친구 리스트
+    private val likeFriend by lazy {
+        AppDatabase.getInstance(this)!!.friendDao().getFriendList().filter { it.like }
+    }
 
     /**
      * @description - Binding 이후
@@ -29,13 +31,7 @@ class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityM
      * @author - namsh1125
      */
     private fun setScreen() = with(binding) {
-
-        val likeFriend = database.friendDao().getFriendList().filter {
-            it.like
-        } // 좋아요 누른 친구 리스트
-
-        // 좋아요 누른 친구 숫자 설정
-        textviewBestFriendCount.text = likeFriend.size.toString()
+        textviewBestFriendCount.text = likeFriend.size.toString() // 좋아요 누른 친구 숫자 설정
 
         // Set RecyclerView
         recyclerviewMyBestFriend.setHasFixedSize(true)
@@ -49,9 +45,7 @@ class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityM
      * @author - namsh1125
      */
     private fun setClickListener() = with(binding) {
-        buttonBack.setOnClickListener {
-            finish()
-        }
+        buttonBack.setOnClickListener { finish() }
     }
 
 }

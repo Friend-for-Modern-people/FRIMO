@@ -67,24 +67,12 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     private fun setRadiobutton() = with(binding) {
-        radiobuttonPleasure.setOnClickListener {
-            radiogroup2.clearCheck()
-        }
-        radiobuttonSadness.setOnClickListener {
-            radiogroup2.clearCheck()
-        }
-        radiobuttonAnxiety.setOnClickListener {
-            radiogroup2.clearCheck()
-        }
-        radiobuttonWound.setOnClickListener {
-            radiogroup1.clearCheck()
-        }
-        radiobuttonEmbarrassment.setOnClickListener {
-            radiogroup1.clearCheck()
-        }
-        radiobuttonAnger.setOnClickListener {
-            radiogroup1.clearCheck()
-        }
+        radiobuttonPleasure.setOnClickListener { radiogroup2.clearCheck() }
+        radiobuttonSadness.setOnClickListener { radiogroup2.clearCheck() }
+        radiobuttonAnxiety.setOnClickListener { radiogroup2.clearCheck() }
+        radiobuttonWound.setOnClickListener { radiogroup1.clearCheck() }
+        radiobuttonEmbarrassment.setOnClickListener { radiogroup1.clearCheck() }
+        radiobuttonAnger.setOnClickListener { radiogroup1.clearCheck() }
     }
 
     /**
@@ -94,16 +82,8 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     private fun setClickListener() = with(binding) {
-
-        // Set back button click listener
-        buttonBack.setOnClickListener {
-            finish()
-        }
-
-        // Set add button click listener
-        buttonAdd.setOnClickListener {
-            showPopupwindow(it)
-        }
+        buttonBack.setOnClickListener { finish() }
+        buttonAdd.setOnClickListener { showPopupwindow(it) }
     }
 
     /**
@@ -170,20 +150,12 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
      * @author - namsh1125
      */
     private fun getSelectedSentiment(): Long = with(binding) {
-        return if (radiobuttonAnger.isChecked) {
-            SentimentDetail.AngerDetail.value
-        } else if (radiobuttonSadness.isChecked) {
-            SentimentDetail.SadnessDetail.value
-        } else if (radiobuttonAnxiety.isChecked) {
-            SentimentDetail.AnxietyDetail.value
-        } else if (radiobuttonWound.isChecked) {
-            SentimentDetail.WoundDetail.value
-        } else if (radiobuttonEmbarrassment.isChecked) {
-            SentimentDetail.EmbarrassmentDetail.value
-        } else if (radiobuttonPleasure.isChecked) {
-            SentimentDetail.PleasureDetail.value
-        } else {
-            SentimentDetail.Error.value
-        }
+        return if (radiobuttonAnger.isChecked) SentimentDetail.AngerDetail.value
+        else if (radiobuttonSadness.isChecked) SentimentDetail.SadnessDetail.value
+        else if (radiobuttonAnxiety.isChecked) SentimentDetail.AnxietyDetail.value
+        else if (radiobuttonWound.isChecked) SentimentDetail.WoundDetail.value
+        else if (radiobuttonEmbarrassment.isChecked) SentimentDetail.EmbarrassmentDetail.value
+        else if (radiobuttonPleasure.isChecked) SentimentDetail.PleasureDetail.value
+        else SentimentDetail.Error.value
     }
 }

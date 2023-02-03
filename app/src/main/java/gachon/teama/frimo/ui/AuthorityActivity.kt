@@ -46,41 +46,22 @@ class AuthorityActivity : BaseActivity<ActivityAuthorityBinding>(ActivityAuthori
                 checkboxInternet.isChecked = true
                 checkboxCamera.isChecked = true
                 checkboxMic.isChecked = true
-                setScreen()
-
-            } else {
+            }
+            else {
                 checkboxFile.isChecked = false
                 checkboxInternet.isChecked = false
                 checkboxCamera.isChecked = false
                 checkboxMic.isChecked = false
-                setScreen()
             }
-        }
-
-        // Set file checkbox click listener
-        checkboxFile.setOnClickListener {
             setScreen()
         }
 
-        // Set internet checkbox click listener
-        checkboxInternet.setOnClickListener {
-            setScreen()
-        }
-
-        // Set camera checkbox click listener
-        checkboxCamera.setOnClickListener {
-            setScreen()
-        }
-
-        // Set mic checkbox click listener
-        checkboxMic.setOnClickListener {
-            setScreen()
-        }
-
-        // Set start button click listener
-        buttonNext.setOnClickListener {
-            checkPermissionsAndRun()
-        }
+        // 체크박스 클릭할 때마다 화면 update
+        checkboxFile.setOnClickListener { setScreen() }
+        checkboxInternet.setOnClickListener { setScreen() }
+        checkboxCamera.setOnClickListener { setScreen() }
+        checkboxMic.setOnClickListener { setScreen() }
+        buttonNext.setOnClickListener { checkPermissionsAndRun() }
     }
 
     /**
@@ -98,32 +79,20 @@ class AuthorityActivity : BaseActivity<ActivityAuthorityBinding>(ActivityAuthori
         buttonNext.isEnabled = checkboxAll.isChecked
 
         // File 체크버튼 클릭 여부 확인
-        if (checkboxFile.isChecked) {
-            textviewTextGiveAuthority1.visibility = View.GONE
-        } else {
-            textviewTextGiveAuthority1.visibility = View.VISIBLE
-        }
+        if (checkboxFile.isChecked) textviewTextGiveAuthority1.visibility = View.GONE
+        else textviewTextGiveAuthority1.visibility = View.VISIBLE
 
         // Internet 체크버튼 클릭 여부 확인
-        if (checkboxInternet.isChecked) {
-            textviewTextGiveAuthority2.visibility = View.GONE
-        } else {
-            textviewTextGiveAuthority2.visibility = View.VISIBLE
-        }
+        if (checkboxInternet.isChecked) textviewTextGiveAuthority2.visibility = View.GONE
+        else textviewTextGiveAuthority2.visibility = View.VISIBLE
 
         // Mic 체크버튼 클릭 여부 확인
-        if (checkboxMic.isChecked) {
-            textviewTextGiveAuthority4.visibility = View.GONE
-        } else {
-            textviewTextGiveAuthority4.visibility = View.VISIBLE
-        }
+        if (checkboxMic.isChecked) textviewTextGiveAuthority4.visibility = View.GONE
+        else textviewTextGiveAuthority4.visibility = View.VISIBLE
 
         // Camera 체크버튼 클릭 여부 확인
-        if (checkboxCamera.isChecked) {
-            textviewTextGiveAuthority3.visibility = View.GONE
-        } else {
-            textviewTextGiveAuthority3.visibility = View.VISIBLE
-        }
+        if (checkboxCamera.isChecked) textviewTextGiveAuthority3.visibility = View.GONE
+        else textviewTextGiveAuthority3.visibility = View.VISIBLE
     }
 
     /**

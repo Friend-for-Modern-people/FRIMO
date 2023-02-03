@@ -29,12 +29,8 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
      */
     private fun setClickListener() = with(binding) {
 
-        // Set back button click listener
-        buttonBack.setOnClickListener {
-            finish()
-        }
+        buttonBack.setOnClickListener { finish() }
 
-        // Set guide1 layout click listener
         layoutGuide1.setOnClickListener {
 
             if (layoutGuide1Detail.isShown) { // If the layout is showing
@@ -46,10 +42,8 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
             }
         }
 
-        // Set guide2 layout click listener
         layoutGuide2.setOnClickListener {
-
-            if (layoutGuide2Detail.isShown) { // If the layout is showing
+            if (layoutGuide2Detail.isShown) {
                 layoutGuide2Detail.visibility = View.GONE
                 buttonDetail2.animate().rotation(0f).setDuration(100).start()
             } else { // If the layout isn't showing
@@ -58,10 +52,8 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::i
             }
         }
 
-        // Set guide3 layout click listener
         layoutGuide3.setOnClickListener {
-
-            if (layoutGuide3Detail.isShown) { // If the layout is showing
+            if (layoutGuide3Detail.isShown) {
                 layoutGuide3Detail.visibility = View.GONE
                 buttonDetail3.animate().rotation(0f).setDuration(100).start()
             } else { // If the layout isn't showing

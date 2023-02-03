@@ -56,14 +56,11 @@ class HomeFragment : Fragment() {
      */
     private fun setClickListener() {
 
-        // Set button(my best friend) click listener
         binding.buttonMyBestFriend.setOnClickListener {
             startActivity(Intent(requireContext(), MyBestFriendActivity::class.java))
         }
 
-        // Set layout(recently talk friend) click listener
         binding.layoutRecentlyTalkFriend.setOnClickListener {
-
             val intent = Intent(requireContext(), SetCharacterActivity::class.java)
             intent.putExtra("id", database.userDao().getRecentlyChatFriendId())
             startActivity(intent)
@@ -191,7 +188,6 @@ class HomeFragment : Fragment() {
         val recentlyTalkFriendId = database.userDao().getRecentlyChatFriendId()
 
         if (recentlyTalkFriendId != 99) {
-
             val recentlyTalkFriend = database.friendDao().getFriend(recentlyTalkFriendId)
 
             // layout 셋팅

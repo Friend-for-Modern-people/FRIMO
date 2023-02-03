@@ -89,12 +89,9 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @return - None
      * @author - namsh1125
      */
-    private fun setLike() {
-        if (friend.like) {
-            binding.imageButtonLike.background.setTint(ContextCompat.getColor(this, R.color.like))
-        } else {
-            binding.imageButtonLike.background.setTint(ContextCompat.getColor(this, R.color.unlike))
-        }
+    private fun setLike() = with(binding) {
+        val backgroundColor = if (friend.like) R.color.like else R.color.unlike
+        imageButtonLike.background.setTint(ContextCompat.getColor(this@SetCharacterActivity, backgroundColor))
     }
 
 }

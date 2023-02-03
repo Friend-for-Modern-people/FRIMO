@@ -78,9 +78,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         val view: View = binding.root
         var rootHeight = -1
         view.viewTreeObserver.addOnGlobalLayoutListener {
-            if (rootHeight == -1) {
-                rootHeight = view.height
-            }
+            if (rootHeight == -1) rootHeight = view.height
 
             val visibleFrameSize = Rect()
             view.getWindowVisibleDisplayFrame(visibleFrameSize)
@@ -173,30 +171,33 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
 
         // Set search button click listener (search layout에서 돋보기 버튼)
-        // Fixme: 채팅 내용 중 딱 한 개의 채팅만 존재하는 경우만 의도하는 대로 동작. 해결 필요
+        // Fixme: 현재 위치를 기준으로 더 위에 있는 내용을 찾는게 아니라, 맨 아래에서 찾음. recyclerview 위치 찾는 법 찾아야됨
         buttonSearch.setOnClickListener {
+            hideKeyboard(it) // Keyboard 숨기기
 
-            // Keyboard 숨기기
-            hideKeyboard(it)
-
-            val word = edittextSearch.text.toString()
-            val position: MutableList<Int> = mutableListOf()
-
-            // 찾는 단어의 위치들
-            for (i in 0 until chatList.size) {
-                if (chatList[i].message.contains(word)) {
-                    position.add(i)
-
-                    val smoothScroller: RecyclerView.SmoothScroller by lazy {
-                        object : LinearSmoothScroller(this@ChattingActivity) {
-                            override fun getVerticalSnapPreference() = SNAP_TO_START
-                        }
-                    }
-                    smoothScroller.targetPosition = i
-                    recyclerviewChatting.layoutManager?.startSmoothScroll(smoothScroller)
+            var position = -1
+            var findFlag = false
+            for (i in chatList.size downTo  0) {
+                if (chatList[i].message.contains(edittextSearch.text.toString())) {
+                    position = i
+                    findFlag = true
+                    break
                 }
             }
 
+            if(findFlag) {
+                val smoothScroller: RecyclerView.SmoothScroller by lazy {
+                    object : LinearSmoothScroller(this@ChattingActivity) {
+                        override fun getVerticalSnapPreference() = SNAP_TO_START
+                    }
+                }
+
+                smoothScroller.targetPosition = position
+                recyclerviewChatting.layoutManager?.startSmoothScroll(smoothScroller)
+
+            } else {
+                showToast("찾는 단어가 없습니다!")
+            }
         }
 
         // Set cancel text click listener
@@ -232,16 +233,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
 
         // 입력창을 눌렀을때 팝업과 키보드가 같이 뜨는 현상 방지
-        edittextChat.setOnClickListener {
-            layoutSendData.visibility = View.GONE
-        }
+        edittextChat.setOnClickListener { layoutSendData.visibility = View.GONE }
 
-        // Set send button click listener
+        // Send message
         buttonSend.setOnClickListener {
-
-            // Send message
-            val msg: String = edittextChat.text.toString()
-            val chat = Chat("Me", msg, Date())
+            val chat = Chat(who = "Me", message = edittextChat.text.toString(), time = Date())
             myRef.child(userName).child("chat").push().setValue(chat)
                 .addOnCompleteListener {
                     edittextChat.setText("")
@@ -249,7 +245,6 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
 
         // 기획 변경으로 다음 버젼에서 출시
-        // Set album button click listener
         buttonAlbum.setOnClickListener {
 
             // startDefalultGalleryApp()
@@ -258,7 +253,6 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
 
         // 기획 변경으로 다음 버젼에서 출시
-        // Set camera button click listener
         buttonCamera.setOnClickListener {
 
 //                openCamera()
@@ -305,17 +299,16 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             }
 
             override fun onError(error: Int) {
-                val message: String
-                when (error) {
-                    SpeechRecognizer.ERROR_AUDIO -> message = "Audio Error"
-                    SpeechRecognizer.ERROR_CLIENT -> message = "Client Error"
-                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> message = "No permissions"
-                    SpeechRecognizer.ERROR_NETWORK -> message = "Network Error"
-                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> message = "Network TIMEOUT"
-                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> message = "Recognizer is busy"
-                    SpeechRecognizer.ERROR_SERVER -> message = "SERVER is weird"
-                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> message = "Speech Time Exceeded"
-                    else -> message = "Unknown Error"
+                val message = when (error) {
+                    SpeechRecognizer.ERROR_AUDIO -> "Audio Error"
+                    SpeechRecognizer.ERROR_CLIENT -> "Client Error"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "No permissions"
+                    SpeechRecognizer.ERROR_NETWORK -> "Network Error"
+                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network TIMEOUT"
+                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer is busy"
+                    SpeechRecognizer.ERROR_SERVER -> "SERVER is weird"
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Speech Time Exceeded"
+                    else -> "Unknown Error"
                 }
 
                 Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
@@ -328,7 +321,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 if (matches != null) {
                     for (i in 0 until matches.size) {
                         val text = binding.edittextChat.text.toString()
-                        binding.edittextChat.setText(text + " " + matches[i])
+                        binding.edittextChat.setText("$text ${matches[i]}")
                     }
                 }
             }

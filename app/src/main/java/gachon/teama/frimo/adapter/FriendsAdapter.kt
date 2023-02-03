@@ -14,7 +14,6 @@ import gachon.teama.frimo.ui.SetCharacterActivity
 class FriendsAdapter(private val dataSet: List<Friend>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val textView_name: TextView
         val textview_tag: TextView
         val imageView_friend: ImageView
@@ -28,7 +27,6 @@ class FriendsAdapter(private val dataSet: List<Friend>) : RecyclerView.Adapter<F
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.view_friends, viewGroup, false)
         return ViewHolder(view)
     }

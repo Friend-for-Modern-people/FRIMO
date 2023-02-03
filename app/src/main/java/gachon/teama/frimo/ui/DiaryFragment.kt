@@ -52,9 +52,7 @@ class DiaryFragment : Fragment() {
     private fun setScreen() {
         setNickname()
         setDiaryCount()
-
-        // 최초 실행시 보이는 fragment 셋팅
-        childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
+        changeFragment(R.id.frame, DiaryFilteredByYearFragment()) // 최초 실행시 보이는 fragment 셋팅
     }
 
     /**
@@ -129,7 +127,6 @@ class DiaryFragment : Fragment() {
         val filterRecent = popupWindow.contentView.findViewById<RadioButton>(R.id.radiobutton_recent)
 
         filterYear.setOnClickListener {
-
             radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -140,7 +137,6 @@ class DiaryFragment : Fragment() {
         }
 
         filterMonth.setOnClickListener {
-
             radiogroup2.clearCheck() // 하위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -151,7 +147,6 @@ class DiaryFragment : Fragment() {
         }
 
         filterSentiment.setOnClickListener {
-
             radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -162,7 +157,6 @@ class DiaryFragment : Fragment() {
         }
 
         filterRecent.setOnClickListener {
-
             radiogroup1.clearCheck() // 상위 라디오 버튼 선택 해제
 
             // text 색상 변경
@@ -175,18 +169,25 @@ class DiaryFragment : Fragment() {
         // Set apply button click listener
         val buttonApply = popupWindow.contentView.findViewById<Button>(R.id.button_apply)
         buttonApply.setOnClickListener {
-
-            if (filterYear.isChecked) {
-                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByYearFragment()).commit()
-            } else if (filterMonth.isChecked) {
-                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByMonthFragment()).commit()
-            } else if (filterSentiment.isChecked) {
-                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredBySentimentFragment()).commit()
-            } else {
-                childFragmentManager.beginTransaction().replace(R.id.frame, DiaryFilteredByRecentFragment()).commit()
+            when {
+                filterYear.isChecked -> changeFragment(R.id.frame, DiaryFilteredByYearFragment())
+                filterMonth.isChecked -> changeFragment(R.id.frame, DiaryFilteredByMonthFragment())
+                filterSentiment.isChecked -> changeFragment(R.id.frame, DiaryFilteredBySentimentFragment())
+                filterRecent.isChecked -> changeFragment(R.id.frame, DiaryFilteredByRecentFragment())
             }
 
             popupWindow.dismiss()
         }
+    }
+
+    /**
+     * @description - Fragment 전환
+     * @param - containerViewId(Int) : 띄워질 fragment의 id
+     * @param - fragment : 띄워질 fragment
+     * @return - None
+     * @author - namsh1125
+     */
+    private fun changeFragment(containerViewId: Int, fragment: Fragment) {
+        childFragmentManager.beginTransaction().replace(containerViewId, fragment).commit()
     }
 }

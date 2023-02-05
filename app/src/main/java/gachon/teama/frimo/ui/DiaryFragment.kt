@@ -85,12 +85,8 @@ class DiaryFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
-
-        // Set filter button click listener
-        binding.buttonFilter.setOnClickListener {
-            showPopupwindow(it)
-        }
+    private fun setClickListener() = with(binding) {
+        buttonFilter.setOnClickListener { showPopupwindow(it) }
     }
 
     /**

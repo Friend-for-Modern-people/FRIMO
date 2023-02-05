@@ -29,18 +29,13 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
      */
     private fun setClickListener() = with(binding) {
 
-        // Set back button click listener
-        buttonBack.setOnClickListener {
-            finish()
-        }
+        buttonBack.setOnClickListener { finish() }
 
-        // Set layout(notice 1) click listener
         layoutNotice1.setOnClickListener {
-
-            if (layoutNotice1Detail.isShown) { // If the layout is showing
+            if (layoutNotice1Detail.isShown) {
                 layoutNotice1Detail.visibility = View.GONE
                 buttonDetail1.animate().rotation(0f).setDuration(100).start()
-            } else { // If the layout isn't showing
+            } else {
                 buttonDetail1.animate().rotation(90f).setDuration(100).start()
                 layoutNotice1Detail.visibility = View.VISIBLE
 
@@ -48,13 +43,11 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
             }
         }
 
-        // Set layout(notice 2) click listener
         layoutNotice2.setOnClickListener {
-
-            if (layoutNotice2Detail.isShown) { // If the layout is showing
+            if (layoutNotice2Detail.isShown) {
                 layoutNotice2Detail.visibility = View.GONE
                 buttonDetail2.animate().rotation(0f).setDuration(100).start()
-            } else { // If the layout isn't showing
+            } else {
                 layoutNotice2Detail.visibility = View.VISIBLE
                 buttonDetail2.animate().rotation(90f).setDuration(100).start()
 

@@ -14,18 +14,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
      * @author - namsh1125
      */
     override fun initAfterBinding() {
-        setScreen()
+        setFragment(R.id.frame, HomeFragment()) // 최초 실행시 보이는 fragment 설정
         initNavigationBar()
-    }
-
-    /**
-     * @description - 최초 실행시 보이는 fragment 설정
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setScreen() {
-        supportFragmentManager.beginTransaction().replace(R.id.frame, HomeFragment()).commit()
     }
 
     /**
@@ -43,15 +33,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                 when (item.itemId) {
                     R.id.home -> { // Home
-                        changeFragment(R.id.frame, HomeFragment())
+                        setFragment(R.id.frame, HomeFragment())
                         menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_select) // 아이콘 변경
                     }
                     R.id.diary -> { // Diary
-                        changeFragment(R.id.frame, DiaryFragment())
+                        setFragment(R.id.frame, DiaryFragment())
                         menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_select) // 아이콘 변경
                     }
                     else -> { // Setting
-                        changeFragment(R.id.frame, SettingFragment())
+                        setFragment(R.id.frame, SettingFragment())
                         menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_select) // 아이콘 변경
                     }
                 }
@@ -68,7 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     * @return - None
     * @author - namsh1125
     */
-    private fun changeFragment(containerViewId: Int, fragment: Fragment) {
+    private fun setFragment(containerViewId: Int, fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(containerViewId, fragment).commit()
     }
 }

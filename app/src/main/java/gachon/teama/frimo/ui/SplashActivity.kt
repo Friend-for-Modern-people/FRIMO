@@ -28,7 +28,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         // Delay screen
         Handler(Looper.getMainLooper()).postDelayed({
 
-            // If the user has set a nickname, go to the main page, otherwise go to the login page
             if (database.userDao().getNickname() != null) {
                 startNextActivity(MainActivity::class.java)
             } else {

@@ -17,6 +17,8 @@ import gachon.teama.frimo.databinding.ActivityFilteredDetailDiaryBinding
 
 class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBinding>(ActivityFilteredDetailDiaryBinding::inflate) {
 
+    private val diary by lazy { intent.getSerializableExtra("filteredDiary") as List<Diary> }
+
     /**
      * @description - Binding 이후
      * @param - None
@@ -35,9 +37,7 @@ class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBind
      * @author - namsh1125
      */
     private fun setClickListener() = with(binding) {
-        buttonBack.setOnClickListener { // When back button clicked
-            finish()
-        }
+        buttonBack.setOnClickListener { finish() }
     }
 
     /**
@@ -49,7 +49,7 @@ class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBind
     private fun setScreen() = with(binding) {
         setRecyclerview()
         textviewFilter.text = intent.getStringExtra("filter") // 어떤 필터 조건이 걸렸는지 설정
-        textviewDiaryCount.text = getString(R.string.set_diary_count, getDiary().size) // Filtering된 Diary 갯수 설정
+        textviewDiaryCount.text = getString(R.string.set_diary_count, diary.size) // Filtering된 Diary 갯수 설정
     }
 
     /**
@@ -61,17 +61,6 @@ class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBind
      */
     private fun setRecyclerview() = with(binding) {
         recyclerviewFilteredDiary.setHasFixedSize(true)
-        recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(getDiary())
+        recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diary)
     }
-
-    /**
-     * @description - 이전 화면에서 전달 받은 filtering된 diary 가져오기
-     * @param - None
-     * @return - diary(ArrayList<Diary>) : 이전 화면에서 전달 받은 filtering된 diary
-     * @author - namsh1125
-     */
-    private fun getDiary(): List<Diary> {
-        return intent.getSerializableExtra("filteredDiary") as List<Diary>
-    }
-
 }

@@ -61,27 +61,18 @@ class SettingFragment : Fragment() {
      * @author - namsh1125
      */
     private fun setClickListener() = with(binding) {
-
-        // Set change nickname button click listener
         buttonChangeNickname.setOnClickListener {
             startActivity(Intent(requireContext(), ChangeNicknameActivity::class.java))
         }
-
-        // Set notice layout click listener
         layoutNotice.setOnClickListener {
             startActivity(Intent(requireContext(), NoticeActivity::class.java))
         }
-
-        // Set guide layout click listener
         layoutGuide.setOnClickListener {
             startActivity(Intent(requireContext(), GuideActivity::class.java))
         }
-
-        // Set logout button click listener
         buttonLogout.setOnClickListener {
             showPopupwindow(it)
         }
-
     }
 
     /**

@@ -36,20 +36,14 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      */
     private fun setClickListener() = with(binding) {
 
-        // Set back button click listener
-        buttonBack.setOnClickListener {
-            finish()
-        }
+        buttonBack.setOnClickListener { finish() }
 
-        // Set like button click listener
         layoutLikeButton.setOnClickListener {
-
             friend.like = !friend.like // Update like
             setLike() // Update screen
             database.friendDao().updateFriendLike(id, friend.like) // Update DB
         }
 
-        // Set start button click listener
         buttonChatStart.setOnClickListener {
 
             // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
@@ -90,7 +84,11 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
      * @author - namsh1125
      */
     private fun setLike() = with(binding) {
-        val backgroundColor = if (friend.like) R.color.like else R.color.unlike
+        val backgroundColor = if (friend.like) {
+            R.color.like
+        } else {
+            R.color.unlike
+        }
         imageButtonLike.background.setTint(ContextCompat.getColor(this@SetCharacterActivity, backgroundColor))
     }
 

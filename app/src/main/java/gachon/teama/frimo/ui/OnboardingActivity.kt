@@ -24,9 +24,9 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
      * @return - None
      * @author - namsh1125
      */
-    private fun setScreen() {
-        binding.viewpager.adapter = OnboardingFragmentAdapter(this)
-        binding.dotsIndicator.attachTo(binding.viewpager)
+    private fun setScreen() = with(binding) {
+        viewpager.adapter = OnboardingFragmentAdapter(this@OnboardingActivity)
+        dotsIndicator.attachTo(viewpager)
     }
 
     /**

@@ -23,6 +23,9 @@ class HomeFragment : Fragment() {
     // Database
     private val database by lazy { AppDatabase.getInstance(requireContext())!! }
 
+    // Friends
+    private val friends by lazy { database.friendDao().getFriendList() as ArrayList }
+
     /**
      * @description - 생명주기 onCreateView
      * @param - inflater(LayoutInflater)
@@ -54,81 +57,63 @@ class HomeFragment : Fragment() {
      * @return - None
      * @author - namsh1125
      */
-    private fun setClickListener() {
+    private fun setClickListener() = with(binding) {
 
-        binding.buttonMyBestFriend.setOnClickListener {
+        buttonMyBestFriend.setOnClickListener {
             startActivity(Intent(requireContext(), MyBestFriendActivity::class.java))
         }
 
-        binding.layoutRecentlyTalkFriend.setOnClickListener {
+        layoutRecentlyTalkFriend.setOnClickListener {
             val intent = Intent(requireContext(), SetCharacterActivity::class.java)
             intent.putExtra("id", database.userDao().getRecentlyChatFriendId())
             startActivity(intent)
         }
 
-        with(binding) {
-
-            // Set text(차분) click listener
-            binding.textviewTheme1.setOnClickListener {
-
-                textviewFriendCount.text = getFriend("차분").size.toString()
-                textviewFriendTag.text = "차분한"
-                recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
-
-                // 테두리 변경
-                clearFriendThemeBackground()
-                textviewTheme1.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
-                textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
-            }
-
-            // Set text(친숙함) click listener
-            binding.textviewTheme2.setOnClickListener {
-
-                textviewFriendCount.text = getFriend("친숙함").size.toString()
-                textviewFriendTag.text = "친숙한"
-                recyclerviewFriend.adapter = FriendsAdapter(getFriend("친숙함"))
-
-                // 테두리 변경
-                clearFriendThemeBackground()
-                textviewTheme2.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
-                textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
-            }
-
-            // Set text(따뜻함) click listener
-            binding.textviewTheme3.setOnClickListener {
-
-                textviewFriendCount.text = getFriend("따뜻함").size.toString()
-                textviewFriendTag.text = "따뜻한"
-                recyclerviewFriend.adapter = FriendsAdapter(getFriend("따뜻함"))
-
-                // 테두리 변경
-                clearFriendThemeBackground()
-                textviewTheme3.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
-                textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
-            }
-
-            // Set text(존경) click listener
-            binding.textviewTheme4.setOnClickListener {
-
-                textviewFriendCount.text = getFriend("존경").size.toString()
-                textviewFriendTag.text = "존경하는"
-                recyclerviewFriend.adapter = FriendsAdapter(getFriend("존경"))
-
-                // 테두리 변경
-                clearFriendThemeBackground()
-                textviewTheme4.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
-                textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+        val themeClickListener = View.OnClickListener {
+            when(it.id) {
+                R.id.textview_theme1 -> {
+                    resetFriendTheme("차분", "차분한")
+                    textviewTheme1.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
+                    textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+                }
+                R.id.textview_theme2 -> {
+                    resetFriendTheme("친숙함", "친숙한")
+                    textviewTheme2.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
+                    textviewTheme2.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+                }
+                R.id.textview_theme3 -> {
+                    resetFriendTheme("따뜻함", "따뜻한")
+                    textviewTheme3.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
+                    textviewTheme3.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+                }
+                R.id.textview_theme4 -> {
+                    resetFriendTheme("존경", "존경하는")
+                    textviewTheme4.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_border_fac883, null)
+                    textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.skin))
+                }
             }
         }
+
+        textviewTheme1.setOnClickListener(themeClickListener)
+        textviewTheme2.setOnClickListener(themeClickListener)
+        textviewTheme3.setOnClickListener(themeClickListener)
+        textviewTheme4.setOnClickListener(themeClickListener)
     }
 
     /**
-     * @description - 친구 테마 배경 초기화
+     * @description - 친구 테마 초기화
      * @param - None
      * @return - None
      * @author - namsh1125
      */
-    private fun clearFriendThemeBackground() = with(binding) {
+    private fun resetFriendTheme(properties: String, tag: String) = with(binding) {
+
+        // 클릭된 친구 테마에 맞게 화면 설정
+        textviewFriendCount.text = getFriend(properties).size.toString()
+        textviewFriendTag.text = tag
+        recyclerviewFriend.adapter = FriendsAdapter(getFriend(properties))
+
+        // 친구 테마 배경 초기화
         textviewTheme1.background = null
         textviewTheme1.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
         textviewTheme2.background = null
@@ -141,38 +126,19 @@ class HomeFragment : Fragment() {
 
     /**
      * @description - Set recyclerview
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setRecyclerview() {
-        setRecommendFriendRecyclerview()
-        setFriendRecyclerview()
-    }
-
-    /**
-     * @description - Set recommend friend recyclerview
      * @see gachon.teama.frimo.adapter.RecommendFriendsAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setRecommendFriendRecyclerview() = with(binding) {
-
-        val friends = database.friendDao().getFriendList() as ArrayList
-
-        recyclerviewRecommendFriend.setHasFixedSize(true)
-        recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(friends)
-    }
-
-    /**
-     * @description - Set friend recyclerview
      * @see gachon.teama.frimo.adapter.FriendsAdapter
      * @param - None
      * @return - None
      * @author - namsh1125
      */
-    private fun setFriendRecyclerview() = with(binding) {
+    private fun setRecyclerview() = with(binding) {
+
+        // recommend friend recyclerview
+        recyclerviewRecommendFriend.setHasFixedSize(true)
+        recyclerviewRecommendFriend.adapter = RecommendFriendsAdapter(friends)
+
+        // friend recyclerview
         recyclerviewFriend.setHasFixedSize(true)
         recyclerviewFriend.adapter = FriendsAdapter(getFriend("차분"))
     }
@@ -205,8 +171,6 @@ class HomeFragment : Fragment() {
      * @author - namsh1125
      */
     private fun getFriend(properties: String): List<Friend> {
-        return database.friendDao().getFriendList().filter {
-            it.tag.contains(properties)
-        }
+        return friends.filter { it.tag.contains(properties) }
     }
 }

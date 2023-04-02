@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import gachon.teama.frimo.data.remote.DiaryKeywordsAPI.AddWordRequest
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object Server {
 
@@ -24,7 +25,7 @@ object Server {
 
         val chatRetrofit = Retrofit.Builder()
             .baseUrl(chatUrl)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(ScalarsConverterFactory.create())
             .client(client)
             .build()
 

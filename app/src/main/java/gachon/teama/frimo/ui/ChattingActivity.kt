@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -16,7 +17,10 @@ import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Chat
+import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.ActivityChattingBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -235,13 +239,21 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         // 입력창을 눌렀을때 팝업과 키보드가 같이 뜨는 현상 방지
         edittextChat.setOnClickListener { layoutSendData.visibility = View.GONE }
 
-        // Send message
+        // 메세지를 보내고, 그에 대한 답장을 realtimeDB에 저장
         buttonSend.setOnClickListener {
-            val chat = Chat(who = "Me", message = edittextChat.text.toString(), time = Date())
+            val message = edittextChat.text.toString()
+            val chat = Chat(who = "Me", message = message, time = Date())
             myRef.child(userName).child("chat").push().setValue(chat)
                 .addOnCompleteListener {
                     edittextChat.setText("")
                 }
+
+            CoroutineScope(Dispatchers.Main).launch {
+                val response = Server.getMessage(message)
+                Log.d("chat", response)
+                val chatResponse = Chat(who = "FRIMO", message = response, time = Date())
+                myRef.child(userName).child("chat").push().setValue(chatResponse)
+            }
         }
 
         // 기획 변경으로 다음 버젼에서 출시

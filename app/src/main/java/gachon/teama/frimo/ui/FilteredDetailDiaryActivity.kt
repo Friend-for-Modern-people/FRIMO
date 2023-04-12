@@ -1,6 +1,5 @@
 package gachon.teama.frimo.ui
 
-import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.remote.Diary
@@ -19,48 +18,24 @@ class FilteredDetailDiaryActivity : BaseActivity<ActivityFilteredDetailDiaryBind
 
     private val diary by lazy { intent.getSerializableExtra("filteredDiary") as List<Diary> }
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun initAfterBinding() {
+        setRecyclerview()
         setScreen()
         setClickListener()
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setClickListener() = with(binding) {
-        buttonBack.setOnClickListener { finish() }
-    }
-
-    /**
-     * @description - Set screen
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setScreen() = with(binding) {
-        setRecyclerview()
-        textviewFilter.text = intent.getStringExtra("filter") // 어떤 필터 조건이 걸렸는지 설정
-        textviewDiaryCount.text = getString(R.string.set_diary_count, diary.size) // Filtering된 Diary 갯수 설정
-    }
-
-    /**
-     * @description - Set recyclerview
-     * @see gachon.teama.frimo.adapter.FilteredDiaryAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
+    // @see gachon.teama.frimo.adapter.FilteredDiaryAdapter
     private fun setRecyclerview() = with(binding) {
         recyclerviewFilteredDiary.setHasFixedSize(true)
         recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diary)
+    }
+
+    private fun setScreen() = with(binding) {
+        textviewFilter.text = intent.getStringExtra("filter") // 어떤 필터 조건이 걸렸는지 설정
+        textviewDiaryCount.text = "${diary.size}개" // Filtering된 Diary 갯수 설정
+    }
+
+    private fun setClickListener() {
+        binding.buttonBack.setOnClickListener { finish() }
     }
 }

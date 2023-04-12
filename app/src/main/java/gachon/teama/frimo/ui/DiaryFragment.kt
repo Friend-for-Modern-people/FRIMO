@@ -20,73 +20,38 @@ import gachon.teama.frimo.data.remote.Server
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DiaryFragment : Fragment() {
 
-    // Binding
     private val binding by lazy { FragmentDiaryBinding.inflate(layoutInflater) }
+    private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
-
-    /**
-     * @description - 생명주기 onCreateView
-     * @param - inflater(LayoutInflater)
-     * @param - container(ViewGroup)
-     * @param - savedInstanceState(Bundle)
-     * @return - v(View)
-     * @author - namsh1125
-     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setScreen()
-        setClickListener()
-        return binding.root // Inflate the layout for this fragment
+        setListeners()
+        return binding.root
     }
 
-    /**
-     * @description - 유저에 맞는 화면 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setScreen() {
-        setNickname()
-        setDiaryCount()
-        changeFragment(R.id.frame, DiaryFilteredByYearFragment()) // 최초 실행시 보이는 fragment 셋팅
-    }
-
-    /**
-     * @description - 화면에 user nickname 설정하기
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setNickname() = with(binding) {
-        textviewNickname1.text = database.userDao().getNickname()
-        textviewNickname2.text = database.userDao().getNickname()
-    }
-
-    /**
-     * @description - 화면에 유저가 작성한 diary의 갯수 설정하기
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setDiaryCount() = with(binding) {
         CoroutineScope(Dispatchers.Main).launch {
-            val count = Server.getDiaryCount(userId = database.userDao().getUserId())
-            textviewDiaryCount.text = count.toString()
+            // Set nickname
+            binding.textviewNickname1.text = database.userDao().getNickname()
+            binding.textviewNickname2.text = database.userDao().getNickname()
+
+            // Set diary count
+            val count = withContext(Dispatchers.IO) {
+                Server.getDiaryCount(userId = database.userDao().getUserId())
+            }
+            binding.textviewDiaryCount.text = count.toString()
+
+            // year로 필터링된 fragment 띄우기
+            changeFragment(R.id.frame, DiaryFilteredByYearFragment())
         }
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setClickListener() = with(binding) {
-        buttonFilter.setOnClickListener { showPopupwindow(it) }
+    private fun setListeners() {
+        binding.buttonFilter.setOnClickListener { showPopupwindow(it) }
     }
 
     /**
@@ -96,7 +61,6 @@ class DiaryFragment : Fragment() {
      * @author - namsh1125
      */
     private fun showPopupwindow(v: View) {
-
         // 클릭시 팝업 윈도우 생성
         val popupWindow = PopupWindow(v)
         val inflater = context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -110,8 +74,6 @@ class DiaryFragment : Fragment() {
         // popup window 이외에도 터치되게 (터치시 팝업 닫기 위한 코드)
         popupWindow.isOutsideTouchable = true
         popupWindow.setBackgroundDrawable(BitmapDrawable())
-
-        // popup window 보여주기
         popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0)
 
         // Set radiobutton click listener

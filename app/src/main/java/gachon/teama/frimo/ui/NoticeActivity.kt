@@ -11,32 +11,19 @@ import gachon.teama.frimo.databinding.ActivityNoticeBinding
 
 class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding::inflate) {
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun initAfterBinding() {
         setClickListener()
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setClickListener() = with(binding) {
-
         buttonBack.setOnClickListener { finish() }
 
         layoutNotice1.setOnClickListener {
             if (layoutNotice1Detail.isShown) {
                 layoutNotice1Detail.visibility = View.GONE
-                buttonDetail1.animate().rotation(0f).setDuration(100).start()
+                setButtonRotation(buttonDetail1, 0f)
             } else {
-                buttonDetail1.animate().rotation(90f).setDuration(100).start()
+                setButtonRotation(buttonDetail1, 90f)
                 layoutNotice1Detail.visibility = View.VISIBLE
 
                 // Todo: 서버에서 앱 기능 개선 관련 공지 받아오기
@@ -46,13 +33,17 @@ class NoticeActivity : BaseActivity<ActivityNoticeBinding>(ActivityNoticeBinding
         layoutNotice2.setOnClickListener {
             if (layoutNotice2Detail.isShown) {
                 layoutNotice2Detail.visibility = View.GONE
-                buttonDetail2.animate().rotation(0f).setDuration(100).start()
+                setButtonRotation(buttonDetail2, 0f)
             } else {
                 layoutNotice2Detail.visibility = View.VISIBLE
-                buttonDetail2.animate().rotation(90f).setDuration(100).start()
+                setButtonRotation(buttonDetail2, 90f)
 
                 // Todo: 서버에서 일기장 생성 관련 이슈 관련 공지 받아오기
             }
         }
+    }
+
+    private fun setButtonRotation(view: View, rotation: Float) {
+        view.animate().rotation(rotation).setDuration(100).start()
     }
 }

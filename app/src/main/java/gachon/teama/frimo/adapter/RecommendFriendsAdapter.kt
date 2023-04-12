@@ -2,44 +2,40 @@ package gachon.teama.frimo.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.Friend
+import gachon.teama.frimo.databinding.ViewFriendsRecommendBinding
 import gachon.teama.frimo.ui.SetCharacterActivity
 
 class RecommendFriendsAdapter(private val dataSet: ArrayList<Friend>) : RecyclerView.Adapter<RecommendFriendsAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        val textView: TextView
-        val imageView: ImageView
+    inner class ViewHolder(private val binding: ViewFriendsRecommendBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            textView = view.findViewById(R.id.textview_recommend_friend)
-            imageView = view.findViewById(R.id.imageView_recommend_friend)
-            imageView.clipToOutline = true // 이미지를 배경에 맞게 자르기
+            binding.imageViewRecommendFriend.clipToOutline = true
 
             // View click listener
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 val intent = Intent(it.context, SetCharacterActivity::class.java)
-                intent.putExtra("id", adapterPosition + 1) // 0부터 시작하기 때문
+                intent.putExtra("id", adapterPosition + 1)
                 it.context.startActivity(intent)
             }
+        }
+
+        fun bind(friend: Friend) {
+            binding.textviewRecommendFriend.text = friend.name
+            binding.imageViewRecommendFriend.setImageResource(friend.img_recommendation)
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.view_friends_recommend, viewGroup, false)
-        return ViewHolder(view)
+        val binding = ViewFriendsRecommendBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.textView.text = dataSet[position].name
-        viewHolder.imageView.setImageResource(dataSet[position].img_recommendation)
+        viewHolder.bind(dataSet[position])
     }
 
     override fun getItemCount() = dataSet.size

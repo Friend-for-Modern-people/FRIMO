@@ -10,62 +10,32 @@ import java.time.LocalDate
 
 abstract class DiaryFragment : Fragment() {
 
-    /**
-     * @description - 현재 연도 받아오기
-     * @param - None
-     * @return - year(Int) : 현재 연도
-     * @author - namsh1125
-     */
+    // 현재 연도 받아오기
     fun getCurrentYear(): Int {
         return LocalDate.now().year
     }
 
-    /**
-     * @description - 현재 달 받아오기
-     * @param - None
-     * @return - year(Int) : 현재 달
-     * @author - namsh1125
-     */
+    // 현재 달 받아오기
     fun getCurrentMonth(): Int {
         return LocalDate.now().monthValue
     }
 
-    /**
-     * @description - 지난 연도 받아오기
-     * @param - None
-     * @return - year(Int) : 지난 연도
-     * @author - namsh1125
-     */
+    // 지난 연도 받아오기
     fun getLastYear(): Int {
         return getCurrentYear() - 1
     }
 
-    /**
-     * @description - 지난 달의 연도 받아오기
-     * @param - None
-     * @return - year(Int) : 지난 달의 연도
-     * @author - namsh1125
-     */
+    // 지난 달의 연도 받아오기
     fun getLastMonthYear(): Int {
-        return if (getCurrentMonth() - 1 == 0) {
-            getCurrentYear() - 1
-        } else {
-            getCurrentYear()
+        return when (getCurrentMonth()) {
+            1 -> getCurrentYear() - 1
+            else -> getCurrentYear()
         }
     }
 
-    /**
-     * @description - 지난 달 받아오기
-     * @param - None
-     * @return - year(Int) : 지난 달
-     * @author - namsh1125
-     */
+    // 지난 달 받아오기
     fun getLastMonth(): Int {
-        return if (getCurrentMonth() - 1 == 0) {
-            12
-        } else {
-            getCurrentMonth() - 1
-        }
+        return (getCurrentMonth() - 2 + 12) % 12 + 1
     }
 
     /**
@@ -74,7 +44,7 @@ abstract class DiaryFragment : Fragment() {
      * @author - namsh1125
      */
     inner class DiaryClickListener(id: Long) : View.OnClickListener {
-        val diaryId = id
+        private val diaryId = id
 
         override fun onClick(v: View?) {
             val intent = Intent(requireContext(), DiaryActivity::class.java)
@@ -89,9 +59,8 @@ abstract class DiaryFragment : Fragment() {
      * @param - diaries(ArrayList<Diary>) : 필터링된 일기
      * @author - namsh1125
      */
-    inner class DetailClickListener(filterString: String, diaries: List<Diary>) : View.OnClickListener {
-        val filter = filterString
-        val diaries = diaries
+    inner class DetailClickListener(filterString: String, private val diaries: List<Diary>) : View.OnClickListener {
+        private val filter = filterString
 
         override fun onClick(v: View?) {
             val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
@@ -102,5 +71,4 @@ abstract class DiaryFragment : Fragment() {
             startActivity(intent)
         }
     }
-
 }

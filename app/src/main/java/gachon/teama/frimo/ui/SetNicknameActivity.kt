@@ -10,14 +10,8 @@ import gachon.teama.frimo.databinding.ActivitySetNicknameBinding
 class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySetNicknameBinding::inflate) {
 
     // Database
-    private val database by lazy { AppDatabase.getInstance(this@SetNicknameActivity)!! }
+    private val database by lazy { AppDatabase.getInstance(this@SetNicknameActivity) }
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun initAfterBinding() {
         setEdittext()
         setClickListener()
@@ -43,17 +37,9 @@ class SetNicknameActivity : BaseActivity<ActivitySetNicknameBinding>(ActivitySet
         })
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setClickListener() = with(binding) {
+    private fun setClickListener() {
 
-        // Set next button click listener
-        buttonNext.setOnClickListener {
-
+        binding.buttonNext.setOnClickListener {
             val name: String = binding.edittextNickname.text.toString()
             val userId : Long = 1
 

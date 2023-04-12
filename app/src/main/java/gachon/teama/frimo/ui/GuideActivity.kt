@@ -11,54 +11,30 @@ import gachon.teama.frimo.databinding.ActivityGuideBinding
 
 class GuideActivity : BaseActivity<ActivityGuideBinding>(ActivityGuideBinding::inflate) {
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun initAfterBinding() {
         setClickListener()
     }
 
+    private fun setClickListener() {
+        setGuideClickListener(binding.layoutGuide1, binding.layoutGuide1Detail, binding.buttonDetail1)
+        setGuideClickListener(binding.layoutGuide2, binding.layoutGuide2Detail, binding.buttonDetail2)
+        setGuideClickListener(binding.layoutGuide3, binding.layoutGuide3Detail, binding.buttonDetail3)
+        binding.buttonBack.setOnClickListener { finish() }
+    }
+
     /**
-     * @description - Set click listener
-     * @param - None
+     * @description - Set guide click listener
+     * @param - guideLayout: View, guideDetailLayout: View, guideButton: View
      * @return - None
-     * @author - namsh1125
      */
-    private fun setClickListener() = with(binding) {
-
-        buttonBack.setOnClickListener { finish() }
-
-        layoutGuide1.setOnClickListener {
-
-            if (layoutGuide1Detail.isShown) { // If the layout is showing
-                layoutGuide1Detail.visibility = View.GONE
-                buttonDetail1.animate().rotation(0f).setDuration(100).start()
-            } else { // If the layout isn't showing
-                layoutGuide1Detail.visibility = View.VISIBLE
-                buttonDetail1.animate().rotation(90f).setDuration(100).start()
-            }
-        }
-
-        layoutGuide2.setOnClickListener {
-            if (layoutGuide2Detail.isShown) {
-                layoutGuide2Detail.visibility = View.GONE
-                buttonDetail2.animate().rotation(0f).setDuration(100).start()
-            } else { // If the layout isn't showing
-                layoutGuide2Detail.visibility = View.VISIBLE
-                buttonDetail2.animate().rotation(90f).setDuration(100).start()
-            }
-        }
-
-        layoutGuide3.setOnClickListener {
-            if (layoutGuide3Detail.isShown) {
-                layoutGuide3Detail.visibility = View.GONE
-                buttonDetail3.animate().rotation(0f).setDuration(100).start()
-            } else { // If the layout isn't showing
-                layoutGuide3Detail.visibility = View.VISIBLE
-                buttonDetail3.animate().rotation(90f).setDuration(100).start()
+    private fun setGuideClickListener(guideLayout: View, guideDetailLayout: View, guideButton: View) {
+        guideLayout.setOnClickListener {
+            if (guideDetailLayout.isShown) {
+                guideDetailLayout.visibility = View.GONE
+                guideButton.animate().rotation(0f).setDuration(100).start()
+            } else {
+                guideDetailLayout.visibility = View.VISIBLE
+                guideButton.animate().rotation(90f).setDuration(100).start()
             }
         }
     }

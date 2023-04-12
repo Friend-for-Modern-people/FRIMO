@@ -7,45 +7,23 @@ import gachon.teama.frimo.databinding.ActivityMyBestFriendBinding
 
 class MyBestFriendActivity : BaseActivity<ActivityMyBestFriendBinding>(ActivityMyBestFriendBinding::inflate) {
 
-    // 좋아요 누른 친구 리스트
-    private val likeFriend by lazy {
-        AppDatabase.getInstance(this)!!.friendDao().getFriendList().filter { it.like }
-    }
+    private val friendDao = AppDatabase.getInstance(this).friendDao()
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
+    // 좋아요 누른 친구 리스트
+    private val likeFriend by lazy { friendDao.getFriendList().filter { it.like } }
+
     override fun initAfterBinding() {
-        setScreen()
+        binding.textviewBestFriendCount.text = "${likeFriend.size}" // 좋아요 누른 친구 숫자 설정
+        setRecyclerview()
         setClickListener()
     }
 
-    /**
-     * @description - 화면 셋팅
-     * @see gachon.teama.frimo.adapter.FriendsAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setScreen() = with(binding) {
-        textviewBestFriendCount.text = likeFriend.size.toString() // 좋아요 누른 친구 숫자 설정
-
-        // Set RecyclerView
-        recyclerviewMyBestFriend.setHasFixedSize(true)
-        recyclerviewMyBestFriend.adapter = FriendsAdapter(likeFriend)
+    private fun setRecyclerview() {
+        binding.recyclerviewMyBestFriend.setHasFixedSize(true)
+        binding.recyclerviewMyBestFriend.adapter = FriendsAdapter(likeFriend)
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setClickListener() = with(binding) {
         buttonBack.setOnClickListener { finish() }
     }
-
 }

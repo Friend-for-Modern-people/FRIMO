@@ -7,58 +7,43 @@ import gachon.teama.frimo.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun initAfterBinding() {
-        setFragment(R.id.frame, HomeFragment()) // 최초 실행시 보이는 fragment 설정
+        setFragment(HomeFragment()) // 최초 실행시 보이는 fragment 설정
         initNavigationBar()
     }
 
-    /**
-     * @description - Navigation bar 설정
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun initNavigationBar() = with(binding) {
-        navigationbar.run {
-            setOnItemSelectedListener{ item ->
-                menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_unselect)
-                menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_unselect)
-                menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_unselect)
+    private fun initNavigationBar() = with(binding.navigationbar) {
+        setOnItemSelectedListener { item ->
+            // 모든 아이콘을 선택되지 않은 것으로 설정
+            menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_unselect)
+            menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_unselect)
+            menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_unselect)
 
-                when (item.itemId) {
-                    R.id.home -> { // Home
-                        setFragment(R.id.frame, HomeFragment())
-                        menu.findItem(R.id.home).setIcon(R.drawable.ic_menu_home_select) // 아이콘 변경
-                    }
-                    R.id.diary -> { // Diary
-                        setFragment(R.id.frame, DiaryFragment())
-                        menu.findItem(R.id.diary).setIcon(R.drawable.ic_menu_diary_select) // 아이콘 변경
-                    }
-                    else -> { // Setting
-                        setFragment(R.id.frame, SettingFragment())
-                        menu.findItem(R.id.setting).setIcon(R.drawable.ic_menu_setting_select) // 아이콘 변경
-                    }
-                }
-                true
+            // 선택된 아이템에 따라 fragment 전환 및 아이콘 변경
+            when (item.itemId) {
+                R.id.home -> setFragment(HomeFragment())
+                R.id.diary -> setFragment(DiaryFragment())
+                R.id.setting -> setFragment(SettingFragment())
             }
-            selectedItemId = R.id.home
+
+            // 선택된 아이템에 따라 아이콘 변경
+            menu.findItem(item.itemId).setIcon(getSelectedIcon(item.itemId))
+
+            true
         }
+        selectedItemId = R.id.home // 초기 선택 아이템
     }
 
-    /**
-    * @description - Fragment 전환
-    * @param - containerViewId(Int) : 띄워질 fragment의 id
-    * @param - fragment : 띄워질 fragment
-    * @return - None
-    * @author - namsh1125
-    */
-    private fun setFragment(containerViewId: Int, fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(containerViewId, fragment).commit()
+    private fun setFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.frame, fragment).commit()
+    }
+
+    private fun getSelectedIcon(itemId: Int): Int {
+        return when (itemId) {
+            R.id.home -> R.drawable.ic_menu_home_select
+            R.id.diary -> R.drawable.ic_menu_diary_select
+            R.id.setting -> R.drawable.ic_menu_setting_select
+            else -> R.drawable.ic_menu_home_unselect
+        }
     }
 }

@@ -21,42 +21,22 @@ class HomeFragment : Fragment() {
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
 
     // Database
-    private val database by lazy { AppDatabase.getInstance(requireContext())!! }
+    private val database by lazy { AppDatabase.getInstance(requireContext()) }
 
     // Friends
     private val friends by lazy { database.friendDao().getFriendList() as ArrayList }
 
-    /**
-     * @description - 생명주기 onCreateView
-     * @param - inflater(LayoutInflater)
-     * @param - container(ViewGroup)
-     * @param - savedInstanceState(Bundle)
-     * @return - v(View)
-     * @author - namsh1125
-     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setClickListener()
         setRecyclerview()
         return binding.root // Inflate the layout for this fragment
     }
 
-    /**
-     * @description - 생명주기 onResume
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun onResume() {
         super.onResume()
         setRecentlyTalkFriend()
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setClickListener() = with(binding) {
 
         buttonMyBestFriend.setOnClickListener {
@@ -124,14 +104,6 @@ class HomeFragment : Fragment() {
         textviewTheme4.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray5))
     }
 
-    /**
-     * @description - Set recyclerview
-     * @see gachon.teama.frimo.adapter.RecommendFriendsAdapter
-     * @see gachon.teama.frimo.adapter.FriendsAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setRecyclerview() = with(binding) {
 
         // recommend friend recyclerview

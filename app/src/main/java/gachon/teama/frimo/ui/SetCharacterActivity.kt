@@ -6,63 +6,37 @@ import androidx.core.content.ContextCompat
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
+import gachon.teama.frimo.data.local.Friend
 import gachon.teama.frimo.databinding.ActivitySetCharacterBinding
 
 class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivitySetCharacterBinding::inflate) {
 
-    // Database
-    private val database by lazy { AppDatabase.getInstance(this@SetCharacterActivity)!! }
+    private val database: AppDatabase by lazy { AppDatabase.getInstance(this@SetCharacterActivity) }
+    private val id: Int by lazy { intent.getIntExtra("id", 1) }
+    private val friend: Friend by lazy { database.friendDao().getFriend(id) }
 
-    // Friend
-    private val id by lazy { intent.getIntExtra("id", 1) }
-    private val friend by lazy { database.friendDao().getFriend(id) }
-
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     override fun initAfterBinding() {
         setScreen()
         setClickListener()
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setClickListener() = with(binding) {
-
+    private fun setClickListener() = binding.apply {
         buttonBack.setOnClickListener { finish() }
 
         layoutLikeButton.setOnClickListener {
-            friend.like = !friend.like // Update like
-            setLike() // Update screen
-            database.friendDao().updateFriendLike(id, friend.like) // Update DB
+            friend.like = !friend.like
+            setLike()
+            database.friendDao().updateFriendLike(id, friend.like)
         }
 
         buttonChatStart.setOnClickListener {
-
-            // Todo: 세팅된 캐릭터와 어떻게 채팅할지 고민해볼 것
-
-            // Start chatting activity
             val intent = Intent(this@SetCharacterActivity, ChattingActivity::class.java)
             intent.putExtra("id", id)
             startActivity(intent)
         }
     }
 
-    /**
-     * @description - 화면에 친구 정보 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setScreen() = with(binding) {
-
+    private fun setScreen() = binding.apply {
         setLike()
         imageviewFriendProfile.setImageDrawable(AppCompatResources.getDrawable(this@SetCharacterActivity, friend.img_profile))
         textviewFriendName.text = friend.name
@@ -77,19 +51,8 @@ class SetCharacterActivity : BaseActivity<ActivitySetCharacterBinding>(ActivityS
         textviewFriendPrefer.text = friend.prefer
     }
 
-    /**
-     * @description - 친구를 좋아하는지 여부에 따라 화면(하트) 색상 변경
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setLike() = with(binding) {
-        val backgroundColor = if (friend.like) {
-            R.color.like
-        } else {
-            R.color.unlike
-        }
+    private fun setLike() = binding.apply {
+        val backgroundColor = if (friend.like) R.color.like else R.color.unlike
         imageButtonLike.background.setTint(ContextCompat.getColor(this@SetCharacterActivity, backgroundColor))
     }
-
 }

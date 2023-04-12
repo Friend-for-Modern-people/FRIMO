@@ -8,9 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import gachon.teama.frimo.data.remote.DiaryKeywordsAPI.AddWordRequest
 
-object Server {
+object DiaryServer {
 
-    // Todo: 다이어리 서버 주소 바뀌었는지 확인
     private const val URL = "http://218.48.213.121:80/app/"
 
     private val client = OkHttpClient.Builder().build()

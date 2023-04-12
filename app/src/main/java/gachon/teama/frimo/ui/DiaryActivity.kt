@@ -20,7 +20,7 @@ import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.remote.Diary.Sentiment
 import gachon.teama.frimo.data.remote.DiaryKeywords
-import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.DiaryServer
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
 import kotlinx.coroutines.*
 
@@ -62,7 +62,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun setDiary() = with(binding) {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diary = Server.getDiaryById(diaryId)
+            val diary = DiaryServer.getDiaryById(diaryId)
 
             textviewDate.text = diary.createdString
             textviewDiaryTitle.text = diary.title
@@ -82,7 +82,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
     private fun setKeyword() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val keywords = Server.getFourWord(diaryId)
+            val keywords = DiaryServer.getFourWord(diaryId)
 
             if (keywords.size >= 1) {
                 binding.textviewKeyword1.text = getString(R.string.set_diary_keyword, keywords[0].word)
@@ -173,7 +173,7 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
 
         // (Popupwindow) reyclerview 설정 및 감정 갯수 설정
         CoroutineScope(Dispatchers.Main).launch {
-            val words = Server.getWord(diaryId)
+            val words = DiaryServer.getWord(diaryId)
 
             FlexboxLayoutManager(this@DiaryActivity).apply {
                 flexWrap = FlexWrap.WRAP

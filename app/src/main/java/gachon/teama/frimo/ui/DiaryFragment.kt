@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.databinding.FragmentDiaryBinding
-import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.DiaryServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,7 +41,7 @@ class DiaryFragment : Fragment() {
 
             // Set diary count
             val count = withContext(Dispatchers.IO) {
-                Server.getDiaryCount(userId = database.userDao().getUserId())
+                DiaryServer.getDiaryCount(userId = database.userDao().getUserId())
             }
             binding.textviewDiaryCount.text = count.toString()
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import gachon.teama.frimo.R
 import gachon.teama.frimo.base.DiaryFragment
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.DiaryServer
 import gachon.teama.frimo.data.remote.Diary.Sentiment
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredSentimentBinding
 import kotlinx.coroutines.CoroutineScope
@@ -59,7 +59,7 @@ class DiaryFilteredBySentimentFragment : DiaryFragment() {
     private fun setAnger() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Anger.value)
+            val diaries = DiaryServer.getDiaryBySentiment(userId, Sentiment.Anger.value)
 
             // Set layout
             binding.textviewDiaryAngerCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -98,7 +98,7 @@ class DiaryFilteredBySentimentFragment : DiaryFragment() {
     private fun setSadness() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Sadness.value)
+            val diaries = DiaryServer.getDiaryBySentiment(userId, Sentiment.Sadness.value)
 
             // Set layout
             binding.textviewDiarySadnessCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -137,7 +137,7 @@ class DiaryFilteredBySentimentFragment : DiaryFragment() {
     private fun setAnxiety() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Anxiety.value)
+            val diaries = DiaryServer.getDiaryBySentiment(userId, Sentiment.Anxiety.value)
 
             // Set layout
             binding.textviewDiaryAnxietyCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -176,7 +176,7 @@ class DiaryFilteredBySentimentFragment : DiaryFragment() {
     private fun setWound() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Wound.value)
+            val diaries = DiaryServer.getDiaryBySentiment(userId, Sentiment.Wound.value)
 
             // Set layout
             binding.textviewDiaryWoundCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -215,7 +215,7 @@ class DiaryFilteredBySentimentFragment : DiaryFragment() {
     private fun setEmbarrassment() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Embarrassment.value)
+            val diaries = DiaryServer.getDiaryBySentiment(userId, Sentiment.Embarrassment.value)
 
             // Set layout
             binding.textviewDiaryEmbarrassmentCount.text = getString(R.string.set_diary_count, diaries.size)
@@ -254,7 +254,7 @@ class DiaryFilteredBySentimentFragment : DiaryFragment() {
     private fun setPleasure() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryBySentiment(userId, Sentiment.Pleasure.value)
+            val diaries = DiaryServer.getDiaryBySentiment(userId, Sentiment.Pleasure.value)
 
             // Set layout
             binding.textviewDiaryPleasureCount.text = getString(R.string.set_diary_count, diaries.size)

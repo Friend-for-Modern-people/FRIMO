@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import gachon.teama.frimo.base.DiaryFragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.DiaryServer
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +58,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
         val month = getCurrentMonth()
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryByMonth(userId, year, month)
+            val diaries = DiaryServer.getDiaryByMonth(userId, year, month)
 
             // Set layout
             binding.textviewFilter1.text = getString(R.string.set_diary_year_and_month, year, month)
@@ -106,7 +106,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
         val month = getLastMonth()
 
         CoroutineScope(Dispatchers.Main).launch {
-            val diaries = Server.getDiaryByMonth(userId, year, month)
+            val diaries = DiaryServer.getDiaryByMonth(userId, year, month)
 
             // Set layout
             binding.textviewFilter2.text = getString(R.string.set_diary_year_and_month, year, month)

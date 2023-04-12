@@ -15,7 +15,7 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.DiaryServer
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
 import kotlinx.coroutines.*
 import gachon.teama.frimo.data.remote.Diary.SentimentDetail
@@ -33,7 +33,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
 
     private fun setRecyclerview() {
         lifecycleScope.launch(Dispatchers.Main) {
-            val words = Server.getWord(diaryId)
+            val words = DiaryServer.getWord(diaryId)
 
             FlexboxLayoutManager(this@AddWordActivity).apply {
                 flexWrap = FlexWrap.WRAP
@@ -90,7 +90,7 @@ class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBind
             )
 
             lifecycleScope.launch(Dispatchers.Main) {
-                if (Server.addWord(request)) {
+                if (DiaryServer.addWord(request)) {
                     popupWindow.dismiss()
                     finish()
                     Toast.makeText(this@AddWordActivity, "성공!", Toast.LENGTH_SHORT).show()

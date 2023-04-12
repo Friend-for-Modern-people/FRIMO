@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.Server
+import gachon.teama.frimo.data.remote.DiaryServer
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,7 @@ class DiaryFilteredByRecentFragment : Fragment() {
 
     private fun setRecyclerView() {
         scope.launch {
-            val diaries = Server.getDiary(userId)
+            val diaries = DiaryServer.getDiary(userId)
             binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diaries)
         }
     }

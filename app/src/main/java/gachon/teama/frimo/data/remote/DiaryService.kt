@@ -4,7 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface DiaryAPI {
+interface DiaryService {
 
     // 유저가 작성한 일기를 최신순으로 가져오는 API
     @GET("diary/{userPK}")

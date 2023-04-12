@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-object ChatServer {
+object ChattingServer {
     private const val chatUrl = "http://server.vivi108.com/"
 
     private val client = OkHttpClient.Builder().build()
@@ -16,7 +16,7 @@ object ChatServer {
         .client(client)
         .build()
 
-    private val chatApi: ChattingAPI = chatRetrofit.create(ChattingAPI::class.java)
+    private val chatApi: ChattingService = chatRetrofit.create(ChattingService::class.java)
 
     // ---------- Chat API ----------
 

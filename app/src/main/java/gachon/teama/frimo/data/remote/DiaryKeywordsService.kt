@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface DiaryKeywordsAPI {
+interface DiaryKeywordsService {
 
     // 사용자가 작성한 단어를 모두 받아오는 API
     @GET("tag/{diaryPK}")

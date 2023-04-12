@@ -17,7 +17,7 @@ import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Chat
-import gachon.teama.frimo.data.remote.ChatServer
+import gachon.teama.frimo.data.remote.ChattingServer
 import gachon.teama.frimo.databinding.ActivityChattingBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -249,7 +249,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 }
 
             CoroutineScope(Dispatchers.Main).launch {
-                val response = ChatServer.getMessage(message)
+                val response = ChattingServer.getMessage(message)
                 Log.d("chat", response)
                 val chatResponse = Chat(who = "FRIMO", message = response, time = Date())
                 myRef.child(userName).child("chat").push().setValue(chatResponse)

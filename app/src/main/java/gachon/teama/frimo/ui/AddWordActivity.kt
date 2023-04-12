@@ -19,7 +19,7 @@ import gachon.teama.frimo.data.remote.DiaryServer
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
 import kotlinx.coroutines.*
 import gachon.teama.frimo.data.remote.Diary.SentimentDetail
-import gachon.teama.frimo.data.remote.DiaryKeywordsAPI.AddWordRequest
+import gachon.teama.frimo.data.remote.DiaryKeywordsService.AddWordRequest
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
 

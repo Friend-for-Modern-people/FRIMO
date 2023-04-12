@@ -7,22 +7,14 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import gachon.teama.frimo.data.remote.DiaryKeywordsAPI.AddWordRequest
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object Server {
 
     // Todo: 다이어리 서버 주소 바뀌었는지 확인
-    private const val URL = "http://218.48.213.10:80/app/"
-    private const val chatUrl = "http://server.vivi108.com/"
+    private const val URL = "http://218.48.213.121:80/app/"
 
     private val client = OkHttpClient.Builder().build()
     private val gson = GsonBuilder().setLenient().create()
-
-    private val chatRetrofit = Retrofit.Builder()
-        .baseUrl(chatUrl)
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .client(client)
-        .build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(URL)
@@ -30,19 +22,8 @@ object Server {
         .client(client)
         .build()
 
-    private val chatApi: ChattingAPI = chatRetrofit.create(ChattingAPI::class.java)
     private val diaryAPI: DiaryAPI = retrofit.create(DiaryAPI::class.java)
     private val diaryKeywordsAPI: DiaryKeywordsAPI = retrofit.create(DiaryKeywordsAPI::class.java)
-
-    // ---------- Chat API ----------
-
-    // 유저가 chatbot에게 message를 보내면 그에 대한 응답을 받아옴
-    suspend fun getMessage(message: String): String = withContext(Dispatchers.IO) {
-        chatApi.getMessage(message).let { response ->
-            response.takeIf { it.isSuccessful }?.body()
-                ?: throw Exception(response.errorBody()?.charStream()?.readText())
-        }
-    }
 
     // ---------- Diary API ----------
 

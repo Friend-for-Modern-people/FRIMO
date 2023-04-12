@@ -11,40 +11,39 @@ import gachon.teama.frimo.data.remote.Server
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class DiaryFilteredByRecentFragment : Fragment() {
 
     // Binding
-    private val binding by lazy { FragmentDiaryFilteredRecentlyBinding.inflate(layoutInflater) }
+    private lateinit var binding: FragmentDiaryFilteredRecentlyBinding
 
     // User
     private val userId by lazy { AppDatabase.getInstance(requireContext())!!.userDao().getUserId() }
 
-    /**
-     * @description - 생명주기 onCreateView
-     * @param - inflater(LayoutInflater)
-     * @param - container(ViewGroup)
-     * @param - savedInstanceState(Bundle)
-     * @return - v(View)
-     * @author - namsh1125
-     */
+    // CoroutineScope
+    private val scope = CoroutineScope(Dispatchers.Main)
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        setRecyclerView()
+        binding = FragmentDiaryFilteredRecentlyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    /**
-     * @description - 사용자의 diary를 Recyclerview에 보여줌
-     * @see gachon.teama.frimo.adapter.FilteredDiaryAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
-    private fun setRecyclerView() = with(binding) {
-        CoroutineScope(Dispatchers.Main).launch {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setRecyclerView()
+    }
+
+    private fun setRecyclerView() {
+        scope.launch {
             val diaries = Server.getDiary(userId)
-            recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diaries)
+            binding.recyclerviewFilteredDiary.adapter = FilteredDiaryAdapter(diaries)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        scope.cancel()
     }
 }

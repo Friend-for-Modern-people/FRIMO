@@ -9,10 +9,7 @@ import retrofit2.http.Path
 
 interface ChattingAPI {
 
-    // 단어 추가하는 API
-//    @POST("chatting/{userPk}")
-//    fun chat(@Body word: Chatting): Call<String>
-
+    // 유저가 chatbot에게 message를 보내면 그에 대한 응답을 받아오는 API
     @GET("chatbot/{message}")
     suspend fun getMessage(@Path("message") message: String) : Response<String>
 }

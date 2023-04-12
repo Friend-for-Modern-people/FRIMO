@@ -20,7 +20,7 @@ class DiaryFilteredByMonthFragment : DiaryFragment() {
     private val binding by lazy { FragmentFilteredDiaryBinding.inflate(layoutInflater) }
 
     // User
-    private val userId by lazy { AppDatabase.getInstance(requireContext())!!.userDao().getUserId() }
+    private val userId by lazy { AppDatabase.getInstance(requireContext()).userDao().getUserId() }
 
     /**
      * @description - 생명주기 onCreateView

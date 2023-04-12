@@ -89,7 +89,7 @@ abstract class DiaryFragment : Fragment() {
      * @param - diaries(ArrayList<Diary>) : 필터링된 일기
      * @author - namsh1125
      */
-    inner class DetailClickListener(filterString: String, diaries: ArrayList<Diary>) : View.OnClickListener {
+    inner class DetailClickListener(filterString: String, diaries: List<Diary>) : View.OnClickListener {
         val filter = filterString
         val diaries = diaries
 
@@ -97,7 +97,7 @@ abstract class DiaryFragment : Fragment() {
             val intent = Intent(requireContext(), FilteredDetailDiaryActivity::class.java)
             intent.apply {
                 this.putExtra("filter", filter) // 어떤 필터가 걸려있는지 전달
-                this.putExtra("filteredDiary", diaries) // 필터링된 diary 전달
+                this.putExtra("filteredDiary", diaries as ArrayList) // 필터링된 diary 전달
             }
             startActivity(intent)
         }

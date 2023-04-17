@@ -17,12 +17,11 @@ import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Chat
+import gachon.teama.frimo.data.remote.ChatGpt
 import gachon.teama.frimo.data.remote.ChattingServer
 import gachon.teama.frimo.databinding.ActivityChattingBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -33,10 +32,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
     // Database
     private val myRef: DatabaseReference = FirebaseDatabase.getInstance().reference
-    private val database by lazy { AppDatabase.getInstance(this@ChattingActivity)!! }
+    private val database by lazy { AppDatabase.getInstance(this@ChattingActivity) }
 
     // Chatting
     private val userName by lazy { database.userDao().getNickname() }
+    private val friendId by lazy { intent.getIntExtra("id", 99) }
     private var chatList = mutableListOf<Chat>() // Chatting 내역
     private var mAdapter = ChatAdapter(chatList)
 
@@ -51,34 +51,34 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 //    private var DEFAULT_GALLERY_REQUEST_CODE = 1
 //    private var TAKE_PICTURE = 1
 
-    /**
-     * @description - Binding 이후
-     * @param - None
-     * @return - None
-     * @author - namsh1125, Hongsi-Taste
-     */
     override fun initAfterBinding() {
+        saveRecentChatInfo()
         initVariable()
         setDatabaseListener()
         setRecyclerview()
+        Log.d("test", chatList.toString())
         setClickListener()
         setSTTListener()
     }
 
-    /**
-     * @description - 변수 셋팅
-     * @param - None
-     * @return - None
-     * @author - namsh1125, Hongsi-Taste
-     */
+    private fun saveRecentChatInfo() {
+        // 최근 대화 날짜 저장
+        val now = LocalDate.now().format(DateTimeFormatter.ofPattern("yy.MM.dd")) // 현재 날짜
+        database.userDao().updateRecentlyChatDate(now)
+
+        // 최근 대화 친구 저장
+        database.userDao().updateRecentlyChatFriendId(friendId)
+    }
+
     private fun initVariable() {
 
         // STT init and language setting
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+        }
 
-        //get keyboard height
+        // Get keyboard height
         val view: View = binding.root
         var rootHeight = -1
         view.viewTreeObserver.addOnGlobalLayoutListener {
@@ -94,79 +94,35 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
     }
 
-    /**
-     * @description - DatabaseReference event listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setDatabaseListener() {
-
         myRef.child(userName).child("chat").addChildEventListener(object : ChildEventListener {
-
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-
-                val chat: Chat = dataSnapshot.getValue(Chat::class.java) ?: throw Error("load error")
-
-                mAdapter.addChat(chat) // add chat data in adapter
-                binding.recyclerviewChatting.scrollToPosition(chatList.size - 1) // Update chat window
+                dataSnapshot.getValue(Chat::class.java)?.let { chat ->
+                    mAdapter.addChat(chat) // add chat data in adapter
+                    binding.recyclerviewChatting.scrollToPosition(chatList.lastIndex) // Update chat window
+                } ?: throw Error("load error")
             }
 
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) { }
 
-            }
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) { }
 
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) { }
 
-            }
-
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-
+            override fun onCancelled(databaseError: DatabaseError) { }
         })
 
     }
 
-    /**
-     * @description - Set recyclerview
-     * @see gachon.teama.frimo.adapter.ChatAdapter
-     * @param - None
-     * @return - None
-     * @author - namsh1125
-     */
     private fun setRecyclerview() = with(binding) {
         recyclerviewChatting.setHasFixedSize(true)
         recyclerviewChatting.adapter = mAdapter
     }
 
-    /**
-     * @description - Set click listener
-     * @param - None
-     * @return - None
-     * @author - namsh1125, Hongsi-Taste
-     */
     private fun setClickListener() = with(binding) {
 
-        // Set back button click listener
-        buttonBack.setOnClickListener {
+        buttonBack.setOnClickListener { finish() }
 
-            // 최근 대화 날짜 저장
-            val now = LocalDate.now().format(DateTimeFormatter.ofPattern("yy.MM.dd")) // 현재 날짜
-            database.userDao().updateRecentlyChatDate(now)
-
-            // 최근 대화 친구 저장
-            val recentlyTalkFriendId = intent.getIntExtra("id", 99)
-            database.userDao().updateRecentlyChatFriendId(recentlyTalkFriendId)
-
-            finish()
-        }
-
-        // Set find button click listener (basic layout에서 돋보기 버튼)
         buttonFind.setOnClickListener {
             layoutBasic.visibility = View.GONE
             layoutSearch.visibility = View.VISIBLE
@@ -181,7 +137,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
             var position = -1
             var findFlag = false
-            for (i in chatList.size downTo  0) {
+            for (i in chatList.size downTo 0) {
                 if (chatList[i].message.contains(edittextSearch.text.toString())) {
                     position = i
                     findFlag = true
@@ -189,7 +145,7 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 }
             }
 
-            if(findFlag) {
+            if (findFlag) {
                 val smoothScroller: RecyclerView.SmoothScroller by lazy {
                     object : LinearSmoothScroller(this@ChattingActivity) {
                         override fun getVerticalSnapPreference() = SNAP_TO_START
@@ -211,7 +167,6 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             hideKeyboard(it)
         }
 
-        // Set '+' button click listener
         buttonPlus.setOnClickListener {
 
             layoutSendData.setHeight(keyboardHeight)
@@ -242,17 +197,27 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         // 메세지를 보내고, 그에 대한 답장을 realtimeDB에 저장
         buttonSend.setOnClickListener {
             val message = edittextChat.text.toString()
-            val chat = Chat(who = "Me", message = message, time = Date())
-            myRef.child(userName).child("chat").push().setValue(chat)
-                .addOnCompleteListener {
+            Log.d("message", message)
+
+            // ChattingServer와 ChatGpt를 이용하여 응답 메세지를 받아옴
+            CoroutineScope(Dispatchers.IO).launch {
+                val chattingServerResponse = ChattingServer.getMessage(message)
+                Log.d("Chatting server response", chattingServerResponse)
+
+                val response = ChatGpt.getChangedSentence(chattingServerResponse, friendId)
+//                val response = ChatGpt.getChangedSentence("저녁을 추천해드릴까요?", friendId)
+                Log.d("ChatGpt response", response)
+
+                // 받아온 응답 메세지와 메세지를 firebase에 저장
+                val chat = Chat(who = "Me", message = message, time = Date())
+                myRef.child(userName).child("chat").push().setValue(chat).await()
+
+                val chatResponse = Chat(who = "FRIMO", message = response, time = Date())
+                myRef.child(userName).child("chat").push().setValue(chatResponse).await()
+
+                withContext(Dispatchers.Main) {
                     edittextChat.setText("")
                 }
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val response = ChattingServer.getMessage(message)
-                Log.d("chat", response)
-                val chatResponse = Chat(who = "FRIMO", message = response, time = Date())
-                myRef.child(userName).child("chat").push().setValue(chatResponse)
             }
         }
 
@@ -272,7 +237,6 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
             showToast("추후 업데이트 예정입니다 :)")
         }
 
-        // Set voice button click listener
         buttonVoice.setOnClickListener {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
             speechRecognizer.setRecognitionListener(recognitionListener)
@@ -280,35 +244,19 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
         }
     }
 
-    /**
-     * @description - STT listener
-     * @param - None
-     * @return - None
-     * @author - Hongsi-Taste
-     */
     private fun setSTTListener() {
-
         recognitionListener = object : RecognitionListener {
-
             override fun onReadyForSpeech(params: Bundle?) {
                 Toast.makeText(applicationContext, "Recording start", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onBeginningOfSpeech() {
+            override fun onBeginningOfSpeech() { }
 
-            }
+            override fun onRmsChanged(rmsdB: Float) { }
 
-            override fun onRmsChanged(rmsdB: Float) {
+            override fun onBufferReceived(buffer: ByteArray?) { }
 
-            }
-
-            override fun onBufferReceived(buffer: ByteArray?) {
-
-            }
-
-            override fun onEndOfSpeech() {
-
-            }
+            override fun onEndOfSpeech() { }
 
             override fun onError(error: Int) {
                 val message = when (error) {
@@ -326,9 +274,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
             }
 
-            //STT 결과를 텍스트로 입력창에 출력
+            // STT 결과를 텍스트로 입력창에 출력
             override fun onResults(results: Bundle?) {
-
                 val matches: ArrayList<String>? = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 if (matches != null) {
                     for (i in 0 until matches.size) {
@@ -338,16 +285,10 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
                 }
             }
 
-            override fun onPartialResults(partialResults: Bundle?) {
+            override fun onPartialResults(partialResults: Bundle?) { }
 
-            }
-
-            override fun onEvent(eventType: Int, params: Bundle?) {
-
-            }
-
+            override fun onEvent(eventType: Int, params: Bundle?) { }
         }
-
     }
 
     /**
@@ -357,8 +298,8 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
      * @author - Hongsi-Taste
      */
     private fun View.setHeight(value: Int) {
-
         val lp = layoutParams
+
         lp?.let {
             lp.height = value
             layoutParams = lp

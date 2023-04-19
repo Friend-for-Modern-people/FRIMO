@@ -10,7 +10,7 @@ import gachon.teama.frimo.data.remote.DiaryKeywordsService.AddWordRequest
 
 object DiaryServer {
 
-    private const val URL = "http://218.48.213.121:80/app/"
+    private const val URL = "http://spring.vivi108.com/app/"
 
     private val client = OkHttpClient.Builder().build()
     private val gson = GsonBuilder().setLenient().create()

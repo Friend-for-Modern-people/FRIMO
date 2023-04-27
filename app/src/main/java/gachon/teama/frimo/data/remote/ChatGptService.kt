@@ -1,41 +1,36 @@
 package gachon.teama.frimo.data.remote
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ChatGptService {
 
-    // ChatGpt에게 요청하면 그에 대한 응답을 받는 API
+    // (다빈치 모델) ChatGpt에게 요청하면 그에 대한 응답을 받는 API
+    @Headers(
+        "Content-Type: application/json",
+        "Authorization: Bearer ${ChatGptDavinci.apiKey}"
+    )
     @POST("https://api.openai.com/v1/engines/davinci/completions")
     suspend fun getCompletion(
-        @Body request: ChatGptRequest,
-        @Header("Content-Type") contentType: String = "application/json",
-        @Header("Authorization") authorization: String
-    ): ChatGptResponse
+        @Body request: DavinciRequest,
+    ): DavinciResponse
 
-    data class ChatGptRequest(
+    data class DavinciRequest(
         @SerializedName("prompt")
         val prompt: String,
         @SerializedName("max_tokens")
         val maxTokens: Int = 200
     )
 
-    data class ChatGptResponse(
-        @SerializedName("choices")
-        val choices: List<Choice>
+    data class DavinciResponse(
+        @SerializedName("choices") val choices: List<DavinciChoice>
     )
 
-    data class Choice(
-        @SerializedName("text")
-        val text: String,
-        @SerializedName("index")
-        val index: Int,
-        @SerializedName("logprobs")
-        val logProbs: Any?,
-        @SerializedName("finish_reason")
-        val finishReason: String
+    data class DavinciChoice(
+        @SerializedName("text") val text: String,
+        @SerializedName("index") val index: Int,
+        @SerializedName("logprobs") val logProbs: Any?,
+        @SerializedName("finish_reason") val finishReason: String
     )
 
 }

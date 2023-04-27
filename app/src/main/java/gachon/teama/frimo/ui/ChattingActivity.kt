@@ -17,7 +17,7 @@ import gachon.teama.frimo.adapter.ChatAdapter
 import gachon.teama.frimo.base.BaseActivity
 import gachon.teama.frimo.data.local.AppDatabase
 import gachon.teama.frimo.data.remote.Chat
-import gachon.teama.frimo.data.remote.ChatGpt
+import gachon.teama.frimo.data.remote.ChatGptDavinci
 import gachon.teama.frimo.data.remote.ChattingServer
 import gachon.teama.frimo.databinding.ActivityChattingBinding
 import kotlinx.coroutines.*
@@ -201,11 +201,11 @@ class ChattingActivity : BaseActivity<ActivityChattingBinding>(ActivityChattingB
 
             // ChattingServer와 ChatGpt를 이용하여 응답 메세지를 받아옴
             CoroutineScope(Dispatchers.IO).launch {
-                val chattingServerResponse = ChattingServer.getMessage(message)
-                Log.d("Chatting server response", chattingServerResponse)
+//                val chattingServerResponse = ChattingServer.getMessage(message)
+//                Log.d("Chatting server response", chattingServerResponse)
 
-                val response = ChatGpt.getChangedSentence(chattingServerResponse, friendId)
-//                val response = ChatGpt.getChangedSentence("저녁을 추천해드릴까요?", friendId)
+//                val response = ChatGptDavinci.getChangedSentence(chattingServerResponse, friendId)
+                val response = ChatGptDavinci.getChangedSentence("저녁을 추천해드릴까요?", friendId)
                 Log.d("ChatGpt response", response)
 
                 // 받아온 응답 메세지와 메세지를 firebase에 저장

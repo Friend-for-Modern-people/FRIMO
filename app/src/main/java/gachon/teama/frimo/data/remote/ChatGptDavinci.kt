@@ -1,15 +1,14 @@
 package gachon.teama.frimo.data.remote
 
 import android.util.Log
-import gachon.teama.frimo.data.remote.ChatGptService.ChatGptRequest
+import gachon.teama.frimo.data.remote.ChatGptService.DavinciRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ChatGpt {
-
-    private const val apiKey = "<api-key>"
+object ChatGptDavinci {
+    const val apiKey = "<api-key>"
     private val chatGptService = Retrofit.Builder()
         .baseUrl("https://api.openai.com/")
         .addConverterFactory(GsonConverterFactory.create())
@@ -24,7 +23,7 @@ object ChatGpt {
             val newPrompt = updatePrompt(prompt, friendId)
             Log.d("ChagtGpt", "\"$newPrompt\" 문장으로 request")
 
-            chatGptService.getCompletion(request = ChatGptRequest(newPrompt), authorization = "Bearer $apiKey").let { response ->
+            chatGptService.getCompletion(request = DavinciRequest(newPrompt)).let { response ->
                 response.choices[0].text
             }
         }

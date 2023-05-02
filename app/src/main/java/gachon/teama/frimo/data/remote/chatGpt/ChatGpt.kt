@@ -1,13 +1,10 @@
-package gachon.teama.frimo.data.remote
+package gachon.teama.frimo.data.remote.chatGpt
 
 import android.util.Log
-import gachon.teama.frimo.data.remote.ChatGptService.DavinciRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ChatGptDavinci {
+object ChatGpt {
     const val apiKey = "<api-key>"
     private val chatGptService = Retrofit.Builder()
         .baseUrl("https://api.openai.com/")
@@ -18,19 +15,31 @@ object ChatGptDavinci {
     // ---------- Chat Gpt ----------
 
     // 채팅 서버로부터 온 응답의 어미를 바꾸는 API
-    suspend fun getChangedSentence(prompt: String, friendId: Int): String =
-        withContext(Dispatchers.IO) {
-            val newPrompt = updatePrompt(prompt, friendId)
-            Log.d("ChagtGpt", "\"$newPrompt\" 문장으로 request")
+    suspend fun getChangedSentence(prompt: String, friendId: Int): String {
+        val newPrompt = updatePrompt(prompt, friendId)
+        return getCompletion(newPrompt, 0.7)
+    }
 
-            chatGptService.getCompletion(request = DavinciRequest(newPrompt)).let { response ->
-                response.choices[0].text
-            }
-        }
+    private suspend fun getCompletion(prompt: String, temperature: Double): String {
+        Log.d("ChatGpt", "Request ChatGpt: $prompt")
+
+        val request = ChatGptService.ChatGptRequest(
+            model = "gpt-3.5-turbo",
+            messages = listOf(
+                ChatGptService.Message(role = "user", content = prompt)
+            ),
+            temperature = temperature
+        )
+
+        val result = chatGptService.getCompletion(request)
+        Log.d("ChatGpt", "ChatGpt requested: $result")
+
+        return result.choices[0].message.content
+    }
 
     // 채팅하는 친구의 성격에 맞게 ChatGpt에 요청할 문장 수정
     private fun updatePrompt(prompt: String, friendId: Int): String {
-        return "$prompt\n\n위 문장을" + when (friendId) {
+        return "\"$prompt\" 문장을 " + when (friendId) {
             1 -> "따뜻하고 포근한 느낌으로"
             2 -> "따뜻하고 친숙한 느낌으로"
             3 -> "친숙하고 존경해주는 느낌으로"
@@ -39,7 +48,7 @@ object ChatGptDavinci {
             6 -> "친숙한 느낌으로"
             7 -> "따뜻하고 친숙한 느낌으로"
             else -> ""
-        } + "바꿔줘"
+        } + " 바꿔줘"
     }
 
 }

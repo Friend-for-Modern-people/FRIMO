@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import gachon.teama.frimo.adapter.FilteredDiaryAdapter
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.DiaryServer
+import gachon.teama.frimo.data.remote.diary.DiaryServer
 import gachon.teama.frimo.databinding.FragmentDiaryFilteredRecentlyBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

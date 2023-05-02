@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import gachon.teama.frimo.base.DiaryFragment
 import gachon.teama.frimo.R
 import gachon.teama.frimo.data.local.AppDatabase
-import gachon.teama.frimo.data.remote.DiaryServer
+import gachon.teama.frimo.data.remote.diary.DiaryServer
 import gachon.teama.frimo.databinding.FragmentFilteredDiaryBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

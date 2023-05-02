@@ -1,8 +1,9 @@
-package gachon.teama.frimo.data.remote
+package gachon.teama.frimo.data.remote.diary
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import gachon.teama.frimo.R
+import gachon.teama.frimo.data.remote.User
 import kotlinx.parcelize.Parcelize
 
 // Todo: 키워드, 댓글 추가 방법 알아볼 것

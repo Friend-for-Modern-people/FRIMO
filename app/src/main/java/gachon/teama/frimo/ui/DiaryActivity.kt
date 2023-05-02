@@ -18,9 +18,9 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.Diary.Sentiment
-import gachon.teama.frimo.data.remote.DiaryKeywords
-import gachon.teama.frimo.data.remote.DiaryServer
+import gachon.teama.frimo.data.remote.diary.Diary.Sentiment
+import gachon.teama.frimo.data.remote.diary.DiaryKeywords
+import gachon.teama.frimo.data.remote.diary.DiaryServer
 import gachon.teama.frimo.databinding.ActivityDiaryBinding
 import kotlinx.coroutines.*
 

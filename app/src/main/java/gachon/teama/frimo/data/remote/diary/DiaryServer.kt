@@ -1,4 +1,4 @@
-package gachon.teama.frimo.data.remote
+package gachon.teama.frimo.data.remote.diary
 
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import gachon.teama.frimo.data.remote.DiaryKeywordsService.AddWordRequest
+import gachon.teama.frimo.data.remote.diary.DiaryKeywordsService.AddWordRequest
 
 object DiaryServer {
 

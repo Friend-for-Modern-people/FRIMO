@@ -15,11 +15,11 @@ import com.google.android.flexbox.JustifyContent
 import gachon.teama.frimo.R
 import gachon.teama.frimo.adapter.WordsAdapter
 import gachon.teama.frimo.base.BaseActivity
-import gachon.teama.frimo.data.remote.DiaryServer
+import gachon.teama.frimo.data.remote.diary.DiaryServer
 import gachon.teama.frimo.databinding.ActivityAddWordBinding
 import kotlinx.coroutines.*
-import gachon.teama.frimo.data.remote.Diary.SentimentDetail
-import gachon.teama.frimo.data.remote.DiaryKeywordsService.AddWordRequest
+import gachon.teama.frimo.data.remote.diary.Diary.SentimentDetail
+import gachon.teama.frimo.data.remote.diary.DiaryKeywordsService.AddWordRequest
 
 class AddWordActivity : BaseActivity<ActivityAddWordBinding>(ActivityAddWordBinding::inflate) {
 

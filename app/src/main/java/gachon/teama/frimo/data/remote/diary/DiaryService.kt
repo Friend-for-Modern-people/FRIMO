@@ -1,4 +1,4 @@
-package gachon.teama.frimo.data.remote
+package gachon.teama.frimo.data.remote.diary
 
 import retrofit2.Response
 import retrofit2.http.GET

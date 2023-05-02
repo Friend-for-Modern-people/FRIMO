@@ -3,7 +3,7 @@ package gachon.teama.frimo.base
 import android.content.Intent
 import android.view.View
 import androidx.fragment.app.Fragment
-import gachon.teama.frimo.data.remote.Diary
+import gachon.teama.frimo.data.remote.diary.Diary
 import gachon.teama.frimo.ui.DiaryActivity
 import gachon.teama.frimo.ui.FilteredDetailDiaryActivity
 import java.time.LocalDate

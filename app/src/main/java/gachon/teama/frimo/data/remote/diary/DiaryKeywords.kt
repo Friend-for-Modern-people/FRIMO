@@ -1,4 +1,4 @@
-package gachon.teama.frimo.data.remote
+package gachon.teama.frimo.data.remote.diary
 
 import com.google.gson.annotations.SerializedName
 

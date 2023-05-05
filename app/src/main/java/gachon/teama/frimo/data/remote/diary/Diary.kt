@@ -28,12 +28,12 @@ class Diary(
      */
     fun getTextSentiment(): String {
         return when (sentiment) {
-            Sentiment.Anger.value -> "#분노"
-            Sentiment.Sadness.value -> "#슬픔"
-            Sentiment.Anxiety.value -> "#불안"
-            Sentiment.Wound.value -> "#상처"
-            Sentiment.Embarrassment.value -> "#당황"
-            Sentiment.Pleasure.value -> "#기쁨"
+            Sentiment.Anger.intValue -> "#분노"
+            Sentiment.Sadness.intValue -> "#슬픔"
+            Sentiment.Anxiety.intValue -> "#불안"
+            Sentiment.Wound.intValue -> "#상처"
+            Sentiment.Embarrassment.intValue -> "#당황"
+            Sentiment.Pleasure.intValue -> "#기쁨"
             else -> "#에러"
         }
     }
@@ -46,22 +46,19 @@ class Diary(
      */
     fun getSentimentColor(): Int {
         return when (sentiment) {
-            Sentiment.Pleasure.value -> R.color.pleasure
-            Sentiment.Sadness.value -> R.color.sadness
-            Sentiment.Anxiety.value -> R.color.anxiety
-            Sentiment.Wound.value -> R.color.wound
-            Sentiment.Embarrassment.value -> R.color.embarrassment
-            Sentiment.Anger.value -> R.color.anger
+            Sentiment.Pleasure.intValue -> R.color.pleasure
+            Sentiment.Sadness.intValue -> R.color.sadness
+            Sentiment.Anxiety.intValue -> R.color.anxiety
+            Sentiment.Wound.intValue -> R.color.wound
+            Sentiment.Embarrassment.intValue -> R.color.embarrassment
+            Sentiment.Anger.intValue -> R.color.anger
             else -> R.color.black
         }
     }
 
-    enum class Sentiment(val value: Int) {
-        Anger(0), Sadness(1), Anxiety(2), Wound(3), Embarrassment(4), Pleasure(5)
-    }
-
-    enum class SentimentDetail(val value: Long) {
-        AngerDetail(1), SadnessDetail(10), AnxietyDetail(19), WoundDetail(28),
-        EmbarrassmentDetail(37), PleasureDetail(46), Error(99)
+    enum class Sentiment(val intValue: Int, val stringValue: String) {
+        Anger(0, "Anger"), Sadness(1, "Sadness"),
+        Anxiety(2, "Anxiety"), Wound(3, "Hurt"),
+        Embarrassment(4, "Embarrassment"), Pleasure(5, "Joy")
     }
 }

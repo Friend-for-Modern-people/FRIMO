@@ -29,27 +29,27 @@ class WordsAdapter(private val dataSet: List<DiaryKeywords>) : RecyclerView.Adap
 
         // Set textview background and color
         when(dataSet[position].sentiment){
-            Sentiment.Anger.value -> {
+            Sentiment.Anger.stringValue -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_anger_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.anger))
             }
-            Sentiment.Sadness.value -> {
+            Sentiment.Sadness.stringValue -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_sadness_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.sadness))
             }
-            Sentiment.Anxiety.value -> {
+            Sentiment.Anxiety.stringValue -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_anxiety_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.anxiety))
             }
-            Sentiment.Wound.value -> {
+            Sentiment.Wound.stringValue -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_wound_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.wound))
             }
-            Sentiment.Embarrassment.value -> {
+            Sentiment.Embarrassment.stringValue -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_embarrassment_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.embarrassment))
             }
-            Sentiment.Pleasure.value -> {
+            Sentiment.Pleasure.stringValue -> {
                 viewHolder.textview.setBackgroundResource(R.drawable.shape_words_pleasure_related)
                 viewHolder.textview.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.pleasure))
             }

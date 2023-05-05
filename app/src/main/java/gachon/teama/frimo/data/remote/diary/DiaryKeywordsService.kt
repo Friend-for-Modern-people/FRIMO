@@ -25,7 +25,6 @@ interface DiaryKeywordsService {
     data class AddWordRequest(
         @SerializedName("diaryPk") val id: Long,
         @SerializedName("tagContent") val content: String,
-        @SerializedName("sentPK") val sentiment: Long,
-        @SerializedName("category") val category: String
+        @SerializedName("sentimentTag") val sentiment: String
     )
 }

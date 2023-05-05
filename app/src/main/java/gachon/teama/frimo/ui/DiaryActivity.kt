@@ -218,6 +218,6 @@ class DiaryActivity : BaseActivity<ActivityDiaryBinding>(ActivityDiaryBinding::i
      * @author - namsh1125
      */
     private fun getWordsCount(words: List<DiaryKeywords>, sentiment: Sentiment): Int {
-        return words.filter { it.sentiment == sentiment.value }.size
+        return words.filter { it.sentiment == sentiment.stringValue }.size
     }
 }

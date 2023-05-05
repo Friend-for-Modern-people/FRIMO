@@ -194,30 +194,29 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textview_text_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="어떤 카테고리에 추가할까요?"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                app:layout_constraintStart_toStartOf="@id/radiogroup2"
-                app:layout_constraintTop_toBottomOf="@id/radiogroup2"
-                tools:ignore="HardcodedText" />
+<!--            <TextView-->
+<!--                android:id="@+id/textview_text_category"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:text="어떤 카테고리에 추가할까요?"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="17sp"-->
+<!--                app:layout_constraintStart_toStartOf="@id/radiogroup2"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/radiogroup2"-->
+<!--                tools:ignore="HardcodedText" />-->
 
-            <EditText
-                android:id="@+id/edittext_category"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/shape_edittext"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="@id/edittext_add"
-                app:layout_constraintStart_toStartOf="@id/edittext_add"
-                app:layout_constraintTop_toBottomOf="@id/textview_text_category" />
-
+<!--            <EditText-->
+<!--                android:id="@+id/edittext_category"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:background="@drawable/shape_edittext"-->
+<!--                android:padding="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/edittext_add"-->
+<!--                app:layout_constraintStart_toStartOf="@id/edittext_add"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/textview_text_category" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

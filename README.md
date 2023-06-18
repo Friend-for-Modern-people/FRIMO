@@ -6,6 +6,19 @@
 ## System Architecture
 ![Android system architecture](./doc/img_system_architecture.png)
 
+##Library List
+- Firebase
+- RoomDB
+- Kapt(Kotlin annotation processing tool)
+- Dots Indicator
+- Flexbox Layout Manager
+- Retrofit
+- Gson
+- Scalars
+- Coroutine
+- Lombok
+- OKHttp
+
 ## Designer
 
 > Kim min ji - gaemi1999

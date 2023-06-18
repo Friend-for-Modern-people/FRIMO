@@ -19,7 +19,7 @@
 - Lombok
 - OKHttp
 
-# SDK version
+## SDK version
 - Min: 30
 - Target: 33
 

@@ -6,7 +6,7 @@
 ## System Architecture
 ![Android system architecture](./doc/img_system_architecture.png)
 
-##Library List
+## Library List
 - Firebase
 - RoomDB
 - Kapt(Kotlin annotation processing tool)
@@ -18,6 +18,10 @@
 - Coroutine
 - Lombok
 - OKHttp
+
+# SDK version
+- Min: 30
+- Target: 33
 
 ## Designer
 
